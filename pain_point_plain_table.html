@@ -1,0 +1,108 @@
+
+<style>
+* { box-sizing: border-box; }
+.wrap { padding: 16px 0; font-family: var(--font-sans); }
+.filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.filter-btn {
+  padding: 5px 14px; border-radius: 20px; border: 1px solid var(--color-border-secondary);
+  background: var(--color-background-secondary); color: var(--color-text-secondary);
+  font-size: 12px; cursor: pointer; transition: all .15s;
+}
+.filter-btn.active { background: #534AB7; border-color: #534AB7; color: #EEEDFE; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead tr { border-bottom: 1.5px solid var(--color-border-secondary); }
+th { padding: 8px 10px; text-align: left; font-weight: 500; font-size: 12px; color: var(--color-text-secondary); }
+td { padding: 9px 10px; border-bottom: 1px solid var(--color-border-tertiary); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--color-background-secondary); }
+.tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.tag-all { background: #F1EFE8; color: #444441; }
+.tag-mfg { background: #E1F5EE; color: #085041; }
+.tag-fin { background: #E6F1FB; color: #0C447C; }
+.tag-ret { background: #FAEEDA; color: #633806; }
+.tag-pub { background: #EEEDFE; color: #3C3489; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.pill-lv12 { background: #EEEDFE; color: #3C3489; }
+.pill-lv34 { background: #E1F5EE; color: #085041; }
+.pill-lv56 { background: #FAEEDA; color: #633806; }
+.pain-type { font-size: 12px; color: var(--color-text-secondary); }
+.course-name { color: var(--color-text-primary); line-height: 1.5; }
+.can-do { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+</style>
+
+<div class="wrap">
+  <div class="filter-row" id="filters">
+    <button class="filter-btn active" data-ind="all">전체</button>
+    <button class="filter-btn" data-ind="mfg">제조</button>
+    <button class="filter-btn" data-ind="fin">금융</button>
+    <button class="filter-btn" data-ind="ret">유통/리테일</button>
+    <button class="filter-btn" data-ind="pub">공공/에너지</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:14%">고통 유형</th>
+        <th style="width:30%">실제 고객 고민 (과목 이름)</th>
+        <th style="width:10%">산업</th>
+        <th style="width:34%">이 과정을 들으면 할 수 있는 것</th>
+        <th style="width:12%">레벨</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const rows = [
+  { pain:"데이터 접근성", course:"IT 도움 없이 내가 직접 데이터 꺼내는 법", ind:["all"], tag:"all", cando:"원하는 조건으로 데이터를 기다림 없이 바로 꺼낼 수 있어요", lv:"lv12" },
+  { pain:"데이터 접근성", course:"ERP·생산시스템 데이터를 직접 연결하는 법", ind:["mfg"], tag:"mfg", cando:"생산·재고 데이터를 요청 없이 실시간으로 볼 수 있어요", lv:"lv34" },
+  { pain:"데이터 접근성", course:"은행 시스템 데이터를 대시보드로 직접 끌어오는 법", ind:["fin"], tag:"fin", cando:"상품·계좌 데이터를 원할 때 바로 꺼낼 수 있어요", lv:"lv34" },
+  { pain:"데이터 신뢰성", course:"보고서 숫자가 맞는지 확인하는 법", ind:["all"], tag:"all", cando:"숫자가 어디서 왔는지 추적해서 틀린 곳을 바로 찾을 수 있어요", lv:"lv12" },
+  { pain:"데이터 신뢰성", course:"불량률 데이터가 라인마다 다르게 나오는 이유 찾는 법", ind:["mfg"], tag:"mfg", cando:"어느 공정에서 숫자가 틀어지는지 바로 짚을 수 있어요", lv:"lv34" },
+  { pain:"데이터 신뢰성", course:"지점마다 실적 숫자가 왜 다른지 추적하는 법", ind:["fin"], tag:"fin", cando:"어느 지점 데이터가 잘못됐는지 한 번에 찾을 수 있어요", lv:"lv34" },
+  { pain:"리포팅 효율", course:"매월 보고서 자동으로 만들어지게 세팅하는 법", ind:["all"], tag:"all", cando:"한 번 세팅하면 매달 보고서가 자동으로 완성돼요", lv:"lv12" },
+  { pain:"리포팅 효율", course:"생산일보·주간보고 10분 안에 끝내는 법", ind:["mfg"], tag:"mfg", cando:"매일 손으로 쓰던 보고서가 자동으로 완성돼요", lv:"lv34" },
+  { pain:"리포팅 효율", course:"전 지점 실적 취합, 손 안 대고 끝내는 법", ind:["fin"], tag:"fin", cando:"지점별 파일 모아서 합치는 작업이 사라져요", lv:"lv34" },
+  { pain:"리포팅 효율", course:"점포 매출·재고 리포트 자동으로 돌리는 법", ind:["ret"], tag:"ret", cando:"점포별 현황을 매일 아침 자동으로 받아볼 수 있어요", lv:"lv34" },
+  { pain:"리포팅 효율", course:"부서별 예산 집행 현황 자동 보고 세팅하는 법", ind:["pub"], tag:"pub", cando:"예산 현황을 자동으로 정리해서 보낼 수 있어요", lv:"lv34" },
+  { pain:"대시보드 활용", course:"팀장이 5초 안에 읽히는 대시보드 만드는 법", ind:["all"], tag:"all", cando:"보는 사람이 스스로 찾아보고 싶어지는 화면을 만들 수 있어요", lv:"lv12" },
+  { pain:"대시보드 활용", course:"라인별 이상, 숫자가 튀면 바로 알게 하는 화면 만들기", ind:["mfg"], tag:"mfg", cando:"문제가 생기면 화면 색이 바뀌어서 현장에서 바로 알 수 있어요", lv:"lv34" },
+  { pain:"대시보드 활용", course:"상품별 판매 vs 목표, 한눈에 비교되는 화면 만들기", ind:["fin"], tag:"fin", cando:"목표 대비 지금 몇 %인지 숫자 하나로 바로 볼 수 있어요", lv:"lv34" },
+  { pain:"대시보드 활용", course:"일별 매출·재고, 클릭하면 점포까지 파고드는 화면 만들기", ind:["ret"], tag:"ret", cando:"전체 현황에서 클릭하면 어느 점포가 문제인지 바로 보여요", lv:"lv34" },
+  { pain:"대시보드 활용", course:"예산 집행률, 클릭 한 번으로 부서까지 파고드는 화면 만들기", ind:["pub"], tag:"pub", cando:"전체 예산 현황에서 어느 부서가 문제인지 바로 찾아요", lv:"lv34" },
+  { pain:"의사결정 지원", course:"데이터로 상사를 설득하는 보고서 만드는 법", ind:["all"], tag:"all", cando:"숫자에 이유를 붙여 결론까지 이어지는 보고를 할 수 있어요", lv:"lv56" },
+  { pain:"의사결정 지원", course:"매출이 떨어진 이유, 숫자를 타고 올라가며 찾는 법", ind:["mfg"], tag:"mfg", cando:"어느 공정·라인에서 원가가 올랐는지 원인까지 찾을 수 있어요", lv:"lv56" },
+  { pain:"의사결정 지원", course:"어떤 고객이 진짜 남는 고객인지 나눠서 보는 법", ind:["fin"], tag:"fin", cando:"수익 나는 고객 그룹과 손해 나는 그룹을 분리해서 볼 수 있어요", lv:"lv56" },
+  { pain:"의사결정 지원", course:"어떤 상품이 진짜 남는 상품인지 가려내는 법", ind:["ret"], tag:"ret", cando:"매출은 높은데 남는 게 없는 상품을 딱 짚어낼 수 있어요", lv:"lv56" },
+  { pain:"의사결정 지원", course:"에너지 사용이 갑자기 튄 이유 찾는 법", ind:["pub"], tag:"pub", cando:"언제 어디서 에너지가 튀었는지 그래프로 바로 집어낼 수 있어요", lv:"lv56" },
+];
+
+const tagClass = { all:"tag-all", mfg:"tag-mfg", fin:"tag-fin", ret:"tag-ret", pub:"tag-pub" };
+const tagLabel = { all:"공통", mfg:"제조", fin:"금융", ret:"유통", pub:"공공" };
+const lvClass  = { lv12:"pill-lv12", lv34:"pill-lv34", lv56:"pill-lv56" };
+const lvLabel  = { lv12:"LV 1-2", lv34:"LV 3-4", lv56:"LV 5-6" };
+
+function render(filter) {
+  const tbody = document.getElementById("tbody");
+  const filtered = filter === "all" ? rows : rows.filter(r => r.ind.includes(filter) || r.tag === "all");
+  tbody.innerHTML = filtered.map(r => `
+    <tr>
+      <td class="pain-type">${r.pain}</td>
+      <td class="course-name">${r.course}</td>
+      <td><span class="tag ${tagClass[r.tag]}">${tagLabel[r.tag]}</span></td>
+      <td class="can-do">${r.cando}</td>
+      <td><span class="pill ${lvClass[r.lv]}">${lvLabel[r.lv]}</span></td>
+    </tr>
+  `).join("");
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render(btn.dataset.ind);
+});
+
+render("all");
+</script>
