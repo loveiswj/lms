@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>과정 상세 — AUD Academy</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ══ 공지 배너 ══ -->
+  <div class="notice-bar">
+    <strong>AUD 플랫폼 실무 교육</strong>&nbsp;|&nbsp;내 업무에 딱 맞는 과정을 찾아보세요
+  </div>
+
+  <!-- ══ 헤더 ══ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
+        </a>
+        <div class="header-search">
+          <input type="text" class="header-search__input" placeholder="과목명, 업종, 역할로 검색하세요">
+          <button class="header-search__btn" aria-label="검색">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </div>
+        <div class="header-actions">
+          <a href="#" class="header-actions__link">로그인</a>
+          <span class="header-actions__divider"></span>
+          <a href="#" class="btn btn--secondary btn--sm">회원가입</a>
+          <a href="course-list.html" class="btn btn--primary btn--sm">수강신청</a>
+        </div>
+        <button class="mobile-search-toggle" id="mobileSearchToggle" aria-label="검색">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </button>
+      </div>
+      <div class="mobile-search-panel" id="mobileSearchPanel">
+        <div class="header-search" style="max-width:100%;">
+          <input type="text" class="header-search__input" id="mobileSearchInput" placeholder="과목명, 업종, 역할로 검색하세요" style="max-width:100%;">
+          <button class="header-search__btn" id="mobileSearchSubmit" aria-label="검색">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <nav class="gnb" aria-label="주요 메뉴">
+      <div class="container">
+        <div class="gnb__inner">
+          <div class="gnb__item">
+            <button class="gnb__trigger">업종별
+              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-menu__nav">
+                <div class="mega-menu__nav-item is-active" data-target="di-all">전체 업종</div>
+                <div class="mega-menu__nav-item" data-target="di-finance">금융 서비스</div>
+                <div class="mega-menu__nav-item" data-target="di-public">공공 부문</div>
+                <div class="mega-menu__nav-item" data-target="di-retail">소매·소비재</div>
+                <div class="mega-menu__nav-item" data-target="di-mfg">제조업</div>
+              </div>
+              <div class="mega-menu__panel is-active" data-panel="di-all">
+                <div class="mega-menu__panel-title">업종별 과정</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=finance_industry" class="mega-menu__link"><strong>금융 서비스</strong><span>은행·증권·보험</span></a>
+                  <a href="course-list.html?category=industry&value=public" class="mega-menu__link"><strong>공공 부문</strong><span>공공기관·지자체</span></a>
+                  <a href="course-list.html?category=industry&value=retail" class="mega-menu__link"><strong>소매·소비재</strong><span>유통·리테일</span></a>
+                  <a href="course-list.html?category=industry&value=manufacturing" class="mega-menu__link"><strong>제조업</strong><span>생산·품질·SCM</span></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="di-finance">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=finance_industry&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                  <a href="course-list.html?category=industry&value=finance_industry&role=finance" class="mega-menu__link"><strong>재무·기획 담당자</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="di-public">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=public&role=finance" class="mega-menu__link"><strong>재무·기획 담당자</strong></a>
+                  <a href="course-list.html?category=industry&value=public&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="di-retail">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=retail&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="di-mfg">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=manufacturing&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                  <a href="course-list.html?category=industry&value=manufacturing&role=developer" class="mega-menu__link"><strong>개발자</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gnb__item">
+            <button class="gnb__trigger">역할별
+              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-menu__nav">
+                <div class="mega-menu__nav-item is-active" data-target="dr-analyst">현업 분석가</div>
+                <div class="mega-menu__nav-item" data-target="dr-developer">개발자</div>
+                <div class="mega-menu__nav-item" data-target="dr-finance">재무·기획</div>
+              </div>
+              <div class="mega-menu__panel is-active" data-panel="dr-analyst">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=analyst" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="dr-developer">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=developer" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="dr-finance">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=finance" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gnb__item">
+            <button class="gnb__trigger">기능별
+              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-menu__nav">
+                <div class="mega-menu__nav-item is-active" data-target="df-epa">엑셀→시스템</div>
+                <div class="mega-menu__nav-item" data-target="df-dashboard">현황판</div>
+                <div class="mega-menu__nav-item" data-target="df-olap">원인 분석</div>
+                <div class="mega-menu__nav-item" data-target="df-uiux">직접 입력</div>
+                <div class="mega-menu__nav-item" data-target="df-report">보고서</div>
+              </div>
+              <div class="mega-menu__panel is-active" data-panel="df-epa">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=epa" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="df-dashboard">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=dashboard" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="df-olap">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=olap" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="df-uiux">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=uiux" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="df-report">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=report" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gnb__extra">
+            <a href="course-list.html" class="gnb__extra-link">전체 과정</a>
+            <a href="#" class="gnb__extra-link">수강후기</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ══ 모바일 네비게이션 ══ -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__header">
+      <a href="index.html" class="logo"><img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img"></a>
+      <button class="mobile-nav__close" id="mobileNavClose">✕</button>
+    </div>
+    <div class="mobile-nav__section">
+      <div class="mobile-nav__category">업종별 <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="mobile-nav__sub">
+        <a href="course-list.html?category=industry&value=finance_industry" class="mobile-nav__sub-link">금융 서비스</a>
+        <a href="course-list.html?category=industry&value=public" class="mobile-nav__sub-link">공공 부문</a>
+        <a href="course-list.html?category=industry&value=retail" class="mobile-nav__sub-link">소매·소비재</a>
+        <a href="course-list.html?category=industry&value=manufacturing" class="mobile-nav__sub-link">제조업</a>
+      </div>
+    </div>
+    <div class="mobile-nav__actions">
+      <a href="#" class="btn btn--secondary btn--full">로그인</a>
+      <a href="course-list.html" class="btn btn--primary btn--full">수강신청</a>
+    </div>
+  </div>
+
+  <!-- ══ 히어로 영역 (JS로 채워짐) ══ -->
+  <div id="detailHero"></div>
+
+  <!-- ══ 모바일 하단 구매 CTA ══ -->
+  <div class="mobile-purchase-bar" id="mobilePurchaseBar">
+    <span class="mobile-purchase-bar__price" id="mobilePurchasePrice">—</span>
+    <a href="#" class="btn btn--accent btn--lg" style="flex:1; max-width:200px;">수강 신청하기</a>
+  </div>
+
+  <!-- ══ 본문 ══ -->
+  <main class="detail-page-body">
+    <div class="container" style="padding-top:40px; padding-bottom:64px;">
+
+      <!-- 브레드크럼 -->
+      <nav class="breadcrumb" id="detailBreadcrumb" aria-label="현재 위치">
+        <a href="index.html">홈</a>
+        <span class="breadcrumb__sep">›</span>
+        <a href="course-list.html">전체 과정</a>
+        <span class="breadcrumb__sep">›</span>
+        <span class="breadcrumb__current" id="breadcrumbTitle">과정 상세</span>
+      </nav>
+
+      <div class="detail-layout">
+        <!-- 좌측 메인 콘텐츠 -->
+        <div id="detailMain">
+          <!-- JS로 렌더링 -->
+        </div>
+
+        <!-- 우측 사이드바 -->
+        <div>
+          <!-- 구매 카드 -->
+          <div class="sticky-card">
+            <div class="purchase-card" id="purchaseCard">
+              <!-- JS로 렌더링 -->
+            </div>
+
+            <!-- 관련 과정 -->
+            <div class="related-sidebar" style="margin-top:20px;" id="relatedSidebar">
+              <div class="related-sidebar__head">관련 과정</div>
+              <div class="related-sidebar__body" id="relatedCourses">
+                <!-- JS로 렌더링 -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 다음 단계 과정 -->
+      <div id="nextCoursesSection"></div>
+
+    </div>
+  </main>
+
+  <!-- ══ 푸터 ══ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px; width:auto; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:12px;">
+          <p class="footer-desc">IT 지식 없이도 시작할 수 있는<br>실무 BI 교육 플랫폼입니다.</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <p class="footer-links__group-title">교육 과정</p>
+            <a href="course-list.html?category=industry&value=finance_industry" class="footer-links__link">금융 서비스</a>
+            <a href="course-list.html?category=industry&value=manufacturing" class="footer-links__link">제조업</a>
+            <a href="course-list.html?category=industry&value=public" class="footer-links__link">공공 부문</a>
+          </div>
+          <div>
+            <p class="footer-links__group-title">고객지원</p>
+            <a href="#" class="footer-links__link">자주 묻는 질문</a>
+            <a href="#" class="footer-links__link">1:1 문의</a>
+          </div>
+          <div>
+            <p class="footer-links__group-title">회사</p>
+            <a href="#" class="footer-links__link">소개</a>
+            <a href="#" class="footer-links__link">기업 교육 문의</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 AUD Academy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/course-data.js"></script>
+  <script src="js/nav.js"></script>
+  <!-- YouTube iframe API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+  /* ── YouTube 시간 이동 ── */
+  var ytPlayer = null;
+  function onYouTubeIframeAPIReady() {
+    var iframe = document.getElementById('ytPlayer');
+    if (!iframe) return;
+    ytPlayer = new YT.Player('ytPlayer', {
+      events: { onStateChange: onPlayerStateChange }
+    });
+  }
+  function onPlayerStateChange(e) {}
+  function seekVideo(seconds, el) {
+    /* 활성 항목 표시 */
+    var items = document.querySelectorAll('.video-timeline__item');
+    items.forEach(function(i) { i.classList.remove('is-active'); });
+    if (el) el.classList.add('is-active');
+    /* 영상 이동 */
+    if (ytPlayer && ytPlayer.seekTo) {
+      ytPlayer.seekTo(seconds, true);
+      ytPlayer.playVideo();
+    } else {
+      var iframe = document.getElementById('ytPlayer');
+      if (iframe) iframe.src = iframe.src.replace(/[?&]start=\d+/, '') +
+        (iframe.src.indexOf('?') > -1 ? '&' : '?') + 'start=' + seconds + '&autoplay=1';
+    }
+  }
+  function formatVideoTime(sec) {
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  </script>
+  <script>
+  /* ── course-detail.html 전용 로직 ── */
+  (function () {
+    "use strict";
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function formatPrice(price) {
+      if (price === 0) return "무료";
+      return price.toLocaleString("ko-KR") + "원";
+    }
+
+    function formatVideoTime(sec) {
+      var m = Math.floor(sec / 60);
+      var s = sec % 60;
+      return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    /* ── 히어로 영역 렌더링 ── */
+    function renderHero(course) {
+      var heroEl = document.getElementById("detailHero");
+      if (!heroEl) return;
+
+      var industryTags = (course.industry || []).map(function (i) {
+        return '<span class="detail-hero__tag">' + escapeHtml(INDUSTRY_LABELS[i] || i) + '</span>';
+      }).join("");
+
+      var roleTags = (course.role || []).map(function (r) {
+        return '<span class="detail-hero__tag">' + escapeHtml(ROLE_LABELS[r] || r) + '</span>';
+      }).join("");
+
+      var featureTags = (course.feature || []).map(function (f) {
+        return '<span class="detail-hero__tag">' + escapeHtml(FEATURE_LABELS[f] || f) + '</span>';
+      }).join("");
+
+      var levelText = course.level === "lv2" ? "Lv.2 심화" : "Lv.1 기초·실무";
+
+      heroEl.innerHTML =
+        '<div class="detail-hero">' +
+          '<div class="container">' +
+            '<div class="detail-hero__tags">' + industryTags + roleTags + featureTags + '</div>' +
+            '<h1 class="detail-hero__title">' + escapeHtml(course.title) + '</h1>' +
+            '<p class="detail-hero__outcome">' + escapeHtml(course.outcome) + '</p>' +
+            '<div class="detail-hero__meta">' +
+              '<div class="detail-hero__meta-item">' +
+                '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>' +
+                '<strong>' + levelText + '</strong>' +
+              '</div>' +
+              '<div class="detail-hero__meta-item">' +
+                '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
+                '<strong>' + escapeHtml(course.duration) + '</strong>' +
+              '</div>' +
+              '<div class="detail-hero__meta-item">' +
+                '<span class="detail-hero__price">' + formatPrice(course.price) + '</span>' +
+              '</div>' +
+              '<a href="#" class="btn btn--accent btn--lg" style="margin-left:8px;">수강 신청하기</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    /* ── 본문 콘텐츠 렌더링 ── */
+    function renderMain(course) {
+      var mainEl = document.getElementById("detailMain");
+      if (!mainEl) return;
+
+      // 역할 설명 (공감 문구)
+      var concernTexts = {
+        analyst:   "매번 엑셀 파일 열고 피벗 돌려도 정작 보고할 때 숫자가 안 맞아 다시 확인하시나요?",
+        developer: "업무 화면 만들어달라는 요청이 쌓이는데 매번 처음부터 개발하기 버겁지 않으신가요?",
+        finance:   "월말마다 각 팀에서 받은 데이터 취합하고 보고서 만드느라 정작 분석할 시간이 없지 않으신가요?",
+        marketing: "매체별 성과 데이터를 엑셀로 취합하다 보면 어느새 월요일이 되어 있지 않으신가요?",
+        leader:    '부서에 "KPI 달성률 어때?" 물으면 "잠깐만요, 확인해볼게요"라는 답변이 돌아오시나요?'
+      };
+
+      var primaryRole = (course.role && course.role[0]) || "analyst";
+      var concernText = concernTexts[primaryRole] || "이 과정은 그 불편함을 해결하기 위해 설계됐습니다.";
+
+      // 학습 성과 (체크리스트)
+      var checkItems = [
+        course.outcome,
+        "IT 부서 도움 없이 직접 화면을 구성하고 데이터를 연결할 수 있어요",
+        "한 번 만들어두면 데이터만 업데이트해도 결과가 자동으로 반영돼요"
+      ];
+
+      var checklistHtml = checkItems.map(function (item) {
+        return '<div class="checklist__item">' +
+          '<div class="checklist__icon">' +
+            '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
+          '</div>' +
+          '<span>' + escapeHtml(item) + '</span>' +
+        '</div>';
+      }).join("");
+
+      // 추천 대상 태그
+      var roleNames = (course.role || []).map(function (r) {
+        return '<span class="persona-tag">' + escapeHtml(ROLE_LABELS[r] || r) + '</span>';
+      }).join("");
+
+      // 산업 태그
+      var industryNames = (course.industry || []).map(function (i) {
+        return '<span class="persona-tag">' + escapeHtml(INDUSTRY_LABELS[i] || i) + '</span>';
+      }).join("");
+
+      mainEl.innerHTML =
+        /* 이런 고민 */
+        '<div class="detail-section">' +
+          '<h2 class="detail-section__title">이런 고민이 있는 분께 맞는 과정이에요</h2>' +
+          '<p style="font-size:15px; color:var(--text-sub); line-height:1.8; padding:16px 20px; background:var(--bg); border-radius:var(--radius-md); border-left:3px solid var(--navy-light);">' +
+            escapeHtml(concernText) +
+          '</p>' +
+        '</div>' +
+
+        /* 학습 성과 */
+        '<div class="detail-section">' +
+          '<h2 class="detail-section__title">이 과정을 들으면</h2>' +
+          '<div class="checklist">' + checklistHtml + '</div>' +
+        '</div>' +
+
+        /* 추천 대상 */
+        '<div class="detail-section">' +
+          '<h2 class="detail-section__title">이런 분께 추천해요</h2>' +
+          '<div class="persona-tags" style="margin-bottom:16px;">' + roleNames + '</div>' +
+          '<div class="persona-tags">' + industryNames + '</div>' +
+        '</div>' +
+
+        /* 과정 소개 영상 + 타임라인 */
+        (function() {
+          var vid = getCourseVideo(course);
+          var chaptersHtml = vid.chapters.map(function(ch, i) {
+            return '<li class="video-timeline__item" data-time="' + ch.time + '" onclick="seekVideo(' + ch.time + ', this)">' +
+              '<span class="video-timeline__time">' + formatVideoTime(ch.time) + '</span>' +
+              '<span class="video-timeline__chapter">' + ch.label + '</span>' +
+              '<svg class="video-timeline__play-icon" width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
+            '</li>';
+          }).join('');
+          return '<div class="detail-section">' +
+            '<h2 class="detail-section__title">과정 소개 영상</h2>' +
+            '<div class="video-layout">' +
+              '<div class="video-player-wrap">' +
+                '<iframe id="ytPlayer" src="https://www.youtube.com/embed/' + vid.videoId + '?enablejsapi=1&rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+              '</div>' +
+              '<div class="video-timeline">' +
+                '<div class="video-timeline__header">' +
+                  '<div class="video-timeline__label">강의 목차</div>' +
+                  '<div class="video-timeline__video-title">' + vid.title + '</div>' +
+                '</div>' +
+                '<ul class="video-timeline__list">' + chaptersHtml + '</ul>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        })()+
+
+          /* 실습 사이트 배너 */
+          '<div class="practice-banner">' +
+            '<div class="practice-banner__content">' +
+              '<p class="practice-banner__title">강의와 같은 환경에서 직접 실습해보세요</p>' +
+              '<p class="practice-banner__desc">AUD 실습 사이트에서 방금 배운 내용을 바로 따라해볼 수 있어요</p>' +
+            '</div>' +
+            '<a href="#" target="_blank" class="practice-banner__btn">' +
+              '실습 사이트 열기 →' +
+            '</a>' +
+          '</div>' +
+        '</div>';
+    }
+
+    /* ── 구매 카드 렌더링 ── */
+    function renderPurchaseCard(course) {
+      var cardEl = document.getElementById("purchaseCard");
+      if (!cardEl) return;
+
+      var levelText = course.level === "lv2" ? "Lv.2 심화" : "Lv.1 기초·실무";
+
+      cardEl.innerHTML =
+        '<p class="purchase-card__title">' + escapeHtml(course.title) + '</p>' +
+        '<p class="purchase-card__price">' + formatPrice(course.price) + '</p>' +
+        '<p class="purchase-card__price-note">VAT 포함 · 1인 라이선스</p>' +
+        '<div class="purchase-card__info">' +
+          '<div class="purchase-card__info-row">' +
+            '<span class="purchase-card__info-label">레벨</span>' +
+            '<span class="purchase-card__info-value">' + levelText + '</span>' +
+          '</div>' +
+          '<div class="purchase-card__info-row">' +
+            '<span class="purchase-card__info-label">소요 시간</span>' +
+            '<span class="purchase-card__info-value">' + escapeHtml(course.duration) + '</span>' +
+          '</div>' +
+          '<div class="purchase-card__info-row">' +
+            '<span class="purchase-card__info-label">수료증</span>' +
+            '<span class="purchase-card__info-value">발급 가능</span>' +
+          '</div>' +
+          '<div class="purchase-card__info-row">' +
+            '<span class="purchase-card__info-label">수강 기간</span>' +
+            '<span class="purchase-card__info-value">6개월</span>' +
+          '</div>' +
+        '</div>' +
+        '<a href="#" class="btn btn--accent btn--full btn--lg" style="margin-bottom:10px;">수강 신청하기</a>' +
+        '<a href="#" class="btn btn--secondary btn--full">장바구니 담기</a>';
+    }
+
+    /* ── 관련 과정 렌더링 ── */
+    function renderRelated(course) {
+      var el = document.getElementById("relatedCourses");
+      if (!el) return;
+
+      var related = getRelatedCourses(course, 3);
+      if (!related.length) {
+        document.getElementById("relatedSidebar").style.display = "none";
+        return;
+      }
+
+      el.innerHTML = related.map(function (c) {
+        return '<a href="course-detail.html?id=' + c.id + '" class="related-card" style="text-decoration:none;">' +
+          '<div class="related-card__thumb" style="display:flex;align-items:center;justify-content:center;">' +
+            '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#CBD5E1;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' +
+          '</div>' +
+          '<div class="related-card__body">' +
+            '<p class="related-card__title">' + escapeHtml(c.title) + '</p>' +
+            '<p class="related-card__price">' + formatPrice(c.price) + '</p>' +
+          '</div>' +
+        '</a>';
+      }).join("");
+    }
+
+    /* ── 다음 단계 과정 렌더링 ── */
+    function renderNextCourses(course) {
+      var el = document.getElementById("nextCoursesSection");
+      if (!el) return;
+
+      var next = getNextCourses(course, 3);
+      if (!next.length) return;
+
+      var cardsHtml = next.map(function (c) {
+        var levelClass = c.level === "lv2" ? "level-badge--lv2" : "level-badge--lv1";
+        var levelText  = c.level === "lv2" ? "Lv.2 심화" : "Lv.1";
+        return '<a href="course-detail.html?id=' + c.id + '" class="course-card" style="text-decoration:none;">' +
+          '<div class="course-card__thumb">' +
+            '<img src="' + c.thumbnail + '" alt="' + escapeHtml(c.title) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+            '<div class="course-card__thumb-placeholder" style="display:none">' +
+              '<svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#CBD5E1;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' +
+            '</div>' +
+            '<span class="course-card__level level-badge ' + levelClass + '">' + levelText + '</span>' +
+          '</div>' +
+          '<div class="course-card__body">' +
+            '<span class="course-card__step">' + escapeHtml(c.step) + '</span>' +
+            '<p class="course-card__title">' + escapeHtml(c.title) + '</p>' +
+            '<p class="course-card__outcome">' + escapeHtml(c.outcome) + '</p>' +
+            '<div class="course-card__meta">' +
+              '<span class="course-card__duration">' +
+                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
+                c.duration +
+              '</span>' +
+              '<span class="course-card__price">' + formatPrice(c.price) + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</a>';
+      }).join("");
+
+      el.innerHTML =
+        '<div class="next-courses">' +
+          '<h2 class="next-courses__title">이 과목과 함께 듣는 다음 단계 과정</h2>' +
+          '<div class="next-courses__list">' + cardsHtml + '</div>' +
+        '</div>';
+    }
+
+    /* ── 브레드크럼 업데이트 ── */
+    function updateBreadcrumb(course) {
+      var el = document.getElementById("breadcrumbTitle");
+      if (el) el.textContent = course.title.length > 30 ? course.title.substring(0, 30) + "…" : course.title;
+
+      document.title = course.title + " — AUD Academy";
+
+      // 모바일 하단 가격 표시
+      var mobilePriceEl = document.getElementById("mobilePurchasePrice");
+      if (mobilePriceEl) mobilePriceEl.textContent = formatPrice(course.price);
+    }
+
+    /* ── 메인 진입점 ── */
+    function init() {
+      var params   = new URLSearchParams(window.location.search);
+      var courseId = params.get("id");
+
+      if (!courseId || typeof COURSES === "undefined") {
+        document.getElementById("detailHero").innerHTML =
+          '<div class="detail-hero"><div class="container"><p style="color:#fff; padding:40px 0;">과정을 찾을 수 없습니다. <a href="course-list.html" style="color:var(--gold);">전체 과정 보기</a></p></div></div>';
+        return;
+      }
+
+      var course = getCourseById(courseId);
+      if (!course) {
+        document.getElementById("detailHero").innerHTML =
+          '<div class="detail-hero"><div class="container"><p style="color:#fff; padding:40px 0;">존재하지 않는 과정입니다. <a href="course-list.html" style="color:var(--gold);">전체 과정 보기</a></p></div></div>';
+        return;
+      }
+
+      updateBreadcrumb(course);
+      renderHero(course);
+      renderMain(course);
+      renderPurchaseCard(course);
+      renderRelated(course);
+      renderNextCourses(course);
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  })();
+  </script>
+</body>
+</html>

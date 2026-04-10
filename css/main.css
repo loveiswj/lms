@@ -1,0 +1,327 @@
+/* =========================================
+   main.css — AUD Academy LMS
+   ========================================= */
+
+@import url('https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/pretendardvariable-dynamic-subset.css');
+
+/* ── CSS Variables ── */
+:root {
+  --navy:          #2C3E6B;
+  --navy-dark:     #1a2a4a;
+  --navy-light:    #4A6FA5;
+  --gold:          #F59E0B;
+  --gold-hover:    #D97706;
+  --bg:            #F8F9FA;
+  --bg-card:       #FFFFFF;
+  --text-primary:  #1A1A2E;
+  --text-sub:      #64748B;
+  --text-hint:     #94A3B8;
+  --border:        #E8ECF0;
+  --radius-sm:     6px;
+  --radius-md:     10px;
+  --radius-lg:     16px;
+  --font:          'Pretendard Variable', 'Pretendard', 'Noto Sans KR', sans-serif;
+
+  /* Alias */
+  --color-primary:       #2C3E6B;
+  --color-primary-light: #4A6FA5;
+  --color-accent:        #F59E0B;
+  --color-bg:            #F8F9FA;
+  --color-text:          #1A1A2E;
+  --color-text-sub:      #64748B;
+  --color-border:        #E2E8F0;
+  --font-main:           'Pretendard Variable', 'Pretendard', 'Noto Sans KR', sans-serif;
+}
+
+/* ── Base ── */
+body {
+  font-family: var(--font);
+  font-size: 15px;
+  color: var(--text-primary);
+  background-color: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout Utilities ── */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.container--wide {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Section Base ── */
+.section {
+  padding: 64px 0;
+}
+
+.section--sm {
+  padding: 48px 0;
+}
+
+.section--lg {
+  padding: 80px 0;
+}
+
+.section__head {
+  margin-bottom: 36px;
+}
+
+.section__title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+
+.section__desc {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.7;
+}
+
+/* ── Typography ── */
+.text-primary { color: var(--text-primary); }
+.text-sub     { color: var(--text-sub); }
+.text-hint    { color: var(--text-hint); }
+.text-navy    { color: var(--navy); }
+.text-gold    { color: var(--gold); }
+
+.fw-400 { font-weight: 400; }
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+.fw-700 { font-weight: 700; }
+
+.fs-12 { font-size: 12px; }
+.fs-13 { font-size: 13px; }
+.fs-14 { font-size: 14px; }
+.fs-15 { font-size: 15px; }
+.fs-16 { font-size: 16px; }
+.fs-18 { font-size: 18px; }
+.fs-20 { font-size: 20px; }
+.fs-24 { font-size: 24px; }
+
+/* ── Flex Utilities ── */
+.flex        { display: flex; }
+.flex-col    { display: flex; flex-direction: column; }
+.items-center{ align-items: center; }
+.items-start { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center  { justify-content: center; }
+.gap-8   { gap: 8px; }
+.gap-12  { gap: 12px; }
+.gap-16  { gap: 16px; }
+.gap-24  { gap: 24px; }
+
+/* ── Grid ── */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  border: none;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-hint);
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  color: var(--text-hint);
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--navy);
+}
+
+.breadcrumb__sep {
+  color: var(--border);
+  font-size: 11px;
+}
+
+.breadcrumb__current {
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+/* ── Empty State ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.empty-state__icon {
+  width: 56px;
+  height: 56px;
+  background: var(--border);
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-state__desc {
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.7;
+}
+
+/* ── Sticky Sidebar ── */
+.sticky-card {
+  position: sticky;
+  top: 80px;
+}
+
+/* ── Page Layout ── */
+.page-with-sidebar {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.page-with-sidebar--right {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ── Detail Page Layout ── */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ── Transition Default ── */
+* {
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
+}
+
+a, button, input, select, textarea,
+[class*="btn"], [class*="card"], [class*="nav"] {
+  transition: all 0.2s ease;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* ── Responsive ── */
+/* 1200px 이상: 풀 레이아웃 — 별도 처리 불필요 */
+
+/* 768px ~ 1199px: 태블릿 */
+@media (max-width: 1199px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* course-list 사이드바는 컴포넌트에서 220px 유지 */
+  .page-with-sidebar {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .detail-layout {
+    grid-template-columns: 1fr 280px;
+    gap: 28px;
+  }
+}
+
+/* 767px 이하: 모바일 */
+@media (max-width: 767px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .section__title {
+    font-size: 22px;
+  }
+
+  .grid-3,
+  .grid-4,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  /* 모바일에서 사이드바 포함 레이아웃 단열 */
+  .page-with-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>과정 목록 — AUD Academy</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ══ 공지 배너 ══ -->
+  <div class="notice-bar">
+    <strong>AUD 플랫폼 실무 교육</strong>&nbsp;|&nbsp;내 업무에 딱 맞는 과정을 찾아보세요
+  </div>
+
+  <!-- ══ 헤더 ══ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
+        </a>
+        <div class="header-search">
+          <input type="text" class="header-search__input" placeholder="과목명, 업종, 역할로 검색하세요">
+          <button class="header-search__btn" aria-label="검색">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </div>
+        <div class="header-actions">
+          <a href="#" class="header-actions__link">로그인</a>
+          <span class="header-actions__divider"></span>
+          <a href="#" class="btn btn--secondary btn--sm">회원가입</a>
+          <a href="course-list.html" class="btn btn--primary btn--sm">수강신청</a>
+        </div>
+        <button class="mobile-search-toggle" id="mobileSearchToggle" aria-label="검색">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </button>
+      </div>
+      <div class="mobile-search-panel" id="mobileSearchPanel">
+        <div class="header-search" style="max-width:100%;">
+          <input type="text" class="header-search__input" id="mobileSearchInput" placeholder="과목명, 업종, 역할로 검색하세요" style="max-width:100%;">
+          <button class="header-search__btn" id="mobileSearchSubmit" aria-label="검색">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="gnb" aria-label="주요 메뉴">
+      <div class="container">
+        <div class="gnb__inner">
+          <div class="gnb__item">
+            <button class="gnb__trigger">업종별
+              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-menu__nav">
+                <div class="mega-menu__nav-item is-active" data-target="li-all">전체 업종</div>
+                <div class="mega-menu__nav-item" data-target="li-finance">금융 서비스</div>
+                <div class="mega-menu__nav-item" data-target="li-public">공공 부문</div>
+                <div class="mega-menu__nav-item" data-target="li-retail">소매·소비재</div>
+                <div class="mega-menu__nav-item" data-target="li-mfg">제조업</div>
+              </div>
+              <div class="mega-menu__panel is-active" data-panel="li-all">
+                <div class="mega-menu__panel-title">업종별 과정</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=finance_industry" class="mega-menu__link"><strong>금융 서비스</strong><span>은행·증권·보험</span></a>
+                  <a href="course-list.html?category=industry&value=public" class="mega-menu__link"><strong>공공 부문</strong><span>공공기관·지자체</span></a>
+                  <a href="course-list.html?category=industry&value=retail" class="mega-menu__link"><strong>소매·소비재</strong><span>유통·리테일</span></a>
+                  <a href="course-list.html?category=industry&value=manufacturing" class="mega-menu__link"><strong>제조업</strong><span>생산·품질·SCM</span></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="li-finance">
+                <div class="mega-menu__panel-title">금융 서비스</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=finance_industry&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                  <a href="course-list.html?category=industry&value=finance_industry&role=finance" class="mega-menu__link"><strong>재무·기획 담당자</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="li-public">
+                <div class="mega-menu__panel-title">공공 부문</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=public&role=finance" class="mega-menu__link"><strong>재무·기획 담당자</strong></a>
+                  <a href="course-list.html?category=industry&value=public&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="li-retail">
+                <div class="mega-menu__panel-title">소매·소비재</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=retail&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                  <a href="course-list.html?category=industry&value=retail&role=marketing" class="mega-menu__link"><strong>마케팅 담당자</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="li-mfg">
+                <div class="mega-menu__panel-title">제조업</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=industry&value=manufacturing&role=analyst" class="mega-menu__link"><strong>현업 분석가</strong></a>
+                  <a href="course-list.html?category=industry&value=manufacturing&role=developer" class="mega-menu__link"><strong>개발자</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gnb__item">
+            <button class="gnb__trigger">역할별
+              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-menu__nav">
+                <div class="mega-menu__nav-item is-active" data-target="lr-analyst">현업 분석가</div>
+                <div class="mega-menu__nav-item" data-target="lr-developer">개발자</div>
+                <div class="mega-menu__nav-item" data-target="lr-finance">재무·기획</div>
+                <div class="mega-menu__nav-item" data-target="lr-marketing">마케팅</div>
+              </div>
+              <div class="mega-menu__panel is-active" data-panel="lr-analyst">
+                <div class="mega-menu__panel-title">현업 분석가</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=analyst" class="mega-menu__link"><strong>전체 과정</strong></a>
+                  <a href="course-list.html?category=role&value=analyst&feature=olap" class="mega-menu__link"><strong>원인 분석</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lr-developer">
+                <div class="mega-menu__panel-title">개발자</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=developer" class="mega-menu__link"><strong>전체 과정</strong></a>
+                  <a href="course-list.html?category=role&value=developer&level=lv2" class="mega-menu__link"><strong>Lv.2 심화</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lr-finance">
+                <div class="mega-menu__panel-title">재무·기획 담당자</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=finance" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lr-marketing">
+                <div class="mega-menu__panel-title">마케팅 담당자</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=role&value=marketing" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gnb__item">
+            <button class="gnb__trigger">기능별
+              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-menu__nav">
+                <div class="mega-menu__nav-item is-active" data-target="lf-epa">엑셀→시스템</div>
+                <div class="mega-menu__nav-item" data-target="lf-dashboard">현황판</div>
+                <div class="mega-menu__nav-item" data-target="lf-olap">원인 분석</div>
+                <div class="mega-menu__nav-item" data-target="lf-uiux">직접 입력</div>
+                <div class="mega-menu__nav-item" data-target="lf-report">보고서</div>
+              </div>
+              <div class="mega-menu__panel is-active" data-panel="lf-epa">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=epa" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lf-dashboard">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=dashboard" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lf-olap">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=olap" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lf-uiux">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=uiux" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lf-report">
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=report" class="mega-menu__link"><strong>전체 과정</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gnb__extra">
+            <a href="course-list.html" class="gnb__extra-link">전체 과정</a>
+            <a href="#" class="gnb__extra-link">수강후기</a>
+            <a href="#" class="gnb__extra-link">커뮤니티</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ══ 모바일 네비게이션 ══ -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__header">
+      <a href="index.html" class="logo"><img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img"></a>
+      <button class="mobile-nav__close" id="mobileNavClose">✕</button>
+    </div>
+    <div class="mobile-nav__section">
+      <div class="mobile-nav__category">업종별 <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="mobile-nav__sub">
+        <a href="course-list.html?category=industry&value=finance_industry" class="mobile-nav__sub-link">금융 서비스</a>
+        <a href="course-list.html?category=industry&value=public" class="mobile-nav__sub-link">공공 부문</a>
+        <a href="course-list.html?category=industry&value=retail" class="mobile-nav__sub-link">소매·소비재</a>
+        <a href="course-list.html?category=industry&value=manufacturing" class="mobile-nav__sub-link">제조업</a>
+      </div>
+    </div>
+    <div class="mobile-nav__section">
+      <div class="mobile-nav__category">역할별 <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="mobile-nav__sub">
+        <a href="course-list.html?category=role&value=analyst" class="mobile-nav__sub-link">현업 분석가</a>
+        <a href="course-list.html?category=role&value=developer" class="mobile-nav__sub-link">개발자</a>
+        <a href="course-list.html?category=role&value=finance" class="mobile-nav__sub-link">재무·기획 담당자</a>
+        <a href="course-list.html?category=role&value=marketing" class="mobile-nav__sub-link">마케팅 담당자</a>
+      </div>
+    </div>
+    <div class="mobile-nav__actions">
+      <a href="#" class="btn btn--secondary btn--full">로그인</a>
+      <a href="course-list.html" class="btn btn--primary btn--full">수강신청</a>
+    </div>
+  </div>
+
+  <!-- ══ 리스트 헤더 ══ -->
+  <div class="list-header">
+    <div class="list-header__inner">
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <a href="index.html">홈</a>
+        <span class="breadcrumb__sep">›</span>
+        <span class="breadcrumb__current" id="breadcrumbCurrent">전체 과정</span>
+      </nav>
+      <h1 style="font-size:24px; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px;" id="pageTitle">전체 과정</h1>
+      <p class="list-header__meta" id="pageDesc">업종·역할·기능에 맞는 과정을 골라보세요</p>
+      <div class="active-filters" id="activeFilters"></div>
+    </div>
+  </div>
+
+  <!-- ══ 모바일 필터 토글 바 ══ -->
+  <div class="mobile-filter-bar" id="mobileFilterBar">
+    <button class="mobile-filter-bar__btn" id="mobileFilterToggle">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/>
+      </svg>
+      필터
+    </button>
+    <span class="mobile-filter-bar__count" id="mobileFilterCount">전체 <strong>0</strong>개 과정</span>
+  </div>
+
+  <!-- ══ 모바일 필터 드로어 ══ -->
+  <div class="filter-drawer-overlay" id="filterDrawerOverlay"></div>
+  <div class="filter-drawer" id="filterDrawer" role="dialog" aria-label="필터">
+    <div class="filter-drawer__header">
+      <span class="filter-drawer__title">필터</span>
+      <button class="filter-drawer__close" id="filterDrawerClose">✕</button>
+    </div>
+    <div class="filter-drawer__body" id="filterDrawerBody">
+      <!-- JS로 사이드바 내용 복제 -->
+    </div>
+    <div class="filter-drawer__footer">
+      <button class="btn btn--secondary btn--full" onclick="resetFilters(); closeFilterDrawer();">초기화</button>
+      <button class="btn btn--primary btn--full" id="filterDrawerApply">적용하기</button>
+    </div>
+  </div>
+
+  <!-- ══ 메인 콘텐츠 ══ -->
+  <main>
+    <div class="container" style="padding-top:32px; padding-bottom:64px;">
+      <div class="page-with-sidebar">
+
+        <!-- 좌측 필터 사이드바 -->
+        <aside>
+          <div class="filter-sidebar">
+            <div class="filter-sidebar__head">
+              <span class="filter-sidebar__title">필터</span>
+              <span class="filter-sidebar__reset" id="resetAllFilters">전체 초기화</span>
+            </div>
+
+            <!-- 업종별 -->
+            <div class="filter-group is-open" data-group="industry">
+              <div class="filter-group__header">
+                <span class="filter-group__label">업종별</span>
+                <svg class="filter-group__arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <div class="filter-group__body">
+                <label class="filter-option">
+                  <input type="checkbox" name="industry" value="finance_industry">
+                  <span class="filter-option__text">금융 서비스</span>
+                  <span class="filter-option__count">5</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="industry" value="public">
+                  <span class="filter-option__text">공공 부문</span>
+                  <span class="filter-option__count">5</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="industry" value="retail">
+                  <span class="filter-option__text">소매·소비재</span>
+                  <span class="filter-option__count">5</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="industry" value="manufacturing">
+                  <span class="filter-option__text">제조업</span>
+                  <span class="filter-option__count">14</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 역할별 -->
+            <div class="filter-group is-open" data-group="role">
+              <div class="filter-group__header">
+                <span class="filter-group__label">역할별</span>
+                <svg class="filter-group__arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <div class="filter-group__body">
+                <label class="filter-option">
+                  <input type="checkbox" name="role" value="analyst">
+                  <span class="filter-option__text">현업 분석가</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="role" value="developer">
+                  <span class="filter-option__text">개발자</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="role" value="finance">
+                  <span class="filter-option__text">재무·기획 담당자</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="role" value="marketing">
+                  <span class="filter-option__text">마케팅 담당자</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="role" value="leader">
+                  <span class="filter-option__text">비즈니스 리더</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 기능별 -->
+            <div class="filter-group is-open" data-group="feature">
+              <div class="filter-group__header">
+                <span class="filter-group__label">기능별</span>
+                <svg class="filter-group__arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <div class="filter-group__body">
+                <label class="filter-option">
+                  <input type="checkbox" name="feature" value="epa">
+                  <span class="filter-option__text">엑셀을 그대로 시스템으로</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="feature" value="dashboard">
+                  <span class="filter-option__text">실시간 현황판 만들기</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="feature" value="olap">
+                  <span class="filter-option__text">데이터 파고들어 원인 찾기</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="feature" value="uiux">
+                  <span class="filter-option__text">화면에서 직접 입력·수정하기</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="feature" value="report">
+                  <span class="filter-option__text">보고서 자동 출력하기</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 레벨별 -->
+            <div class="filter-group" data-group="level">
+              <div class="filter-group__header">
+                <span class="filter-group__label">레벨별</span>
+                <svg class="filter-group__arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <div class="filter-group__body">
+                <label class="filter-option">
+                  <input type="checkbox" name="level" value="lv1">
+                  <span class="filter-option__text">Lv.1 기초·실무</span>
+                  <span class="filter-option__count">30</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="level" value="lv2">
+                  <span class="filter-option__text">Lv.2 심화</span>
+                  <span class="filter-option__count">4</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- 우측 과목 목록 -->
+        <div>
+          <div class="sort-bar">
+            <p class="sort-bar__count" id="courseCount">
+              전체 <strong>0</strong>개 과정
+            </p>
+          </div>
+          <div class="grid-3" id="courseGrid">
+            <!-- JS로 렌더링 -->
+          </div>
+          <!-- 빈 상태 -->
+          <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="empty-state__icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+            <p class="empty-state__title">해당 조건의 과정이 없습니다</p>
+            <p class="empty-state__desc">다른 필터 조건을 선택하거나<br>전체 초기화 후 다시 검색해보세요.</p>
+            <button class="btn btn--secondary" style="margin-top:20px;" onclick="resetFilters()">필터 초기화</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ══ 푸터 ══ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px; width:auto; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:12px;">
+          <p class="footer-desc">IT 지식 없이도 시작할 수 있는<br>실무 BI 교육 플랫폼입니다.</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <p class="footer-links__group-title">교육 과정</p>
+            <a href="course-list.html?category=industry&value=finance_industry" class="footer-links__link">금융 서비스</a>
+            <a href="course-list.html?category=industry&value=manufacturing" class="footer-links__link">제조업</a>
+            <a href="course-list.html?category=industry&value=public" class="footer-links__link">공공 부문</a>
+          </div>
+          <div>
+            <p class="footer-links__group-title">고객지원</p>
+            <a href="#" class="footer-links__link">자주 묻는 질문</a>
+            <a href="#" class="footer-links__link">1:1 문의</a>
+          </div>
+          <div>
+            <p class="footer-links__group-title">회사</p>
+            <a href="#" class="footer-links__link">소개</a>
+            <a href="#" class="footer-links__link">기업 교육 문의</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 AUD Academy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/course-data.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+  /* ── course-list.html 전용 로직 ── */
+  (function () {
+    "use strict";
+
+    var activeFilters = { industry: [], role: [], feature: [], level: [] };
+    var searchQuery = "";
+
+    /* ── URL 파라미터로 초기 필터 설정 ── */
+    function initFromUrl() {
+      var params = new URLSearchParams(window.location.search);
+      var category = params.get("category");
+      var value    = params.get("value");
+      var role     = params.get("role");
+      var feature  = params.get("feature");
+      var level    = params.get("level");
+      var q        = params.get("q");
+
+      if (q) {
+        searchQuery = q;
+        var inp = document.querySelector(".header-search__input");
+        if (inp) inp.value = q;
+      }
+
+      if (category && value) {
+        if (activeFilters[category] !== undefined) {
+          activeFilters[category].push(value);
+          var cb = document.querySelector('input[name="' + category + '"][value="' + value + '"]');
+          if (cb) cb.checked = true;
+        }
+      }
+      if (role) {
+        activeFilters.role.push(role);
+        var cb2 = document.querySelector('input[name="role"][value="' + role + '"]');
+        if (cb2) cb2.checked = true;
+      }
+      if (feature) {
+        activeFilters.feature.push(feature);
+        var cb3 = document.querySelector('input[name="feature"][value="' + feature + '"]');
+        if (cb3) cb3.checked = true;
+      }
+      if (level) {
+        activeFilters.level.push(level);
+        var cb4 = document.querySelector('input[name="level"][value="' + level + '"]');
+        if (cb4) cb4.checked = true;
+      }
+
+      updatePageTitle(category, value);
+    }
+
+    /* ── 페이지 타이틀 업데이트 ── */
+    function updatePageTitle(category, value) {
+      var titleEl = document.getElementById("pageTitle");
+      var descEl  = document.getElementById("pageDesc");
+      var bcEl    = document.getElementById("breadcrumbCurrent");
+
+      if (!category || !value) return;
+
+      var labels = {
+        industry: {
+          finance_industry: "금융 서비스",
+          public:           "공공 부문",
+          retail:           "소매·소비재",
+          manufacturing:    "제조업"
+        },
+        role: {
+          analyst:   "현업 분석가",
+          developer: "개발자",
+          finance:   "재무·기획 담당자",
+          marketing: "마케팅 담당자",
+          leader:    "비즈니스 리더"
+        },
+        feature: {
+          epa:       "엑셀을 그대로 시스템으로",
+          dashboard: "실시간 현황판 만들기",
+          olap:      "데이터 파고들어 원인 찾기",
+          uiux:      "화면에서 직접 입력·수정하기",
+          report:    "보고서 자동 출력하기"
+        }
+      };
+
+      var catLabels = { industry: "업종별", role: "역할별", feature: "기능별" };
+      var label = (labels[category] && labels[category][value]) || value;
+
+      if (titleEl) titleEl.textContent = label + " 과정";
+      if (descEl)  descEl.textContent  = label + "에 맞는 실무 BI 과정을 확인하세요";
+      if (bcEl)    bcEl.textContent    = (catLabels[category] || category) + " > " + label;
+    }
+
+    /* ── 필터링 로직 (OR 방식) ── */
+    function filterCourses() {
+      return COURSES.filter(function (course) {
+        // 검색어 필터
+        if (searchQuery) {
+          var q = searchQuery.toLowerCase();
+          var match = course.title.toLowerCase().indexOf(q) !== -1 ||
+                      course.outcome.toLowerCase().indexOf(q) !== -1;
+          if (!match) return false;
+        }
+
+        var industryMatch = activeFilters.industry.length === 0 ||
+          course.industry.some(function (i) { return activeFilters.industry.indexOf(i) !== -1; });
+
+        var roleMatch = activeFilters.role.length === 0 ||
+          course.role.some(function (r) { return activeFilters.role.indexOf(r) !== -1; });
+
+        var featureMatch = activeFilters.feature.length === 0 ||
+          course.feature.some(function (f) { return activeFilters.feature.indexOf(f) !== -1; });
+
+        var levelMatch = activeFilters.level.length === 0 ||
+          activeFilters.level.indexOf(course.level) !== -1;
+
+        return industryMatch && roleMatch && featureMatch && levelMatch;
+      });
+    }
+
+    /* ── 과목 카드 HTML ── */
+    function renderCard(course) {
+      var levelClass = course.level === "lv2" ? "level-badge--lv2" : "level-badge--lv1";
+      var levelText  = course.level === "lv2" ? "Lv.2 심화" : "Lv.1";
+      var price = course.price === 0 ? "무료" : course.price.toLocaleString("ko-KR") + "원";
+
+      return '<a href="course-detail.html?id=' + course.id + '" class="course-card" style="text-decoration:none;">' +
+        '<div class="course-card__thumb">' +
+          '<img src="' + course.thumbnail + '" alt="' + escapeHtml(course.title) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+          '<div class="course-card__thumb-placeholder" style="display:none">' +
+            '<svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#CBD5E1;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' +
+          '</div>' +
+          '<span class="course-card__level level-badge ' + levelClass + '">' + levelText + '</span>' +
+        '</div>' +
+        '<div class="course-card__body">' +
+          '<span class="course-card__step">' + escapeHtml(course.step) + '</span>' +
+          '<p class="course-card__title">' + escapeHtml(course.title) + '</p>' +
+          '<p class="course-card__outcome">' + escapeHtml(course.outcome) + '</p>' +
+          '<div class="course-card__meta">' +
+            '<div class="course-card__info">' +
+              '<span class="course-card__duration">' +
+                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
+                course.duration +
+              '</span>' +
+            '</div>' +
+            '<span class="course-card__price">' + price + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    /* ── 화면 업데이트 ── */
+    function updateUI() {
+      var filtered = filterCourses();
+      var grid     = document.getElementById("courseGrid");
+      var empty    = document.getElementById("emptyState");
+      var countEl  = document.getElementById("courseCount");
+      var mobileCountEl = document.getElementById("mobileFilterCount");
+
+      if (filtered.length === 0) {
+        grid.style.display  = "none";
+        empty.style.display = "flex";
+      } else {
+        grid.style.display  = "grid";
+        empty.style.display = "none";
+        grid.innerHTML = filtered.map(renderCard).join("");
+      }
+
+      var countHtml = '전체 <strong>' + filtered.length + '</strong>개 과정';
+      if (countEl)       countEl.innerHTML       = countHtml;
+      if (mobileCountEl) mobileCountEl.innerHTML = countHtml;
+
+      // 모바일 필터 버튼 강조
+      var totalActive = activeFilters.industry.length + activeFilters.role.length +
+                        activeFilters.feature.length + activeFilters.level.length;
+      var toggleBtn = document.getElementById("mobileFilterToggle");
+      if (toggleBtn) {
+        if (totalActive > 0) {
+          toggleBtn.classList.add("has-filter");
+          toggleBtn.innerHTML = '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg> 필터 ' + totalActive;
+        } else {
+          toggleBtn.classList.remove("has-filter");
+          toggleBtn.innerHTML = '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg> 필터';
+        }
+      }
+
+      renderActiveTags();
+    }
+
+    /* ── 활성 필터 태그 렌더링 ── */
+    function renderActiveTags() {
+      var container = document.getElementById("activeFilters");
+      if (!container) return;
+
+      var tags = [];
+      var names = {
+        industry: { finance_industry:"금융 서비스", public:"공공 부문", retail:"소매·소비재", manufacturing:"제조업" },
+        role:     { analyst:"현업 분석가", developer:"개발자", finance:"재무·기획 담당자", marketing:"마케팅 담당자", leader:"비즈니스 리더" },
+        feature:  { epa:"엑셀→시스템", dashboard:"현황판", olap:"원인 분석", uiux:"직접 입력·수정", report:"보고서 출력" },
+        level:    { lv1:"Lv.1", lv2:"Lv.2 심화" }
+      };
+
+      ["industry", "role", "feature", "level"].forEach(function (group) {
+        activeFilters[group].forEach(function (val) {
+          var label = (names[group] && names[group][val]) || val;
+          tags.push('<span class="active-filter-tag">' + label +
+            '<span class="active-filter-tag__remove" data-group="' + group + '" data-value="' + val + '">✕</span>' +
+          '</span>');
+        });
+      });
+
+      if (searchQuery) {
+        tags.push('<span class="active-filter-tag">검색: ' + escapeHtml(searchQuery) +
+          '<span class="active-filter-tag__remove" data-group="search" data-value="">✕</span>' +
+        '</span>');
+      }
+
+      container.innerHTML = tags.join("");
+
+      // 태그 제거 이벤트
+      container.querySelectorAll(".active-filter-tag__remove").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var group = this.dataset.group;
+          var value = this.dataset.value;
+
+          if (group === "search") {
+            searchQuery = "";
+            var inp = document.querySelector(".header-search__input");
+            if (inp) inp.value = "";
+          } else {
+            var idx = activeFilters[group].indexOf(value);
+            if (idx !== -1) activeFilters[group].splice(idx, 1);
+
+            var cb = document.querySelector('input[name="' + group + '"][value="' + value + '"]');
+            if (cb) cb.checked = false;
+          }
+          updateUI();
+        });
+      });
+    }
+
+    /* ── 전체 초기화 ── */
+    window.resetFilters = function () {
+      activeFilters = { industry: [], role: [], feature: [], level: [] };
+      searchQuery = "";
+      document.querySelectorAll('input[type="checkbox"][name="industry"], input[type="checkbox"][name="role"], input[type="checkbox"][name="feature"], input[type="checkbox"][name="level"]').forEach(function (cb) {
+        cb.checked = false;
+      });
+      var inp = document.querySelector(".header-search__input");
+      if (inp) inp.value = "";
+      updateUI();
+    };
+
+    /* ── 모바일 필터 드로어 ── */
+    window.closeFilterDrawer = function () {
+      var drawer  = document.getElementById("filterDrawer");
+      var overlay = document.getElementById("filterDrawerOverlay");
+      if (drawer)  drawer.classList.remove("is-open");
+      if (overlay) overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+    };
+
+    function openFilterDrawer() {
+      // 사이드바 내용을 드로어로 복제
+      var sidebar  = document.querySelector(".filter-sidebar");
+      var drawerBody = document.getElementById("filterDrawerBody");
+      if (sidebar && drawerBody) {
+        drawerBody.innerHTML = sidebar.innerHTML;
+
+        // 복제된 체크박스 상태 동기화
+        document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(function (orig) {
+          var copy = drawerBody.querySelector('input[name="' + orig.name + '"][value="' + orig.value + '"]');
+          if (copy) copy.checked = orig.checked;
+        });
+
+        // 복제된 체크박스 이벤트
+        drawerBody.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+          cb.addEventListener("change", function () {
+            var group = this.name;
+            var val   = this.value;
+            // 원본도 동기화
+            var orig = document.querySelector('.filter-sidebar input[name="' + group + '"][value="' + val + '"]');
+            if (orig) orig.checked = this.checked;
+
+            if (this.checked) {
+              if (activeFilters[group].indexOf(val) === -1) activeFilters[group].push(val);
+            } else {
+              var idx = activeFilters[group].indexOf(val);
+              if (idx !== -1) activeFilters[group].splice(idx, 1);
+            }
+            updateUI();
+          });
+        });
+
+        // 복제된 아코디언
+        drawerBody.querySelectorAll(".filter-group__header").forEach(function (header) {
+          header.addEventListener("click", function () {
+            this.closest(".filter-group").classList.toggle("is-open");
+          });
+        });
+
+        // 복제된 초기화 버튼
+        var resetBtn = drawerBody.querySelector("#resetAllFilters");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", function () {
+            window.resetFilters();
+            // 드로어 체크박스도 해제
+            drawerBody.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+              cb.checked = false;
+            });
+          });
+        }
+      }
+
+      var drawer  = document.getElementById("filterDrawer");
+      var overlay = document.getElementById("filterDrawerOverlay");
+      if (drawer)  drawer.classList.add("is-open");
+      if (overlay) overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function initMobileFilterDrawer() {
+      var toggleBtn = document.getElementById("mobileFilterToggle");
+      var closeBtn  = document.getElementById("filterDrawerClose");
+      var overlay   = document.getElementById("filterDrawerOverlay");
+      var applyBtn  = document.getElementById("filterDrawerApply");
+
+      if (toggleBtn) toggleBtn.addEventListener("click", openFilterDrawer);
+      if (closeBtn)  closeBtn.addEventListener("click", window.closeFilterDrawer);
+      if (overlay)   overlay.addEventListener("click", window.closeFilterDrawer);
+      if (applyBtn)  applyBtn.addEventListener("click", window.closeFilterDrawer);
+    }
+
+    /* ── 필터 그룹 아코디언 ── */
+    function initFilterAccordion() {
+      document.querySelectorAll(".filter-group__header").forEach(function (header) {
+        header.addEventListener("click", function () {
+          var group = this.closest(".filter-group");
+          group.classList.toggle("is-open");
+        });
+      });
+    }
+
+    /* ── 체크박스 이벤트 ── */
+    function initCheckboxes() {
+      document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(function (cb) {
+        cb.addEventListener("change", function () {
+          var group = this.name;
+          var val   = this.value;
+          if (this.checked) {
+            if (activeFilters[group].indexOf(val) === -1) {
+              activeFilters[group].push(val);
+            }
+          } else {
+            var idx = activeFilters[group].indexOf(val);
+            if (idx !== -1) activeFilters[group].splice(idx, 1);
+          }
+          updateUI();
+        });
+      });
+
+      document.getElementById("resetAllFilters").addEventListener("click", window.resetFilters);
+    }
+
+    /* ── 초기화 ── */
+    document.addEventListener("DOMContentLoaded", function () {
+      initFilterAccordion();
+      initCheckboxes();
+      initFromUrl();
+      initMobileFilterDrawer();
+      updateUI();
+    });
+  })();
+  </script>
+</body>
+</html>
