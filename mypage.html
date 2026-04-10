@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지 — AUD Academy</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .mypage-wrap {
+      min-height: 100vh;
+      background: var(--bg);
+      padding-bottom: 80px;
+    }
+
+    /* ── 프로필 헤더 ── */
+    .profile-header {
+      background: var(--navy);
+      color: #fff;
+      padding: 48px 0 40px;
+    }
+    .profile-header .container {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 3px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .profile-info { flex: 1; }
+    .profile-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .profile-email { font-size: 14px; opacity: 0.75; margin-bottom: 12px; }
+    .profile-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .profile-badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .profile-badge.gold { background: rgba(245,158,11,0.2); border-color: var(--gold); color: var(--gold); }
+    .profile-edit-btn {
+      padding: 8px 20px;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .profile-edit-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── 통계 카드 ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: -24px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      box-shadow: 0 2px 12px rgba(44,62,107,0.06);
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-num span { font-size: 16px; font-weight: 600; }
+    .stat-label { font-size: 12px; color: var(--text-hint); font-weight: 600; letter-spacing: 0.04em; }
+
+    /* ── 탭 ── */
+    .mypage-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 28px;
+      border-bottom: 2px solid var(--border);
+    }
+    .mypage-tab {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-hint);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font);
+      position: relative;
+      bottom: -2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s;
+    }
+    .mypage-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
+    .mypage-tab:hover:not(.active) { color: var(--text-sub); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── 강의 카드 (수강 중) ── */
+    .course-progress-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(44,62,107,0.04);
+      transition: box-shadow 0.2s;
+    }
+    .course-progress-card:hover { box-shadow: 0 4px 20px rgba(44,62,107,0.1); }
+    .course-thumb {
+      width: 140px;
+      height: 90px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--bg);
+    }
+    .course-thumb-placeholder {
+      width: 140px;
+      height: 90px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 28px;
+    }
+    .course-info { flex: 1; min-width: 0; }
+    .course-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .course-tag {
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      color: var(--text-hint);
+    }
+    .course-tag.completed { background: #ECFDF5; border-color: #10B981; color: #059669; }
+    .course-progress-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .progress-bar-wrap {
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--navy);
+      transition: width 0.6s ease;
+    }
+    .progress-bar-fill.done { background: #10B981; }
+    .progress-text {
+      font-size: 12px;
+      color: var(--text-hint);
+      font-weight: 600;
+    }
+    .course-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .btn-continue {
+      padding: 7px 16px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-continue:hover { background: var(--navy-dark); }
+    .btn-certificate {
+      padding: 7px 16px;
+      background: #fff;
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-certificate:hover { background: var(--bg); }
+
+    /* ── 빈 상태 ── */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-hint);
+    }
+    .empty-state svg { opacity: 0.3; margin-bottom: 16px; }
+    .empty-state p { font-size: 15px; margin-bottom: 20px; }
+    .empty-state a {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* ── 프로필 편집 탭 ── */
+    .settings-section {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+    .settings-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: #fff;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .form-input:focus { outline: none; border-color: var(--navy); }
+    .form-input:disabled { background: var(--bg); color: var(--text-hint); }
+    .btn-save {
+      padding: 10px 28px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-save:hover { background: var(--navy-dark); }
+
+    /* ── 알림 / 토스트 ── */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1A1A2E; color: #fff;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 14px; opacity: 0; transition: all 0.3s;
+      z-index: 9999; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── 반응형 ── */
+    @media (max-width: 768px) {
+      .profile-header .container { flex-direction: column; align-items: flex-start; }
+      .profile-edit-btn { align-self: flex-start; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .course-progress-card { flex-direction: column; }
+      .course-thumb, .course-thumb-placeholder { width: 100%; height: 160px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .mypage-tab { padding: 10px 12px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body class="mypage-wrap">
+
+  <!-- ══ GNB ══ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
+        </a>
+        <div class="header-actions">
+          <a href="mypage.html" class="header-actions__link" style="color:var(--navy);font-weight:700;">마이페이지</a>
+          <span class="header-actions__divider"></span>
+          <a href="login.html" class="btn btn--secondary btn--sm" onclick="logout(event)">로그아웃</a>
+          <a href="course-list.html" class="btn btn--primary btn--sm">수강신청</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ 프로필 헤더 ══ -->
+  <div class="profile-header">
+    <div class="container">
+      <div class="profile-avatar" id="profileAvatar">홍</div>
+      <div class="profile-info">
+        <div class="profile-name" id="profileName">홍길동</div>
+        <div class="profile-email" id="profileEmail">hong@example.com</div>
+        <div class="profile-badges">
+          <span class="profile-badge">수강생</span>
+          <span class="profile-badge gold" id="profileLevel">Lv.1 입문자</span>
+        </div>
+      </div>
+      <button class="profile-edit-btn" onclick="switchTab('settings')">프로필 수정</button>
+    </div>
+  </div>
+
+  <!-- ══ 통계 ══ -->
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="statEnrolled">0</div>
+        <div class="stat-label">수강 중인 강의</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statCompleted">0</div>
+        <div class="stat-label">완료한 강의</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statProgress">0<span>%</span></div>
+        <div class="stat-label">평균 진도율</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statCerts">0</div>
+        <div class="stat-label">수료증 발급</div>
+      </div>
+    </div>
+
+    <!-- ══ 탭 ══ -->
+    <div class="mypage-tabs">
+      <button class="mypage-tab active" onclick="switchTab('courses')">내 강의</button>
+      <button class="mypage-tab" onclick="switchTab('certificates')">수료증</button>
+      <button class="mypage-tab" onclick="switchTab('settings')">프로필 설정</button>
+    </div>
+
+    <!-- ── 탭: 내 강의 ── -->
+    <div class="tab-panel active" id="panel-courses">
+      <div id="courseList">
+        <!-- JS로 렌더링 -->
+      </div>
+    </div>
+
+    <!-- ── 탭: 수료증 ── -->
+    <div class="tab-panel" id="panel-certificates">
+      <div id="certList">
+        <!-- JS로 렌더링 -->
+      </div>
+    </div>
+
+    <!-- ── 탭: 프로필 설정 ── -->
+    <div class="tab-panel" id="panel-settings">
+      <div class="settings-section">
+        <div class="settings-title">기본 정보</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">이름</label>
+            <input type="text" class="form-input" id="settingName" placeholder="이름을 입력하세요">
+          </div>
+          <div class="form-group">
+            <label class="form-label">연락처</label>
+            <input type="tel" class="form-input" id="settingPhone" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일 (변경 불가)</label>
+          <input type="email" class="form-input" id="settingEmail" disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label">직군 / 역할</label>
+          <select class="form-input" id="settingRole">
+            <option value="">선택하세요</option>
+            <option value="analyst">데이터 분석가</option>
+            <option value="finance">재무/회계 담당자</option>
+            <option value="sales">영업/마케팅 담당자</option>
+            <option value="manager">관리자/경영진</option>
+            <option value="developer">개발자</option>
+            <option value="other">기타</option>
+          </select>
+        </div>
+        <button class="btn-save" onclick="saveProfile()">변경사항 저장</button>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">비밀번호 변경</div>
+        <div class="form-group">
+          <label class="form-label">현재 비밀번호</label>
+          <input type="password" class="form-input" id="pwCurrent" placeholder="현재 비밀번호">
+        </div>
+        <div class="form-group">
+          <label class="form-label">새 비밀번호</label>
+          <input type="password" class="form-input" id="pwNew" placeholder="8자 이상">
+        </div>
+        <div class="form-group">
+          <label class="form-label">새 비밀번호 확인</label>
+          <input type="password" class="form-input" id="pwConfirm" placeholder="새 비밀번호 다시 입력">
+        </div>
+        <button class="btn-save" onclick="changePassword()">비밀번호 변경</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/course-data.js"></script>
+  <script>
+    /* ──────────────────────────────────────────
+       임시 더미 데이터 (Supabase 연동 전)
+       TODO: Supabase 연동 시 loadUserData() 교체
+    ────────────────────────────────────────── */
+    var USER = {
+      name: '홍길동',
+      email: 'hong@example.com',
+      phone: '010-1234-5678',
+      role: 'analyst'
+    };
+
+    /* 수강 중인 강의 목록 (진도율 포함) */
+    var ENROLLMENTS = [
+      { courseId: 1, progress: 75,  enrolledAt: '2026-03-15' },
+      { courseId: 2, progress: 100, enrolledAt: '2026-03-10' },
+      { courseId: 5, progress: 30,  enrolledAt: '2026-04-01' },
+    ];
+
+    /* ── 유틸 ── */
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 2500);
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll('.mypage-tab').forEach(function(btn, i) {
+        var names = ['courses', 'certificates', 'settings'];
+        btn.classList.toggle('active', names[i] === name);
+      });
+      document.querySelectorAll('.tab-panel').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      document.getElementById('panel-' + name).classList.add('active');
+    }
+
+    function logout(e) {
+      e.preventDefault();
+      /* TODO: Supabase signOut() */
+      showToast('로그아웃되었습니다');
+      setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+    }
+
+    /* ── 프로필 렌더 ── */
+    function renderProfile() {
+      document.getElementById('profileName').textContent = USER.name;
+      document.getElementById('profileEmail').textContent = USER.email;
+      document.getElementById('profileAvatar').textContent = USER.name.charAt(0);
+
+      /* 레벨 계산 */
+      var done = ENROLLMENTS.filter(function(e) { return e.progress === 100; }).length;
+      var level = done >= 5 ? 'Lv.3 전문가' : done >= 2 ? 'Lv.2 실무자' : 'Lv.1 입문자';
+      document.getElementById('profileLevel').textContent = level;
+
+      /* 설정 폼 채우기 */
+      document.getElementById('settingName').value = USER.name;
+      document.getElementById('settingPhone').value = USER.phone || '';
+      document.getElementById('settingEmail').value = USER.email;
+      document.getElementById('settingRole').value = USER.role || '';
+    }
+
+    /* ── 통계 ── */
+    function renderStats() {
+      var total = ENROLLMENTS.length;
+      var completed = ENROLLMENTS.filter(function(e) { return e.progress === 100; }).length;
+      var avgProgress = total > 0
+        ? Math.round(ENROLLMENTS.reduce(function(s, e) { return s + e.progress; }, 0) / total)
+        : 0;
+
+      document.getElementById('statEnrolled').textContent = total - completed;
+      document.getElementById('statCompleted').textContent = completed;
+      document.getElementById('statProgress').innerHTML = avgProgress + '<span>%</span>';
+      document.getElementById('statCerts').textContent = completed;
+    }
+
+    /* ── 강의 목록 렌더 ── */
+    function renderCourses() {
+      var list = document.getElementById('courseList');
+      if (ENROLLMENTS.length === 0) {
+        list.innerHTML = '<div class="empty-state">'
+          + '<svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>'
+          + '<p>아직 수강 중인 강의가 없어요</p>'
+          + '<a href="course-list.html">강의 둘러보기</a>'
+          + '</div>';
+        return;
+      }
+
+      var html = '';
+      ENROLLMENTS.forEach(function(enr) {
+        var course = COURSES.find(function(c) { return c.id === enr.courseId; });
+        if (!course) return;
+        var isDone = enr.progress === 100;
+        var featureLabel = { epa:'데이터 취합', dashboard:'대시보드', olap:'OLAP', uiux:'UI/UX', report:'보고서' };
+        var feat = featureLabel[course.feature[0]] || course.feature[0];
+
+        html += '<div class="course-progress-card">';
+
+        /* 썸네일 */
+        if (course.thumbnail) {
+          html += '<img class="course-thumb" src="' + course.thumbnail + '" alt="" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+                + '<div class="course-thumb-placeholder" style="display:none">📊</div>';
+        } else {
+          html += '<div class="course-thumb-placeholder">📊</div>';
+        }
+
+        /* 정보 */
+        html += '<div class="course-info">'
+              + '<div class="course-meta-row">'
+              + '<span class="course-tag' + (isDone ? ' completed' : '') + '">' + (isDone ? '✓ 완료' : '수강 중') + '</span>'
+              + '<span class="course-tag">' + feat + '</span>'
+              + '<span class="course-tag">' + course.level.replace('lv','Lv.') + '</span>'
+              + '</div>'
+              + '<div class="course-progress-title">' + course.title + '</div>'
+              + '<div class="progress-bar-wrap"><div class="progress-bar-fill' + (isDone ? ' done' : '') + '" style="width:' + enr.progress + '%"></div></div>'
+              + '<div class="progress-text">' + enr.progress + '% 완료 · ' + course.duration + '</div>'
+              + '<div class="course-actions">'
+              + '<a href="course-detail.html?id=' + course.id + '" class="btn-continue">' + (isDone ? '다시 보기' : '이어 보기') + '</a>';
+
+        if (isDone) {
+          html += '<button class="btn-certificate" onclick="downloadCert(' + course.id + ')">'
+                + '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>'
+                + '수료증 발급</button>';
+        }
+
+        html += '</div></div></div>';
+      });
+
+      list.innerHTML = html;
+    }
+
+    /* ── 수료증 탭 렌더 ── */
+    function renderCertificates() {
+      var done = ENROLLMENTS.filter(function(e) { return e.progress === 100; });
+      var list = document.getElementById('certList');
+
+      if (done.length === 0) {
+        list.innerHTML = '<div class="empty-state">'
+          + '<svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>'
+          + '<p>아직 수료한 강의가 없어요<br>강의를 완료하면 수료증을 발급받을 수 있어요</p>'
+          + '<a href="course-list.html">강의 보러가기</a>'
+          + '</div>';
+        return;
+      }
+
+      var html = '';
+      done.forEach(function(enr) {
+        var course = COURSES.find(function(c) { return c.id === enr.courseId; });
+        if (!course) return;
+        html += '<div class="course-progress-card" style="align-items:center">'
+              + '<div class="course-thumb-placeholder" style="background:linear-gradient(135deg,#10B981,#059669)">🏆</div>'
+              + '<div class="course-info">'
+              + '<div class="course-meta-row"><span class="course-tag completed">✓ 수료 완료</span></div>'
+              + '<div class="course-progress-title">' + course.title + '</div>'
+              + '<div class="progress-text">수강 완료일: ' + enr.enrolledAt + '</div>'
+              + '<div class="course-actions">'
+              + '<button class="btn-certificate" onclick="downloadCert(' + course.id + ')">'
+              + '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>'
+              + '수료증 PDF 다운로드</button>'
+              + '</div></div></div>';
+      });
+      list.innerHTML = html;
+    }
+
+    /* ── 수료증 다운로드 (TODO) ── */
+    function downloadCert(courseId) {
+      /* TODO: Supabase 연동 후 PDF 생성 또는 URL 반환 */
+      showToast('수료증 발급 기능은 DB 연동 후 지원됩니다');
+    }
+
+    /* ── 프로필 저장 (TODO) ── */
+    function saveProfile() {
+      /* TODO: Supabase profiles 테이블 UPDATE */
+      USER.name = document.getElementById('settingName').value;
+      USER.phone = document.getElementById('settingPhone').value;
+      USER.role = document.getElementById('settingRole').value;
+      renderProfile();
+      showToast('프로필이 저장되었습니다 (DB 연동 후 실제 동작)');
+    }
+
+    /* ── 비밀번호 변경 (TODO) ── */
+    function changePassword() {
+      var cur = document.getElementById('pwCurrent').value;
+      var nw  = document.getElementById('pwNew').value;
+      var cfm = document.getElementById('pwConfirm').value;
+      if (!cur || !nw) { showToast('모든 항목을 입력해주세요'); return; }
+      if (nw.length < 8) { showToast('새 비밀번호는 8자 이상이어야 합니다'); return; }
+      if (nw !== cfm)    { showToast('새 비밀번호가 일치하지 않습니다'); return; }
+      /* TODO: Supabase auth.updateUser({ password: nw }) */
+      document.getElementById('pwCurrent').value = '';
+      document.getElementById('pwNew').value = '';
+      document.getElementById('pwConfirm').value = '';
+      showToast('비밀번호가 변경되었습니다 (DB 연동 후 실제 동작)');
+    }
+
+    /* ── 초기화 ── */
+    renderProfile();
+    renderStats();
+    renderCourses();
+    renderCertificates();
+  </script>
+</body>
+</html>
