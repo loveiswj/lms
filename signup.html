@@ -184,12 +184,12 @@
             전체 동의
           </label>
           <label class="agree-item">
-            <input type="checkbox" class="agree-check" name="agree">
+            <input type="checkbox" class="agree-check" data-required="true" name="agree">
             [필수] 이용약관 동의
             <a href="#" class="agree-link">보기</a>
           </label>
           <label class="agree-item">
-            <input type="checkbox" class="agree-check" name="agree">
+            <input type="checkbox" class="agree-check" data-required="true" name="agree">
             [필수] 개인정보 처리방침 동의
             <a href="#" class="agree-link">보기</a>
           </label>
@@ -223,6 +223,7 @@
 
     function toggleAll(el) {
       document.querySelectorAll('.agree-check').forEach(function(c) { c.checked = el.checked; });
+      if (el.checked) document.getElementById('agreeError').classList.remove('show');
     }
 
     document.querySelectorAll('.agree-check').forEach(function(c) {
@@ -230,7 +231,25 @@
         var all = document.querySelectorAll('.agree-check');
         var checked = document.querySelectorAll('.agree-check:checked');
         document.getElementById('agreeAll').checked = all.length === checked.length;
+        /* 필수 체크박스 모두 체크되면 에러 제거 */
+        var allRequired = Array.from(document.querySelectorAll('.agree-check[data-required]'))
+          .every(function(c) { return c.checked; });
+        if (allRequired) document.getElementById('agreeError').classList.remove('show');
       });
+    });
+
+    /* 실시간 에러 클리어 */
+    document.getElementById('name').addEventListener('input', function() {
+      if (this.value.trim()) { this.classList.remove('error'); document.getElementById('nameError').classList.remove('show'); }
+    });
+    document.getElementById('email').addEventListener('input', function() {
+      if (/\S+@\S+\.\S+/.test(this.value)) { this.classList.remove('error'); document.getElementById('emailError').classList.remove('show'); }
+    });
+    document.getElementById('password').addEventListener('input', function() {
+      if (this.value.length >= 8) { this.classList.remove('error'); document.getElementById('passwordError').classList.remove('show'); }
+    });
+    document.getElementById('passwordConfirm').addEventListener('input', function() {
+      if (this.value === document.getElementById('password').value) { this.classList.remove('error'); document.getElementById('passwordConfirmError').classList.remove('show'); }
     });
 
     function checkPwStrength(val) {
@@ -292,8 +311,8 @@
         document.getElementById('passwordConfirmError').classList.remove('show');
       }
 
-      var required = document.querySelectorAll('.agree-check:not(:last-child)');
-      var allRequired = Array.from(required).every(function(c) { return c.checked; });
+      var allRequired = Array.from(document.querySelectorAll('.agree-check[data-required]'))
+        .every(function(c) { return c.checked; });
       if (!allRequired) {
         document.getElementById('agreeError').classList.add('show');
         valid = false;
