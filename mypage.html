@@ -619,10 +619,104 @@
       list.innerHTML = html;
     }
 
-    /* ── 수료증 다운로드 (TODO) ── */
-    function downloadCert(courseId) {
-      /* TODO: Supabase 연동 후 PDF 생성 또는 URL 반환 */
-      showToast('수료증 발급 기능은 DB 연동 후 지원됩니다');
+    /* ── 수료증 PDF 다운로드 ── */
+    async function downloadCert(courseId) {
+      var { data: { session } } = await _supabase.auth.getSession();
+      if (!session) { showToast('로그인이 필요합니다'); return; }
+
+      var course = COURSES.find(function(c) { return c.id === courseId; });
+      if (!course) return;
+
+      /* 수료 확인 */
+      var { data: cert } = await _supabase
+        .from('certificates')
+        .select('issued_at')
+        .eq('user_id', session.user.id)
+        .eq('course_id', courseId)
+        .single();
+      if (!cert) { showToast('수료증이 아직 발급되지 않았습니다'); return; }
+
+      var userName = USER.name || session.user.email.split('@')[0];
+      var issuedDate = cert.issued_at ? cert.issued_at.slice(0, 10) : new Date().toISOString().slice(0, 10);
+
+      /* Canvas로 수료증 생성 */
+      generateCertPDF(userName, course.title, issuedDate);
+    }
+
+    function generateCertPDF(name, courseTitle, date) {
+      var canvas = document.createElement('canvas');
+      canvas.width = 1120; canvas.height = 793;
+      var ctx = canvas.getContext('2d');
+
+      /* 배경 */
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      /* 테두리 */
+      ctx.strokeStyle = '#2C3E6B';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(24, 24, canvas.width - 48, canvas.height - 48);
+      ctx.strokeStyle = '#F59E0B';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(36, 36, canvas.width - 72, canvas.height - 72);
+
+      /* 로고 텍스트 */
+      ctx.fillStyle = '#2C3E6B';
+      ctx.font = 'bold 28px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('AUD Academy — BI MATRIX', canvas.width / 2, 110);
+
+      /* 제목 */
+      ctx.font = 'bold 56px sans-serif';
+      ctx.fillStyle = '#2C3E6B';
+      ctx.fillText('수  료  증', canvas.width / 2, 210);
+
+      /* 구분선 */
+      ctx.strokeStyle = '#F59E0B';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(200, 240); ctx.lineTo(920, 240);
+      ctx.stroke();
+
+      /* 이름 */
+      ctx.fillStyle = '#111827';
+      ctx.font = '28px sans-serif';
+      ctx.fillText('성  명', canvas.width / 2, 320);
+      ctx.font = 'bold 44px sans-serif';
+      ctx.fillStyle = '#2C3E6B';
+      ctx.fillText(name, canvas.width / 2, 375);
+
+      /* 강의명 */
+      ctx.fillStyle = '#111827';
+      ctx.font = '28px sans-serif';
+      ctx.fillText('과정명', canvas.width / 2, 450);
+      ctx.font = 'bold 30px sans-serif';
+      ctx.fillStyle = '#2C3E6B';
+      var title = courseTitle.length > 30 ? courseTitle.slice(0, 30) + '…' : courseTitle;
+      ctx.fillText(title, canvas.width / 2, 500);
+
+      /* 본문 */
+      ctx.fillStyle = '#374151';
+      ctx.font = '22px sans-serif';
+      ctx.fillText('위 사람은 AUD Academy의 실무 BI 교육 과정을 성실히 이수하였기에', canvas.width / 2, 575);
+      ctx.fillText('이 수료증을 수여합니다.', canvas.width / 2, 610);
+
+      /* 날짜 */
+      ctx.font = '20px sans-serif';
+      ctx.fillStyle = '#6B7280';
+      ctx.fillText(date, canvas.width / 2, 670);
+
+      /* 발급처 */
+      ctx.font = 'bold 22px sans-serif';
+      ctx.fillStyle = '#2C3E6B';
+      ctx.fillText('비아이매트릭스 AUD Academy', canvas.width / 2, 720);
+
+      /* 다운로드 */
+      var link = document.createElement('a');
+      link.download = '수료증_' + name + '_' + courseTitle.slice(0, 15) + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('수료증이 다운로드되었습니다');
     }
 
     /* ── 프로필 저장 ── */
