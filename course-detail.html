@@ -209,7 +209,7 @@
   <!-- ══ 모바일 하단 구매 CTA ══ -->
   <div class="mobile-purchase-bar" id="mobilePurchaseBar">
     <span class="mobile-purchase-bar__price" id="mobilePurchasePrice">—</span>
-    <a href="#" class="btn btn--accent btn--lg" style="flex:1; max-width:200px;">수강 신청하기</a>
+    <a href="#" id="mobileCTABtn" class="btn btn--accent btn--lg" style="flex:1; max-width:200px;">수강 신청하기</a>
   </div>
 
   <!-- ══ 본문 ══ -->
@@ -387,7 +387,7 @@
               '<div class="detail-hero__meta-item">' +
                 '<span class="detail-hero__price">' + formatPrice(course.price) + '</span>' +
               '</div>' +
-              '<a href="#" class="btn btn--accent btn--lg" style="margin-left:8px;">수강 신청하기</a>' +
+              '<a href="checkout.html?id=' + course.id + '" class="btn btn--accent btn--lg" style="margin-left:8px;">수강 신청하기</a>' +
             '</div>' +
           '</div>' +
         '</div>';
@@ -527,8 +527,8 @@
             '<span class="purchase-card__info-value">6개월</span>' +
           '</div>' +
         '</div>' +
-        '<a href="#" class="btn btn--accent btn--full btn--lg" style="margin-bottom:10px;">수강 신청하기</a>' +
-        '<a href="#" class="btn btn--secondary btn--full">장바구니 담기</a>';
+        '<a href="checkout.html?id=' + course.id + '" class="btn btn--accent btn--full btn--lg" style="margin-bottom:10px;">수강 신청하기</a>' +
+        '<a href="checkout.html?id=' + course.id + '" class="btn btn--secondary btn--full">장바구니 담기</a>';
     }
 
     /* ── 관련 과정 렌더링 ── */
@@ -606,6 +606,8 @@
       // 모바일 하단 가격 표시
       var mobilePriceEl = document.getElementById("mobilePurchasePrice");
       if (mobilePriceEl) mobilePriceEl.textContent = formatPrice(course.price);
+      var mobileCTABtn = document.getElementById("mobileCTABtn");
+      if (mobileCTABtn) mobileCTABtn.href = 'checkout.html?id=' + course.id;
     }
 
     /* ── 메인 진입점 ── */

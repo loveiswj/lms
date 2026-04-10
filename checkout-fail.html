@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>결제 실패 — AUD Academy</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: var(--font);
+    }
+    .result-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 56px 48px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(44,62,107,0.08);
+    }
+    .icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: #FEF2F2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    h1 { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .desc { font-size: 15px; color: var(--text-sub); margin-bottom: 12px; line-height: 1.6; }
+    .error-msg {
+      font-size: 13px;
+      color: #EF4444;
+      background: #FEF2F2;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 32px;
+    }
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--navy-dark); }
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: #fff;
+      color: var(--navy);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: var(--bg); }
+  </style>
+</head>
+<body>
+  <div class="result-card">
+    <div class="icon-wrap">
+      <svg width="32" height="32" fill="none" stroke="#EF4444" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </div>
+    <h1>결제에 실패했어요</h1>
+    <p class="desc">결제 처리 중 문제가 발생했습니다.<br>다시 시도해주세요.</p>
+    <div class="error-msg" id="errorMsg">알 수 없는 오류가 발생했습니다</div>
+
+    <a href="javascript:history.back()" class="btn-primary">다시 결제하기</a>
+    <a href="course-list.html" class="btn-secondary">강의 목록으로 돌아가기</a>
+  </div>
+
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var msg = params.get('message') || params.get('code') || '결제가 취소되었습니다';
+    document.getElementById('errorMsg').textContent = msg;
+  </script>
+</body>
+</html>

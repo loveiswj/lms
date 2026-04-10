@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>결제 완료 — AUD Academy</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: var(--font);
+    }
+    .result-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 56px 48px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(44,62,107,0.08);
+    }
+    .icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: #ECFDF5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    h1 { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .desc { font-size: 15px; color: var(--text-sub); margin-bottom: 32px; line-height: 1.6; }
+    .info-box {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-row span:first-child { color: var(--text-hint); }
+    .info-row span:last-child { font-weight: 700; color: var(--navy); }
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--navy-dark); }
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: #fff;
+      color: var(--navy);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: var(--bg); }
+  </style>
+</head>
+<body>
+  <div class="result-card">
+    <div class="icon-wrap">
+      <svg width="32" height="32" fill="none" stroke="#10B981" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h1>결제가 완료됐어요!</h1>
+    <p class="desc">수강 신청이 완료되었습니다.<br>지금 바로 강의를 시작해보세요.</p>
+
+    <div class="info-box">
+      <div class="info-row"><span>강의명</span><span id="infoTitle">—</span></div>
+      <div class="info-row"><span>결제금액</span><span id="infoAmount">—</span></div>
+      <div class="info-row"><span>결제방법</span><span id="infoMethod">—</span></div>
+    </div>
+
+    <a href="course-detail.html" id="btnStart" class="btn-primary">강의 바로 시작하기 →</a>
+    <a href="mypage.html" class="btn-secondary">마이페이지에서 확인하기</a>
+  </div>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/course-data.js"></script>
+  <script>
+    async function init() {
+      var params = new URLSearchParams(window.location.search);
+      var paymentKey = params.get('paymentKey');
+      var orderId    = params.get('orderId');
+      var amount     = params.get('amount');
+      var courseId   = parseInt(params.get('courseId'));
+
+      var course = COURSES.find(function(c) { return c.id === courseId; });
+
+      /* UI 업데이트 */
+      if (course) {
+        document.getElementById('infoTitle').textContent =
+          course.title.length > 25 ? course.title.slice(0, 25) + '…' : course.title;
+        document.getElementById('btnStart').href = 'course-detail.html?id=' + courseId;
+      }
+      document.getElementById('infoAmount').textContent =
+        amount ? parseInt(amount).toLocaleString('ko-KR') + '원' : '—';
+      document.getElementById('infoMethod').textContent = '카드결제';
+
+      /* Supabase에 수강 등록 저장 */
+      var { data: { session } } = await _supabase.auth.getSession();
+      if (session && courseId) {
+        /* enrollments 추가 */
+        await _supabase.from('enrollments').upsert({
+          user_id: session.user.id,
+          course_id: courseId,
+          paid_amount: amount ? parseInt(amount) : 0
+        }, { onConflict: 'user_id,course_id' });
+
+        /* progress 초기화 */
+        await _supabase.from('progress').upsert({
+          user_id: session.user.id,
+          course_id: courseId,
+          progress_pct: 0
+        }, { onConflict: 'user_id,course_id' });
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

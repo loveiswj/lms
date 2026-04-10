@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수강 신청 — AUD Academy</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .checkout-wrap {
+      min-height: 100vh;
+      background: var(--bg);
+      padding-bottom: 80px;
+    }
+    .checkout-header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      margin-bottom: 40px;
+    }
+    .checkout-header .container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .checkout-header a { color: var(--navy); text-decoration: none; }
+    .checkout-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+    .checkout-section {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    /* 강의 정보 */
+    .course-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .course-thumb {
+      width: 100px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+    .course-thumb-placeholder {
+      width: 100px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .course-info-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .course-info-meta {
+      font-size: 13px;
+      color: var(--text-hint);
+    }
+    /* 수강자 정보 */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .form-value {
+      font-size: 15px;
+      color: var(--text-primary);
+      padding: 10px 14px;
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+    }
+    /* 결제 위젯 */
+    #payment-method { margin-bottom: 16px; }
+    #agreement { margin-bottom: 24px; }
+    /* 주문 요약 (우측) */
+    .order-summary {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: sticky;
+      top: 24px;
+    }
+    .summary-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--text-sub);
+    }
+    .summary-row.total {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 2px solid var(--navy);
+      margin-bottom: 0;
+    }
+    .summary-row.total span:last-child { color: var(--gold); }
+    .btn-pay {
+      width: 100%;
+      padding: 16px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 17px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 20px;
+    }
+    .btn-pay:hover { background: var(--navy-dark); }
+    .btn-pay:disabled { background: var(--text-hint); cursor: not-allowed; }
+    .pay-notice {
+      font-size: 12px;
+      color: var(--text-hint);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+    /* 로딩 */
+    .loading-wrap {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-hint);
+    }
+    /* 토스트 */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1A1A2E; color: #fff;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 14px; opacity: 0; transition: all 0.3s;
+      z-index: 9999; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    @media (max-width: 768px) {
+      .checkout-grid { grid-template-columns: 1fr; }
+      .order-summary { position: static; }
+      .checkout-section { padding: 20px; }
+    }
+  </style>
+</head>
+<body class="checkout-wrap">
+
+  <!-- 헤더 -->
+  <div class="checkout-header">
+    <div class="container">
+      <a href="javascript:history.back()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 12H5m7-7-7 7 7 7"/>
+        </svg>
+      </a>
+      <h1>수강 신청</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="loadingWrap" class="loading-wrap">
+      <p>결제 정보를 불러오는 중...</p>
+    </div>
+
+    <div id="checkoutContent" style="display:none">
+      <div class="checkout-grid">
+
+        <!-- 왼쪽: 강의 정보 + 결제 위젯 -->
+        <div>
+          <!-- 강의 정보 -->
+          <div class="checkout-section">
+            <div class="section-title">신청 강의</div>
+            <div class="course-row">
+              <img id="courseThumb" class="course-thumb" src="" alt=""
+                onerror="this.style.display='none';document.getElementById('courseThumbFallback').style.display='flex'">
+              <div id="courseThumbFallback" class="course-thumb-placeholder" style="display:none">📊</div>
+              <div>
+                <div class="course-info-title" id="courseTitle">—</div>
+                <div class="course-info-meta" id="courseMeta">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 수강자 정보 -->
+          <div class="checkout-section">
+            <div class="section-title">수강자 정보</div>
+            <div class="form-group">
+              <div class="form-label">이름</div>
+              <div class="form-value" id="userName">—</div>
+            </div>
+            <div class="form-group">
+              <div class="form-label">이메일</div>
+              <div class="form-value" id="userEmail">—</div>
+            </div>
+          </div>
+
+          <!-- 토스페이먼츠 결제 위젯 -->
+          <div class="checkout-section">
+            <div class="section-title">결제 수단</div>
+            <div id="payment-method"></div>
+            <div id="agreement"></div>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 주문 요약 -->
+        <div class="order-summary">
+          <div class="summary-title">결제 금액</div>
+          <div class="summary-row">
+            <span>강의 정가</span>
+            <span id="summaryOriginal">—</span>
+          </div>
+          <div class="summary-row">
+            <span>할인</span>
+            <span style="color:#10B981">—</span>
+          </div>
+          <div class="summary-row total">
+            <span>최종 결제금액</span>
+            <span id="summaryTotal">—</span>
+          </div>
+          <button class="btn-pay" id="payBtn" onclick="requestPayment()">결제하기</button>
+          <p class="pay-notice">
+            결제 완료 후 즉시 수강이 가능합니다.<br>
+            테스트 환경에서는 실제 결제가 이루어지지 않습니다.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- 토스페이먼츠 SDK -->
+  <script src="https://js.tosspayments.com/v2/standard"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/course-data.js"></script>
+  <script>
+    const TOSS_CLIENT_KEY = 'test_ck_LkKEypNArWez6WMEjanN3lmeaxYG';
+
+    var courseId, course, userSession, userProfile;
+    var tossPayments, widgets;
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 2500);
+    }
+
+    function formatPrice(n) {
+      return n.toLocaleString('ko-KR') + '원';
+    }
+
+    async function init() {
+      /* 로그인 확인 */
+      var { data: { session } } = await _supabase.auth.getSession();
+      if (!session) {
+        window.location.href = 'login.html?redirect=checkout';
+        return;
+      }
+      userSession = session;
+
+      /* URL 파라미터에서 강의 ID */
+      var params = new URLSearchParams(window.location.search);
+      courseId = parseInt(params.get('id'));
+      course = COURSES.find(function(c) { return c.id === courseId; });
+
+      if (!course) {
+        showToast('강의 정보를 찾을 수 없습니다');
+        setTimeout(function() { window.location.href = 'course-list.html'; }, 1500);
+        return;
+      }
+
+      /* 이미 수강 중인지 확인 */
+      var { data: existing } = await _supabase
+        .from('enrollments')
+        .select('id')
+        .eq('user_id', session.user.id)
+        .eq('course_id', courseId)
+        .single();
+
+      if (existing) {
+        showToast('이미 수강 중인 강의입니다');
+        setTimeout(function() { window.location.href = 'mypage.html'; }, 1500);
+        return;
+      }
+
+      /* 프로필 로드 */
+      var { data: profile } = await _supabase
+        .from('profiles')
+        .select('name, phone')
+        .eq('id', session.user.id)
+        .single();
+      userProfile = profile || {};
+
+      /* UI 채우기 */
+      renderCourseInfo();
+      renderUserInfo();
+      await initPaymentWidget();
+
+      document.getElementById('loadingWrap').style.display = 'none';
+      document.getElementById('checkoutContent').style.display = 'block';
+    }
+
+    function renderCourseInfo() {
+      document.getElementById('courseTitle').textContent = course.title;
+      document.getElementById('courseMeta').textContent =
+        course.duration + ' · ' + course.level.replace('lv', 'Lv.') + ' · ' + course.feature[0].toUpperCase();
+      var thumb = document.getElementById('courseThumb');
+      if (course.thumbnail) {
+        thumb.src = course.thumbnail;
+      } else {
+        thumb.style.display = 'none';
+        document.getElementById('courseThumbFallback').style.display = 'flex';
+      }
+      document.getElementById('summaryOriginal').textContent = formatPrice(course.price);
+      document.getElementById('summaryTotal').textContent = formatPrice(course.price);
+    }
+
+    function renderUserInfo() {
+      document.getElementById('userName').textContent =
+        userProfile.name || userSession.user.email.split('@')[0];
+      document.getElementById('userEmail').textContent = userSession.user.email;
+    }
+
+    async function initPaymentWidget() {
+      tossPayments = TossPayments(TOSS_CLIENT_KEY);
+      widgets = tossPayments.widgets({
+        customerKey: userSession.user.id
+      });
+
+      await widgets.setAmount({ currency: 'KRW', value: course.price });
+      await Promise.all([
+        widgets.renderPaymentMethods({
+          selector: '#payment-method',
+          variantKey: 'DEFAULT'
+        }),
+        widgets.renderAgreement({
+          selector: '#agreement',
+          variantKey: 'AGREEMENT'
+        })
+      ]);
+    }
+
+    async function requestPayment() {
+      var btn = document.getElementById('payBtn');
+      btn.disabled = true;
+      btn.textContent = '결제 처리 중...';
+
+      try {
+        var orderId = 'order_' + courseId + '_' + Date.now();
+        await widgets.requestPayment({
+          orderId: orderId,
+          orderName: course.title.slice(0, 50),
+          customerEmail: userSession.user.email,
+          customerName: userProfile.name || userSession.user.email.split('@')[0],
+          successUrl: window.location.origin +
+            '/lms/checkout-success.html?courseId=' + courseId,
+          failUrl: window.location.origin +
+            '/lms/checkout-fail.html?courseId=' + courseId
+        });
+      } catch (err) {
+        if (err.code !== 'USER_CANCEL') {
+          showToast('결제 중 오류가 발생했습니다: ' + err.message);
+        }
+        btn.disabled = false;
+        btn.textContent = '결제하기';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
