@@ -467,25 +467,12 @@
 
   <div class="toast" id="toast"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
   <script src="js/course-data.js"></script>
   <script>
-    /* ──────────────────────────────────────────
-       임시 더미 데이터 (Supabase 연동 전)
-       TODO: Supabase 연동 시 loadUserData() 교체
-    ────────────────────────────────────────── */
-    var USER = {
-      name: '홍길동',
-      email: 'hong@example.com',
-      phone: '010-1234-5678',
-      role: 'analyst'
-    };
-
-    /* 수강 중인 강의 목록 (진도율 포함) */
-    var ENROLLMENTS = [
-      { courseId: 1, progress: 75,  enrolledAt: '2026-03-15' },
-      { courseId: 2, progress: 100, enrolledAt: '2026-03-10' },
-      { courseId: 5, progress: 30,  enrolledAt: '2026-04-01' },
-    ];
+    var USER = { name: '', email: '', phone: '', role: '' };
+    var ENROLLMENTS = [];
 
     /* ── 유틸 ── */
     function showToast(msg) {
@@ -506,11 +493,10 @@
       document.getElementById('panel-' + name).classList.add('active');
     }
 
-    function logout(e) {
+    async function logout(e) {
       e.preventDefault();
-      /* TODO: Supabase signOut() */
-      showToast('로그아웃되었습니다');
-      setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+      await _supabase.auth.signOut();
+      window.location.href = 'index.html';
     }
 
     /* ── 프로필 렌더 ── */
@@ -639,36 +625,87 @@
       showToast('수료증 발급 기능은 DB 연동 후 지원됩니다');
     }
 
-    /* ── 프로필 저장 (TODO) ── */
-    function saveProfile() {
-      /* TODO: Supabase profiles 테이블 UPDATE */
-      USER.name = document.getElementById('settingName').value;
+    /* ── 프로필 저장 ── */
+    async function saveProfile() {
+      var { data: { session } } = await _supabase.auth.getSession();
+      if (!session) return;
+      USER.name  = document.getElementById('settingName').value;
       USER.phone = document.getElementById('settingPhone').value;
-      USER.role = document.getElementById('settingRole').value;
+      USER.role  = document.getElementById('settingRole').value;
+      var { error } = await _supabase.from('profiles').update({
+        name: USER.name, phone: USER.phone, role: USER.role
+      }).eq('id', session.user.id);
+      if (error) { showToast('저장 중 오류가 발생했습니다'); return; }
       renderProfile();
-      showToast('프로필이 저장되었습니다 (DB 연동 후 실제 동작)');
+      showToast('프로필이 저장되었습니다');
     }
 
-    /* ── 비밀번호 변경 (TODO) ── */
-    function changePassword() {
-      var cur = document.getElementById('pwCurrent').value;
+    /* ── 비밀번호 변경 ── */
+    async function changePassword() {
       var nw  = document.getElementById('pwNew').value;
       var cfm = document.getElementById('pwConfirm').value;
-      if (!cur || !nw) { showToast('모든 항목을 입력해주세요'); return; }
+      if (!nw) { showToast('새 비밀번호를 입력해주세요'); return; }
       if (nw.length < 8) { showToast('새 비밀번호는 8자 이상이어야 합니다'); return; }
       if (nw !== cfm)    { showToast('새 비밀번호가 일치하지 않습니다'); return; }
-      /* TODO: Supabase auth.updateUser({ password: nw }) */
+      var { error } = await _supabase.auth.updateUser({ password: nw });
+      if (error) { showToast('비밀번호 변경 중 오류가 발생했습니다'); return; }
       document.getElementById('pwCurrent').value = '';
       document.getElementById('pwNew').value = '';
       document.getElementById('pwConfirm').value = '';
-      showToast('비밀번호가 변경되었습니다 (DB 연동 후 실제 동작)');
+      showToast('비밀번호가 변경되었습니다');
     }
 
-    /* ── 초기화 ── */
-    renderProfile();
-    renderStats();
-    renderCourses();
-    renderCertificates();
+    /* ── Supabase 데이터 로드 및 초기화 ── */
+    async function init() {
+      /* 로그인 확인 */
+      var { data: { session } } = await _supabase.auth.getSession();
+      if (!session) { window.location.href = 'login.html'; return; }
+
+      var userId = session.user.id;
+
+      /* 프로필 로드 */
+      var { data: profile } = await _supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (profile) {
+        USER.name  = profile.name  || session.user.email.split('@')[0];
+        USER.email = session.user.email;
+        USER.phone = profile.phone || '';
+        USER.role  = profile.role  || '';
+      }
+
+      /* 수강 정보 로드 (enrollments + progress JOIN) */
+      var { data: enrollData } = await _supabase
+        .from('enrollments')
+        .select('course_id, enrolled_at')
+        .eq('user_id', userId);
+
+      var { data: progressData } = await _supabase
+        .from('progress')
+        .select('course_id, progress_pct')
+        .eq('user_id', userId);
+
+      if (enrollData) {
+        ENROLLMENTS = enrollData.map(function(e) {
+          var p = (progressData || []).find(function(p) { return p.course_id === e.course_id; });
+          return {
+            courseId:   e.course_id,
+            progress:   p ? p.progress_pct : 0,
+            enrolledAt: e.enrolled_at ? e.enrolled_at.slice(0, 10) : ''
+          };
+        });
+      }
+
+      renderProfile();
+      renderStats();
+      renderCourses();
+      renderCertificates();
+    }
+
+    init();
   </script>
 </body>
 </html>

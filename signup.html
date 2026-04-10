@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     .auth-wrap {
       min-height: 100vh;
@@ -211,6 +212,7 @@
 
   <div class="toast" id="toast"></div>
 
+  <script src="js/supabase-client.js"></script>
   <script>
     function showToast(msg) {
       var t = document.getElementById('toast');
@@ -246,7 +248,7 @@
       hint.textContent = score > 0 ? labels[score] : '영문·숫자 조합 8자 이상';
     }
 
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       var valid = true;
 
@@ -305,13 +307,29 @@
       btn.disabled = true;
       btn.textContent = '가입 중...';
 
-      setTimeout(function() {
-        /* TODO: Supabase 연동 시 교체 */
-        showToast('가입 완료! (DB 연동 후 실제 동작)');
+      var { data, error } = await _supabase.auth.signUp({
+        email: email.value,
+        password: pw.value,
+        options: { data: { name: name.value.trim() } }
+      });
+
+      if (error) {
+        showToast(error.message === 'User already registered'
+          ? '이미 가입된 이메일입니다' : '가입 중 오류가 발생했습니다');
         btn.disabled = false;
         btn.textContent = '회원가입';
-        /* 실제 연동 후: window.location.href = 'login.html'; */
-      }, 1000);
+        return;
+      }
+
+      /* phone 업데이트 */
+      if (document.getElementById('phone').value && data.user) {
+        await _supabase.from('profiles')
+          .update({ phone: document.getElementById('phone').value })
+          .eq('id', data.user.id);
+      }
+
+      showToast('가입 완료! 로그인 페이지로 이동합니다');
+      setTimeout(function() { window.location.href = 'login.html'; }, 1500);
     });
   </script>
 </body>
