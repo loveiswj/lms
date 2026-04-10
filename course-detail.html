@@ -203,6 +203,17 @@
     </div>
   </div>
 
+  <!-- ══ 수료 축하 배너 ══ -->
+  <div id="certBanner" style="display:none; opacity:0; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; transition:opacity 0.4s;">
+    <div style="background:#fff; border-radius:16px; padding:48px 40px; max-width:420px; width:90%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.2);">
+      <div style="font-size:56px; margin-bottom:16px;">🏆</div>
+      <h2 style="font-size:22px; font-weight:800; color:#2C3E6B; margin-bottom:8px;">수료를 축하합니다!</h2>
+      <p style="font-size:15px; color:#6B7280; margin-bottom:28px; line-height:1.6;">강의를 완료하셨어요.<br>수료증이 마이페이지에 발급되었습니다.</p>
+      <a href="mypage.html" style="display:inline-block; padding:12px 32px; background:#2C3E6B; color:#fff; border-radius:8px; font-size:15px; font-weight:700; text-decoration:none; margin-right:8px;">수료증 보기</a>
+      <button onclick="document.getElementById('certBanner').style.display='none'" style="padding:12px 24px; background:#fff; color:#2C3E6B; border:1.5px solid #e5e7eb; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; font-family:inherit;">닫기</button>
+    </div>
+  </div>
+
   <!-- ══ 히어로 영역 (JS로 채워짐) ══ -->
   <div id="detailHero"></div>
 
@@ -290,21 +301,118 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
   <script src="js/course-data.js"></script>
   <script src="js/nav.js"></script>
   <!-- YouTube iframe API -->
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-  /* ── YouTube 시간 이동 ── */
+  /* ── YouTube 진도율 추적 + Supabase 저장 ── */
   var ytPlayer = null;
+  var _progressCourseId = null;
+  var _progressTimer = null;
+  var _lastSavedPct = -1;
+
   function onYouTubeIframeAPIReady() {
     var iframe = document.getElementById('ytPlayer');
     if (!iframe) return;
     ytPlayer = new YT.Player('ytPlayer', {
-      events: { onStateChange: onPlayerStateChange }
+      events: {
+        onStateChange: onPlayerStateChange,
+        onReady: onPlayerReady
+      }
     });
   }
-  function onPlayerStateChange(e) {}
+
+  function onPlayerReady() {
+    /* URL에서 courseId 추출 */
+    var params = new URLSearchParams(window.location.search);
+    _progressCourseId = parseInt(params.get('id'));
+  }
+
+  function onPlayerStateChange(e) {
+    /* 재생 중(1)이면 10초마다 진도율 체크 */
+    if (e.data === YT.PlayerState.PLAYING) {
+      if (!_progressTimer) {
+        _progressTimer = setInterval(saveProgress, 10000);
+      }
+    } else {
+      clearInterval(_progressTimer);
+      _progressTimer = null;
+      /* 일시정지·종료 시 즉시 저장 */
+      saveProgress();
+    }
+  }
+
+  async function saveProgress() {
+    if (!ytPlayer || !ytPlayer.getDuration) return;
+    if (!_progressCourseId) return;
+
+    var duration = ytPlayer.getDuration();
+    var current  = ytPlayer.getCurrentTime();
+    if (!duration || duration <= 0) return;
+
+    var pct = Math.min(100, Math.round((current / duration) * 100));
+
+    /* 이전 저장과 같거나 로그인 안 된 경우 스킵 */
+    if (pct === _lastSavedPct) return;
+    var { data: { session } } = await _supabase.auth.getSession();
+    if (!session) return;
+
+    _lastSavedPct = pct;
+
+    /* progress 테이블 upsert */
+    await _supabase.from('progress').upsert({
+      user_id:         session.user.id,
+      course_id:       _progressCourseId,
+      progress_pct:    pct,
+      last_watched_at: new Date().toISOString()
+    }, { onConflict: 'user_id,course_id' });
+
+    /* 진도 바 UI 업데이트 */
+    var bar = document.getElementById('heroProgressBar');
+    var txt = document.getElementById('heroProgressTxt');
+    if (bar) bar.style.width = pct + '%';
+    if (txt) txt.textContent = pct + '% 수강 완료';
+
+    /* 100% 달성 시 수료증 자동 발급 */
+    if (pct >= 100) {
+      clearInterval(_progressTimer);
+      _progressTimer = null;
+      await issueCertificate(session.user.id, _progressCourseId);
+    }
+  }
+
+  async function issueCertificate(userId, courseId) {
+    /* 이미 발급된 수료증 확인 */
+    var { data: existing } = await _supabase
+      .from('certificates')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('course_id', courseId)
+      .single();
+    if (existing) return;
+
+    /* certificates 테이블에 삽입 */
+    await _supabase.from('certificates').insert({
+      user_id:   userId,
+      course_id: courseId,
+      issued_at: new Date().toISOString()
+    });
+
+    /* 수료 축하 배너 표시 */
+    showCertBanner();
+  }
+
+  function showCertBanner() {
+    var banner = document.getElementById('certBanner');
+    if (banner) {
+      banner.style.display = 'flex';
+      setTimeout(function() { banner.style.opacity = '1'; }, 100);
+    }
+  }
+
   function seekVideo(seconds, el) {
     /* 활성 항목 표시 */
     var items = document.querySelectorAll('.video-timeline__item');
@@ -388,6 +496,16 @@
                 '<span class="detail-hero__price">' + formatPrice(course.price) + '</span>' +
               '</div>' +
               '<a href="checkout.html?id=' + course.id + '" class="btn btn--accent btn--lg" style="margin-left:8px;">수강 신청하기</a>' +
+            '</div>' +
+            /* 진도 바 */
+            '<div style="margin-top:20px; max-width:480px;">' +
+              '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">' +
+                '<span style="font-size:13px; color:rgba(255,255,255,0.7); font-weight:600;">수강 진도</span>' +
+                '<span id="heroProgressTxt" style="font-size:13px; color:rgba(255,255,255,0.9); font-weight:700;">0% 수강 완료</span>' +
+              '</div>' +
+              '<div style="height:6px; background:rgba(255,255,255,0.2); border-radius:3px; overflow:hidden;">' +
+                '<div id="heroProgressBar" style="height:100%; background:var(--gold); border-radius:3px; width:0%; transition:width 0.5s ease;"></div>' +
+              '</div>' +
             '</div>' +
           '</div>' +
         '</div>';
@@ -634,6 +752,30 @@
       renderPurchaseCard(course);
       renderRelated(course);
       renderNextCourses(course);
+
+      /* 기존 진도율 로드 */
+      loadProgress(course.id);
+    }
+
+    async function loadProgress(courseId) {
+      var { data: { session } } = await _supabase.auth.getSession();
+      if (!session) return;
+
+      var { data } = await _supabase
+        .from('progress')
+        .select('progress_pct')
+        .eq('user_id', session.user.id)
+        .eq('course_id', courseId)
+        .single();
+
+      if (!data) return;
+      var pct = data.progress_pct || 0;
+      _lastSavedPct = pct;
+
+      var bar = document.getElementById('heroProgressBar');
+      var txt = document.getElementById('heroProgressTxt');
+      if (bar) bar.style.width = pct + '%';
+      if (txt) txt.textContent = pct + '% 수강 완료';
     }
 
     document.addEventListener("DOMContentLoaded", init);
