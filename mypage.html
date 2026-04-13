@@ -742,7 +742,18 @@
       ctx.shadowColor = 'rgba(44,62,107,0.12)';
       ctx.shadowBlur = 16;
       ctx.beginPath();
-      ctx.roundRect(nameBoxX, nameBoxY, nameBoxW, nameBoxH, 8);
+      /* roundRect 폴리필 — 구형 브라우저 대응 */
+      var r = 8;
+      ctx.moveTo(nameBoxX + r, nameBoxY);
+      ctx.lineTo(nameBoxX + nameBoxW - r, nameBoxY);
+      ctx.quadraticCurveTo(nameBoxX + nameBoxW, nameBoxY, nameBoxX + nameBoxW, nameBoxY + r);
+      ctx.lineTo(nameBoxX + nameBoxW, nameBoxY + nameBoxH - r);
+      ctx.quadraticCurveTo(nameBoxX + nameBoxW, nameBoxY + nameBoxH, nameBoxX + nameBoxW - r, nameBoxY + nameBoxH);
+      ctx.lineTo(nameBoxX + r, nameBoxY + nameBoxH);
+      ctx.quadraticCurveTo(nameBoxX, nameBoxY + nameBoxH, nameBoxX, nameBoxY + nameBoxH - r);
+      ctx.lineTo(nameBoxX, nameBoxY + r);
+      ctx.quadraticCurveTo(nameBoxX, nameBoxY, nameBoxX + r, nameBoxY);
+      ctx.closePath();
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.strokeStyle = '#E5E7EB';
