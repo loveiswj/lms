@@ -183,6 +183,48 @@
   }
 
   /* ────────────────────────────────────────
+     로그인 상태 헤더 반영
+  ──────────────────────────────────────── */
+  function initAuth() {
+    if (typeof _supabase === "undefined") return;
+
+    _supabase.auth.getSession().then(function (res) {
+      var session = res.data && res.data.session;
+      var actionsEl = document.querySelector(".header-actions");
+      if (!actionsEl) return;
+
+      if (session) {
+        /* 프로필 이름 가져오기 */
+        _supabase.from("profiles").select("name").eq("id", session.user.id).single()
+          .then(function (r) {
+            var name = (r.data && r.data.name) || session.user.email.split("@")[0];
+            actionsEl.innerHTML =
+              '<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">' + name + '님</span>' +
+              '<span class="header-actions__divider"></span>' +
+              '<a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a>' +
+              '<button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';
+          });
+
+        /* 모바일 nav 로그인 버튼도 교체 */
+        var mobileLoginBtn = document.getElementById("mobileLoginBtn");
+        if (mobileLoginBtn) {
+          mobileLoginBtn.textContent = "마이페이지";
+          mobileLoginBtn.href = "mypage.html";
+        }
+        var mobileSignupBtn = document.getElementById("mobileSignupBtn");
+        if (mobileSignupBtn) mobileSignupBtn.style.display = "none";
+      }
+    });
+  }
+
+  window.navLogout = function () {
+    if (typeof _supabase === "undefined") return;
+    _supabase.auth.signOut().then(function () {
+      window.location.href = "index.html";
+    });
+  };
+
+  /* ────────────────────────────────────────
      초기화
   ──────────────────────────────────────── */
   document.addEventListener("DOMContentLoaded", function () {
@@ -190,5 +232,6 @@
     initMobileNav();
     initSearch();
     initMobileSearch();
+    initAuth();
   });
 })();

@@ -211,7 +211,7 @@
           <label class="form-check">
             <input type="checkbox" id="remember"> 로그인 상태 유지
           </label>
-          <a href="#" class="form-forgot">비밀번호 찾기</a>
+          <a href="#" class="form-forgot" onclick="forgotPassword(event)">비밀번호 찾기</a>
         </div>
 
         <button type="submit" class="btn-auth" id="loginBtn">로그인</button>
@@ -298,6 +298,25 @@
         window.location.href = 'mypage.html';
       }
     });
+
+    /* 비밀번호 찾기 */
+    async function forgotPassword(e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        showToast('이메일을 먼저 입력해주세요');
+        document.getElementById('email').focus();
+        return;
+      }
+      var { error } = await _supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/lms/reset-password.html'
+      });
+      if (error) {
+        showToast('오류가 발생했습니다. 다시 시도해주세요');
+      } else {
+        showToast('비밀번호 재설정 메일을 발송했습니다');
+      }
+    }
 
     /* Google 로그인 */
     async function loginWithGoogle() {
