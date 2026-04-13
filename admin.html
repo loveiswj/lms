@@ -18,6 +18,7 @@
       padding: 24px 0;
       position: fixed; top: 0; left: 0; bottom: 0;
       overflow-y: auto;
+      display: flex; flex-direction: column;
     }
     .sidebar-logo {
       padding: 0 20px 24px;
@@ -143,19 +144,19 @@
       <img src="assets/images/bimatrix_logo.png" alt="AUD Academy">
     </div>
     <div class="sidebar-section">관리</div>
-    <a class="sidebar-menu-item active" onclick="showTab('dashboard')">
+    <a class="sidebar-menu-item active" data-tab="dashboard" onclick="showTab('dashboard')">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       <span>대시보드</span>
     </a>
-    <a class="sidebar-menu-item" onclick="showTab('users')">
+    <a class="sidebar-menu-item" data-tab="users" onclick="showTab('users')">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <span>수강생 관리</span>
     </a>
-    <a class="sidebar-menu-item" onclick="showTab('enrollments')">
+    <a class="sidebar-menu-item" data-tab="enrollments" onclick="showTab('enrollments')">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253"/></svg>
       <span>수강 현황</span>
     </a>
-    <a class="sidebar-menu-item" onclick="showTab('revenue')">
+    <a class="sidebar-menu-item" data-tab="revenue" onclick="showTab('revenue')">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       <span>매출 현황</span>
     </a>
@@ -163,6 +164,10 @@
     <a class="sidebar-menu-item" href="index.html" target="_blank">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       <span>사이트 보기</span>
+    </a>
+    <a class="sidebar-menu-item" onclick="adminLogout()" style="margin-top:auto; color:rgba(255,100,100,0.8);">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>로그아웃</span>
     </a>
   </nav>
 
@@ -188,8 +193,13 @@
 <script src="js/supabase-client.js"></script>
 <script src="js/course-data.js"></script>
 <script>
+  /* ── 관리자 이메일 화이트리스트 ── */
+  var ADMIN_EMAILS = ['loveiswj@gmail.com', 'wjkim1363@bimatrix.co.kr'];
+
   var _currentTab = 'dashboard';
   var _data = { users: [], enrollments: [], progress: [], certificates: [] };
+  var _userSearch = '';
+  var _enrollSearch = '';
 
   function showToast(msg) {
     var t = document.getElementById('toast');
@@ -199,7 +209,11 @@
   }
 
   function formatPrice(n) { return (n || 0).toLocaleString('ko-KR') + '원'; }
-  function formatDate(d) { return d ? d.slice(0, 10) : '—'; }
+  function formatDate(d) {
+    if (!d) return '—';
+    var dt = new Date(d);
+    return dt.getFullYear() + '. ' + (dt.getMonth()+1) + '. ' + dt.getDate() + '.';
+  }
 
   async function adminLogout() {
     await _supabase.auth.signOut();
@@ -220,12 +234,12 @@
     _data.certificates = c.data  || [];
   }
 
-  /* ── 탭 전환 ── */
+  /* ── 탭 전환 (URL hash 유지) ── */
   function showTab(tab) {
     _currentTab = tab;
-    document.querySelectorAll('.sidebar-menu-item').forEach(function(el, i) {
-      var tabs = ['dashboard','users','enrollments','revenue'];
-      el.classList.toggle('active', tabs[i] === tab);
+    window.location.hash = tab;
+    document.querySelectorAll('.sidebar-menu-item[data-tab]').forEach(function(el) {
+      el.classList.toggle('active', el.dataset.tab === tab);
     });
     var titles = { dashboard:'대시보드', users:'수강생 관리', enrollments:'수강 현황', revenue:'매출 현황' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
@@ -235,8 +249,8 @@
   function renderTab(tab) {
     var el = document.getElementById('adminContent');
     if (tab === 'dashboard')   el.innerHTML = renderDashboard();
-    if (tab === 'users')       el.innerHTML = renderUsers();
-    if (tab === 'enrollments') el.innerHTML = renderEnrollments();
+    if (tab === 'users')       el.innerHTML = renderUsers(_userSearch);
+    if (tab === 'enrollments') el.innerHTML = renderEnrollments(_enrollSearch);
     if (tab === 'revenue')     el.innerHTML = renderRevenue();
   }
 
@@ -247,24 +261,23 @@
     var totalRevenue = _data.enrollments.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
     var totalCerts   = _data.certificates.length;
     var avgProgress  = _data.progress.length > 0
-      ? Math.round(_data.progress.reduce(function(s, p) { return s + (p.progress_pct || 0); }, 0) / _data.progress.length)
-      : 0;
+      ? Math.round(_data.progress.reduce(function(s, p) { return s + (p.progress_pct || 0); }, 0) / _data.progress.length) : 0;
 
-    /* 최근 수강생 5명 */
-    var recentRows = _data.enrollments.slice(0, 5).map(function(e) {
+    var recentRows = _data.enrollments.slice(0, 8).map(function(e) {
       var user   = _data.users.find(function(u) { return u.id === e.user_id; });
       var course = COURSES.find(function(c) { return c.id === e.course_id; });
       var prog   = _data.progress.find(function(p) { return p.user_id === e.user_id && p.course_id === e.course_id; });
+      var pct    = prog ? prog.progress_pct : 0;
       return '<tr>' +
-        '<td>' + (user ? user.name || '—' : '—') + '</td>' +
-        '<td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (course ? course.title.slice(0,30) + '…' : '강의 #' + e.course_id) + '</td>' +
+        '<td><strong>' + (user ? (user.name || (user.email ? user.email.split('@')[0] : '—')) : '—') + '</strong></td>' +
+        '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (course ? course.title : '') + '">' + (course ? course.title.slice(0,28) + (course.title.length>28?'…':'') : '강의 #' + e.course_id) + '</td>' +
         '<td>' + formatDate(e.enrolled_at) + '</td>' +
         '<td>' +
-          '<div style="display:flex; align-items:center; gap:8px;">' +
-            '<div style="flex:1; height:6px; background:#F3F4F6; border-radius:3px; overflow:hidden; min-width:60px;">' +
-              '<div style="height:100%; background:' + (prog && prog.progress_pct >= 100 ? '#10B981' : 'var(--navy)') + '; width:' + (prog ? prog.progress_pct : 0) + '%;"></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<div style="flex:1;height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden;min-width:60px;">' +
+              '<div style="height:100%;background:' + (pct>=100?'#10B981':'var(--navy)') + ';width:' + pct + '%;"></div>' +
             '</div>' +
-            '<span style="font-size:12px; font-weight:700; color:var(--navy);">' + (prog ? prog.progress_pct : 0) + '%</span>' +
+            '<span style="font-size:12px;font-weight:700;color:var(--navy);min-width:32px;">' + pct + '%</span>' +
           '</div>' +
         '</td>' +
         '<td>' + formatPrice(e.paid_amount) + '</td>' +
@@ -272,82 +285,125 @@
     }).join('');
 
     return '<div class="kpi-grid">' +
-      kpiCard('전체 수강생', totalUsers, '명', '') +
-      kpiCard('수강 신청', totalEnroll, '건', '') +
-      kpiCard('누적 매출', formatPrice(totalRevenue).replace('원',''), '원', '') +
-      kpiCard('수료증 발급', totalCerts, '건', '') +
+      kpiCard('전체 수강생', totalUsers, '명') +
+      kpiCard('수강 신청', totalEnroll, '건') +
+      kpiCard('누적 매출', formatPrice(totalRevenue).replace('원',''), '원') +
+      kpiCard('평균 진도율', avgProgress, '%') +
     '</div>' +
     '<div class="admin-card">' +
-      '<div class="admin-card-header"><span class="admin-card-title">최근 수강 신청</span></div>' +
+      '<div class="admin-card-header">' +
+        '<span class="admin-card-title">최근 수강 신청</span>' +
+        '<span style="font-size:12px;color:var(--text-hint);">최근 8건</span>' +
+      '</div>' +
       '<table class="admin-table">' +
         '<thead><tr><th>이름</th><th>강의</th><th>신청일</th><th>진도율</th><th>결제금액</th></tr></thead>' +
         '<tbody>' + (recentRows || '<tr class="empty-row"><td colspan="5">수강 내역이 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
+    '</div>' +
+    '<div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);margin-top:0;">' +
+      kpiCard('수료증 발급', totalCerts, '건') +
+      kpiCard('수강 완료율', totalEnroll > 0 ? Math.round(totalCerts/totalEnroll*100) : 0, '%') +
     '</div>';
   }
 
-  function kpiCard(label, value, unit, change) {
+  function kpiCard(label, value, unit) {
     return '<div class="kpi-card">' +
       '<div class="kpi-label">' + label + '</div>' +
       '<div class="kpi-value">' + value + '<span>' + unit + '</span></div>' +
-      (change ? '<div class="kpi-change">' + change + '</div>' : '') +
     '</div>';
   }
 
   /* ── 수강생 관리 ── */
-  function renderUsers() {
-    var rows = _data.users.map(function(u) {
+  function renderUsers(search) {
+    var list = _data.users;
+    if (search) {
+      var q = search.toLowerCase();
+      list = list.filter(function(u) {
+        return (u.name && u.name.toLowerCase().includes(q)) ||
+               (u.email && u.email.toLowerCase().includes(q)) ||
+               (u.phone && u.phone.includes(q));
+      });
+    }
+
+    var rows = list.map(function(u) {
       var enrCount  = _data.enrollments.filter(function(e) { return e.user_id === u.id; }).length;
       var certCount = _data.certificates.filter(function(c) { return c.user_id === u.id; }).length;
+      var progList  = _data.progress.filter(function(p) { return p.user_id === u.id; });
+      var avgPct    = progList.length > 0
+        ? Math.round(progList.reduce(function(s, p) { return s + (p.progress_pct||0); }, 0) / progList.length) : 0;
       return '<tr>' +
         '<td><strong>' + (u.name || '—') + '</strong></td>' +
-        '<td style="color:var(--text-hint)">' + (u.id ? u.id.slice(0,8) + '…' : '—') + '</td>' +
-        '<td>' + enrCount + '개</td>' +
-        '<td><span class="badge badge-gold">' + certCount + '개</span></td>' +
-        '<td>' + formatDate(u.created_at) + '</td>' +
+        '<td style="color:var(--text-hint);font-size:13px;">' + (u.email || '—') + '</td>' +
+        '<td>' + (u.phone || '—') + '</td>' +
+        '<td><span class="badge badge-blue">' + enrCount + '개</span></td>' +
+        '<td>' +
+          (certCount > 0 ? '<span class="badge badge-gold">🏆 ' + certCount + '개</span>' : '<span class="badge badge-gray">—</span>') +
+        '</td>' +
+        '<td style="font-size:13px;">' + avgPct + '%</td>' +
+        '<td style="font-size:12px;color:var(--text-hint);">' + formatDate(u.created_at) + '</td>' +
       '</tr>';
     }).join('');
 
     return '<div class="admin-card">' +
       '<div class="admin-card-header">' +
-        '<span class="admin-card-title">전체 수강생 (' + _data.users.length + '명)</span>' +
+        '<span class="admin-card-title">전체 수강생 (' + list.length + '명)</span>' +
+        '<input type="text" placeholder="이름·이메일·연락처 검색" value="' + (search||'') + '" ' +
+          'oninput="_userSearch=this.value;renderTab(\'users\')" ' +
+          'style="padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);width:200px;">' +
       '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>이름</th><th>ID</th><th>수강 강의</th><th>수료증</th><th>가입일</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="5">수강생이 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>수강</th><th>수료증</th><th>평균진도</th><th>가입일</th></tr></thead>' +
+        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="7">검색 결과가 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
 
   /* ── 수강 현황 ── */
-  function renderEnrollments() {
-    var rows = _data.enrollments.map(function(e) {
+  function renderEnrollments(search) {
+    var list = _data.enrollments;
+    if (search) {
+      var q = search.toLowerCase();
+      list = list.filter(function(e) {
+        var user   = _data.users.find(function(u) { return u.id === e.user_id; });
+        var course = COURSES.find(function(c) { return c.id === e.course_id; });
+        return (user && user.name && user.name.toLowerCase().includes(q)) ||
+               (course && course.title.toLowerCase().includes(q));
+      });
+    }
+
+    var rows = list.map(function(e) {
       var user   = _data.users.find(function(u) { return u.id === e.user_id; });
       var course = COURSES.find(function(c) { return c.id === e.course_id; });
       var prog   = _data.progress.find(function(p) { return p.user_id === e.user_id && p.course_id === e.course_id; });
       var pct    = prog ? prog.progress_pct : 0;
       var isDone = pct >= 100;
       return '<tr>' +
-        '<td>' + (user ? user.name || '—' : '—') + '</td>' +
-        '<td style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (course ? course.title : '강의 #' + e.course_id) + '</td>' +
-        '<td><span class="badge ' + (isDone ? 'badge-green' : 'badge-blue') + '">' + (isDone ? '완료' : '수강중') + '</span></td>' +
+        '<td><strong>' + (user ? (user.name || '—') : '—') + '</strong></td>' +
+        '<td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (course?course.title:'') + '">' + (course ? course.title : '강의 #' + e.course_id) + '</td>' +
+        '<td><span class="badge ' + (isDone ? 'badge-green' : 'badge-blue') + '">' + (isDone ? '✅ 완료' : '수강중') + '</span></td>' +
         '<td>' +
-          '<div style="display:flex; align-items:center; gap:8px;">' +
-            '<div style="flex:1; height:6px; background:#F3F4F6; border-radius:3px; overflow:hidden; min-width:80px;">' +
-              '<div style="height:100%; background:' + (isDone ? '#10B981' : 'var(--navy)') + '; width:' + pct + '%;"></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<div style="flex:1;height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden;min-width:80px;">' +
+              '<div style="height:100%;background:' + (isDone?'#10B981':'var(--navy)') + ';width:' + pct + '%;"></div>' +
             '</div>' +
-            '<span style="font-size:12px; font-weight:700;">' + pct + '%</span>' +
+            '<span style="font-size:12px;font-weight:700;min-width:32px;">' + pct + '%</span>' +
           '</div>' +
         '</td>' +
-        '<td>' + formatDate(e.enrolled_at) + '</td>' +
+        '<td>' + formatPrice(e.paid_amount) + '</td>' +
+        '<td style="font-size:12px;color:var(--text-hint);">' + formatDate(e.enrolled_at) + '</td>' +
       '</tr>';
     }).join('');
 
     return '<div class="admin-card">' +
-      '<div class="admin-card-header"><span class="admin-card-title">전체 수강 현황 (' + _data.enrollments.length + '건)</span></div>' +
+      '<div class="admin-card-header">' +
+        '<span class="admin-card-title">전체 수강 현황 (' + list.length + '건)</span>' +
+        '<input type="text" placeholder="수강생·강의명 검색" value="' + (search||'') + '" ' +
+          'oninput="_enrollSearch=this.value;renderTab(\'enrollments\')" ' +
+          'style="padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);width:200px;">' +
+      '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>수강생</th><th>강의</th><th>상태</th><th>진도율</th><th>신청일</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="5">수강 내역이 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>수강생</th><th>강의</th><th>상태</th><th>진도율</th><th>결제금액</th><th>신청일</th></tr></thead>' +
+        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="6">검색 결과가 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
@@ -356,7 +412,6 @@
   function renderRevenue() {
     var total = _data.enrollments.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
 
-    /* 강의별 매출 집계 */
     var courseRevMap = {};
     _data.enrollments.forEach(function(e) {
       if (!courseRevMap[e.course_id]) courseRevMap[e.course_id] = { count: 0, revenue: 0 };
@@ -369,23 +424,57 @@
     }).map(function(id) {
       var course = COURSES.find(function(c) { return c.id === parseInt(id); });
       var d = courseRevMap[id];
+      var barW = total > 0 ? Math.round(d.revenue / total * 100) : 0;
       return '<tr>' +
-        '<td style="max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (course ? course.title : '강의 #' + id) + '</td>' +
-        '<td>' + d.count + '명</td>' +
+        '<td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (course ? course.title : '강의 #' + id) + '</td>' +
+        '<td style="text-align:center;">' + d.count + '명</td>' +
+        '<td><strong>' + formatPrice(d.revenue) + '</strong></td>' +
+        '<td style="width:120px;">' +
+          '<div style="height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden;">' +
+            '<div style="height:100%;background:var(--gold);width:' + barW + '%;"></div>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+
+    /* 월별 통계 */
+    var monthMap = {};
+    _data.enrollments.forEach(function(e) {
+      if (!e.enrolled_at) return;
+      var ym = e.enrolled_at.slice(0, 7);
+      if (!monthMap[ym]) monthMap[ym] = { count: 0, revenue: 0 };
+      monthMap[ym].count++;
+      monthMap[ym].revenue += (e.paid_amount || 0);
+    });
+    var monthRows = Object.keys(monthMap).sort().reverse().slice(0, 6).map(function(ym) {
+      var d = monthMap[ym];
+      return '<tr>' +
+        '<td>' + ym + '</td>' +
+        '<td style="text-align:center;">' + d.count + '건</td>' +
         '<td><strong>' + formatPrice(d.revenue) + '</strong></td>' +
       '</tr>';
     }).join('');
 
-    return '<div class="kpi-grid" style="grid-template-columns: repeat(2,1fr);">' +
-      kpiCard('누적 총 매출', formatPrice(total).replace('원',''), '원', '') +
-      kpiCard('결제 건수', _data.enrollments.length, '건', '') +
+    return '<div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">' +
+      kpiCard('누적 총 매출', formatPrice(total).replace('원',''), '원') +
+      kpiCard('총 결제 건수', _data.enrollments.length, '건') +
+      kpiCard('강의당 평균', _data.enrollments.length > 0 ? formatPrice(Math.round(total/_data.enrollments.length)).replace('원','') : '0', '원') +
     '</div>' +
-    '<div class="admin-card">' +
-      '<div class="admin-card-header"><span class="admin-card-title">강의별 매출</span></div>' +
-      '<table class="admin-table">' +
-        '<thead><tr><th>강의명</th><th>수강생 수</th><th>매출</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="3">결제 내역이 없습니다</td></tr>') + '</tbody>' +
-      '</table>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">' +
+      '<div class="admin-card">' +
+        '<div class="admin-card-header"><span class="admin-card-title">강의별 매출 (Top)</span></div>' +
+        '<table class="admin-table">' +
+          '<thead><tr><th>강의명</th><th>수강생</th><th>매출</th><th>비중</th></tr></thead>' +
+          '<tbody>' + (rows || '<tr class="empty-row"><td colspan="4">결제 내역이 없습니다</td></tr>') + '</tbody>' +
+        '</table>' +
+      '</div>' +
+      '<div class="admin-card">' +
+        '<div class="admin-card-header"><span class="admin-card-title">월별 매출</span></div>' +
+        '<table class="admin-table">' +
+          '<thead><tr><th>월</th><th>건수</th><th>매출</th></tr></thead>' +
+          '<tbody>' + (monthRows || '<tr class="empty-row"><td colspan="3">데이터가 없습니다</td></tr>') + '</tbody>' +
+        '</table>' +
+      '</div>' +
     '</div>';
   }
 
@@ -393,10 +482,23 @@
   async function init() {
     var { data: { session } } = await _supabase.auth.getSession();
     if (!session) { window.location.href = 'login.html'; return; }
+
+    /* 관리자 권한 체크 */
+    if (!ADMIN_EMAILS.includes(session.user.email)) {
+      alert('관리자 권한이 없습니다.');
+      window.location.href = 'index.html';
+      return;
+    }
+
     document.getElementById('adminEmail').textContent = session.user.email;
 
     await loadAll();
-    renderTab('dashboard');
+
+    /* URL hash로 초기 탭 결정 */
+    var hash = window.location.hash.replace('#', '');
+    var validTabs = ['dashboard','users','enrollments','revenue'];
+    var initTab = validTabs.includes(hash) ? hash : 'dashboard';
+    showTab(initTab);
   }
 
   init();
