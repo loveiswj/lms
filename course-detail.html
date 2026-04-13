@@ -590,6 +590,10 @@
             '<h2 class="detail-section__title">과정 소개 영상</h2>' +
             '<div class="video-layout">' +
               '<div class="video-player-wrap">' +
+                '<div id="previewNotice" style="display:none;background:linear-gradient(90deg,#1A2E5A,#2C3E6B);color:#fff;padding:10px 20px;border-radius:8px 8px 0 0;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;">' +
+                  '<span style="background:#F59E0B;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;">무료</span>' +
+                  '미리보기 중입니다 · 수강 신청 후 진도율이 저장됩니다' +
+                '</div>' +
                 '<iframe id="ytPlayer" src="https://www.youtube.com/embed/' + vid.videoId + '?enablejsapi=1&rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
               '</div>' +
               '<div class="video-timeline">' +
@@ -753,6 +757,10 @@
       renderRelated(course);
       renderNextCourses(course);
 
+      /* 기본값: 미리보기 배너 표시 (loadProgress에서 수강자면 숨김) */
+      var pn = document.getElementById('previewNotice');
+      if (pn) pn.style.display = 'flex';
+
       /* 기존 진도율 로드 */
       loadProgress(course.id);
     }
@@ -768,6 +776,10 @@
         .eq('user_id', session.user.id)
         .eq('course_id', courseId)
         .single();
+
+      /* 미리보기 배너: 미수강자에게 표시 */
+      var previewNotice = document.getElementById('previewNotice');
+      if (previewNotice) previewNotice.style.display = enrollment ? 'none' : 'flex';
 
       if (enrollment) {
         /* 이미 수강 중 → 모든 "수강 신청하기" 버튼을 "학습 계속하기"로 교체 */

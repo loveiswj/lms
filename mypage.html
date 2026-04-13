@@ -644,77 +644,173 @@
     }
 
     function generateCertPDF(name, courseTitle, date) {
+      var W = 1200, H = 850;
       var canvas = document.createElement('canvas');
-      canvas.width = 1120; canvas.height = 793;
+      canvas.width = W; canvas.height = H;
       var ctx = canvas.getContext('2d');
 
-      /* 배경 */
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      /* ── 배경 그라데이션 ── */
+      var bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      bgGrad.addColorStop(0, '#FAFBFF');
+      bgGrad.addColorStop(1, '#F0F4FF');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
 
-      /* 테두리 */
+      /* ── 상단 navy 헤더 바 ── */
+      var headerGrad = ctx.createLinearGradient(0, 0, W, 0);
+      headerGrad.addColorStop(0, '#1A2E5A');
+      headerGrad.addColorStop(1, '#2C3E6B');
+      ctx.fillStyle = headerGrad;
+      ctx.fillRect(0, 0, W, 120);
+
+      /* ── 하단 gold 액센트 바 ── */
+      var footGrad = ctx.createLinearGradient(0, 0, W, 0);
+      footGrad.addColorStop(0, '#D97706');
+      footGrad.addColorStop(0.5, '#F59E0B');
+      footGrad.addColorStop(1, '#D97706');
+      ctx.fillStyle = footGrad;
+      ctx.fillRect(0, H - 16, W, 16);
+
+      /* ── 좌측 gold 세로 라인 ── */
+      ctx.fillStyle = '#F59E0B';
+      ctx.fillRect(60, 140, 5, H - 175);
+
+      /* ── 외곽 테두리 ── */
       ctx.strokeStyle = '#2C3E6B';
-      ctx.lineWidth = 12;
-      ctx.strokeRect(24, 24, canvas.width - 48, canvas.height - 48);
-      ctx.strokeStyle = '#F59E0B';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(36, 36, canvas.width - 72, canvas.height - 72);
+      ctx.lineWidth = 2;
+      ctx.strokeRect(30, 30, W - 60, H - 60);
 
-      /* 로고 텍스트 */
-      ctx.fillStyle = '#2C3E6B';
-      ctx.font = 'bold 28px sans-serif';
+      /* ── 헤더: 로고 + 기관명 ── */
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 15px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('BI MATRIX', 80, 52);
+      ctx.font = '13px sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText('비아이매트릭스 주식회사', 80, 74);
+
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillStyle = '#F59E0B';
+      ctx.textAlign = 'right';
+      ctx.fillText('AUD Academy', W - 80, 55);
+      ctx.font = '13px sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText('실무 BI 교육 플랫폼', W - 80, 75);
+
+      /* ── 헤더 하단 gold 라인 ── */
+      ctx.fillStyle = '#F59E0B';
+      ctx.fillRect(0, 120, W, 4);
+
+      /* ── 수료증 제목 ── */
       ctx.textAlign = 'center';
-      ctx.fillText('AUD Academy — BI MATRIX', canvas.width / 2, 110);
+      ctx.font = 'bold 64px serif';
+      ctx.fillStyle = '#1A2E5A';
+      ctx.fillText('수 료 증', W / 2, 225);
 
-      /* 제목 */
-      ctx.font = 'bold 56px sans-serif';
-      ctx.fillStyle = '#2C3E6B';
-      ctx.fillText('수  료  증', canvas.width / 2, 210);
-
-      /* 구분선 */
-      ctx.strokeStyle = '#F59E0B';
+      /* 제목 하단 장식 라인 */
+      var lineGrad = ctx.createLinearGradient(W/2 - 180, 0, W/2 + 180, 0);
+      lineGrad.addColorStop(0, 'transparent');
+      lineGrad.addColorStop(0.3, '#F59E0B');
+      lineGrad.addColorStop(0.7, '#F59E0B');
+      lineGrad.addColorStop(1, 'transparent');
+      ctx.strokeStyle = lineGrad;
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(200, 240); ctx.lineTo(920, 240);
+      ctx.moveTo(W/2 - 180, 245); ctx.lineTo(W/2 + 180, 245);
       ctx.stroke();
 
-      /* 이름 */
-      ctx.fillStyle = '#111827';
-      ctx.font = '28px sans-serif';
-      ctx.fillText('성  명', canvas.width / 2, 320);
-      ctx.font = 'bold 44px sans-serif';
-      ctx.fillStyle = '#2C3E6B';
-      ctx.fillText(name, canvas.width / 2, 375);
+      /* ── Certificate of Completion ── */
+      ctx.font = '16px sans-serif';
+      ctx.fillStyle = '#9CA3AF';
+      ctx.fillText('Certificate of Completion', W / 2, 278);
 
-      /* 강의명 */
-      ctx.fillStyle = '#111827';
-      ctx.font = '28px sans-serif';
-      ctx.fillText('과정명', canvas.width / 2, 450);
-      ctx.font = 'bold 30px sans-serif';
-      ctx.fillStyle = '#2C3E6B';
-      var title = courseTitle.length > 30 ? courseTitle.slice(0, 30) + '…' : courseTitle;
-      ctx.fillText(title, canvas.width / 2, 500);
-
-      /* 본문 */
-      ctx.fillStyle = '#374151';
-      ctx.font = '22px sans-serif';
-      ctx.fillText('위 사람은 AUD Academy의 실무 BI 교육 과정을 성실히 이수하였기에', canvas.width / 2, 575);
-      ctx.fillText('이 수료증을 수여합니다.', canvas.width / 2, 610);
-
-      /* 날짜 */
+      /* ── 본문: 수여 문구 ── */
       ctx.font = '20px sans-serif';
-      ctx.fillStyle = '#6B7280';
-      ctx.fillText(date, canvas.width / 2, 670);
+      ctx.fillStyle = '#4B5563';
+      ctx.fillText('아래 사람은 AUD Academy 실무 BI 교육 과정을 성실히 이수하였기에', W / 2, 340);
+      ctx.fillText('이 수료증을 수여합니다.', W / 2, 370);
+
+      /* ── 이름 섹션 ── */
+      ctx.font = '14px sans-serif';
+      ctx.fillStyle = '#9CA3AF';
+      ctx.fillText('수 료 자', W / 2, 430);
+
+      /* 이름 배경 박스 */
+      var nameBoxW = 360, nameBoxH = 68;
+      var nameBoxX = W/2 - nameBoxW/2, nameBoxY = 445;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.shadowColor = 'rgba(44,62,107,0.12)';
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.roundRect(nameBoxX, nameBoxY, nameBoxW, nameBoxH, 8);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = '#E5E7EB';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = 'bold 40px serif';
+      ctx.fillStyle = '#1A2E5A';
+      ctx.fillText(name, W / 2, nameBoxY + 46);
+
+      /* ── 과정명 섹션 ── */
+      ctx.font = '14px sans-serif';
+      ctx.fillStyle = '#9CA3AF';
+      ctx.fillText('수 료 과 정', W / 2, 560);
+
+      ctx.font = 'bold 24px sans-serif';
+      ctx.fillStyle = '#1A2E5A';
+      var title = courseTitle.length > 32 ? courseTitle.slice(0, 32) + '…' : courseTitle;
+      ctx.fillText(title, W / 2, 598);
+
+      /* ── 구분선 ── */
+      ctx.strokeStyle = '#E5E7EB';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(100, 630); ctx.lineTo(W - 100, 630);
+      ctx.stroke();
+
+      /* ── 하단: 날짜 + 직인 영역 ── */
+      ctx.textAlign = 'left';
+      ctx.font = '13px sans-serif';
+      ctx.fillStyle = '#9CA3AF';
+      ctx.fillText('발급일', 120, 675);
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillStyle = '#374151';
+      ctx.fillText(date, 120, 702);
+
+      /* 직인 원 */
+      ctx.textAlign = 'center';
+      ctx.beginPath();
+      ctx.arc(W - 180, 690, 52, 0, Math.PI * 2);
+      ctx.strokeStyle = '#DC2626';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(W - 180, 690, 44, 0, Math.PI * 2);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillStyle = '#DC2626';
+      ctx.fillText('비아이매트릭스', W - 180, 684);
+      ctx.fillText('AUD Academy', W - 180, 700);
 
       /* 발급처 */
-      ctx.font = 'bold 22px sans-serif';
-      ctx.fillStyle = '#2C3E6B';
-      ctx.fillText('비아이매트릭스 AUD Academy', canvas.width / 2, 720);
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillStyle = '#1A2E5A';
+      ctx.fillText('비아이매트릭스 주식회사  대표이사', W / 2, 780);
 
-      /* 다운로드 */
+      /* 수료번호 */
+      var certNum = 'AUD-' + date.replace(/-/g,'') + '-' + Math.floor(Math.random()*9000+1000);
+      ctx.font = '11px sans-serif';
+      ctx.fillStyle = '#D1D5DB';
+      ctx.fillText('수료번호: ' + certNum, W / 2, 810);
+
+      /* ── 다운로드 ── */
       var link = document.createElement('a');
       link.download = '수료증_' + name + '_' + courseTitle.slice(0, 15) + '.png';
-      link.href = canvas.toDataURL('image/png');
+      link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
       showToast('수료증이 다운로드되었습니다');
     }
