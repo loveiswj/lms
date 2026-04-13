@@ -326,7 +326,9 @@
     }
 
     var rows = list.map(function(u) {
-      var enrCount  = _data.enrollments.filter(function(e) { return e.user_id === u.id; }).length;
+      var userEnrs  = _data.enrollments.filter(function(e) { return e.user_id === u.id; });
+      var enrCount  = userEnrs.length;
+      var totalPaid = userEnrs.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
       var certCount = _data.certificates.filter(function(c) { return c.user_id === u.id; }).length;
       var progList  = _data.progress.filter(function(p) { return p.user_id === u.id; });
       var avgPct    = progList.length > 0
@@ -336,6 +338,7 @@
         '<td style="color:var(--text-hint);font-size:13px;">' + (u.email || '—') + '</td>' +
         '<td>' + (u.phone || '—') + '</td>' +
         '<td><span class="badge badge-blue">' + enrCount + '개</span></td>' +
+        '<td><strong style="color:var(--navy);">' + (totalPaid > 0 ? formatPrice(totalPaid) : '—') + '</strong></td>' +
         '<td>' +
           (certCount > 0 ? '<span class="badge badge-gold">🏆 ' + certCount + '개</span>' : '<span class="badge badge-gray">—</span>') +
         '</td>' +
@@ -344,16 +347,24 @@
       '</tr>';
     }).join('');
 
+    /* 총 결제 합계 */
+    var grandTotal = list.reduce(function(s, u) {
+      return s + _data.enrollments.filter(function(e) { return e.user_id === u.id; })
+        .reduce(function(ss, e) { return ss + (e.paid_amount || 0); }, 0);
+    }, 0);
+
     return '<div class="admin-card">' +
       '<div class="admin-card-header">' +
-        '<span class="admin-card-title">전체 수강생 (' + list.length + '명)</span>' +
+        '<span class="admin-card-title">전체 수강생 (' + list.length + '명)' +
+          (grandTotal > 0 ? ' &nbsp;·&nbsp; <span style="font-size:13px;color:var(--gold);font-weight:700;">총 ' + formatPrice(grandTotal) + '</span>' : '') +
+        '</span>' +
         '<input type="text" placeholder="이름·이메일·연락처 검색" value="' + (search||'') + '" ' +
           'oninput="_userSearch=this.value;renderTab(\'users\')" ' +
           'style="padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);width:200px;">' +
       '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>수강</th><th>수료증</th><th>평균진도</th><th>가입일</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="7">검색 결과가 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>수강</th><th>결제금액</th><th>수료증</th><th>평균진도</th><th>가입일</th></tr></thead>' +
+        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="8">검색 결과가 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
