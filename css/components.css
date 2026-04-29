@@ -145,7 +145,7 @@
    HERO SECTION
    ════════════════════════════════════════ */
 .hero {
-  background: var(--hero-bg) url('../../image/main.jpg') center/cover no-repeat;
+  background: var(--hero-bg) url('../assets/images/main.jpg') center/cover no-repeat;
   padding: 80px 0 88px;
   position: relative;
   overflow: hidden;
