@@ -3,744 +3,329 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AUD Academy — 실무 BI 교육 플랫폼</title>
-  <meta name="description" content="엑셀만 알면 시작할 수 있는 실무 BI 교육 플랫폼. AUD 플랫폼 활용 능력을 업종별·역할별 맞춤 과정으로 키우세요.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AUD Academy — 실무 BI 교육 플랫폼">
-  <meta property="og:description" content="엑셀만 알면 시작할 수 있는 실무 BI 교육. 유통·금융·제조·공공 업종별 34개 과정.">
-  <meta property="og:image" content="https://loveiswj.github.io/lms/assets/images/hero-01.jpg">
-  <meta property="og:url" content="https://loveiswj.github.io/lms/">
-  <meta property="og:site_name" content="AUD Academy">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AUD Academy — 실무 BI 교육 플랫폼">
-  <meta name="twitter:description" content="엑셀만 알면 시작할 수 있는 실무 BI 교육. 34개 과정.">
-  <meta name="twitter:image" content="https://loveiswj.github.io/lms/assets/images/hero-01.jpg">
+  <title>비아이매트릭스 아카데미 — 데이터로 성장하는 학습 플랫폼</title>
+  <meta name="description" content="AUD · G-MATRIX · TRINITY 통합 교육 센터. 비아이매트릭스 아카데미에서 데이터 전문가로 성장하세요.">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
 
-  <!-- ══ 공지 배너 ══ -->
-  <div class="notice-bar">
-    IT 지식 없이도 시작할 수 있는 실무 BI 교육 플랫폼입니다.&nbsp;&nbsp;<strong>엑셀만 알면 충분합니다.</strong>
-  </div>
-
   <!-- ══ 헤더 ══ -->
   <header class="site-header">
     <div class="container">
       <div class="header-main">
 
-        <!-- 로고 -->
-        <a href="index.html" class="logo">
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
+        <a href="index.html" class="logo-new">
+          <div class="logo-icon">B</div>
+          <div class="logo-text">
+            <span class="logo-text__brand">BI MATRIX</span>
+            <span class="logo-text__sub">ACADEMY</span>
+          </div>
         </a>
 
-        <!-- 검색창 -->
-        <div class="header-search">
-          <input type="text" class="header-search__input" placeholder="과목명, 업종, 역할로 검색하세요">
-          <button class="header-search__btn" aria-label="검색">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-          </button>
-        </div>
+        <nav class="gnb-simple" id="gnbSimple">
+          <a href="#" class="gnb-simple__link">교육안내</a>
+          <a href="course-list.html" class="gnb-simple__link">교육과정</a>
+          <a href="course-list.html" class="gnb-simple__link">교육탐색</a>
+          <a href="course-list.html" class="gnb-simple__link">교육신청</a>
+          <a href="#faq" class="gnb-simple__link">FAQ</a>
+          <a href="#community" class="gnb-simple__link">커뮤니티</a>
+        </nav>
 
-        <!-- 우측 액션 -->
         <div class="header-actions">
-          <a href="login.html" class="header-actions__link">로그인</a>
-          <span class="header-actions__divider"></span>
-          <a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>
-          <a href="course-list.html" class="btn btn--primary btn--sm">수강신청</a>
-        </div>
-
-        <!-- 모바일 검색 토글 -->
-        <button class="mobile-search-toggle" id="mobileSearchToggle" aria-label="검색">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </button>
-
-        <!-- 모바일 햄버거 -->
-        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
-          <span class="hamburger__line"></span>
-          <span class="hamburger__line"></span>
-          <span class="hamburger__line"></span>
-        </button>
-
-      </div>
-
-      <!-- 모바일 검색 패널 -->
-      <div class="mobile-search-panel" id="mobileSearchPanel">
-        <div class="header-search" style="max-width:100%;">
-          <input type="text" class="header-search__input" id="mobileSearchInput" placeholder="과목명, 업종, 역할로 검색하세요" style="max-width:100%;">
-          <button class="header-search__btn" id="mobileSearchSubmit" aria-label="검색">
+          <button class="header-icon-btn" aria-label="검색">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
+          <button class="lang-toggle">KO / EN</button>
+          <a href="login.html" class="btn btn--primary btn--sm">로그인</a>
         </div>
-      </div>
 
+        <button class="hamburger" id="hamburger" aria-label="메뉴">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </button>
+
+      </div>
     </div>
-
-    <!-- GNB -->
-    <nav class="gnb" aria-label="주요 메뉴">
-      <div class="container">
-        <div class="gnb__inner">
-
-          <!-- 업종별 -->
-          <div class="gnb__item">
-            <button class="gnb__trigger" aria-haspopup="true" aria-expanded="false">
-              업종별
-              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            <div class="mega-menu">
-              <div class="mega-menu__nav">
-                <div class="mega-menu__nav-item is-active" data-target="industry-all">전체 업종</div>
-                <div class="mega-menu__nav-item" data-target="industry-finance">금융 서비스</div>
-                <div class="mega-menu__nav-item" data-target="industry-medical">의료·생명과학</div>
-                <div class="mega-menu__nav-item" data-target="industry-public">공공 부문</div>
-                <div class="mega-menu__nav-item" data-target="industry-retail">소매·소비재</div>
-                <div class="mega-menu__nav-item" data-target="industry-telecom">통신·미디어</div>
-                <div class="mega-menu__nav-item" data-target="industry-manufacturing">제조업</div>
-              </div>
-              <div class="mega-menu__panel is-active" data-panel="industry-all">
-                <div class="mega-menu__panel-title">업종별 과정</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=industry&value=finance_industry" class="mega-menu__link">
-                    <strong>금융 서비스</strong><span>은행·증권·보험</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=public" class="mega-menu__link">
-                    <strong>공공 부문</strong><span>공공기관·지자체·에너지</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=retail" class="mega-menu__link">
-                    <strong>소매·소비재</strong><span>유통·리테일·이커머스</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=manufacturing" class="mega-menu__link">
-                    <strong>제조업</strong><span>생산·품질·SCM</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="industry-finance">
-                <div class="mega-menu__panel-title">금융 서비스</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=industry&value=finance_industry&role=analyst" class="mega-menu__link">
-                    <strong>현업 분석가용</strong><span>KPI·금리 분석 등</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=finance_industry&role=finance" class="mega-menu__link">
-                    <strong>재무·기획 담당자용</strong><span>예산·보고서 자동화</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=finance_industry&role=leader" class="mega-menu__link">
-                    <strong>비즈니스 리더용</strong><span>KPI 현황 대시보드</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=finance_industry&role=developer" class="mega-menu__link">
-                    <strong>개발자용</strong><span>외부 데이터 자동 수집</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="industry-medical">
-                <div class="mega-menu__panel-title">의료·생명과학</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html" class="mega-menu__link">
-                    <strong>병원·클리닉</strong><span>환자 데이터 분석</span>
-                  </a>
-                  <a href="course-list.html" class="mega-menu__link">
-                    <strong>제약·연구기관</strong><span>임상·실험 데이터 관리</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="industry-public">
-                <div class="mega-menu__panel-title">공공 부문</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=industry&value=public&role=finance" class="mega-menu__link">
-                    <strong>재무·기획 담당자</strong><span>예산 취합·보고서 자동화</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=public&role=analyst" class="mega-menu__link">
-                    <strong>현업 분석가</strong><span>근태·인건비 분석</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=public&role=developer" class="mega-menu__link">
-                    <strong>개발자</strong><span>직원 정보 관리 시스템</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="industry-retail">
-                <div class="mega-menu__panel-title">소매·소비재</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=industry&value=retail&role=analyst" class="mega-menu__link">
-                    <strong>현업 분석가</strong><span>매장 실적·재고 분석</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=retail&role=finance" class="mega-menu__link">
-                    <strong>재무·기획 담당자</strong><span>주간 보고서 자동화</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=retail&role=marketing" class="mega-menu__link">
-                    <strong>마케팅 담당자</strong><span>캠페인 성과 분석</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="industry-telecom">
-                <div class="mega-menu__panel-title">통신·미디어</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html" class="mega-menu__link">
-                    <strong>통신사</strong><span>가입자·해지 분석</span>
-                  </a>
-                  <a href="course-list.html" class="mega-menu__link">
-                    <strong>방송·플랫폼</strong><span>시청률·콘텐츠 성과 분석</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="industry-manufacturing">
-                <div class="mega-menu__panel-title">제조업</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=industry&value=manufacturing&role=analyst" class="mega-menu__link">
-                    <strong>현업 분석가</strong><span>생산·불량·SCM 분석</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=manufacturing&role=developer" class="mega-menu__link">
-                    <strong>개발자</strong><span>현장 데이터 입력 시스템</span>
-                  </a>
-                  <a href="course-list.html?category=industry&value=manufacturing&role=finance" class="mega-menu__link">
-                    <strong>재무·기획 담당자</strong><span>원가 분석·보고서 자동화</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 역할별 -->
-          <div class="gnb__item">
-            <button class="gnb__trigger">
-              역할별
-              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            <div class="mega-menu">
-              <div class="mega-menu__nav">
-                <div class="mega-menu__nav-item is-active" data-target="role-leader">비즈니스 리더</div>
-                <div class="mega-menu__nav-item" data-target="role-it">데이터·IT 리더</div>
-                <div class="mega-menu__nav-item" data-target="role-analyst">현업 분석가</div>
-                <div class="mega-menu__nav-item" data-target="role-developer">개발자</div>
-                <div class="mega-menu__nav-item" data-target="role-marketing">마케팅 담당자</div>
-                <div class="mega-menu__nav-item" data-target="role-finance">재무·기획 담당자</div>
-                <div class="mega-menu__nav-item" data-target="role-sales">영업·매출 관리자</div>
-              </div>
-              <div class="mega-menu__panel is-active" data-panel="role-leader">
-                <div class="mega-menu__panel-title">비즈니스 리더</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=leader" class="mega-menu__link">
-                    <strong>KPI 대시보드 구성</strong><span>엑셀 없이 바로 대답하기</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=leader&feature=dashboard" class="mega-menu__link">
-                    <strong>실시간 현황판 만들기</strong><span>의사결정 속도 높이기</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="role-it">
-                <div class="mega-menu__panel-title">데이터·IT 리더</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=developer" class="mega-menu__link">
-                    <strong>시스템 구현 전체 과정</strong><span>Lv.1~Lv.2 전체</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="role-analyst">
-                <div class="mega-menu__panel-title">현업 분석가</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=analyst" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>데이터로 원인 찾는 실무자</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=analyst&feature=olap" class="mega-menu__link">
-                    <strong>원인 분석 과정</strong><span>드릴다운·세그먼트 분석</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=analyst&feature=dashboard" class="mega-menu__link">
-                    <strong>현황 시각화 과정</strong><span>실시간 현황판 구성</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="role-developer">
-                <div class="mega-menu__panel-title">개발자</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=developer" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>화면·시스템 구현 담당자</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=developer&level=lv2" class="mega-menu__link">
-                    <strong>Lv.2 심화 과정</strong><span>CRUD·대시보드·결재 구현</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="role-marketing">
-                <div class="mega-menu__panel-title">마케팅 담당자</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=marketing" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>캠페인·고객 분석 실무자</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=marketing&feature=dashboard" class="mega-menu__link">
-                    <strong>광고 성과 현황판</strong><span>채널별 실시간 비교</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="role-finance">
-                <div class="mega-menu__panel-title">재무·기획 담당자</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=finance" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>예산·실적·보고 실무자</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=finance&feature=report" class="mega-menu__link">
-                    <strong>보고서 자동화 과정</strong><span>클릭 한 번에 보고서 완성</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="role-sales">
-                <div class="mega-menu__panel-title">영업·매출 관리자</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=role&value=analyst" class="mega-menu__link">
-                    <strong>실적 분석 과정</strong><span>매출 원인 추적</span>
-                  </a>
-                  <a href="course-list.html?category=role&value=analyst&feature=dashboard" class="mega-menu__link">
-                    <strong>매출 현황판 구성</strong><span>목표 대비 달성률</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 기능별 -->
-          <div class="gnb__item">
-            <button class="gnb__trigger">
-              기능별
-              <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            <div class="mega-menu" style="min-width: 700px;">
-              <div class="mega-menu__nav">
-                <div class="mega-menu__nav-item is-active" data-target="feat-epa">엑셀 → 시스템</div>
-                <div class="mega-menu__nav-item" data-target="feat-dashboard">현황판 만들기</div>
-                <div class="mega-menu__nav-item" data-target="feat-olap">원인 찾기</div>
-                <div class="mega-menu__nav-item" data-target="feat-uiux">직접 입력·수정</div>
-                <div class="mega-menu__nav-item" data-target="feat-report">보고서 출력</div>
-              </div>
-              <div class="mega-menu__panel is-active" data-panel="feat-epa">
-                <div class="mega-menu__panel-title">엑셀을 그대로 시스템으로</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=feature&value=epa" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>수식·조건부서식·틀고정까지 웹으로</span>
-                  </a>
-                  <a href="course-list.html?category=feature&value=epa&level=lv2" class="mega-menu__link">
-                    <strong>Lv.2 심화</strong><span>비정형 엑셀 → DB 자동 정규화</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="feat-dashboard">
-                <div class="mega-menu__panel-title">실시간 현황판 만들기</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=feature&value=dashboard" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>데이터가 자동 업데이트되는 화면</span>
-                  </a>
-                  <a href="course-list.html?category=feature&value=dashboard&level=lv2" class="mega-menu__link">
-                    <strong>Lv.2 심화</strong><span>커스텀 대시보드 처음부터 구성</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="feat-olap">
-                <div class="mega-menu__panel-title">데이터 파고들어 원인 찾기</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=feature&value=olap" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>클릭으로 숫자 뒤의 이유 추적</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="feat-uiux">
-                <div class="mega-menu__panel-title">화면에서 직접 입력·수정하기</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=feature&value=uiux" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>IT 요청 없이 데이터 직접 수정</span>
-                  </a>
-                  <a href="course-list.html?category=feature&value=uiux&level=lv2" class="mega-menu__link">
-                    <strong>Lv.2 심화</strong><span>CRUD 완성형 업무 시스템 구현</span>
-                  </a>
-                </div>
-              </div>
-              <div class="mega-menu__panel" data-panel="feat-report">
-                <div class="mega-menu__panel-title">보고서 자동 출력하기</div>
-                <div class="mega-menu__links">
-                  <a href="course-list.html?category=feature&value=report" class="mega-menu__link">
-                    <strong>전체 과정 보기</strong><span>정해진 양식으로 클릭 한 번에 완성</span>
-                  </a>
-                  <a href="course-list.html?category=feature&value=report&level=lv2" class="mega-menu__link">
-                    <strong>Lv.2 심화</strong><span>전자결재 양식 시스템 구현</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 추가 링크 -->
-          <div class="gnb__extra">
-            <a href="course-list.html" class="gnb__extra-link">전체 과정</a>
-            <a href="#" class="gnb__extra-link">수강후기</a>
-            <a href="#" class="gnb__extra-link">커뮤니티</a>
-          </div>
-        </div>
-      </div>
-    </nav>
   </header>
 
-  <!-- ══ 모바일 네비게이션 ══ -->
+  <!-- ══ 모바일 메뉴 ══ -->
   <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
     <div class="mobile-nav__header">
-      <a href="index.html" class="logo">
-        <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
-      </a>
+      <div class="logo-new">
+        <div class="logo-icon">B</div>
+        <div class="logo-text">
+          <span class="logo-text__brand">BI MATRIX</span>
+          <span class="logo-text__sub">ACADEMY</span>
+        </div>
+      </div>
       <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
     </div>
-
-    <div class="mobile-nav__section">
-      <div class="mobile-nav__category">
-        업종별
-        <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
-      <div class="mobile-nav__sub">
-        <a href="course-list.html?category=industry&value=finance_industry" class="mobile-nav__sub-link">금융 서비스 (은행·증권·보험)</a>
-        <a href="course-list.html?category=industry&value=public" class="mobile-nav__sub-link">공공 부문 (공공기관·지자체·에너지)</a>
-        <a href="course-list.html?category=industry&value=retail" class="mobile-nav__sub-link">소매·소비재 (유통·리테일·이커머스)</a>
-        <a href="course-list.html?category=industry&value=manufacturing" class="mobile-nav__sub-link">제조업 (생산·품질·SCM)</a>
-      </div>
+    <div class="mobile-nav__links">
+      <a href="#">교육안내</a>
+      <a href="course-list.html">교육과정</a>
+      <a href="course-list.html">교육탐색</a>
+      <a href="course-list.html">교육신청</a>
+      <a href="#faq">FAQ</a>
+      <a href="#community">커뮤니티</a>
     </div>
-
-    <div class="mobile-nav__section">
-      <div class="mobile-nav__category">
-        역할별
-        <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
-      <div class="mobile-nav__sub">
-        <a href="course-list.html?category=role&value=leader" class="mobile-nav__sub-link">비즈니스 리더 (의사결정·전략 담당 임원)</a>
-        <a href="course-list.html?category=role&value=analyst" class="mobile-nav__sub-link">현업 분석가 (데이터로 원인 찾는 실무자)</a>
-        <a href="course-list.html?category=role&value=developer" class="mobile-nav__sub-link">개발자 (화면·시스템 구현 담당자)</a>
-        <a href="course-list.html?category=role&value=marketing" class="mobile-nav__sub-link">마케팅 담당자 (캠페인·고객 분석 실무자)</a>
-        <a href="course-list.html?category=role&value=finance" class="mobile-nav__sub-link">재무·기획 담당자 (예산·실적·보고 실무자)</a>
-      </div>
-    </div>
-
-    <div class="mobile-nav__section">
-      <div class="mobile-nav__category">
-        기능별
-        <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
-      <div class="mobile-nav__sub">
-        <a href="course-list.html?category=feature&value=epa" class="mobile-nav__sub-link">엑셀을 그대로 시스템으로</a>
-        <a href="course-list.html?category=feature&value=dashboard" class="mobile-nav__sub-link">실시간 현황판 만들기</a>
-        <a href="course-list.html?category=feature&value=olap" class="mobile-nav__sub-link">데이터 파고들어 원인 찾기</a>
-        <a href="course-list.html?category=feature&value=uiux" class="mobile-nav__sub-link">화면에서 직접 입력·수정하기</a>
-        <a href="course-list.html?category=feature&value=report" class="mobile-nav__sub-link">보고서 자동 출력하기</a>
-      </div>
-    </div>
-
     <div class="mobile-nav__actions">
-      <a href="#" class="btn btn--secondary btn--full">로그인</a>
-      <a href="course-list.html" class="btn btn--primary btn--full">수강신청</a>
+      <a href="login.html" class="btn btn--primary btn--full">로그인</a>
     </div>
   </div>
 
-  <!-- ══ 메인 배너 슬라이더 ══ -->
-  <section class="hero-slider" aria-label="메인 배너">
-    <div class="hero-slides">
-
-      <!-- 슬라이드 1 -->
-      <div class="hero-slide hero-slide--1">
-        <div class="hero-slide__bg">
-          <img src="assets/images/hero-01.jpg" alt="">
-        </div>
-        <div class="hero-slide__inner">
-          <div class="hero-slide__content">
-            <span class="hero-slide__tag">Lv.1 기초 실무 과정</span>
-            <h1 class="hero-slide__title">내 업무에 딱 맞는<br>BI 교육</h1>
-            <p class="hero-slide__desc">IT 몰라도 됩니다.<br>엑셀만 알면 시작할 수 있어요.</p>
-            <a href="course-list.html" class="btn btn--primary btn--lg">지금 시작하기</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 슬라이드 2 -->
-      <div class="hero-slide hero-slide--2">
-        <div class="hero-slide__bg">
-          <img src="assets/images/hero-02.jpg" alt="">
-        </div>
-        <div class="hero-slide__inner">
-          <div class="hero-slide__content">
-            <span class="hero-slide__tag">업종별·역할별 맞춤 커리큘럼</span>
-            <h1 class="hero-slide__title">업종별·역할별<br>맞춤 커리큘럼</h1>
-            <p class="hero-slide__desc">금융, 제조, 공공, 유통 —<br>내 산업 언어로 배우는 실무 교육</p>
-            <a href="course-list.html?category=industry" class="btn btn--primary btn--lg">업종별 과정 보기</a>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- 슬라이드 3 -->
-      <div class="hero-slide hero-slide--3">
-        <div class="hero-slide__bg">
-          <img src="assets/images/hero-03.jpg" alt="">
-        </div>
-        <div class="hero-slide__inner">
-          <div class="hero-slide__content">
-            <span class="hero-slide__tag">단계별 커리큘럼</span>
-            <h1 class="hero-slide__title">한 번 세팅하면<br>매달 보고서가 혼자 만들어집니다</h1>
-            <p class="hero-slide__desc">Lv.1부터 Lv.2까지,<br>단계별로 실력을 쌓아가는 커리큘럼</p>
-            <a href="course-list.html" class="btn btn--accent btn--lg">커리큘럼 전체 보기</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 화살표 -->
-    <button class="hero-arrow hero-arrow--prev" aria-label="이전 슬라이드">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </button>
-    <button class="hero-arrow hero-arrow--next" aria-label="다음 슬라이드">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>
-    </button>
-
-    <!-- 인디케이터 -->
-    <div class="hero-slider__controls">
-      <button class="hero-dot is-active" aria-label="슬라이드 1"></button>
-      <button class="hero-dot" aria-label="슬라이드 2"></button>
-      <button class="hero-dot" aria-label="슬라이드 3"></button>
-    </div>
-  </section>
-
-  <!-- ══ 퀵배너 ══ -->
-  <section class="quick-banners">
+  <!-- ══ 히어로 ══ -->
+  <section class="hero">
+    <div class="hero__bg-dots"></div>
     <div class="container">
-      <a href="#" class="quick-banner" style="border-radius:0;">
-        <div class="quick-banner__icon">
-          <!-- 사람들이 모인 SVG 아이콘 -->
-          <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 36 36">
-            <circle cx="12" cy="10" r="4"/>
-            <circle cx="24" cy="10" r="4"/>
-            <circle cx="18" cy="10" r="4"/>
-            <path d="M4 28c0-4 3.6-7 8-7h12c4.4 0 8 3 8 7" stroke-linecap="round"/>
-          </svg>
+      <div class="hero__inner">
+
+        <div class="hero__content">
+          <h1 class="hero__title">데이터로 성장하는<br>사람들의 학습 플랫폼</h1>
+          <p class="hero__sub">AUD · G-MATRIX · TRINITY 통합 교육 센터</p>
+          <div class="hero__btns">
+            <a href="course-list.html" class="btn btn--blue btn--lg">교육 과정 &nbsp;→</a>
+            <a href="course-list.html" class="btn btn--outline-white btn--lg">교육 과정 보기 &nbsp;→</a>
+          </div>
         </div>
-        <div class="quick-banner__body">
-          <p class="quick-banner__date">2025년 6월 25일 (수) &nbsp;·&nbsp; 오프라인</p>
-          <p class="quick-banner__text">커뮤니티 네트워킹 데이 &mdash; 같은 고민을 가진 현업 담당자들과 직접 만나보세요</p>
+
+        <div class="hero__dashboard">
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <span class="dash-card__title">학습 현황 서비스</span>
+              <div class="dash-card__dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="dash-stats">
+              <div class="dash-stat">
+                <div class="dash-stat__val">12</div>
+                <div class="dash-stat__label">수강 과정</div>
+              </div>
+              <div class="dash-stat">
+                <div class="dash-stat__val">28</div>
+                <div class="dash-stat__label">완료 강의</div>
+              </div>
+              <div class="dash-stat">
+                <div class="dash-stat__val">124h</div>
+                <div class="dash-stat__label">학습 시간</div>
+              </div>
+              <div class="dash-stat">
+                <div class="dash-stat__val">16</div>
+                <div class="dash-stat__label">수료 과정</div>
+              </div>
+            </div>
+            <div class="dash-charts">
+              <div class="dash-chart-area">
+                <div class="dash-chart-label">학습 종료</div>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none" class="dash-line-svg">
+                  <defs>
+                    <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <polygon points="0,60 0,50 30,40 60,44 90,24 120,28 150,14 180,9 200,4 200,60" fill="url(#lg1)"/>
+                  <polyline points="0,50 30,40 60,44 90,24 120,28 150,14 180,9 200,4"
+                    fill="none" stroke="#3B82F6" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="dash-chart-area">
+                <div class="dash-chart-label">과정 VS. 분포</div>
+                <div class="dash-donut-wrap">
+                  <svg viewBox="0 0 80 80" class="dash-donut-svg">
+                    <circle cx="40" cy="40" r="26" fill="none" stroke="#1E3A6E" stroke-width="12"/>
+                    <circle cx="40" cy="40" r="26" fill="none" stroke="#3B82F6" stroke-width="12"
+                      stroke-dasharray="65 98" stroke-dashoffset="-5" stroke-linecap="round"/>
+                    <circle cx="40" cy="40" r="26" fill="none" stroke="#0D9488" stroke-width="12"
+                      stroke-dasharray="33 130" stroke-dashoffset="-75" stroke-linecap="round"/>
+                    <circle cx="40" cy="40" r="26" fill="none" stroke="#F59E0B" stroke-width="12"
+                      stroke-dasharray="18 145" stroke-dashoffset="-113" stroke-linecap="round"/>
+                  </svg>
+                  <div class="dash-donut-legend">
+                    <div><span style="background:#3B82F6"></span>AUD</div>
+                    <div><span style="background:#0D9488"></span>TRINITY</div>
+                    <div><span style="background:#F59E0B"></span>G-MTX</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <span class="quick-banner__btn">참석 신청하기 →</span>
-      </a>
+
+      </div>
     </div>
   </section>
 
-  <!-- ══ 업종별 빠른 탐색 ══ -->
-  <section class="section section--sm" style="background:var(--bg); border-bottom:1px solid var(--border); padding-top:32px;">
+  <!-- ══ 플랫폼 카드 ══ -->
+  <section class="platforms-section">
     <div class="container">
-      <div class="section-head-row">
-        <div class="section__head" style="margin-bottom:0;">
-          <h2 class="section__title">내 업종에 맞는 과정 찾기</h2>
-        </div>
-        <a href="course-list.html" class="btn btn--secondary btn--sm">전체 보기</a>
-      </div>
-      <div class="industry-cards" style="margin-top:28px;">
-        <div class="industry-card" data-industry="finance_industry">
-          <div class="industry-card__icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
-              <line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+      <div class="platforms-grid">
+
+        <a href="course-list.html?category=feature&value=epa" class="platform-card">
+          <div class="platform-card__icon platform-card__icon--blue">
+            <svg width="30" height="30" fill="white" viewBox="0 0 24 24">
+              <rect x="3" y="12" width="4" height="9" rx="1"/>
+              <rect x="10" y="7" width="4" height="14" rx="1"/>
+              <rect x="17" y="3" width="4" height="18" rx="1"/>
             </svg>
           </div>
-          <p class="industry-card__name">금융 서비스</p>
-          <p class="industry-card__count">5개 과정</p>
-        </div>
-        <div class="industry-card" data-industry="public">
-          <div class="industry-card__icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-              <polyline points="9,22 9,12 15,12 15,22"/>
+          <div class="platform-card__body">
+            <h3 class="platform-card__name">AUD 플랫폼</h3>
+            <p class="platform-card__desc">현장 개념이는 BI 방식품</p>
+            <p class="platform-card__tags">기초 · 중급 · 고급 의합</p>
+          </div>
+          <span class="platform-card__link">과정 보기 →</span>
+        </a>
+
+        <a href="course-list.html" class="platform-card">
+          <div class="platform-card__icon platform-card__icon--teal">
+            <svg width="30" height="30" fill="none" stroke="white" stroke-width="1.8" viewBox="0 0 24 24">
+              <path d="M12 2a7 7 0 017 7c0 4-2.5 5.5-3.5 7H8.5C7.5 14.5 5 13 5 9a7 7 0 017-7z"/>
+              <path d="M9 22h6M10 18h4"/>
             </svg>
           </div>
-          <p class="industry-card__name">공공 부문</p>
-          <p class="industry-card__count">5개 과정</p>
-        </div>
-        <div class="industry-card" data-industry="retail">
-          <div class="industry-card__icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-            </svg>
+          <div class="platform-card__body">
+            <h3 class="platform-card__name">TRINITY</h3>
+            <p class="platform-card__desc">수준별 최신 분석 AI</p>
+            <p class="platform-card__tags">AI 쿼리 · 실무 과정</p>
           </div>
-          <p class="industry-card__name">소매·소비재</p>
-          <p class="industry-card__count">5개 과정</p>
-        </div>
-        <div class="industry-card" data-industry="manufacturing">
-          <div class="industry-card__icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/>
-            </svg>
-          </div>
-          <p class="industry-card__name">제조업</p>
-          <p class="industry-card__count">9개 과정</p>
-        </div>
-        <div class="industry-card" data-industry="retail">
-          <div class="industry-card__icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-            </svg>
-          </div>
-          <p class="industry-card__name">마케팅·CRM</p>
-          <p class="industry-card__count">5개 과정</p>
-        </div>
-        <div class="industry-card" data-industry="manufacturing">
-          <div class="industry-card__icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
-          </div>
-          <p class="industry-card__name">구매·SCM</p>
-          <p class="industry-card__count">5개 과정</p>
-        </div>
+          <span class="platform-card__link">과정 보기 →</span>
+        </a>
+
       </div>
     </div>
   </section>
 
-  <!-- ══ 기능별 추천 과정 ══ -->
-  <section class="section">
+  <!-- ══ 이번 달 교육 일정 ══ -->
+  <section class="schedule-section">
     <div class="container">
       <div class="section-head-row">
-        <div class="section__head" style="margin-bottom:0;">
-          <h2 class="section__title">지금 가장 많이 찾는 과정</h2>
-          <p class="section__desc">기능별로 바로 시작할 수 있는 Lv.1 실무 과정</p>
-        </div>
-        <a href="course-list.html" class="btn btn--secondary btn--sm">전체 과정 보기</a>
+        <h2 class="section__title">이번 달 교육 일정</h2>
+        <a href="#" class="section-more-link">일정 전문 보기 →</a>
       </div>
-      <div class="grid-3" id="featuredCourses" style="margin-top:0;">
-        <!-- JS로 렌더링 -->
-        <div style="padding:60px; text-align:center; color:var(--text-hint); grid-column:span 3;">과정을 불러오는 중...</div>
+      <div class="schedule-card" id="scheduleCard">
+        <div class="data-loading">일정을 불러오는 중...</div>
       </div>
     </div>
   </section>
 
-  <!-- ══ Lv.2 심화 과정 ══ -->
-  <section class="section section--sm" style="background:var(--bg-card); border-top:1px solid var(--border);">
+  <!-- ══ 인기 교육 영상 ══ -->
+  <section class="videos-section">
     <div class="container">
       <div class="section-head-row">
-        <div class="section__head" style="margin-bottom:0;">
-          <h2 class="section__title">Lv.2 심화 과정</h2>
-          <p class="section__desc">기초를 마쳤다면, 이제 진짜 시스템을 만들 차례입니다</p>
-        </div>
-        <a href="course-list.html?level=lv2" class="btn btn--secondary btn--sm">심화 전체 보기</a>
+        <h2 class="section__title">인기 교육 영상</h2>
+        <a href="#" class="section-more-link">전체 영상 보기 →</a>
       </div>
-      <div class="grid-4" id="newCourses" style="margin-top:0;">
-        <!-- JS로 렌더링 -->
+      <div class="videos-grid" id="videosGrid">
+        <div class="data-loading" style="grid-column:span 4">영상을 불러오는 중...</div>
       </div>
     </div>
   </section>
 
-  <!-- ══ CTA 배너 ══ -->
-  <section style="background:var(--navy-dark); padding:64px 0;">
-    <div class="container" style="text-align:center;">
-      <h2 style="font-size:28px; font-weight:700; color:#fff; margin-bottom:14px; letter-spacing:-0.5px;">
-        어떤 과정부터 시작해야 할지 모르겠다면
-      </h2>
-      <p style="font-size:15px; color:rgba(255,255,255,0.65); line-height:1.7; margin-bottom:32px;">
-        2분 진단으로 내 업종·역할에 딱 맞는 과정을 추천받으세요
-      </p>
-      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-        <a href="course-list.html" class="btn btn--accent btn--lg">과정 추천받기</a>
-        <a href="course-list.html" class="btn btn--lg" style="background:rgba(255,255,255,0.1); color:#fff; border:1.5px solid rgba(255,255,255,0.3);">전체 과정 목록</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FAQ ══ -->
-  <section class="faq-section">
+  <!-- ══ FAQ + 커뮤니티 ══ -->
+  <section class="bottom-section" id="faq">
     <div class="container">
-      <div class="section-header" style="text-align:center; margin-bottom:40px;">
-        <p class="section-eyebrow">FAQ</p>
-        <h2 class="section-title">교육 전 자주 묻는 질문</h2>
-      </div>
-      <div class="faq-list" id="faqList">
+      <div class="bottom-grid">
 
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>IT 지식이 없어도 수강할 수 있나요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>네, 엑셀을 다룰 줄 안다면 충분합니다. 모든 과정은 SQL·프로그래밍 없이 BI 도구만으로 진행되며, 실무에서 바로 쓸 수 있는 내용 위주로 구성되어 있습니다.</p>
+        <!-- FAQ -->
+        <div class="faq-col">
+          <h2 class="section__title">자주 묻는 물음 (FAQ)</h2>
+          <div class="faq-list-new">
+
+            <div class="faq-item-new">
+              <button class="faq-q" onclick="toggleFaqNew(this)">
+                <span>교육 신청은 어떻게 하나요?</span>
+                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+              </button>
+              <div class="faq-a">
+                <p>회원가입 후 교육 과정 페이지에서 원하는 과정을 선택하고 신청하시면 됩니다. 기업 교육의 경우 별도 문의 바랍니다.</p>
+              </div>
+            </div>
+
+            <div class="faq-item-new">
+              <button class="faq-q" onclick="toggleFaqNew(this)">
+                <span>교육 수료증을 받을 수 있나요?</span>
+                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+              </button>
+              <div class="faq-a">
+                <p>영상을 80% 이상 수강하면 마이페이지에서 수료증을 바로 발급받을 수 있습니다. PDF로 저장하거나 이메일로 전송할 수 있습니다.</p>
+              </div>
+            </div>
+
+            <div class="faq-item-new">
+              <button class="faq-q" onclick="toggleFaqNew(this)">
+                <span>환불 기준은 어떻게 되나요?</span>
+                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+              </button>
+              <div class="faq-a">
+                <p>결제 후 7일 이내, 수강 진도 10% 미만인 경우 전액 환불됩니다. 자세한 내용은 이용약관을 확인해 주세요.</p>
+              </div>
+            </div>
+
+            <div class="faq-item-new">
+              <button class="faq-q" onclick="toggleFaqNew(this)">
+                <span>기업 정액 교육도 가능한가요?</span>
+                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+              </button>
+              <div class="faq-a">
+                <p>5인 이상 팀 교육은 별도 기업 교육 패키지로 제공됩니다. 업종·직무 맞춤 커리큘럼 구성, 현장 강사 파견이 가능합니다.</p>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>어떤 BI 도구를 사용하나요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>비아이매트릭스의 <strong>AUD (Analytics Universal Dashboard)</strong> 플랫폼을 사용합니다. 별도 설치 없이 웹 브라우저에서 바로 실습할 수 있으며, 수강 기간 동안 실습 계정이 제공됩니다.</p>
+        <!-- 커뮤니티 -->
+        <div class="community-col" id="community">
+          <h2 class="section__title">커뮤니티</h2>
+          <div class="community-list">
+            <a href="#" class="community-item">
+              <div class="community-item__icon community-item__icon--blue">📢</div>
+              <div class="community-item__body">
+                <p class="community-item__cat">공지 게시판</p>
+                <p class="community-item__text" id="noticePreview">최신 공지사항을 확인하세요</p>
+              </div>
+              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+            </a>
+            <a href="#" class="community-item">
+              <div class="community-item__icon community-item__icon--green">💬</div>
+              <div class="community-item__body">
+                <p class="community-item__cat">Q&amp;A</p>
+                <p class="community-item__text" id="qaPreview">궁금한 점을 질문해 보세요</p>
+              </div>
+              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+            </a>
+            <a href="#" class="community-item">
+              <div class="community-item__icon community-item__icon--purple">⭐</div>
+              <div class="community-item__body">
+                <p class="community-item__cat">수강 후기</p>
+                <p class="community-item__text" id="reviewPreview">수강생들의 생생한 후기</p>
+              </div>
+              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+            </a>
+            <a href="#" class="community-item">
+              <div class="community-item__icon community-item__icon--orange">🤖</div>
+              <div class="community-item__body">
+                <p class="community-item__cat">AI 이야기</p>
+                <p class="community-item__text" id="aiPreview">AI 활용 팁을 공유해요</p>
+              </div>
+              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+            </a>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>어떤 순서로 들어야 하나요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>각 업종별로 5단계 순서(① 데이터 취합 → ② 현황 시각화 → ③ 원인 분석 → ④ 데이터 입력 → ⑤ 보고서 출력)로 수강하시면 가장 효과적입니다. 본인 업무에서 가장 급한 단계부터 선택해서 들으셔도 됩니다.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>회사에서 이미 다른 BI 도구를 쓰고 있는데, 도움이 될까요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>네. 대시보드 설계 방법, 데이터 구조 이해, 드릴다운 분석 개념은 Tableau·Power BI 등 다른 도구에서도 동일하게 적용됩니다. AUD로 배운 실무 감각이 다른 도구 전환 시에도 큰 도움이 됩니다.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>수강 기간이 지나면 영상을 다시 볼 수 없나요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>수강 기간은 결제일로부터 6개월이며, 기간 내 무제한 반복 수강이 가능합니다. 수강 기간 연장도 별도로 신청하실 수 있습니다.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>팀 단위 기업 교육도 가능한가요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>네, 5인 이상 팀 교육은 별도 기업 교육 패키지로 제공됩니다. 업종·직무 맞춤 커리큘럼 구성, 현장 강사 파견, 실습 데이터 커스터마이징이 가능합니다. 기업 교육 문의는 하단 링크를 이용해 주세요.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            <span>수료증은 어떻게 받나요?</span>
-            <svg class="faq-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>과정 영상을 80% 이상 수강하면 마이페이지에서 수료증을 바로 발급받을 수 있습니다. PDF 형식으로 저장하거나 이메일로 전송할 수 있으며, 기업 제출용 원본 발급도 가능합니다.</p>
+          <div class="offline-event-card" id="offlineEventCard">
+            <div class="offline-event-card__content">
+              <p class="offline-event-card__tag">오프라인 모임 신청</p>
+              <h3 class="offline-event-card__title">BI MATRIX U2CR MEETUP</h3>
+              <p class="offline-event-card__info">📅 2026.06.25 (목) &nbsp;13:40 – 17:00</p>
+              <p class="offline-event-card__info">📍 서울 강남구 비아이매트릭스 본사 3층</p>
+              <a href="#" class="offline-event-card__btn">모임 참여하기 →</a>
+            </div>
           </div>
         </div>
 
@@ -749,37 +334,29 @@
   </section>
 
   <!-- ══ 푸터 ══ -->
-  <footer class="site-footer">
+  <footer class="site-footer-new">
     <div class="container">
-      <div class="footer-inner">
-        <div>
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px; width:auto; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:12px;">
-          <p class="footer-desc">IT 지식 없이도 시작할 수 있는<br>실무 BI 교육 플랫폼입니다.<br>엑셀만 알면 충분합니다.</p>
+      <div class="footer-new__inner">
+        <div class="footer-new__brand">
+          <div class="footer-logo-new">
+            <div class="logo-icon logo-icon--sm">B</div>
+            <span class="footer-logo-new__text">BI MATRIX</span>
+          </div>
         </div>
-        <div class="footer-links">
-          <div>
-            <p class="footer-links__group-title">교육 과정</p>
-            <a href="course-list.html?category=industry&value=finance_industry" class="footer-links__link">금융 서비스</a>
-            <a href="course-list.html?category=industry&value=manufacturing" class="footer-links__link">제조업</a>
-            <a href="course-list.html?category=industry&value=public" class="footer-links__link">공공 부문</a>
-            <a href="course-list.html?category=industry&value=retail" class="footer-links__link">소매·소비재</a>
-          </div>
-          <div>
-            <p class="footer-links__group-title">커뮤니티</p>
-            <a href="#" class="footer-links__link">수강후기</a>
-            <a href="#" class="footer-links__link">네트워킹 데이</a>
-            <a href="#" class="footer-links__link">공지사항</a>
-          </div>
-          <div>
-            <p class="footer-links__group-title">고객지원</p>
-            <a href="#" class="footer-links__link">자주 묻는 질문</a>
-            <a href="#" class="footer-links__link">1:1 문의</a>
-            <a href="#" class="footer-links__link">기업 교육 문의</a>
-          </div>
+        <div class="footer-new__links">
+          <a href="#">회사소개</a>
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+          <a href="#">고객센터</a>
+        </div>
+        <div class="footer-new__social">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="YouTube">▶</a>
+          <a href="#" aria-label="Naver Blog">N</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 AUD Academy. All rights reserved.</p>
+      <div class="footer-new__bottom">
+        <p>© 2026 BIMatrix Co. Ltd. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -789,15 +366,15 @@
   <script src="js/course-data.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/main.js"></script>
+
   <script>
-  function toggleFaq(btn) {
-    var item = btn.closest('.faq-item');
-    var isOpen = item.classList.contains('is-open');
-    document.querySelectorAll('.faq-item.is-open').forEach(function(el) {
-      el.classList.remove('is-open');
-    });
-    if (!isOpen) item.classList.add('is-open');
-  }
+    function toggleFaqNew(btn) {
+      const item = btn.closest('.faq-item-new');
+      const isOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.faq-item-new.is-open').forEach(el => el.classList.remove('is-open'));
+      if (!isOpen) item.classList.add('is-open');
+    }
   </script>
+
 </body>
 </html>

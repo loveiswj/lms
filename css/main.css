@@ -6,28 +6,60 @@
 
 /* ── CSS Variables ── */
 :root {
-  --navy:          #2C3E6B;
-  --navy-dark:     #1a2a4a;
-  --navy-light:    #4A6FA5;
+  /* ── Brand Blue (메인 포인트) ── */
+  --blue:          #2563EB;
+  --blue-light:    #3B82F6;
+  --blue-dark:     #1D4ED8;
+  --blue-pale:     #EFF6FF;
+
+  /* ── Teal (TRINITY) ── */
+  --teal:          #0D9488;
+  --teal-light:    #14B8A6;
+  --teal-pale:     #F0FDFA;
+
+  /* ── Hero 배경 ── */
+  --hero-bg:       #06101F;
+
+  /* ── 기존 호환 유지 ── */
+  --navy:          #0B1E3D;
+  --navy-dark:     #06101F;
+  --navy-light:    #1E40AF;
   --gold:          #F59E0B;
   --gold-hover:    #D97706;
-  --bg:            #F8F9FA;
+
+  /* ── 배경/카드 ── */
+  --bg:            #F0F4F8;
   --bg-card:       #FFFFFF;
-  --text-primary:  #1A1A2E;
+
+  /* ── 텍스트 ── */
+  --text-primary:  #0F172A;
   --text-sub:      #64748B;
   --text-hint:     #94A3B8;
-  --border:        #E8ECF0;
+
+  /* ── 테두리 ── */
+  --border:        #E2E8F0;
+  --border-light:  #F1F5F9;
+
+  /* ── 상태 색상 ── */
+  --green:         #22C55E;
+  --orange:        #F97316;
+  --red:           #EF4444;
+
+  /* ── 반경 ── */
   --radius-sm:     6px;
   --radius-md:     10px;
   --radius-lg:     16px;
+  --radius-xl:     24px;
+
+  /* ── 폰트 ── */
   --font:          'Pretendard Variable', 'Pretendard', 'Noto Sans KR', sans-serif;
 
-  /* Alias */
-  --color-primary:       #2C3E6B;
-  --color-primary-light: #4A6FA5;
+  /* ── Alias (하위 호환) ── */
+  --color-primary:       #2563EB;
+  --color-primary-light: #3B82F6;
   --color-accent:        #F59E0B;
-  --color-bg:            #F8F9FA;
-  --color-text:          #1A1A2E;
+  --color-bg:            #F0F4F8;
+  --color-text:          #0F172A;
   --color-text-sub:      #64748B;
   --color-border:        #E2E8F0;
   --font-main:           'Pretendard Variable', 'Pretendard', 'Noto Sans KR', sans-serif;
