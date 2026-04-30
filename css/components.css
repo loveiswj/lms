@@ -682,6 +682,11 @@
 .faq-col {
   display: flex;
   flex-direction: column;
+  order: 2;
+}
+
+.community-col {
+  order: 1;
 }
 
 .faq-list-new {
