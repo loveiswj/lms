@@ -204,15 +204,25 @@
   }
 
   /* ────────────────────────────────────────
+     오프라인 카드 높이 = FAQ 리스트 높이에 맞춤
+  ──────────────────────────────────────── */
+  function syncOfflineCardHeight() {
+    var faqList    = document.querySelector('.faq-list-new');
+    var offlineCard = document.getElementById('offlineEventCard');
+    if (!faqList || !offlineCard) return;
+    offlineCard.style.minHeight = faqList.offsetHeight + 'px';
+  }
+
+  /* ────────────────────────────────────────
      초기화 — 샘플 즉시 렌더 후 Supabase 업데이트
   ──────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
-    // 샘플 데이터 즉시 표시
     renderSchedules(SAMPLE_SCHEDULES);
     renderVideos(SAMPLE_VIDEOS);
-    // Supabase 실제 데이터로 업데이트 시도
     updateFromSupabase();
     initMobileNav();
+    syncOfflineCardHeight();
+    window.addEventListener('resize', syncOfflineCardHeight);
   });
 
 })();
