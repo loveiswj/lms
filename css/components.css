@@ -689,6 +689,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
+  flex: 1;
 }
 
 .faq-item-new {
