@@ -448,6 +448,12 @@
 .platform-card__icon--blue { background: var(--blue); }
 .platform-card__icon--teal { background: var(--teal); }
 
+.platform-card__logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
 .platform-card__body {
   flex: 1;
   min-width: 0;
@@ -460,15 +466,17 @@
   margin-bottom: 4px;
 }
 
-.platform-card__desc {
+.platform-card__tagline {
   font-size: 13px;
-  color: var(--text-sub);
+  font-weight: 600;
+  color: var(--blue);
   margin-bottom: 6px;
 }
 
-.platform-card__tags {
-  font-size: 12px;
-  color: var(--text-hint);
+.platform-card__desc {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.55;
 }
 
 .platform-card__link {
