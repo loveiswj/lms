@@ -620,11 +620,17 @@
 }
 
 /* FAQ */
+.faq-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .faq-list-new {
   margin-top: 20px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
+  flex: 1;
 }
 
 .faq-item-new {
