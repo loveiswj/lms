@@ -616,6 +616,7 @@
   display: grid;
   grid-template-columns: 55fr 45fr;
   gap: 48px;
+  align-items: stretch;
 }
 
 /* FAQ */
@@ -678,6 +679,11 @@
 }
 
 /* 커뮤니티 */
+.community-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .community-col .section__title {
   margin-bottom: 0;
 }
@@ -751,6 +757,10 @@
   background: linear-gradient(135deg, #0B1E3D 0%, #1E3A5F 100%);
   padding: 24px;
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .offline-event-card::before {
