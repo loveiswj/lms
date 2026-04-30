@@ -7,16 +7,16 @@
   "use strict";
 
   /* ────────────────────────────────────────
-     샘플 데이터 (Supabase 테이블 비어있을 때 fallback)
+     샘플 데이터
   ──────────────────────────────────────── */
-  const SAMPLE_SCHEDULES = [
+  var SAMPLE_SCHEDULES = [
     { date: '2026-11-05', dow: 'WED', title: 'AUD 기초 과정 — 데이터 연결과 네비게이션', instructor: '김지현 강사', time_start: '10:00', time_end: '17:00', mode: 'online', status: 'open' },
     { date: '2026-11-12', dow: 'WED', title: 'G-MATRIX 모바일 활용 실무', instructor: '이상현 강사', time_start: '10:00', time_end: '17:00', mode: 'online', status: 'closing' },
     { date: '2026-11-18', dow: 'WED', title: 'TRINITY 실전 데이터 분석', instructor: '박성현 강사', time_start: '10:00', time_end: '17:00', mode: 'offline', status: 'closed' },
     { date: '2026-11-26', dow: 'WED', title: 'BI 데이터 모델링 기초', instructor: '지관수 강사', time_start: '10:00', time_end: '17:00', mode: 'offline', status: 'open' },
   ];
 
-  const SAMPLE_VIDEOS = [
+  var SAMPLE_VIDEOS = [
     { title: 'AUD 대시보드 실전 질문', duration: '29:16', thumbnail_url: 'assets/images/thumb-dashboard.jpg', youtube_url: '#' },
     { title: 'G-MATRIX 콘텐츠 작성팁', duration: '15:52', thumbnail_url: 'assets/images/thumb-epa.jpg', youtube_url: '#' },
     { title: 'TRINITY 실전 판서', duration: '21:05', thumbnail_url: 'assets/images/thumb-olap.jpg', youtube_url: '#' },
@@ -24,54 +24,30 @@
   ];
 
   /* ────────────────────────────────────────
-     일정 로드
+     일정 렌더링
   ──────────────────────────────────────── */
-  async function loadSchedules() {
-    try {
-      if (typeof _supabase === 'undefined') throw new Error('no supabase');
-      const today = new Date().toISOString().split('T')[0];
-      const { data, error } = await _supabase
-        .from('schedules')
-        .select('*')
-        .gte('date', today)
-        .order('date', { ascending: true })
-        .limit(5);
-
-      if (error || !data || data.length === 0) {
-        renderSchedules(SAMPLE_SCHEDULES);
-      } else {
-        renderSchedules(data);
-      }
-    } catch (_) {
-      renderSchedules(SAMPLE_SCHEDULES);
-    }
-  }
-
   function renderSchedules(list) {
-    const el = document.getElementById('scheduleCard');
+    var el = document.getElementById('scheduleCard');
     if (!el) return;
 
-    const DOWS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    var DOWS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    var statusMap = {
+      open:     { cls: 'schedule-status--open',     label: '신청중' },
+      closing:  { cls: 'schedule-status--closing',  label: '마감임박' },
+      closed:   { cls: 'schedule-status--closed',   label: '마감' },
+      upcoming: { cls: 'schedule-status--upcoming', label: '예정' }
+    };
 
-    const rows = list.map(function (s) {
-      const d = new Date(s.date + 'T00:00:00');
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      const dow = s.dow || DOWS[d.getDay()];
-
-      const modeIcon = s.mode === 'online' ? '🖥' : '📍';
-      const modeText = s.mode === 'online' ? '온라인' : s.mode === 'hybrid' ? '하이브리드' : '오프라인';
-
-      const statusMap = {
-        open:     { cls: 'schedule-status--open',     label: '신청중' },
-        closing:  { cls: 'schedule-status--closing',  label: '마감임박' },
-        closed:   { cls: 'schedule-status--closed',   label: '마감' },
-        upcoming: { cls: 'schedule-status--upcoming', label: '예정' },
-      };
-      const st = statusMap[s.status] || statusMap['open'];
-
-      const timeStart = (s.time_start || '10:00').slice(0, 5);
-      const timeEnd   = (s.time_end   || '17:00').slice(0, 5);
+    var rows = list.map(function (s) {
+      var d = new Date(s.date + 'T00:00:00');
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      var dow = s.dow || DOWS[d.getDay()];
+      var modeIcon = s.mode === 'online' ? '🖥' : '📍';
+      var modeText = s.mode === 'online' ? '온라인' : s.mode === 'hybrid' ? '하이브리드' : '오프라인';
+      var st = statusMap[s.status] || statusMap['open'];
+      var ts = (s.time_start || '10:00').slice(0, 5);
+      var te = (s.time_end   || '17:00').slice(0, 5);
 
       return '<tr>' +
         '<td><div class="schedule-date">' +
@@ -80,7 +56,7 @@
         '</div></td>' +
         '<td class="schedule-title-cell">' + s.title + '</td>' +
         '<td class="schedule-instructor">' + (s.instructor || '') + '</td>' +
-        '<td class="schedule-time">' + timeStart + ' – ' + timeEnd + '</td>' +
+        '<td class="schedule-time">' + ts + ' – ' + te + '</td>' +
         '<td><div class="schedule-mode"><span>' + modeIcon + '</span><span>' + modeText + '</span></div></td>' +
         '<td><span class="schedule-status ' + st.cls + '">' + st.label + '</span></td>' +
         '</tr>';
@@ -90,36 +66,16 @@
   }
 
   /* ────────────────────────────────────────
-     영상 로드
+     영상 렌더링
   ──────────────────────────────────────── */
-  async function loadVideos() {
-    try {
-      if (typeof _supabase === 'undefined') throw new Error('no supabase');
-      const { data, error } = await _supabase
-        .from('videos')
-        .select('*')
-        .order('view_count', { ascending: false })
-        .limit(4);
-
-      if (error || !data || data.length === 0) {
-        renderVideos(SAMPLE_VIDEOS);
-      } else {
-        renderVideos(data);
-      }
-    } catch (_) {
-      renderVideos(SAMPLE_VIDEOS);
-    }
-  }
-
   function renderVideos(list) {
-    const el = document.getElementById('videosGrid');
+    var el = document.getElementById('videosGrid');
     if (!el) return;
 
     el.innerHTML = list.map(function (v) {
-      const thumb = v.thumbnail_url || 'assets/images/thumb-dashboard.jpg';
-      const url   = v.youtube_url   || '#';
-      const target = url !== '#' ? 'target="_blank" rel="noopener"' : '';
-
+      var thumb  = v.thumbnail_url || 'assets/images/thumb-dashboard.jpg';
+      var url    = v.youtube_url   || '#';
+      var target = url !== '#' ? 'target="_blank" rel="noopener"' : '';
       return '<a href="' + url + '" ' + target + ' class="video-card">' +
         '<div class="video-card__thumb">' +
           '<img src="' + thumb + '" alt="' + v.title + '" loading="lazy">' +
@@ -131,86 +87,97 @@
           '</div>' +
           (v.duration ? '<span class="video-card__duration">' + v.duration + '</span>' : '') +
         '</div>' +
-        '<div class="video-card__body">' +
-          '<p class="video-card__title">' + v.title + '</p>' +
-        '</div>' +
+        '<div class="video-card__body"><p class="video-card__title">' + v.title + '</p></div>' +
         '</a>';
     }).join('');
   }
 
   /* ────────────────────────────────────────
-     커뮤니티 게시글 미리보기
+     Supabase에서 실제 데이터 업데이트
   ──────────────────────────────────────── */
-  async function loadCommunityPosts() {
-    try {
-      if (typeof _supabase === 'undefined') return;
-      const { data, error } = await _supabase
-        .from('community_posts')
-        .select('id, category, title, created_at')
-        .order('created_at', { ascending: false })
-        .limit(8);
+  function updateFromSupabase() {
+    var sb;
+    try { sb = _supabase; } catch (e) { return; }
+    if (!sb) return;
 
-      if (error || !data) return;
-
-      var byCategory = {};
-      data.forEach(function (p) {
-        if (!byCategory[p.category]) byCategory[p.category] = [];
-        byCategory[p.category].push(p);
-      });
-
-      var map = {
-        notice: 'noticePreview',
-        qa:     'qaPreview',
-        review: 'reviewPreview',
-        ai:     'aiPreview',
-      };
-
-      Object.keys(map).forEach(function (cat) {
-        if (byCategory[cat] && byCategory[cat][0]) {
-          var el = document.getElementById(map[cat]);
-          if (el) el.textContent = byCategory[cat][0].title;
+    // 일정 업데이트
+    var today = new Date().toISOString().split('T')[0];
+    sb.from('schedules')
+      .select('*')
+      .gte('date', today)
+      .order('date', { ascending: true })
+      .limit(5)
+      .then(function (res) {
+        if (!res.error && res.data && res.data.length > 0) {
+          renderSchedules(res.data);
         }
-      });
-    } catch (_) { /* keep defaults */ }
+      })
+      .catch(function () {});
+
+    // 영상 업데이트
+    sb.from('videos')
+      .select('*')
+      .order('view_count', { ascending: false })
+      .limit(4)
+      .then(function (res) {
+        if (!res.error && res.data && res.data.length > 0) {
+          renderVideos(res.data);
+        }
+      })
+      .catch(function () {});
+
+    // 커뮤니티 미리보기
+    sb.from('community_posts')
+      .select('id, category, title')
+      .order('created_at', { ascending: false })
+      .limit(8)
+      .then(function (res) {
+        if (!res.error && res.data) {
+          var map = { notice: 'noticePreview', qa: 'qaPreview', review: 'reviewPreview', ai: 'aiPreview' };
+          var bycat = {};
+          res.data.forEach(function (p) {
+            if (!bycat[p.category]) bycat[p.category] = p;
+          });
+          Object.keys(map).forEach(function (cat) {
+            if (bycat[cat]) {
+              var el = document.getElementById(map[cat]);
+              if (el) el.textContent = bycat[cat].title;
+            }
+          });
+        }
+      })
+      .catch(function () {});
+
+    // 오프라인 이벤트
+    sb.from('offline_events')
+      .select('*')
+      .eq('is_active', true)
+      .order('date', { ascending: true })
+      .limit(1)
+      .then(function (res) {
+        if (!res.error && res.data && res.data.length > 0) {
+          var data = res.data[0];
+          var el = document.getElementById('offlineEventCard');
+          if (!el) return;
+          var d = new Date(data.date);
+          var pad = function (n) { return String(n).padStart(2, '0'); };
+          var dateStr = d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate());
+          var timeStr = pad(d.getHours()) + ':' + pad(d.getMinutes());
+          el.innerHTML =
+            '<div class="offline-event-card__content">' +
+            '<p class="offline-event-card__tag">오프라인 모임 신청</p>' +
+            '<h3 class="offline-event-card__title">' + data.title + '</h3>' +
+            '<p class="offline-event-card__info">📅 ' + dateStr + ' &nbsp;' + timeStr + '</p>' +
+            '<p class="offline-event-card__info">📍 ' + (data.location || '') + '</p>' +
+            '<a href="' + (data.apply_url || '#') + '" class="offline-event-card__btn">모임 참여하기 →</a>' +
+            '</div>';
+        }
+      })
+      .catch(function () {});
   }
 
   /* ────────────────────────────────────────
-     오프라인 이벤트
-  ──────────────────────────────────────── */
-  async function loadOfflineEvent() {
-    try {
-      if (typeof _supabase === 'undefined') return;
-      const { data, error } = await _supabase
-        .from('offline_events')
-        .select('*')
-        .eq('is_active', true)
-        .order('date', { ascending: true })
-        .limit(1)
-        .maybeSingle();
-
-      if (error || !data) return;
-
-      var el = document.getElementById('offlineEventCard');
-      if (!el) return;
-
-      var d = new Date(data.date);
-      var pad = function (n) { return String(n).padStart(2, '0'); };
-      var dateStr = d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate());
-      var timeStr = pad(d.getHours()) + ':' + pad(d.getMinutes());
-
-      el.innerHTML =
-        '<div class="offline-event-card__content">' +
-          '<p class="offline-event-card__tag">오프라인 모임 신청</p>' +
-          '<h3 class="offline-event-card__title">' + data.title + '</h3>' +
-          '<p class="offline-event-card__info">📅 ' + dateStr + ' &nbsp;' + timeStr + '</p>' +
-          '<p class="offline-event-card__info">📍 ' + (data.location || '') + '</p>' +
-          '<a href="' + (data.apply_url || '#') + '" class="offline-event-card__btn">모임 참여하기 →</a>' +
-        '</div>';
-    } catch (_) { /* keep defaults */ }
-  }
-
-  /* ────────────────────────────────────────
-     모바일 메뉴 (신규)
+     모바일 메뉴
   ──────────────────────────────────────── */
   function initMobileNav() {
     var ham = document.getElementById('hamburger');
@@ -222,14 +189,12 @@
       nav.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     });
-
     if (cls) {
       cls.addEventListener('click', function () {
         nav.classList.remove('is-open');
         document.body.style.overflow = '';
       });
     }
-
     nav.addEventListener('click', function (e) {
       if (e.target === nav) {
         nav.classList.remove('is-open');
@@ -239,13 +204,14 @@
   }
 
   /* ────────────────────────────────────────
-     초기화
+     초기화 — 샘플 즉시 렌더 후 Supabase 업데이트
   ──────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
-    loadSchedules();
-    loadVideos();
-    loadCommunityPosts();
-    loadOfflineEvent();
+    // 샘플 데이터 즉시 표시
+    renderSchedules(SAMPLE_SCHEDULES);
+    renderVideos(SAMPLE_VIDEOS);
+    // Supabase 실제 데이터로 업데이트 시도
+    updateFromSupabase();
     initMobileNav();
   });
 
