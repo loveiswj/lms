@@ -180,18 +180,22 @@
      과정별 교육 카드 탭
   ──────────────────────────────────────── */
   function initCourseTabs() {
-    var btns = document.querySelectorAll('.course-tab-btn');
-    if (!btns.length) return;
-    btns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var tab = btn.dataset.tab;
-        btns.forEach(function (b) { b.classList.remove('is-active'); });
-        btn.classList.add('is-active');
+    var cards = document.querySelectorAll('.platform-card--v2[data-course-tab]');
+    if (!cards.length) return;
+    cards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        e.preventDefault();
+        var tab = card.dataset.courseTab;
+        cards.forEach(function (c) { c.classList.remove('is-active'); });
+        card.classList.add('is-active');
         document.querySelectorAll('.course-cards-panel').forEach(function (p) {
           p.classList.add('is-hidden');
         });
         var panel = document.getElementById('courseTab-' + tab);
-        if (panel) panel.classList.remove('is-hidden');
+        if (panel) {
+          panel.classList.remove('is-hidden');
+          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       });
     });
   }
