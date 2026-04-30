@@ -282,49 +282,52 @@
         <!-- 커뮤니티 -->
         <div class="community-col" id="community">
           <h2 class="section__title">커뮤니티</h2>
-          <div class="community-list">
-            <a href="#" class="community-item">
-              <div class="community-item__icon community-item__icon--blue">📢</div>
-              <div class="community-item__body">
-                <p class="community-item__cat">공지 게시판</p>
-                <p class="community-item__text" id="noticePreview">최신 공지사항을 확인하세요</p>
-              </div>
-              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
-            </a>
-            <a href="#" class="community-item">
-              <div class="community-item__icon community-item__icon--green">💬</div>
-              <div class="community-item__body">
-                <p class="community-item__cat">Q&amp;A</p>
-                <p class="community-item__text" id="qaPreview">궁금한 점을 질문해 보세요</p>
-              </div>
-              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
-            </a>
-            <a href="#" class="community-item">
-              <div class="community-item__icon community-item__icon--purple">⭐</div>
-              <div class="community-item__body">
-                <p class="community-item__cat">수강 후기</p>
-                <p class="community-item__text" id="reviewPreview">수강생들의 생생한 후기</p>
-              </div>
-              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
-            </a>
-            <a href="#" class="community-item">
-              <div class="community-item__icon community-item__icon--orange">🤖</div>
-              <div class="community-item__body">
-                <p class="community-item__cat">AI 이야기</p>
-                <p class="community-item__text" id="aiPreview">AI 활용 팁을 공유해요</p>
-              </div>
-              <svg width="16" height="16" fill="none" stroke="#CBD5E1" stroke-width="2" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
-            </a>
-          </div>
+          <div class="community-card">
 
-          <div class="offline-event-card" id="offlineEventCard">
-            <div class="offline-event-card__content">
-              <p class="offline-event-card__tag">오프라인 모임 신청</p>
-              <h3 class="offline-event-card__title">BI MATRIX U2CR MEETUP</h3>
-              <p class="offline-event-card__info">📅 2026.06.25 (목) &nbsp;13:40 – 17:00</p>
-              <p class="offline-event-card__info">📍 서울 강남구 비아이매트릭스 본사 3층</p>
-              <a href="#" class="offline-event-card__btn">모임 참여하기 →</a>
+            <!-- 온라인 커뮤니티 -->
+            <div class="community-card__online">
+              <p class="community-card__sub-title">온라인 커뮤니티</p>
+              <p class="community-card__sub-desc">다양한 주제의 질문과 정보 공유</p>
+              <div class="community-list-v2">
+                <a href="#" class="community-item-v2">
+                  <div class="community-item-v2__icon community-item-v2__icon--blue">📢</div>
+                  <div class="community-item-v2__body">
+                    <p class="community-item-v2__cat">공지 게시판</p>
+                    <p class="community-item-v2__text" id="noticePreview">자주묻는 질문을 나눠보는 공간</p>
+                  </div>
+                </a>
+                <a href="#" class="community-item-v2">
+                  <div class="community-item-v2__icon community-item-v2__icon--teal">💬</div>
+                  <div class="community-item-v2__body">
+                    <p class="community-item-v2__cat">Q&amp;A 질문</p>
+                    <p class="community-item-v2__text" id="qaPreview">질문하고 전문가에게 답변 받기</p>
+                  </div>
+                </a>
+                <a href="#" class="community-item-v2">
+                  <div class="community-item-v2__icon community-item-v2__icon--purple">👥</div>
+                  <div class="community-item-v2__body">
+                    <p class="community-item-v2__cat">스터디 그룹</p>
+                    <p class="community-item-v2__text" id="reviewPreview">함께 성장하는 학습공동체</p>
+                  </div>
+                </a>
+              </div>
             </div>
+
+            <!-- 오프라인 모임 -->
+            <div class="community-card__offline" id="offlineEventCard">
+              <p class="community-card__sub-title">오프라인 모임 신청</p>
+              <p class="community-card__sub-desc">현장에서 만나는 교육 세미나</p>
+              <div class="offline-event-v2">
+                <img src="assets/images/hero-02.jpg" alt="오프라인 모임" class="offline-event-v2__img">
+                <div class="offline-event-v2__body">
+                  <p class="offline-event-v2__name">BI MATRIX USER MEETUP</p>
+                  <p class="offline-event-v2__info">📅 2026.10.21 (수) &nbsp;14:00 ~ 17:00</p>
+                  <p class="offline-event-v2__info">📍 서울 강남구 테헤란로 125, 5층</p>
+                  <a href="#" class="offline-event-v2__btn">모임 신청하기 →</a>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
