@@ -673,7 +673,7 @@
 
 .bottom-grid {
   display: grid;
-  grid-template-columns: 55fr 45fr;
+  grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: stretch;
 }
