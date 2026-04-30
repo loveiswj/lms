@@ -177,6 +177,36 @@
   }
 
   /* ────────────────────────────────────────
+     검색 오버레이
+  ──────────────────────────────────────── */
+  function initSearch() {
+    var toggle  = document.getElementById('searchToggle');
+    var overlay = document.getElementById('searchOverlay');
+    var input   = document.getElementById('searchInput');
+    var close   = document.getElementById('searchClose');
+    if (!toggle || !overlay) return;
+
+    function open() {
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { if (input) input.focus(); }, 50);
+    }
+    function shut() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', open);
+    close.addEventListener('click', shut);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) shut();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') shut();
+    });
+  }
+
+  /* ────────────────────────────────────────
      모바일 메뉴
   ──────────────────────────────────────── */
   function initMobileNav() {
@@ -220,6 +250,7 @@
     renderSchedules(SAMPLE_SCHEDULES);
     renderVideos(SAMPLE_VIDEOS);
     updateFromSupabase();
+    initSearch();
     initMobileNav();
     syncOfflineCardHeight();
     window.addEventListener('resize', syncOfflineCardHeight);

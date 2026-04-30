@@ -3,6 +3,65 @@
    ========================================= */
 
 /* ════════════════════════════════════════
+   검색 오버레이
+   ════════════════════════════════════════ */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 16, 31, 0.85);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 100px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.search-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.search-overlay__inner {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.search-overlay__input {
+  flex: 1;
+  height: 52px;
+  padding: 0 20px;
+  border: 2px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+}
+.search-overlay__input:focus {
+  border-color: var(--blue-light);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+}
+.search-overlay__close {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.search-overlay__close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ════════════════════════════════════════
    NEW HEADER — 로고 & GNB
    ════════════════════════════════════════ */
 .logo-new {
