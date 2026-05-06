@@ -1150,6 +1150,7 @@
   color: var(--text-secondary);
   text-align: left;
   width: 100%;
+  white-space: nowrap;
 }
 
 .course-tabs-section .course-card__meta li span {
