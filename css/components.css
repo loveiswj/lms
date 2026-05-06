@@ -1124,7 +1124,7 @@
 }
 
 .course-card__desc {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-sub);
   line-height: 1.6;
   flex: 1;
