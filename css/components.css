@@ -962,9 +962,7 @@
   flex-shrink: 0;
 }
 
-.community-item-v2__icon--blue   { background: var(--blue-pale); }
-.community-item-v2__icon--teal   { background: #CCFBF1; }
-.community-item-v2__icon--purple { background: #FAF5FF; }
+.community-item-v2__icon { background: #F1F5F9; }
 
 .community-item-v2__cat {
   font-size: 13px;
