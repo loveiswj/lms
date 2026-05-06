@@ -1129,7 +1129,7 @@
   flex: 1;
 }
 
-.course-card__meta {
+.course-tabs-section .course-card__meta {
   list-style: none;
   padding: 0;
   margin: 8px 0 0;
@@ -1137,19 +1137,21 @@
   padding-top: 12px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 6px;
 }
 
-.course-card__meta li {
+.course-tabs-section .course-card__meta li {
   display: flex;
   align-items: baseline;
   gap: 10px;
   font-size: 12px;
   color: var(--text-secondary);
   text-align: left;
+  width: 100%;
 }
 
-.course-card__meta li span {
+.course-tabs-section .course-card__meta li span {
   font-weight: 700;
   color: var(--text-primary);
   min-width: 52px;
