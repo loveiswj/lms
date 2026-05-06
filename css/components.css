@@ -1150,7 +1150,7 @@
   align-items: flex-start;
 }
 
-.course-tabs-section .course-card__meta li span {
+.course-tabs-section .course-card__meta li span:first-child {
   font-weight: 700;
   color: var(--text-primary);
   min-width: 52px;
