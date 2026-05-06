@@ -396,6 +396,7 @@
     <div class="mypage-tabs">
       <button class="mypage-tab active" onclick="switchTab('courses')">내 강의</button>
       <button class="mypage-tab" onclick="switchTab('certificates')">수료증</button>
+      <button class="mypage-tab" onclick="switchTab('community')">내 게시글</button>
       <button class="mypage-tab" onclick="switchTab('settings')">프로필 설정</button>
     </div>
 
@@ -409,6 +410,13 @@
     <!-- ── 탭: 수료증 ── -->
     <div class="tab-panel" id="panel-certificates">
       <div id="certList">
+        <!-- JS로 렌더링 -->
+      </div>
+    </div>
+
+    <!-- ── 탭: 내 게시글 ── -->
+    <div class="tab-panel" id="panel-community">
+      <div id="myPostList">
         <!-- JS로 렌더링 -->
       </div>
     </div>
@@ -483,14 +491,15 @@
     }
 
     function switchTab(name) {
+      var names = ['courses', 'certificates', 'community', 'settings'];
       document.querySelectorAll('.mypage-tab').forEach(function(btn, i) {
-        var names = ['courses', 'certificates', 'settings'];
         btn.classList.toggle('active', names[i] === name);
       });
       document.querySelectorAll('.tab-panel').forEach(function(p) {
         p.classList.remove('active');
       });
       document.getElementById('panel-' + name).classList.add('active');
+      if (name === 'community') loadMyPosts();
     }
 
     async function logout(e) {
@@ -854,6 +863,70 @@
       document.getElementById('pwNew').value = '';
       document.getElementById('pwConfirm').value = '';
       showToast('비밀번호가 변경되었습니다');
+    }
+
+    /* ── 내 게시글 로드 ── */
+    var _myPostsLoaded = false;
+    async function loadMyPosts() {
+      if (_myPostsLoaded) return;
+      _myPostsLoaded = true;
+
+      var listEl = document.getElementById('myPostList');
+      var CAT_LABELS = { notice:'공지', qa:'Q&A', free:'자유', review:'수강후기' };
+      var CAT_COLORS = { notice:'#92400E', qa:'#2563EB', free:'#166534', review:'#7C3AED' };
+      var CAT_BGS    = { notice:'#FEF3C7', qa:'#EFF6FF', free:'#F0FDF4', review:'#FDF4FF' };
+
+      function renderMyPosts(posts) {
+        if (!posts || posts.length === 0) {
+          listEl.innerHTML = '<div class="empty-state">'
+            + '<svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+            + '<p>아직 작성한 게시글이 없어요<br>커뮤니티에서 첫 글을 써보세요</p>'
+            + '<a href="community.html">커뮤니티 가기</a>'
+            + '</div>';
+          return;
+        }
+
+        var html = posts.map(function(p) {
+          var cat = p.category || 'free';
+          var label = CAT_LABELS[cat] || cat;
+          var color = CAT_COLORS[cat] || '#64748B';
+          var bg    = CAT_BGS[cat]    || '#F0F4F8';
+          var date  = p.created_at ? p.created_at.slice(0,10) : '';
+          return '<div class="course-progress-card" style="align-items:center; cursor:pointer;" onclick="window.location.href=\'community.html\'">'
+            + '<div style="width:48px; height:48px; border-radius:12px; background:' + bg + '; display:flex; align-items:center; justify-content:center; flex-shrink:0;">'
+            + '<svg width="20" height="20" fill="none" stroke="' + color + '" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+            + '</div>'
+            + '<div class="course-info">'
+            + '<div class="course-meta-row">'
+            + '<span class="course-tag" style="background:' + bg + '; border-color:transparent; color:' + color + ';">' + label + '</span>'
+            + '<span class="course-tag">' + date + '</span>'
+            + '</div>'
+            + '<div class="course-progress-title">' + (p.title || '') + '</div>'
+            + '<div class="progress-text">조회 ' + (p.views||0) + ' · 댓글 ' + (p.comment_count||0) + ' · 좋아요 ' + (p.likes||0) + '</div>'
+            + '</div>'
+            + '<a href="community.html" class="btn-continue" style="flex-shrink:0;">보러가기</a>'
+            + '</div>';
+        }).join('');
+        listEl.innerHTML = html;
+      }
+
+      // Supabase에서 로드
+      try {
+        var { data: { session } } = await _supabase.auth.getSession();
+        if (!session) { renderMyPosts([]); return; }
+
+        var { data, error } = await _supabase
+          .from('community_posts')
+          .select('*')
+          .eq('author_id', session.user.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (error || !data) { renderMyPosts([]); return; }
+        renderMyPosts(data);
+      } catch(e) {
+        renderMyPosts([]);
+      }
     }
 
     /* ── Supabase 데이터 로드 및 초기화 ── */
