@@ -677,7 +677,7 @@
    BOTTOM SECTION (FAQ + 커뮤니티)
    ════════════════════════════════════════ */
 .bottom-section {
-  background: var(--bg-card);
+  background: var(--bg);
   padding: 56px 0 64px;
 }
 
