@@ -1098,8 +1098,7 @@
 }
 
 .course-card--teal {
-  border-color: var(--teal);
-  border-top: 3px solid var(--teal);
+  border-top: 4px solid var(--teal);
 }
 
 .course-card:not(.course-card--teal) {
@@ -1150,7 +1149,7 @@
   color: var(--text-secondary);
   text-align: left;
   width: 100%;
-  white-space: nowrap;
+  align-items: flex-start;
 }
 
 .course-tabs-section .course-card__meta li span {
