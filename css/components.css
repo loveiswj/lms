@@ -408,8 +408,8 @@
    PLATFORM CARDS
    ════════════════════════════════════════ */
 .platforms-section {
-  background: var(--bg);
-  padding: 36px 0;
+  background: #fff;
+  padding: 36px 0 24px;
 }
 
 .platforms-grid {
@@ -1017,7 +1017,7 @@
    과정별 교육 카드 (탭)
    ════════════════════════════════════════ */
 .course-tabs-section {
-  padding: 64px 0 48px;
+  padding: 0 0 48px;
   background: #fff;
 }
 
