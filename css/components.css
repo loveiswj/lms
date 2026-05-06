@@ -1106,7 +1106,7 @@
 }
 
 .course-card__num {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--blue);
   letter-spacing: 1px;
@@ -1117,13 +1117,13 @@
 }
 
 .course-card__title {
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .course-card__desc {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-sub);
   line-height: 1.6;
   flex: 1;
@@ -1145,7 +1145,7 @@
   display: flex;
   align-items: baseline;
   gap: 10px;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   text-align: left;
   width: 100%;
