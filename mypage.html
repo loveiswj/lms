@@ -512,7 +512,7 @@
     function renderProfile() {
       document.getElementById('profileName').textContent = USER.name;
       document.getElementById('profileEmail').textContent = USER.email;
-      document.getElementById('profileAvatar').textContent = USER.name.charAt(0);
+      document.getElementById('profileAvatar').textContent = USER.name.charAt(0) || '?';
 
       /* 레벨 계산 */
       var done = ENROLLMENTS.filter(function(e) { return e.progress === 100; }).length;

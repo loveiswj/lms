@@ -292,17 +292,18 @@
       e.preventDefault();
       var email = document.getElementById('email').value.trim();
       if (!email || !/\S+@\S+\.\S+/.test(email)) {
-        showToast('이메일을 먼저 입력해주세요');
+        showToast('이메일 주소를 먼저 입력해주세요');
         document.getElementById('email').focus();
         return;
       }
+      var baseUrl = window.location.href.replace(/\/[^/]*$/, '/');
       var { error } = await _supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/lms/reset-password.html'
+        redirectTo: baseUrl + 'reset-password.html'
       });
       if (error) {
-        showToast('오류가 발생했습니다. 다시 시도해주세요');
+        showToast('오류가 발생했습니다. 잠시 후 다시 시도해주세요');
       } else {
-        showToast('비밀번호 재설정 메일을 발송했습니다');
+        showToast('재설정 메일을 발송했습니다. 스팸함도 확인해주세요');
       }
     }
 

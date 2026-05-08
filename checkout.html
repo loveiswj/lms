@@ -400,15 +400,14 @@
 
       try {
         var orderId = 'order_' + courseId + '_' + Date.now();
+        var baseUrl = window.location.href.replace(/\/[^/]*$/, '/');
         await widgets.requestPayment({
           orderId: orderId,
           orderName: course.title.slice(0, 50),
           customerEmail: userSession.user.email,
           customerName: userProfile.name || userSession.user.email.split('@')[0],
-          successUrl: window.location.origin +
-            '/lms/checkout-success.html?courseId=' + courseId,
-          failUrl: window.location.origin +
-            '/lms/checkout-fail.html?courseId=' + courseId
+          successUrl: baseUrl + 'checkout-success.html?courseId=' + courseId,
+          failUrl: baseUrl + 'checkout-fail.html?courseId=' + courseId
         });
       } catch (err) {
         if (err.code !== 'USER_CANCEL') {
