@@ -1,620 +1,318 @@
 /* =========================================
-   course-data.js — AUD Academy LMS
-   전체 과목 데이터
+   course-data.js — 비아이매트릭스 아카데미
+   보유 영상 기반 강의 데이터 (20개)
    ========================================= */
 
 const COURSES = [
-  /* ── 유통 / 영업 ── */
+
+  /* ── i-META View · OLAP 조회 ── */
   {
     id: 1,
-    title: "각 지점에서 보내온 엑셀 파일, 이제 직접 안 모아도 됩니다",
-    report_title: "지점별 엑셀 파일 한 번에 취합하는 법",
-    industry: ["retail"],
-    role: ["analyst", "finance"],
-    feature: ["epa"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "각 지점 엑셀 파일을 하나하나 복사하지 않고 한 번에 취합할 수 있어요",
-    step: "1단계 · 데이터 취합",
-    thumbnail: "assets/images/thumb-epa.jpg"
-  },
-  {
-    id: 2,
-    title: "엑셀 피벗 없이 매장 실적 한눈에 보기",
-    report_title: "매장별 실적 현황판 구성하기",
-    industry: ["retail"],
-    role: ["analyst"],
-    feature: ["dashboard"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "피벗 없이 매장 실적을 자동 업데이트되는 화면으로 한눈에 볼 수 있어요",
-    step: "2단계 · 현황 시각화",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
-  },
-  {
-    id: 3,
-    title: "A매장 매출이 빠진 이유, 클릭 세 번이면 나옵니다",
-    report_title: "매장 매출 원인 분석 파고들기",
-    industry: ["retail"],
+    product: "i-META View",
+    title: "드래그만으로 지점별 매출 실적을 내가 원하는 항목으로 조회할 수 있어요",
+    report_title: "지점별 매출 실적(List) - 기본",
+    industry: ["retail", "finance", "manufacturing", "public"],
     role: ["analyst"],
     feature: ["olap"],
     level: "lv1",
-    duration: "3시간",
+    duration: "1분",
     price: 90000,
-    outcome: "클릭 세 번으로 매출 하락 원인을 상품·시간대·지역별로 추적할 수 있어요",
-    step: "3단계 · 원인 분석",
+    outcome: "데이터 파일에서 보고싶은 항목을 화면에 끌어다 놓으면 화면에 데이터가 바로 조회돼요.",
+    step: "OLAP · 기본 조회",
+    thumbnail: "assets/images/thumb-olap.jpg"
+  },
+  {
+    id: 2,
+    product: "i-META View",
+    title: "조회한 데이터를 내 업무에 맞게 가공할 수 있어요",
+    report_title: "지점별 매출 실적(List) - 응용",
+    industry: ["retail", "finance", "manufacturing", "public"],
+    role: ["analyst"],
+    feature: ["olap"],
+    level: "lv1",
+    duration: "4분",
+    price: 90000,
+    outcome: "정렬·필터·소계·화면 재구성(단위 변환)·계절 컬럼 추가까지, 별도 엑셀 작업 없이 조회 화면에서 바로 처리할 수 있어요.",
+    step: "OLAP · 데이터 가공",
+    thumbnail: "assets/images/thumb-olap.jpg"
+  },
+  {
+    id: 3,
+    product: "i-META View",
+    title: "상품 정보를 피벗 형태로 배치해 다양한 관점으로 매출을 분석할 수 있어요",
+    report_title: "상품별 매출 분석(CrossTab) - 기본",
+    industry: ["retail", "manufacturing"],
+    role: ["analyst"],
+    feature: ["olap"],
+    level: "lv1",
+    duration: "2분",
+    price: 90000,
+    outcome: "행과 열에 원하는 항목을 끌어다 놓으면 상품별·매장별 매출 순위 교차표가 바로 나와요.",
+    step: "OLAP · CrossTab 기본",
     thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 4,
-    title: "재고 부족 확인하고 다른 시스템 안 켜도 됩니다",
-    report_title: "재고 현황 직접 입력·수정하기",
-    industry: ["retail"],
+    product: "i-META View",
+    title: "피벗 분석의 심화 기능으로 상품 매출을 깊이 있게 파고들 수 있어요",
+    report_title: "상품별 매출 분석(CrossTab) - 응용",
+    industry: ["retail", "manufacturing"],
     role: ["analyst"],
-    feature: ["uiux"],
+    feature: ["olap"],
     level: "lv1",
-    duration: "3시간",
+    duration: "3분",
     price: 90000,
-    outcome: "재고 데이터를 화면에서 직접 수정하고 저장할 수 있어요",
-    step: "4단계 · 데이터 입력",
-    thumbnail: "assets/images/thumb-uiux.jpg"
+    outcome: "구조 변경(소계 생성)·그룹핑·정렬·필터·비교 지표·배경 데이터 확인까지 보고서 한 장에서 전부 처리할 수 있어요.",
+    step: "OLAP · CrossTab 응용",
+    thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 5,
-    title: "매주 주간 보고서, 이제 혼자 만들어집니다",
-    report_title: "주간 판매 보고서 자동 출력하기",
-    industry: ["retail"],
-    role: ["finance"],
-    feature: ["report"],
+    product: "i-META View",
+    title: "숫자로 보던 매출 데이터의 추세를 추가하여 흐름과 추이를 한눈에 볼 수 있어요",
+    report_title: "기간별 매출 추이 현황(Chart) - 기본",
+    industry: ["retail", "finance", "manufacturing", "public"],
+    role: ["analyst", "finance"],
+    feature: ["olap", "dashboard"],
     level: "lv1",
-    duration: "3시간",
+    duration: "1분",
     price: 90000,
-    outcome: "매주 버튼 한 번으로 정해진 양식의 주간 보고서를 자동 생성할 수 있어요",
-    step: "5단계 · 보고서 출력",
-    thumbnail: "assets/images/thumb-report.jpg"
+    outcome: "수치로 보면 찾기 어렵던 항목과 추세 유형을 시각화하고 기준·범위를 조정해 추이를 쉽게 파악할 수 있어요.",
+    step: "OLAP · 차트 기본",
+    thumbnail: "assets/images/thumb-dashboard.jpg"
   },
-
-  /* ── 제조 / 생산 ── */
   {
     id: 6,
-    title: "현장 수기 장부, 사무실 와서 다시 타이핑 안 해도 됩니다",
-    report_title: "현장 데이터 모바일 입력 시스템 만들기",
-    industry: ["manufacturing"],
-    role: ["developer"],
-    feature: ["epa"],
+    product: "i-META View",
+    title: "차트 유형·색상·조건 범위·계열을 바꿔 내 보고서에 딱 맞는 차트를 만들 수 있어요",
+    report_title: "기간별 매출 추이 현황(Chart) - 응용",
+    industry: ["retail", "finance", "manufacturing", "public"],
+    role: ["analyst", "finance"],
+    feature: ["olap", "dashboard"],
     level: "lv1",
-    duration: "3시간",
+    duration: "2분",
     price: 90000,
-    outcome: "현장에서 입력한 데이터가 사무실 시스템에 바로 반영돼요",
-    step: "1단계 · 데이터 취합",
-    thumbnail: "assets/images/thumb-epa.jpg"
+    outcome: "다양한 속성 설정만으로 차트의 모양과 전달하는 데이터 범위를 자유롭게 조절할 수 있어요.",
+    step: "OLAP · 차트 응용",
+    thumbnail: "assets/images/thumb-dashboard.jpg"
   },
   {
     id: 7,
-    title: "현장 안 가도 됩니다 — 라인 가동 현황 실시간으로 보기",
-    report_title: "생산 라인 실시간 현황판 구성하기",
-    industry: ["manufacturing"],
+    product: "i-META View",
+    title: "데이터 다운로드 없이 자동 연동된 엑셀 보고서로 매장별 매출 현황을 만들 수 있어요",
+    report_title: "매장별 매출 현황",
+    industry: ["retail"],
     role: ["analyst"],
-    feature: ["dashboard"],
+    feature: ["report"],
     level: "lv1",
-    duration: "3시간",
+    duration: "6분",
     price: 90000,
-    outcome: "현장에 가지 않아도 라인별 가동 현황을 실시간으로 확인할 수 있어요",
-    step: "2단계 · 현황 시각화",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    outcome: "빈 엑셀에 데이터를 결합하여 기간만 선택하면 매장별 매출 합계·기획·계산·각종 서식까지 한 번에 완성돼요.",
+    step: "Report · 엑셀 연동",
+    thumbnail: "assets/images/thumb-report.jpg"
   },
+
+  /* ── i-MATRIX · 보고서 자동화 ── */
   {
     id: 8,
-    title: "불량 터졌을 때, 원인 찾는 데 하루 걸리던 걸 10분으로",
-    report_title: "불량 원인 드릴다운 분석하기",
-    industry: ["manufacturing"],
+    product: "i-MATRIX",
+    title: "매일 다운로드해야 피벗 돌리던 작업을 기간만 선택하면 자동 완성되는 엑셀 보고서로 만들 수 있어요",
+    report_title: "상품별 매출 실적 현황",
+    industry: ["retail", "manufacturing"],
     role: ["analyst"],
-    feature: ["olap"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "불량 발생 시 라인·설비·작업자별로 원인을 10분 안에 추적할 수 있어요",
-    step: "3단계 · 원인 분석",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    feature: ["report"],
+    level: "lv2",
+    duration: "3분",
+    price: 220000,
+    outcome: "데이터가 연동된 엑셀에 피벗테이블과 슬라이서 필터를 추가하면 상품별 매출 분석 보고서가 완성돼요.",
+    step: "G-MATRIX · 보고서 자동화",
+    thumbnail: "assets/images/thumb-report.jpg"
   },
   {
     id: 9,
-    title: "구두로 지시하고 나면 끝? 이제 점검 완료까지 시스템으로 관리합니다",
-    report_title: "설비 점검 지시·완료 관리 화면 만들기",
-    industry: ["manufacturing"],
-    role: ["developer"],
-    feature: ["uiux"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "설비 점검 지시부터 완료까지 시스템으로 추적 관리할 수 있어요",
-    step: "4단계 · 데이터 입력",
-    thumbnail: "assets/images/thumb-uiux.jpg"
-  },
-  {
-    id: 10,
-    title: "월말마다 생산·불량 데이터 취합, 이제 안 해도 됩니다",
-    report_title: "월간 생산 실적 보고서 자동 출력하기",
-    industry: ["manufacturing"],
-    role: ["finance"],
-    feature: ["report"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "월말 생산·불량 보고서를 버튼 하나로 자동 완성할 수 있어요",
-    step: "5단계 · 보고서 출력",
-    thumbnail: "assets/images/thumb-report.jpg"
-  },
-
-  /* ── 금융 / 기획 ── */
-  {
-    id: 11,
-    title: "매일 한국은행 들어가서 데이터 긁어오는 작업, 이제 자동으로 됩니다",
-    report_title: "외부 데이터 자동 수집 시스템 구성하기",
-    industry: ["finance_industry"],
-    role: ["developer"],
-    feature: ["epa"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "외부 사이트 데이터를 자동으로 수집해 시스템에 올릴 수 있어요",
-    step: "1단계 · 데이터 취합",
+    product: "i-MATRIX",
+    title: "매일 영업 보고서에 붙여 넣던 수작업을 엑셀 밖에서 처리하여 자동으로 만들 수 있어요",
+    report_title: "영업 실적 보고서",
+    industry: ["retail", "finance", "manufacturing"],
+    role: ["analyst", "finance"],
+    feature: ["epa", "report"],
+    level: "lv2",
+    duration: "14분",
+    price: 220000,
+    outcome: "엑셀에서 영업 실적을 수식·자동화·차트까지 3가지 기능으로 엑셀 데이터와 연동 전환해요. 개발자에게 요청하지 않아도 돼요.",
+    step: "G-MATRIX · EPA 보고서",
     thumbnail: "assets/images/thumb-epa.jpg"
-  },
-  {
-    id: 12,
-    title: '"KPI 달성률 어때?" — 이제 엑셀 안 열고 바로 대답합니다',
-    report_title: "KPI 실시간 달성률 현황판 만들기",
-    industry: ["finance_industry"],
-    role: ["leader"],
-    feature: ["dashboard"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "KPI 달성률을 실시간으로 확인할 수 있는 임원용 현황판을 만들 수 있어요",
-    step: "2단계 · 현황 시각화",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
-  },
-  {
-    id: 13,
-    title: "금리 바뀔 때마다 엑셀 수식 고치던 거, 이제 조건만 바꾸면 됩니다",
-    report_title: "금리 변동 시나리오 분석 화면 만들기",
-    industry: ["finance_industry"],
-    role: ["finance"],
-    feature: ["olap"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "금리 변동 시 수식 없이 조건만 바꿔 시나리오를 바로 분석할 수 있어요",
-    step: "3단계 · 원인 분석",
-    thumbnail: "assets/images/thumb-olap.jpg"
-  },
-  {
-    id: 14,
-    title: "목표치 하나 바꾸는 데 IT 기다리지 않아도 됩니다",
-    report_title: "목표·예산 데이터 직접 수정하기",
-    industry: ["finance_industry"],
-    role: ["finance"],
-    feature: ["uiux"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "IT 요청 없이 목표치와 예산 데이터를 직접 수정하고 반영할 수 있어요",
-    step: "4단계 · 데이터 입력",
-    thumbnail: "assets/images/thumb-uiux.jpg"
-  },
-  {
-    id: 15,
-    title: "폰트·표 양식 하나하나 맞추던 공시 보고서, 이제 버튼 하나면 됩니다",
-    report_title: "정규 공시 보고서 자동 생성하기",
-    industry: ["finance_industry"],
-    role: ["finance"],
-    feature: ["report"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "공시 양식 그대로 보고서를 버튼 하나로 자동 생성할 수 있어요",
-    step: "5단계 · 보고서 출력",
-    thumbnail: "assets/images/thumb-report.jpg"
-  },
-
-  /* ── 공공 / 인사 ── */
-  {
-    id: 16,
-    title: "양식 제각각인 부서 예산 파일, 셀 복구 없이 한 번에 모읍니다",
-    report_title: "부서별 예산 파일 통합 취합하기",
-    industry: ["public"],
-    role: ["finance"],
-    feature: ["epa"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "양식이 달라도 부서 예산 파일을 오류 없이 한 번에 취합할 수 있어요",
-    step: "1단계 · 데이터 취합",
-    thumbnail: "assets/images/thumb-epa.jpg"
-  },
-  {
-    id: 17,
-    title: "인사 시스템 조건 검색 안 해도 됩니다 — 근태 현황 한 화면으로",
-    report_title: "직원 근태 현황 대시보드 만들기",
-    industry: ["public"],
-    role: ["analyst"],
-    feature: ["dashboard"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "조건 검색 없이 전 직원 근태 현황을 한 화면에서 확인할 수 있어요",
-    step: "2단계 · 현황 시각화",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
-  },
-  {
-    id: 18,
-    title: "따로 노는 근태·인건비 데이터, 연결해서 원인까지 한 번에 봅니다",
-    report_title: "근태·인건비 데이터 연계 분석하기",
-    industry: ["public"],
-    role: ["analyst"],
-    feature: ["olap"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "근태와 인건비 데이터를 연결해 비용 이상 원인을 한 번에 추적할 수 있어요",
-    step: "3단계 · 원인 분석",
-    thumbnail: "assets/images/thumb-olap.jpg"
-  },
-  {
-    id: 19,
-    title: "수백 명 직원 정보, 하나하나 수정 안 해도 됩니다",
-    report_title: "직원 정보 일괄 수정 화면 구성하기",
-    industry: ["public"],
-    role: ["developer"],
-    feature: ["uiux"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "수백 명 직원 정보를 한 화면에서 일괄 수정하고 저장할 수 있어요",
-    step: "4단계 · 데이터 입력",
-    thumbnail: "assets/images/thumb-uiux.jpg"
   },
   {
     id: 20,
-    title: "감사 통보 받아도 당황하지 않습니다 — 보고서 버튼 하나로 완성",
-    report_title: "감사 대응 보고서 즉시 출력하기",
-    industry: ["public"],
-    role: ["finance"],
-    feature: ["report"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "감사 통보 즉시 필요한 보고서를 버튼 하나로 완성할 수 있어요",
-    step: "5단계 · 보고서 출력",
-    thumbnail: "assets/images/thumb-report.jpg"
+    product: "i-MATRIX",
+    title: "엑셀에서 매장별 매출 계획을 직접 수정하고 DB에 저장까지 되는 관리 화면을 만들 수 있어요",
+    report_title: "매장별 매출 계획 관리",
+    industry: ["retail", "manufacturing"],
+    role: ["finance", "analyst"],
+    feature: ["uiux"],
+    level: "lv2",
+    duration: "9분",
+    price: 220000,
+    outcome: "DB 연결 시트를 자동으로 생성하고 저장·조회 기능을 연결한 엑셀이 실무 데이터 관리 도구가 돼요.",
+    step: "G-MATRIX · 관리화면",
+    thumbnail: "assets/images/thumb-uiux.jpg"
   },
 
-  /* ── 마케팅 / CRM ── */
+  /* ── i-AUD · 통합 보고서 ── */
   {
-    id: 21,
-    title: "매일 아침 매체별 엑셀 취합, 이제 드래그 앤 드롭으로 끝납니다",
-    report_title: "매체별 광고 데이터 자동 취합하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["marketing"],
-    feature: ["epa"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "매체별 엑셀 파일을 드래그 앤 드롭으로 한 번에 취합할 수 있어요",
-    step: "1단계 · 데이터 취합",
+    id: 10,
+    product: "i-AUD",
+    title: "전월·전년 비교와 고객 등급별 실적, 표 하나에 다 담은 통합 보고서를 엑셀로 직접 만들 수 있어요",
+    report_title: "상품별 실적",
+    industry: ["retail", "finance"],
+    role: ["analyst"],
+    feature: ["epa", "report"],
+    level: "lv2",
+    duration: "13분",
+    price: 220000,
+    outcome: "다양한 분석 관점을 엑셀로 설계하면 레이아웃과 수식이 틀에 맞게 자동 반영돼요. 개발자 없이 완성돼요.",
+    step: "AUD · 통합 보고서",
     thumbnail: "assets/images/thumb-epa.jpg"
   },
   {
-    id: 22,
-    title: "SNS·검색광고 성과, 이제 한 화면에서 실시간으로 비교합니다",
-    report_title: "광고 채널 통합 성과 현황판 만들기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["marketing"],
-    feature: ["dashboard"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "SNS·검색광고 성과를 채널별로 실시간 비교할 수 있어요",
-    step: "2단계 · 현황 시각화",
+    id: 11,
+    product: "i-AUD",
+    title: "영업 실적 대시보드를 매일 붙여 넣던 작업 없이 데이터가 연결된 화면으로 직접 만들 수 있어요",
+    report_title: "매출 현황",
+    industry: ["retail", "finance", "manufacturing"],
+    role: ["analyst", "finance"],
+    feature: ["epa", "report", "dashboard"],
+    level: "lv2",
+    duration: "16분",
+    price: 220000,
+    outcome: "엑셀 시트를 따로 쓰지 않고 이미지·차트를 한 화면에 연결해 완성해요.",
+    step: "AUD · 매출 대시보드",
     thumbnail: "assets/images/thumb-dashboard.jpg"
   },
   {
-    id: 23,
-    title: '"왜 20대 여성이 빠졌지?" 연령·채널별로 원인 바로 찾습니다',
-    report_title: "고객 세그먼트별 이탈 원인 분석하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["marketing"],
-    feature: ["olap"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "연령·채널·상품별로 고객 이탈 원인을 클릭으로 추적할 수 있어요",
-    step: "3단계 · 원인 분석",
-    thumbnail: "assets/images/thumb-olap.jpg"
-  },
-  {
-    id: 24,
-    title: "분석 결과 나오면 광고 예산, 화면에서 바로 수정합니다",
-    report_title: "광고 예산 직접 수정·조정하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["marketing"],
-    feature: ["uiux"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "분석 결과를 보면서 광고 예산을 화면에서 바로 수정할 수 있어요",
-    step: "4단계 · 데이터 입력",
-    thumbnail: "assets/images/thumb-uiux.jpg"
-  },
-  {
-    id: 25,
-    title: "매주 월요일 캠페인 성과 PPT 다시 그리던 거, 이제 자동으로 됩니다",
-    report_title: "캠페인 성과 보고서 자동 생성하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
+    id: 12,
+    product: "i-AUD",
+    title: "매달 손으로 범위 조정하던 엑셀 보고서를 기간만 선택하면 자동 완성되는 정기 보고서로 만들 수 있어요",
+    report_title: "고객 등급별 매출 추이",
+    industry: ["retail", "finance"],
     role: ["marketing"],
     feature: ["report"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "매주 캠페인 성과 보고서를 자동으로 생성할 수 있어요",
-    step: "5단계 · 보고서 출력",
+    level: "lv2",
+    duration: "7분",
+    price: 220000,
+    outcome: "기준에 맞는 엑셀 양식을 구성하면 선택한 기간의 데이터가 화면에 자동 표시되는 보고서가 완성돼요.",
+    step: "AUD · 정기 보고서",
+    thumbnail: "assets/images/thumb-report.jpg"
+  },
+  {
+    id: 13,
+    product: "i-AUD",
+    title: "복잡한 엑셀 작업 없이 조회된 데이터를 채워 지정 점포별 매출 보고서를 만들 수 있어요",
+    report_title: "주요 점포별 매출 실적 현황",
+    industry: ["retail"],
+    role: ["finance", "analyst"],
+    feature: ["report"],
+    level: "lv2",
+    duration: "10분",
+    price: 220000,
+    outcome: "화면에서 선택만 하고 자동화 기능을 연결하면 점포별 보고서가 완성돼요.",
+    step: "AUD · 점포별 보고서",
     thumbnail: "assets/images/thumb-report.jpg"
   },
 
-  /* ── 구매 / SCM ── */
+  /* ── i-AUD · 고객 대시보드 ── */
   {
-    id: 26,
-    title: "수십 개 협력사 엑셀, 하나하나 열지 않아도 됩니다",
-    report_title: "협력사 데이터 일괄 취합하기",
-    industry: ["manufacturing"],
-    role: ["analyst"],
-    feature: ["epa"],
+    id: 14,
+    product: "i-AUD",
+    title: "고객별 매출 대시보드를 엑셀로 직접 만들 수 있어요",
+    report_title: "고객별 매출 현황(기본)",
+    industry: ["retail", "finance"],
+    role: ["marketing"],
+    feature: ["epa", "dashboard"],
     level: "lv1",
-    duration: "3시간",
+    duration: "7분",
     price: 90000,
-    outcome: "수십 개 협력사 엑셀 파일을 한 번에 취합해 비교할 수 있어요",
-    step: "1단계 · 데이터 취합",
-    thumbnail: "assets/images/thumb-epa.jpg"
-  },
-  {
-    id: 27,
-    title: "협력사 납기 준수율, 수십 개 업체 한 화면에서 한눈에 봅니다",
-    report_title: "협력사 납기 현황 모니터링 화면 만들기",
-    industry: ["manufacturing"],
-    role: ["analyst"],
-    feature: ["dashboard"],
-    level: "lv1",
-    duration: "3시간",
-    price: 90000,
-    outcome: "수십 개 협력사 납기 준수율을 한 화면에서 한눈에 확인할 수 있어요",
-    step: "2단계 · 현황 시각화",
+    outcome: "회원카드·성별·연령·부서·업태 등의 차트를 엑셀로 설계하면 레이아웃·수식·그래프로 자동 연결돼요.",
+    step: "AUD · 고객 대시보드 기본",
     thumbnail: "assets/images/thumb-dashboard.jpg"
   },
   {
-    id: 28,
-    title: "원자재 단가 오를 때 우리 원가 얼마나 올라가는지 바로 계산됩니다",
-    report_title: "원자재 단가 변동 원가 영향 분석하기",
-    industry: ["manufacturing"],
-    role: ["finance"],
-    feature: ["olap"],
+    id: 15,
+    product: "i-AUD",
+    title: "차트 막대를 클릭하면 해당 고객의 상세 데이터가 팝업으로 열리는 기능을 코딩 없이 추가할 수 있어요",
+    report_title: "고객별 매출 현황(응용)",
+    industry: ["retail", "finance"],
+    role: ["marketing"],
+    feature: ["epa", "dashboard"],
     level: "lv1",
-    duration: "3시간",
+    duration: "4분",
     price: 90000,
-    outcome: "원자재 단가 변동 시 제품별 원가 영향을 즉시 시뮬레이션할 수 있어요",
-    step: "3단계 · 원인 분석",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    outcome: "이벤트 콘솔을 설정하는 것만으로 차트와 상세 데이터가 연결돼요. 개발자 없이 인터랙티브 보고서가 완성돼요.",
+    step: "AUD · 고객 대시보드 응용",
+    thumbnail: "assets/images/thumb-dashboard.jpg"
   },
+
+  /* ── i-AUD · 관리화면 (UI/UX) ── */
   {
-    id: 29,
-    title: "협력사 단가 바뀔 때 ERP 들어가서 하나하나 수정 안 해도 됩니다",
-    report_title: "협력사 단가 일괄 수정 화면 구성하기",
-    industry: ["manufacturing"],
-    role: ["developer"],
+    id: 16,
+    product: "i-AUD",
+    title: "코딩 없이 고객 정보를 직접 조회·수정·삭제까지 할 수 있는 관리 화면을 만들 수 있어요",
+    report_title: "고객 정보 관리",
+    industry: ["retail", "finance"],
+    role: ["marketing"],
     feature: ["uiux"],
     level: "lv1",
-    duration: "3시간",
+    duration: "6분",
     price: 90000,
-    outcome: "ERP 없이 협력사 단가를 화면에서 일괄 수정하고 반영할 수 있어요",
-    step: "4단계 · 데이터 입력",
+    outcome: "데이터 처리 모듈을 설정하는 것만으로 변경 사항이 바로 저장되는 실무 관리 화면이 완성돼요.",
+    step: "AUD · 고객 관리화면",
     thumbnail: "assets/images/thumb-uiux.jpg"
   },
   {
-    id: 30,
-    title: "협력사 평가 보고서, 업체별로 따로 만들지 않아도 됩니다",
-    report_title: "협력사별 평가 보고서 자동 출력하기",
-    industry: ["manufacturing"],
-    role: ["finance"],
-    feature: ["report"],
+    id: 17,
+    product: "i-AUD",
+    title: "고객을 선택하면 해당 고객의 상세 매출 내역이 리스트로 연결되는 관리 화면을 만들 수 있어요",
+    report_title: "고객별 매출 실적",
+    industry: ["retail", "finance"],
+    role: ["marketing"],
+    feature: ["uiux"],
     level: "lv1",
-    duration: "3시간",
+    duration: "11분",
     price: 90000,
-    outcome: "협력사별 평가 보고서를 선택 후 버튼 하나로 자동 생성할 수 있어요",
-    step: "5단계 · 보고서 출력",
-    thumbnail: "assets/images/thumb-report.jpg"
-  },
-
-  /* ── 심화 과정 Lv.2 ── */
-  {
-    id: 31,
-    title: "엑셀 컬럼이 제각각이어도 DB에 깔끔하게 올라가게 만듭니다",
-    report_title: "비정형 엑셀 → DB 자동 정규화 구현하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["developer"],
-    feature: ["epa"],
-    level: "lv2",
-    duration: "6시간",
-    price: 220000,
-    outcome: "어떤 형태의 엑셀이 들어와도 DB에 깔끔하게 정규화해 올릴 수 있어요",
-    step: "심화 · 데이터 취합",
-    thumbnail: "assets/images/thumb-lv2-epa.jpg"
+    outcome: "고객 정보와 매출 정보를 연결, 두 가지 데이터를 한 화면에서 조회·수정까지 할 수 있는 관리화면이 완성돼요.",
+    step: "AUD · 매출 관리화면",
+    thumbnail: "assets/images/thumb-uiux.jpg"
   },
   {
-    id: 32,
-    title: "조회만 되는 화면 말고, 수정하고 저장되는 진짜 업무 시스템 만들기",
-    report_title: "CRUD 완성형 업무 시스템 구현하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["developer"],
+    id: 18,
+    product: "i-AUD",
+    title: "입력 폼과 목록을 연결해 임직원 정보를 편하게 수정·관리하는 화면을 코딩 없이 만들 수 있어요",
+    report_title: "인사 관리",
+    industry: ["retail", "finance", "manufacturing", "public"],
+    role: ["analyst", "developer"],
     feature: ["uiux"],
     level: "lv2",
-    duration: "6시간",
+    duration: "12분",
     price: 220000,
-    outcome: "조회·입력·수정·삭제가 모두 되는 완성형 업무 시스템을 만들 수 있어요",
-    step: "심화 · 데이터 입력",
-    thumbnail: "assets/images/thumb-lv2-uiux.jpg"
+    outcome: "근속년수 자동 계산, 직급 수 집계, 수정·조회까지 — 실무에서 바로 쓸 수 있는 관리 화면이 완성돼요.",
+    step: "AUD · 인사 관리화면",
+    thumbnail: "assets/images/thumb-uiux.jpg"
   },
   {
-    id: 33,
-    title: "템플릿 없이 빈 화면에서 내 업무에 딱 맞는 대시보드 만들기",
-    report_title: "커스텀 대시보드 처음부터 구성하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["developer"],
-    feature: ["dashboard"],
+    id: 19,
+    product: "i-AUD",
+    title: "기간을 선택하면 매출 계획을 직접 상품 기준으로 분류하고 수정·저장까지 할 수 있는 화면을 만들 수 있어요",
+    report_title: "매출 계획 입력",
+    industry: ["retail", "finance", "manufacturing"],
+    role: ["finance"],
+    feature: ["epa", "uiux"],
     level: "lv2",
-    duration: "6시간",
+    duration: "14분",
     price: 220000,
-    outcome: "빈 화면에서 업무에 최적화된 대시보드를 완전히 자유롭게 구성할 수 있어요",
-    step: "심화 · 현황 시각화",
-    thumbnail: "assets/images/thumb-lv2-dashboard.jpg"
-  },
-  {
-    id: 34,
-    title: "어떤 복잡한 결재 양식도 시스템으로 그대로 구현합니다",
-    report_title: "전자결재 양식 시스템 구현하기",
-    industry: ["retail", "manufacturing", "finance_industry", "public"],
-    role: ["developer"],
-    feature: ["report"],
-    level: "lv2",
-    duration: "6시간",
-    price: 220000,
-    outcome: "복잡한 결재 양식도 시스템으로 구현해 자동 출력·관리할 수 있어요",
-    step: "심화 · 보고서 출력",
-    thumbnail: "assets/images/thumb-lv2-report.jpg"
+    outcome: "매장·지역·유형·항목 교차 탭을 표 형태 그대로 직접 입력하고 저장할 수 있는 화면이 완성돼요.",
+    step: "AUD · 계획 입력화면",
+    thumbnail: "assets/images/thumb-uiux.jpg"
   }
+
 ];
-
-/* ── 라벨 매핑 ── */
-const INDUSTRY_LABELS = {
-  retail:           "소매·소비재",
-  manufacturing:    "제조업",
-  finance_industry: "금융 서비스",
-  public:           "공공 부문"
-};
-
-const ROLE_LABELS = {
-  analyst:   "현업 분석가",
-  developer: "개발자",
-  finance:   "재무·기획 담당자",
-  leader:    "비즈니스 리더",
-  marketing: "마케팅 담당자",
-  sales:     "영업·매출 관리자"
-};
-
-const FEATURE_LABELS = {
-  epa:       "엑셀을 그대로 시스템으로",
-  dashboard: "실시간 현황판 만들기",
-  olap:      "데이터 파고들어 원인 찾기",
-  uiux:      "화면에서 직접 입력·수정하기",
-  report:    "보고서 자동 출력하기"
-};
-
-const LEVEL_LABELS = {
-  lv1: "Lv.1 기초·실무",
-  lv2: "Lv.2 심화"
-};
-
-/* ── 가격 포맷 ── */
-function formatPrice(price) {
-  if (price === 0) return "무료";
-  return price.toLocaleString("ko-KR") + "원";
-}
-
-/* ── 과목 단건 조회 ── */
-function getCourseById(id) {
-  return COURSES.find(c => c.id === Number(id)) || null;
-}
-
-/* ── 관련 과목 조회 (같은 업종, 현재 과목 제외) ── */
-function getRelatedCourses(course, limit = 3) {
-  return COURSES
-    .filter(c => c.id !== course.id && c.industry.some(i => course.industry.includes(i)))
-    .slice(0, limit);
-}
-
-/* =========================================
-   YouTube 영상 데이터
-   ========================================= */
-const VIDEOS = {
-  'xfjBQhEq_ns': {
-    title: "고객 등급별 매출 현황",
-    chapters: [
-      { time: 0,   label: "완성 화면 미리보기" },
-      { time: 80,  label: "데이터 소스 연결하기" },
-      { time: 190, label: "고객 등급 필터 설정" },
-      { time: 330, label: "매출 차트 구성하기" },
-      { time: 480, label: "대시보드 완성" }
-    ]
-  },
-  'mcQouFOabOs': {
-    title: "주요 점포별 매출 실적현황",
-    chapters: [
-      { time: 0,   label: "완성 화면 미리보기" },
-      { time: 55,  label: "점포 데이터 연결" },
-      { time: 160, label: "실적 현황 차트" },
-      { time: 300, label: "조건 필터 설정" },
-      { time: 430, label: "완성 및 정리" }
-    ]
-  },
-  '3GBdauqfJG4': {
-    title: "i-META 제작하기",
-    chapters: [
-      { time: 0,   label: "소개 및 미리보기" },
-      { time: 60,  label: "프로젝트 기본 설정" },
-      { time: 180, label: "화면 구성하기" },
-      { time: 330, label: "데이터 연결 완성" },
-      { time: 480, label: "최종 완성" }
-    ]
-  },
-  'x9FVyu5ORm8': {
-    title: "상품별 월별 추이 분석 화면 만들기",
-    chapters: [
-      { time: 0,   label: "완성 화면 미리보기" },
-      { time: 90,  label: "상품 데이터 연결" },
-      { time: 210, label: "월별 추이 설정" },
-      { time: 360, label: "드릴다운 분석 구성" },
-      { time: 510, label: "완성 및 활용법" }
-    ]
-  }
-};
-
-/* ── 과목별 YouTube 영상 매핑 ── */
-function getCourseVideoId(course) {
-  if (course.feature[0] === 'olap') return 'x9FVyu5ORm8';
-  if (course.feature[0] === 'dashboard' && course.industry.includes('retail')) return 'mcQouFOabOs';
-  if (course.feature[0] === 'dashboard') return 'xfjBQhEq_ns';
-  return '3GBdauqfJG4';
-}
-
-function getCourseVideo(course) {
-  var id = getCourseVideoId(course);
-  return Object.assign({ videoId: id }, VIDEOS[id]);
-}
-
-/* ── 다음 단계 과목 조회 (같은 업종 다음 feature 순서) ── */
-const FEATURE_ORDER = ["epa", "dashboard", "olap", "uiux", "report"];
-
-function getNextCourses(course, limit = 3) {
-  const featureIdx = FEATURE_ORDER.indexOf(course.feature[0]);
-  if (featureIdx === -1) return [];
-
-  return COURSES
-    .filter(c =>
-      c.id !== course.id &&
-      c.level === course.level &&
-      c.industry.some(i => course.industry.includes(i)) &&
-      FEATURE_ORDER.indexOf(c.feature[0]) > featureIdx
-    )
-    .slice(0, limit);
-}
