@@ -492,10 +492,7 @@
                 '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
                 '<strong>' + escapeHtml(course.duration) + '</strong>' +
               '</div>' +
-              '<div class="detail-hero__meta-item">' +
-                '<span class="detail-hero__price">' + formatPrice(course.price) + '</span>' +
-              '</div>' +
-              '<a href="checkout.html?id=' + course.id + '" class="btn btn--accent btn--lg" style="margin-left:8px;">수강 신청하기</a>' +
+              '<a href="mypage.html" class="btn btn--accent btn--lg" style="margin-left:8px;">수강 신청하기</a>' +
             '</div>' +
             /* 진도 바 */
             '<div style="margin-top:20px; max-width:480px;">' +
@@ -629,8 +626,6 @@
 
       cardEl.innerHTML =
         '<p class="purchase-card__title">' + escapeHtml(course.title) + '</p>' +
-        '<p class="purchase-card__price">' + formatPrice(course.price) + '</p>' +
-        '<p class="purchase-card__price-note">VAT 포함 · 1인 라이선스</p>' +
         '<div class="purchase-card__info">' +
           '<div class="purchase-card__info-row">' +
             '<span class="purchase-card__info-label">레벨</span>' +
@@ -649,8 +644,7 @@
             '<span class="purchase-card__info-value">6개월</span>' +
           '</div>' +
         '</div>' +
-        '<a href="checkout.html?id=' + course.id + '" class="btn btn--accent btn--full btn--lg" id="heroBuyBtn">수강 신청하기</a>' +
-        '<p style="font-size:12px;color:var(--text-hint);text-align:center;margin-top:10px;">결제 완료 후 즉시 수강 가능 · 6개월 수강</p>';
+        '<a href="mypage.html" class="btn btn--accent btn--full btn--lg" id="heroBuyBtn">수강 신청하기</a>';
     }
 
     /* ── 관련 과정 렌더링 ── */
@@ -671,7 +665,6 @@
           '</div>' +
           '<div class="related-card__body">' +
             '<p class="related-card__title">' + escapeHtml(c.title) + '</p>' +
-            '<p class="related-card__price">' + formatPrice(c.price) + '</p>' +
           '</div>' +
         '</a>';
       }).join("");
@@ -705,7 +698,6 @@
                 '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
                 c.duration +
               '</span>' +
-              '<span class="course-card__price">' + formatPrice(c.price) + '</span>' +
             '</div>' +
           '</div>' +
         '</a>';
@@ -725,11 +717,10 @@
 
       document.title = course.title + " — AUD Academy";
 
-      // 모바일 하단 가격 표시
       var mobilePriceEl = document.getElementById("mobilePurchasePrice");
-      if (mobilePriceEl) mobilePriceEl.textContent = formatPrice(course.price);
+      if (mobilePriceEl) mobilePriceEl.style.display = 'none';
       var mobileCTABtn = document.getElementById("mobileCTABtn");
-      if (mobileCTABtn) mobileCTABtn.href = 'checkout.html?id=' + course.id;
+      if (mobileCTABtn) mobileCTABtn.href = 'mypage.html';
     }
 
     /* ── 메인 진입점 ── */

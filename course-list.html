@@ -587,8 +587,6 @@
     function renderCard(course) {
       var levelClass = course.level === "lv2" ? "level-badge--lv2" : "level-badge--lv1";
       var levelText  = course.level === "lv2" ? "Lv.2 심화" : "Lv.1";
-      var price = course.price === 0 ? "무료" : course.price.toLocaleString("ko-KR") + "원";
-
       return '<a href="course-detail.html?id=' + course.id + '" class="course-card" style="text-decoration:none;">' +
         '<div class="course-card__thumb">' +
           '<img src="' + course.thumbnail + '" alt="' + escapeHtml(course.title) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
@@ -608,7 +606,6 @@
                 course.duration +
               '</span>' +
             '</div>' +
-            '<span class="course-card__price">' + price + '</span>' +
           '</div>' +
         '</div>' +
       '</a>';
