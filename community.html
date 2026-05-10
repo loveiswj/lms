@@ -117,16 +117,28 @@
       margin-bottom: 8px;
     }
     .post-card__badge {
-      padding: 2px 8px;
+      padding: 2px 9px;
       border-radius: 4px;
       font-size: 11px;
       font-weight: 700;
-      background: var(--bg, #F0F4F8);
-      color: var(--navy);
+      letter-spacing: .02em;
+      background: #F1F5F9;
+      color: #64748B;
     }
-    .post-card__badge--notice { background: #FEF3C7; color: #92400E; }
-    .post-card__badge--qa { background: #EDE9FE; color: #5B21B6; }
-    .post-card__badge--review { background: #D1FAE5; color: #065F46; }
+    .post-card__badge--notice {
+      background: #1B2B4B;
+      color: #fff;
+    }
+    .post-card__badge--qa {
+      background: #EEF2FF;
+      color: #3730A3;
+      border: 1px solid #C7D2FE;
+    }
+    .post-card__badge--review {
+      background: #FFF4E6;
+      color: #B45309;
+      border: 1px solid #FDE68A;
+    }
     .post-card__title {
       font-size: 16px;
       font-weight: 700;
@@ -1045,7 +1057,9 @@
       if (!post) return;
       post.views = (post.views || 0) + 1;
       var catMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
-      document.getElementById('detailBadge').textContent = catMap[post.cat] || '일반';
+      var detailBadgeEl = document.getElementById('detailBadge');
+      detailBadgeEl.textContent = catMap[post.cat] || '일반';
+      detailBadgeEl.className = 'detail-header__badge post-card__badge post-card__badge--' + (post.cat || 'free');
       document.getElementById('detailTitle').textContent = post.title;
       document.getElementById('detailAuthor').textContent = post.author;
       document.getElementById('detailDate').textContent = post.date;
