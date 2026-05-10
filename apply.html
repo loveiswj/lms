@@ -10,59 +10,61 @@
   <style>
     /* ── 히어로 ── */
     .apply-hero {
-      background: linear-gradient(135deg, #1B2B4B 0%, #243550 60%, #2d4a6e 100%);
-      padding: 72px 24px 64px;
+      background: linear-gradient(135deg, #0F172A 0%, #1B2B4B 60%, #1e3a6e 100%);
+      padding: 80px 24px 72px;
       text-align: center;
     }
     .apply-hero__eyebrow {
       display: inline-block;
-      margin-bottom: 16px;
-      padding: 5px 16px;
+      margin-bottom: 18px;
+      padding: 5px 18px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
-      background: rgba(220, 38, 38, .15);
-      color: #FCA5A5;
-      border: 1px solid rgba(220, 38, 38, .3);
+      background: rgba(59,130,246,.18);
+      color: #93C5FD;
+      border: 1px solid rgba(59,130,246,.35);
     }
     .apply-hero__title {
-      font-size: 34px;
+      font-size: 36px;
       font-weight: 800;
       color: #fff;
       margin-bottom: 14px;
-      line-height: 1.3;
+      line-height: 1.25;
       letter-spacing: -0.5px;
     }
-    .apply-hero__title strong { color: #FCA5A5; }
+    .apply-hero__title em {
+      font-style: normal;
+      color: #60A5FA;
+    }
     .apply-hero__desc {
       font-size: 15px;
-      color: #93C5FD;
+      color: #94A3B8;
       max-width: 460px;
       margin: 0 auto;
-      line-height: 1.8;
+      line-height: 1.85;
     }
 
-    /* ── 본문 래퍼 ── */
-    .apply-body {
-      background: #F5F5F5;
-      padding: 64px 24px 0;
+    /* ── 절차 섹션 ── */
+    .apply-section {
+      background: #F8F9FB;
+      padding: 72px 24px 64px;
     }
     .apply-wrap {
       max-width: 1080px;
       margin: 0 auto;
     }
-
-    /* ── 섹션 헤더 ── */
     .apply-section-hd {
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
     .apply-section-hd__title {
       font-size: 22px;
       font-weight: 800;
-      color: #1B2B4B;
+      color: #0F172A;
       margin-bottom: 6px;
+      letter-spacing: -0.3px;
     }
     .apply-section-hd__sub {
       font-size: 14px;
@@ -74,29 +76,45 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 64px;
     }
     .apply-step {
       background: #fff;
-      border: 1px solid #E5E7EB;
+      border: 1px solid #E2E8F0;
       border-radius: 14px;
-      padding: 32px 28px 28px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 32px 24px 28px;
+      box-shadow: 0 1px 4px rgba(15,23,42,.06);
       position: relative;
     }
+    .apply-step__arrow {
+      position: absolute;
+      top: 36px;
+      right: -14px;
+      width: 28px;
+      height: 28px;
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      box-shadow: 0 1px 3px rgba(0,0,0,.07);
+    }
+    .apply-step__arrow svg { width: 12px; height: 12px; color: #94A3B8; }
+    .apply-step:last-child .apply-step__arrow { display: none; }
     .apply-step__num {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: #9CA3AF;
-      margin-bottom: 18px;
+      color: #94A3B8;
+      margin-bottom: 16px;
     }
     .apply-step__icon-wrap {
       width: 52px;
       height: 52px;
-      border-radius: 50%;
-      background: #FEE2E2;
+      border-radius: 14px;
+      background: #EFF6FF;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -105,65 +123,41 @@
     .apply-step__icon-wrap svg {
       width: 26px;
       height: 26px;
-      color: #DC2626;
+      color: #2563EB;
     }
     .apply-step__title {
       font-size: 16px;
       font-weight: 700;
-      color: #1B2B4B;
+      color: #0F172A;
       margin-bottom: 14px;
     }
     .apply-step__divider {
       height: 1px;
-      background: #E5E7EB;
+      background: #F1F5F9;
       margin-bottom: 14px;
     }
     .apply-step__desc {
       font-size: 13px;
       color: #64748B;
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
-    /* 스텝 화살표 연결자 */
-    .apply-step__arrow {
-      position: absolute;
-      top: 38px;
-      right: -14px;
-      width: 28px;
-      height: 28px;
-      background: #fff;
-      border: 1px solid #E5E7EB;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      box-shadow: 0 1px 3px rgba(0,0,0,.08);
-    }
-    .apply-step__arrow svg {
-      width: 12px;
-      height: 12px;
-      color: #9CA3AF;
-    }
-    .apply-step:last-child .apply-step__arrow { display: none; }
-
-    /* ── 하단 정책 섹션 (다크) ── */
+    /* ── 정책 섹션 (다크) ── */
     .apply-policy {
-      background: #1E2535;
-      padding: 60px 24px;
+      background: #131C2E;
+      padding: 64px 24px;
     }
     .apply-policy__wrap {
       max-width: 1080px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1px 1fr;
-      gap: 0 48px;
+      gap: 0 56px;
       align-items: start;
     }
-    .apply-policy__divider {
-      background: rgba(255,255,255,.12);
-      height: 100%;
-      min-height: 140px;
+    .apply-policy__sep {
+      background: rgba(255,255,255,.1);
+      min-height: 130px;
     }
     .apply-policy__col-title {
       font-size: 17px;
@@ -171,6 +165,12 @@
       color: #F1F5F9;
       margin-bottom: 22px;
       letter-spacing: -0.3px;
+    }
+    .apply-policy__col-title span {
+      font-size: 13px;
+      font-weight: 400;
+      color: #64748B;
+      margin-left: 6px;
     }
     .apply-policy__list {
       list-style: none;
@@ -183,36 +183,38 @@
       font-size: 14px;
       color: #94A3B8;
       line-height: 1.75;
-      padding-left: 12px;
+      padding-left: 14px;
       position: relative;
     }
     .apply-policy__list li::before {
       content: '·';
       position: absolute;
       left: 0;
-      color: #64748B;
+      color: #475569;
       font-weight: 700;
     }
     .apply-policy__list li strong {
       color: #CBD5E1;
       font-weight: 600;
     }
-    .apply-policy__list li em {
-      font-style: normal;
-      color: #FCA5A5;
+    .apply-policy__list .highlight {
+      color: #60A5FA;
+      font-weight: 600;
+    }
+    .apply-policy__list .muted {
+      color: #475569;
+      font-size: 13px;
     }
 
     /* ── 반응형 ── */
-    @media (max-width: 840px) {
-      .apply-steps {
-        grid-template-columns: 1fr 1fr;
-      }
+    @media (max-width: 860px) {
+      .apply-steps { grid-template-columns: 1fr 1fr; }
       .apply-step__arrow { display: none; }
       .apply-policy__wrap {
         grid-template-columns: 1fr;
-        gap: 40px 0;
+        gap: 40px;
       }
-      .apply-policy__divider { display: none; }
+      .apply-policy__sep { display: none; }
     }
     @media (max-width: 480px) {
       .apply-steps { grid-template-columns: 1fr; }
@@ -273,12 +275,12 @@
   <!-- ══ 히어로 ══ -->
   <section class="apply-hero">
     <div class="apply-hero__eyebrow">교육 신청 안내</div>
-    <h1 class="apply-hero__title">교육 신청, <strong>어떻게 하나요?</strong></h1>
+    <h1 class="apply-hero__title">교육 신청,<br><em>어떻게 하나요?</em></h1>
     <p class="apply-hero__desc">담당 영업 대표를 통해 간단하게 신청하세요.<br>아래 4단계를 따라 교육에 참여할 수 있습니다.</p>
   </section>
 
   <!-- ══ 신청 절차 ══ -->
-  <div class="apply-body">
+  <div class="apply-section">
     <div class="apply-wrap">
 
       <div class="apply-section-hd">
@@ -295,7 +297,6 @@
           </div>
           <div class="apply-step__num">STEP 1</div>
           <div class="apply-step__icon-wrap">
-            <!-- 알람 시계 아이콘 -->
             <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
               <circle cx="12" cy="13" r="7"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v3l2 2"/>
@@ -314,7 +315,6 @@
           </div>
           <div class="apply-step__num">STEP 2</div>
           <div class="apply-step__icon-wrap">
-            <!-- 신청서 작성 아이콘 -->
             <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M17.586 3.586a2 2 0 012.828 2.828l-8.485 8.485L9 15l.101-2.929 8.485-8.485z"/>
@@ -332,7 +332,6 @@
           </div>
           <div class="apply-step__num">STEP 3</div>
           <div class="apply-step__icon-wrap">
-            <!-- 카드 결제 아이콘 -->
             <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
               <rect x="2" y="5" width="20" height="14" rx="2"/>
               <path stroke-linecap="round" d="M2 10h20"/>
@@ -348,7 +347,6 @@
         <div class="apply-step">
           <div class="apply-step__num">STEP 4</div>
           <div class="apply-step__icon-wrap">
-            <!-- 확정 체크 아이콘 -->
             <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
               <circle cx="12" cy="12" r="9"/>
@@ -367,23 +365,21 @@
   <section class="apply-policy">
     <div class="apply-policy__wrap">
 
-      <!-- 교육 비용 안내 -->
       <div>
-        <p class="apply-policy__col-title">교육 비용 안내 <span style="font-weight:400; font-size:14px; color:#94A3B8;">(전 과정 유상)</span></p>
+        <p class="apply-policy__col-title">교육 비용 안내<span>(전 과정 유상)</span></p>
         <ul class="apply-policy__list">
-          <li>모든 교육 과정은 유상으로 진행됩니다. <em>(1일 300,000원 / VAT 별도)</em></li>
+          <li>모든 교육 과정은 유상으로 진행됩니다. <span class="highlight">(1일 300,000원 / VAT 별도)</span></li>
           <li>정확한 교육 비용 및 견적은 교육 신청 시 담당 영업대표에게 문의해주시기 바랍니다.</li>
         </ul>
       </div>
 
-      <div class="apply-policy__divider"></div>
+      <div class="apply-policy__sep"></div>
 
-      <!-- 교육 운영 정책 안내 -->
       <div>
         <p class="apply-policy__col-title">교육 운영 정책 안내</p>
         <ul class="apply-policy__list">
           <li><strong>정원 안내 :</strong> 모든 교육 과정은 최대 24명 정원으로, 선착순 마감됩니다.</li>
-          <li><strong>폐강 안내 :</strong> 접수 마감일 기준 신청 인원이 10명 이하일 경우 폐강될 수 있습니다.<br><span style="color:#64748B;">(폐강 시 별도 안내 메일 발송)</span></li>
+          <li><strong>폐강 안내 :</strong> 접수 마감일 기준 신청 인원이 10명 이하일 경우 폐강될 수 있습니다. <span class="muted">(폐강 시 별도 안내 메일 발송)</span></li>
         </ul>
       </div>
 
@@ -391,34 +387,26 @@
   </section>
 
   <!-- ══ 푸터 ══ -->
-  <footer class="site-footer">
+  <footer class="site-footer-new">
     <div class="container">
-      <div class="footer-inner">
-        <div>
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px; width:auto; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:12px;">
-          <p class="footer-desc">IT 지식 없이도 시작할 수 있는<br>실무 BI 교육 플랫폼입니다.</p>
+      <div class="footer-new__inner">
+        <div class="footer-new__brand">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img logo-img--footer">
         </div>
-        <div class="footer-links">
-          <div>
-            <p class="footer-links__group-title">교육 과정</p>
-            <a href="course-list.html?category=industry&value=finance_industry" class="footer-links__link">금융 서비스</a>
-            <a href="course-list.html?category=industry&value=manufacturing" class="footer-links__link">제조업</a>
-            <a href="course-list.html?category=industry&value=public" class="footer-links__link">공공 부문</a>
-          </div>
-          <div>
-            <p class="footer-links__group-title">교육 신청</p>
-            <a href="apply.html" class="footer-links__link">신청 절차 안내</a>
-            <a href="apply.html" class="footer-links__link">비용 안내</a>
-          </div>
-          <div>
-            <p class="footer-links__group-title">고객지원</p>
-            <a href="index.html#faq" class="footer-links__link">자주 묻는 질문</a>
-            <a href="community.html" class="footer-links__link">커뮤니티</a>
-          </div>
+        <div class="footer-new__links">
+          <a href="#">회사소개</a>
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+          <a href="#">고객센터</a>
+        </div>
+        <div class="footer-new__social">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="YouTube">▶</a>
+          <a href="#" aria-label="Naver Blog">N</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 AUD Academy. All rights reserved.</p>
+      <div class="footer-new__bottom">
+        <p>© 2026 BIMatrix Co. Ltd. All rights reserved.</p>
       </div>
     </div>
   </footer>
