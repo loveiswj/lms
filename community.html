@@ -9,6 +9,66 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <style>
+    /* ══ 히어로 ══ */
+    .comm-hero {
+      background: #06101F url('assets/images/main.jpg') center/cover no-repeat;
+      padding: 72px 24px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .comm-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 16, 31, 0.78);
+      pointer-events: none;
+    }
+    .comm-hero__dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .comm-hero__inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1080px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .comm-hero__eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 18px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: rgba(59,130,246,.18);
+      color: #93C5FD;
+      border: 1px solid rgba(59,130,246,.35);
+    }
+    .comm-hero__title {
+      font-size: 38px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+    .comm-hero__desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+    }
+    @media (max-width: 640px) {
+      .comm-hero { padding: 52px 20px 48px; }
+      .comm-hero__title { font-size: 26px; }
+    }
+
     /* ══ 커뮤니티 서브 네비 ══ */
     .comm-sub-nav {
       background: #fff;
@@ -582,6 +642,16 @@
       </div>
     </div>
   </header>
+
+  <!-- ══ 히어로 ══ -->
+  <section class="comm-hero">
+    <div class="comm-hero__dots"></div>
+    <div class="comm-hero__inner">
+      <div class="comm-hero__eyebrow">Community</div>
+      <h1 class="comm-hero__title">수강생 커뮤니티</h1>
+      <p class="comm-hero__desc">질문, 수강후기, 자유로운 토론을 나눠보세요.</p>
+    </div>
+  </section>
 
   <!-- ══ 서브 네비 ══ -->
   <div class="comm-sub-nav">
