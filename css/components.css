@@ -474,6 +474,10 @@
   margin: 0;
 }
 
+.platform-card--v2[data-course-tab="trinity"] .platform-card__tagline {
+  color: var(--teal);
+}
+
 .platform-card__desc {
   font-size: 13px;
   color: var(--text-sub);
@@ -486,6 +490,10 @@
   font-weight: 600;
   color: var(--blue);
   flex-shrink: 0;
+}
+
+.platform-card--v2[data-course-tab="trinity"] .platform-card__link {
+  color: var(--teal);
 }
 
 /* ════════════════════════════════════════
@@ -1095,7 +1103,7 @@
   transform: translateY(-2px);
 }
 
-.course-card--teal {
+.course-card.course-card--teal {
   border-top: 4px solid var(--teal);
 }
 
