@@ -220,6 +220,13 @@
       document.body.style.overflow = '';
     }
 
+    function doSearch() {
+      var q = input ? input.value.trim() : '';
+      if (q) {
+        window.location.href = 'course-list.html?q=' + encodeURIComponent(q);
+      }
+    }
+
     toggle.addEventListener('click', open);
     close.addEventListener('click', shut);
     overlay.addEventListener('click', function (e) {
@@ -228,6 +235,11 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') shut();
     });
+    if (input) {
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') doSearch();
+      });
+    }
   }
 
   /* ────────────────────────────────────────
