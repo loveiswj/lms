@@ -474,10 +474,6 @@
   margin: 0;
 }
 
-.platform-card--v2[data-course-tab="trinity"] .platform-card__tagline {
-  color: var(--teal);
-}
-
 .platform-card__desc {
   font-size: 13px;
   color: var(--text-sub);
@@ -490,10 +486,6 @@
   font-weight: 600;
   color: var(--blue);
   flex-shrink: 0;
-}
-
-.platform-card--v2[data-course-tab="trinity"] .platform-card__link {
-  color: var(--teal);
 }
 
 /* ════════════════════════════════════════
@@ -708,8 +700,7 @@
 }
 
 .faq-list-new {
-  margin-top: 20px;
-  background: #fff;
+  margin-top: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -908,7 +899,7 @@
    커뮤니티 카드 v2 (온라인 + 오프라인 나란히)
    ════════════════════════════════════════ */
 .community-card {
-  margin-top: 20px;
+  margin-top: 0;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -1104,7 +1095,7 @@
   transform: translateY(-2px);
 }
 
-.course-card.course-card--teal {
+.course-card--teal {
   border-top: 4px solid var(--teal);
 }
 
