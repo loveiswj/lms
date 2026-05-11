@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>과정 목록 — AUD Academy</title>
-  <meta name="description" content="AUD Academy 실무 BI 교육 전체 과정. 업종별·역할별·기능별 34개 과정을 찾아보세요.">
+  <meta name="description" content="AUD Academy 실무 BI 교육 전체 과정. 업종별·단계별·기능별 34개 과정을 찾아보세요.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="과정 목록 — AUD Academy">
   <meta property="og:description" content="유통·금융·제조·공공 업종별 실무 BI 교육 34개 과정. 지금 바로 시작하세요.">
@@ -120,7 +120,7 @@
             </div>
           </div>
           <div class="gnb__item">
-            <button class="gnb__trigger">역할별
+            <button class="gnb__trigger">단계별
               <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="mega-menu">
@@ -223,7 +223,7 @@
       </div>
     </div>
     <div class="mobile-nav__section">
-      <div class="mobile-nav__category">역할별 <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="mobile-nav__category">단계별 <svg class="arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
       <div class="mobile-nav__sub">
         <a href="course-list.html?category=role&value=analyst" class="mobile-nav__sub-link">현업 분석가</a>
         <a href="course-list.html?category=role&value=developer" class="mobile-nav__sub-link">개발자</a>
@@ -321,10 +321,10 @@
               </div>
             </div>
 
-            <!-- 역할별 -->
+            <!-- 단계별 -->
             <div class="filter-group is-open" data-group="role">
               <div class="filter-group__header">
-                <span class="filter-group__label">역할별</span>
+                <span class="filter-group__label">단계별</span>
                 <svg class="filter-group__arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
               </div>
               <div class="filter-group__body">
@@ -548,7 +548,7 @@
         }
       };
 
-      var catLabels = { industry: "업종별", role: "역할별", feature: "기능별" };
+      var catLabels = { industry: "업종별", role: "단계별", feature: "기능별" };
       var label = (labels[category] && labels[category][value]) || value;
 
       if (titleEl) titleEl.textContent = label + " 과정";
