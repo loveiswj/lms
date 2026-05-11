@@ -16,7 +16,7 @@
     <div class="container">
       <div class="header-main">
 
-        <a href="index.html" class="logo-new">
+        <a href="index.html" class="logo-new" onclick="if(location.pathname.endsWith('index.html')||location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
 
