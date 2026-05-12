@@ -529,15 +529,25 @@
         if (chapters.length) {
           var chapListHtml = chapters.map(function(ch, idx) {
             return '<li class="chap-item" onclick="seekVideo(' + ch.time + ', this)">' +
-              '<span class="chap-item__num">' + (idx + 1) + '</span>' +
-              '<span class="chap-item__time">' + formatVideoTime(ch.time) + '</span>' +
-              '<span class="chap-item__label">' + escapeHtml(ch.label) + '</span>' +
-              '<svg class="chap-item__play" width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
+              '<div class="chap-item__circle">' +
+                '<svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>' +
+              '</div>' +
+              '<div class="chap-item__info">' +
+                '<span class="chap-item__label">' + escapeHtml(ch.label) + '</span>' +
+                '<span class="chap-item__time">' + formatVideoTime(ch.time) + ' video</span>' +
+              '</div>' +
             '</li>';
           }).join('');
           timelineHtml =
             '<div class="chap-bar">' +
-              '<span class="chap-bar__heading">목차</span>' +
+              '<div class="chap-bar__header">' +
+                '<div class="chap-bar__icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor" stroke="none"/></svg></div>' +
+                '<div>' +
+                  '<div class="chap-bar__title">' + escapeHtml(course.report_title || course.title) + '</div>' +
+                  '<div class="chap-bar__meta">' + chapters.length + '개 챕터</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="chap-bar__section-label">강의 목차</div>' +
               '<ul class="chap-list">' + chapListHtml + '</ul>' +
             '</div>';
         }
