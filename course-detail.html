@@ -430,7 +430,7 @@
 
   function seekVideo(seconds, el) {
     /* 활성 항목 표시 */
-    var items = document.querySelectorAll('.video-timeline__item');
+    var items = document.querySelectorAll('.video-timeline__item, .chap-btn');
     items.forEach(function(i) { i.classList.remove('is-active'); });
     if (el) el.classList.add('is-active');
     /* 영상 이동 */
@@ -527,29 +527,24 @@
 
         var timelineHtml = '';
         if (chapters.length) {
-          var chapListHtml = chapters.map(function(ch) {
-            return '<li class="video-timeline__item" onclick="seekVideo(' + ch.time + ', this)">' +
-              '<span class="video-timeline__time">' + formatVideoTime(ch.time) + '</span>' +
-              '<span class="video-timeline__chapter">' + escapeHtml(ch.label) + '</span>' +
-              '<svg class="video-timeline__play-icon" width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
-            '</li>';
+          var chapListHtml = chapters.map(function(ch, idx) {
+            return '<button class="chap-btn" onclick="seekVideo(' + ch.time + ', this)">' +
+              '<span class="chap-btn__time">' + formatVideoTime(ch.time) + '</span>' +
+              '<span class="chap-btn__label">' + escapeHtml(ch.label) + '</span>' +
+            '</button>';
           }).join('');
           timelineHtml =
-            '<div class="video-timeline">' +
-              '<div class="video-timeline__header">' +
-                '<div class="video-timeline__label">목차</div>' +
-                '<div class="video-timeline__video-title">' + escapeHtml(course.report_title || course.title) + '</div>' +
-              '</div>' +
-              '<ul class="video-timeline__list">' + chapListHtml + '</ul>' +
+            '<div class="chap-bar">' +
+              '<span class="chap-bar__heading">목차</span>' +
+              '<div class="chap-bar__scroll">' + chapListHtml + '</div>' +
             '</div>';
         }
 
         videoSection =
           '<div class="detail-section">' +
             '<h2 class="detail-section__title">강의 영상</h2>' +
-            (chapters.length
-              ? '<div class="video-layout">' + playerHtml + timelineHtml + '</div>'
-              : playerHtml) +
+            playerHtml +
+            timelineHtml +
           '</div>';
       } else {
         videoSection =
