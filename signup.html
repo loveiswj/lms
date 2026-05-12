@@ -94,6 +94,23 @@
     }
     .agree-item:last-child { margin-bottom: 0; }
     .agree-item input, .agree-all input { accent-color: var(--navy); width: 15px; height: 15px; flex-shrink: 0; }
+    .agree-item.is-agreed {
+      background: #F0FDF4;
+      border-radius: 6px;
+      padding: 4px 8px;
+      color: #15803D;
+      font-weight: 600;
+    }
+    .agree-item.is-agreed::after {
+      content: '✓ 동의완료';
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      color: #16A34A;
+      background: #DCFCE7;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
     .agree-link { margin-left: auto; font-size: 12px; color: var(--navy-light); text-decoration: none; cursor: pointer; }
     .agree-link:hover { text-decoration: underline; }
     .agree-box.error { border-color: #EF4444; background: #FFF5F5; }
@@ -313,6 +330,11 @@
       var all = document.querySelectorAll('.agree-check');
       var checked = document.querySelectorAll('.agree-check:checked');
       document.getElementById('agreeAll').checked = all.length === checked.length;
+      /* 각 항목 동의완료 표시 */
+      all.forEach(function(cb) {
+        var item = cb.closest('.agree-item');
+        if (item) item.classList.toggle('is-agreed', cb.checked);
+      });
       var allRequired = Array.from(document.querySelectorAll('.agree-check[data-required]'))
         .every(function(c) { return c.checked; });
       if (allRequired) {
