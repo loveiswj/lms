@@ -385,7 +385,7 @@
               전체 <strong>0</strong>개 과정
             </p>
           </div>
-          <div class="grid-3" id="courseGrid">
+          <div class="grid-4" id="courseGrid">
             <!-- JS로 렌더링 -->
           </div>
           <!-- 빈 상태 -->
@@ -528,41 +528,49 @@
       });
     }
 
-    /* ── 레벨 배지 헬퍼 ── */
+    /* ── 레벨 헬퍼 ── */
     var LEVEL_MAP = {
-      basic:    { cls: "level-badge--basic",    text: "기초" },
-      applied:  { cls: "level-badge--applied",  text: "응용" },
-      advanced: { cls: "level-badge--advanced", text: "심화" },
-      expert:   { cls: "level-badge--expert",   text: "전문" }
+      basic:    { lv: "Lv.1", text: "기초" },
+      applied:  { lv: "Lv.2", text: "응용" },
+      advanced: { lv: "Lv.3", text: "심화" },
+      expert:   { lv: "Lv.4", text: "전문" }
+    };
+
+    var FEATURE_LABEL = {
+      query:  "데이터 조회",
+      excel:  "엑셀 자동화",
+      visual: "시각화 분석",
+      data:   "데이터 저장",
+      system: "시스템 운영"
     };
 
     /* ── 과목 카드 HTML ── */
     function renderCard(course) {
-      var lv = LEVEL_MAP[course.level] || { cls: "level-badge--basic", text: course.level };
+      var lv = LEVEL_MAP[course.level] || { lv: "Lv.1", text: course.level };
+      var featureText = course.feature && course.feature.length
+        ? (FEATURE_LABEL[course.feature[0]] || course.feature[0])
+        : "";
+      var stepText = lv.text + (featureText ? " · " + featureText : "");
       var comingSoon = !course.youtube
         ? '<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.55);color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:0.05em;">준비중</span>'
         : '';
       return '<a href="course-detail.html?id=' + course.id + '" class="course-card" style="text-decoration:none;">' +
-        '<div class="course-card__thumb" style="position:relative;">' +
+        '<div class="course-card__thumb">' +
           '<img src="' + course.thumbnail + '" alt="' + escapeHtml(course.title) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
           '<div class="course-card__thumb-placeholder" style="display:none">' +
             '<svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#CBD5E1;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' +
           '</div>' +
-          '<span class="course-card__level level-badge ' + lv.cls + '">' + lv.text + '</span>' +
+          '<span class="course-card__level">' + lv.lv + '</span>' +
           comingSoon +
         '</div>' +
         '<div class="course-card__body">' +
-          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">' +
-            '<span style="display:inline-block;font-size:10px;font-weight:700;color:var(--navy);border:1px solid var(--navy);padding:2px 7px;border-radius:4px;letter-spacing:0.06em;opacity:0.75;">' + escapeHtml(course.product) + '</span>' +
-            '<span style="font-size:12px;color:var(--text-sub);font-weight:500;">' + escapeHtml(course.report_title || "") + '</span>' +
-          '</div>' +
-          '<p class="course-card__title" style="font-size:15px;font-weight:700;line-height:1.45;margin-bottom:0;">' + escapeHtml(course.title) + '</p>' +
-          '<div class="course-card__meta" style="margin-top:12px;">' +
+          '<span class="course-card__step">' + escapeHtml(stepText) + '</span>' +
+          '<p class="course-card__title">' + escapeHtml(course.title) + '</p>' +
+          '<div class="course-card__meta">' +
             '<span class="course-card__duration">' +
               '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
-              course.duration +
+              escapeHtml(course.duration) +
             '</span>' +
-            (course.difficulty ? '<span style="font-size:11px;color:var(--text-hint);margin-left:8px;">' + escapeHtml(course.difficulty) + '</span>' : '') +
           '</div>' +
         '</div>' +
       '</a>';

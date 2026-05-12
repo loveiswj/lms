@@ -2278,17 +2278,19 @@
    ════════════════════════════════════════ */
 .course-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border: none;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   cursor: pointer;
 }
 
 .course-card:hover {
-  border-color: var(--navy-light);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  transform: translateY(-3px);
 }
 
 .course-card__thumb {
@@ -2299,6 +2301,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .course-card__thumb img {
@@ -2322,12 +2325,20 @@
 
 .course-card__level {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255,0.92);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(4px);
 }
 
 .course-card__body {
-  padding: 16px 20px 20px;
+  padding: 16px 18px 18px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -2335,39 +2346,35 @@
 }
 
 .course-card__step {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--text-hint);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 
 .course-card__title {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
-  line-height: 1.45;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .course-card__outcome {
-  font-size: 13px;
-  color: var(--text-sub);
-  line-height: 1.6;
   display: none;
 }
 
 .course-card__meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid var(--border);
-  margin-top: auto;
+  border-top: 1px solid var(--border-light);
 }
 
 .course-card__info {
