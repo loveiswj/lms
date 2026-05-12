@@ -1611,6 +1611,7 @@
   color: var(--text-primary);
   font-size: 13px;
   margin-bottom: 2px;
+  white-space: nowrap;
 }
 
 .mega-menu__link span {
