@@ -94,8 +94,39 @@
     }
     .agree-item:last-child { margin-bottom: 0; }
     .agree-item input, .agree-all input { accent-color: var(--navy); width: 15px; height: 15px; flex-shrink: 0; }
-    .agree-link { margin-left: auto; font-size: 12px; color: var(--navy-light); text-decoration: none; }
+    .agree-link { margin-left: auto; font-size: 12px; color: var(--navy-light); text-decoration: none; cursor: pointer; }
     .agree-link:hover { text-decoration: underline; }
+    .agree-box.error { border-color: #EF4444; background: #FFF5F5; }
+    /* 약관 모달 */
+    .terms-modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    .terms-modal-bg.open { display: flex; }
+    .terms-modal {
+      background: #fff; border-radius: 12px;
+      width: 90%; max-width: 520px; max-height: 80vh;
+      display: flex; flex-direction: column;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .terms-modal__head {
+      padding: 20px 24px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .terms-modal__title { font-size: 16px; font-weight: 700; color: var(--navy); }
+    .terms-modal__close {
+      background: none; border: none; cursor: pointer;
+      font-size: 20px; color: var(--text-hint); line-height: 1;
+    }
+    .terms-modal__body { padding: 20px 24px; overflow-y: auto; font-size: 13px; line-height: 1.8; color: var(--text-sub); }
+    .terms-modal__body h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin: 16px 0 6px; }
+    .terms-modal__foot { padding: 16px 24px; border-top: 1px solid var(--border); text-align: right; }
+    .terms-modal__foot button {
+      padding: 10px 28px; background: var(--navy); color: #fff;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+      font-family: var(--font); cursor: pointer;
+    }
     .btn-auth {
       width: 100%;
       padding: 14px;
@@ -189,27 +220,27 @@
           <div class="form-error" id="passwordConfirmError">비밀번호가 일치하지 않습니다</div>
         </div>
 
-        <div class="agree-box">
+        <div class="agree-box" id="agreeBox">
           <label class="agree-all">
             <input type="checkbox" id="agreeAll" onchange="toggleAll(this)">
             전체 동의
           </label>
           <label class="agree-item">
-            <input type="checkbox" class="agree-check" data-required="true" name="agree">
+            <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreeTerms">
             [필수] 이용약관 동의
-            <a href="#" class="agree-link">보기</a>
+            <span class="agree-link" onclick="openTerms('terms')">보기</span>
           </label>
           <label class="agree-item">
-            <input type="checkbox" class="agree-check" data-required="true" name="agree">
+            <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreePrivacy">
             [필수] 개인정보 처리방침 동의
-            <a href="#" class="agree-link">보기</a>
+            <span class="agree-link" onclick="openTerms('privacy')">보기</span>
           </label>
           <label class="agree-item">
             <input type="checkbox" class="agree-check" name="agree">
             [선택] 마케팅 정보 수신 동의
           </label>
         </div>
-        <div class="form-error" id="agreeError" style="margin-bottom:12px;">필수 약관에 동의해주세요</div>
+        <div class="form-error" id="agreeError" style="margin-bottom:12px;">위 필수 약관 두 항목에 체크해주세요</div>
 
         <button type="submit" class="btn-auth" id="signupBtn">회원가입</button>
       </form>
@@ -223,8 +254,65 @@
 
   <div class="toast" id="toast"></div>
 
+  <!-- 이용약관 모달 -->
+  <div class="terms-modal-bg" id="termsModal">
+    <div class="terms-modal">
+      <div class="terms-modal__head">
+        <span class="terms-modal__title" id="termsModalTitle">이용약관</span>
+        <button class="terms-modal__close" onclick="closeTerms()">✕</button>
+      </div>
+      <div class="terms-modal__body" id="termsModalBody"></div>
+      <div class="terms-modal__foot">
+        <button onclick="agreeAndClose()">동의하고 닫기</button>
+      </div>
+    </div>
+  </div>
+
   <script src="js/supabase-client.js"></script>
   <script>
+    var _currentTermsId = null;
+    var TERMS_CONTENT = {
+      terms: {
+        title: '이용약관',
+        targetId: 'agreeTerms',
+        body: '<h4>제1조 (목적)</h4>본 약관은 AUD Academy(이하 "회사")가 제공하는 교육 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.' +
+              '<h4>제2조 (서비스 이용)</h4>회원은 회사가 제공하는 강의 콘텐츠를 개인 학습 목적으로만 이용할 수 있으며, 무단 배포·재판매·공유를 금지합니다.' +
+              '<h4>제3조 (계정 관리)</h4>회원은 본인의 계정 정보를 안전하게 관리할 책임이 있으며, 타인에게 계정을 양도하거나 공유할 수 없습니다.' +
+              '<h4>제4조 (서비스 변경 및 중단)</h4>회사는 운영상 필요에 따라 서비스 내용을 변경하거나 중단할 수 있으며, 이 경우 사전에 공지합니다.' +
+              '<h4>제5조 (면책)</h4>회사는 천재지변, 시스템 장애 등 불가피한 사유로 인한 서비스 중단에 대해 책임을 지지 않습니다.'
+      },
+      privacy: {
+        title: '개인정보 처리방침',
+        targetId: 'agreePrivacy',
+        body: '<h4>수집하는 개인정보 항목</h4>이름, 이메일, 연락처, 회사명, 부서명 (선택)' +
+              '<h4>개인정보 수집 목적</h4>회원 식별 및 서비스 제공, 교육 이수 관리, 수료증 발급' +
+              '<h4>개인정보 보유 기간</h4>회원 탈퇴 시까지. 단, 관련 법령에 따라 일정 기간 보관될 수 있습니다.' +
+              '<h4>제3자 제공</h4>회사는 원칙적으로 회원의 개인정보를 외부에 제공하지 않습니다. 단, 법령에 의한 경우는 예외입니다.' +
+              '<h4>개인정보 처리 담당</h4>담당부서: AUD Academy 운영팀 / 문의: contact@audacademy.kr'
+      }
+    };
+
+    function openTerms(type) {
+      _currentTermsId = TERMS_CONTENT[type].targetId;
+      document.getElementById('termsModalTitle').textContent = TERMS_CONTENT[type].title;
+      document.getElementById('termsModalBody').innerHTML = TERMS_CONTENT[type].body;
+      document.getElementById('termsModal').classList.add('open');
+    }
+    function closeTerms() {
+      document.getElementById('termsModal').classList.remove('open');
+      _currentTermsId = null;
+    }
+    function agreeAndClose() {
+      if (_currentTermsId) {
+        var cb = document.getElementById(_currentTermsId);
+        if (cb) { cb.checked = true; cb.dispatchEvent(new Event('change')); }
+      }
+      closeTerms();
+    }
+    document.getElementById('termsModal').addEventListener('click', function(e) {
+      if (e.target === this) closeTerms();
+    });
+
     function showToast(msg) {
       var t = document.getElementById('toast');
       t.textContent = msg;
@@ -245,7 +333,10 @@
         /* 필수 체크박스 모두 체크되면 에러 제거 */
         var allRequired = Array.from(document.querySelectorAll('.agree-check[data-required]'))
           .every(function(c) { return c.checked; });
-        if (allRequired) document.getElementById('agreeError').classList.remove('show');
+        if (allRequired) {
+          document.getElementById('agreeError').classList.remove('show');
+          document.getElementById('agreeBox').classList.remove('error');
+        }
       });
     });
 
@@ -326,9 +417,12 @@
         .every(function(c) { return c.checked; });
       if (!allRequired) {
         document.getElementById('agreeError').classList.add('show');
+        document.getElementById('agreeBox').classList.add('error');
+        document.getElementById('agreeBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
         valid = false;
       } else {
         document.getElementById('agreeError').classList.remove('show');
+        document.getElementById('agreeBox').classList.remove('error');
       }
 
       if (!valid) return;
