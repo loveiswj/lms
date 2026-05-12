@@ -1946,6 +1946,26 @@
   color: #92400e;
 }
 
+.level-badge--basic {
+  background: rgba(16, 185, 129, 0.12);
+  color: #065f46;
+}
+
+.level-badge--applied {
+  background: rgba(59, 130, 246, 0.12);
+  color: #1e40af;
+}
+
+.level-badge--advanced {
+  background: rgba(245, 158, 11, 0.12);
+  color: #92400e;
+}
+
+.level-badge--expert {
+  background: rgba(44, 62, 107, 0.1);
+  color: var(--navy);
+}
+
 /* ════════════════════════════════════════
    HERO BANNER SLIDER
    ════════════════════════════════════════ */
