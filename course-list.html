@@ -552,18 +552,17 @@
           comingSoon +
         '</div>' +
         '<div class="course-card__body">' +
-          '<span style="display:inline-block;font-size:10px;font-weight:700;color:var(--navy);border:1px solid var(--navy);padding:2px 7px;border-radius:4px;letter-spacing:0.06em;margin-bottom:6px;opacity:0.75;">' + escapeHtml(course.product) + '</span>' +
-          '<span class="course-card__step" style="display:block;">' + escapeHtml(course.report_title || "") + '</span>' +
-          '<p class="course-card__title">' + escapeHtml(course.title) + '</p>' +
-          '<p class="course-card__outcome">' + escapeHtml(course.outcome || "") + '</p>' +
-          '<div class="course-card__meta">' +
-            '<div class="course-card__info">' +
-              '<span class="course-card__duration">' +
-                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
-                course.duration +
-              '</span>' +
-              (course.difficulty ? '<span style="font-size:11px;color:var(--text-hint);margin-left:8px;">' + escapeHtml(course.difficulty) + '</span>' : '') +
-            '</div>' +
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">' +
+            '<span style="display:inline-block;font-size:10px;font-weight:700;color:var(--navy);border:1px solid var(--navy);padding:2px 7px;border-radius:4px;letter-spacing:0.06em;opacity:0.75;">' + escapeHtml(course.product) + '</span>' +
+            '<span style="font-size:12px;color:var(--text-sub);font-weight:500;">' + escapeHtml(course.report_title || "") + '</span>' +
+          '</div>' +
+          '<p class="course-card__title" style="font-size:15px;font-weight:700;line-height:1.45;margin-bottom:0;">' + escapeHtml(course.title) + '</p>' +
+          '<div class="course-card__meta" style="margin-top:12px;">' +
+            '<span class="course-card__duration">' +
+              '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
+              course.duration +
+            '</span>' +
+            (course.difficulty ? '<span style="font-size:11px;color:var(--text-hint);margin-left:8px;">' + escapeHtml(course.difficulty) + '</span>' : '') +
           '</div>' +
         '</div>' +
       '</a>';
