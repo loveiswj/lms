@@ -115,6 +115,17 @@
     .auth-footer { text-align: center; margin-top: 16px; font-size: 14px; color: var(--text-sub); }
     .auth-footer a { color: var(--navy); font-weight: 700; text-decoration: none; }
     .auth-footer a:hover { text-decoration: underline; }
+    .auth-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-sub);
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+    .auth-back:hover { color: var(--navy); }
     .toast {
       position: fixed; bottom: 32px; left: 50%;
       transform: translateX(-50%) translateY(20px);
@@ -134,6 +145,11 @@
 
   <div class="auth-wrap">
     <div class="auth-card">
+
+      <a href="javascript:history.back()" class="auth-back">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        이전 페이지로 돌아가기
+      </a>
 
       <div class="auth-logo">
         <a href="index.html">
@@ -333,8 +349,19 @@
       });
 
       if (error) {
-        showToast(error.message === 'User already registered'
-          ? '이미 가입된 이메일입니다' : '가입 중 오류가 발생했습니다');
+        var msg = '가입 중 오류가 발생했습니다';
+        if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+          msg = '이미 가입된 이메일입니다. 로그인해주세요';
+        } else if (error.message.includes('invalid') && error.message.includes('email')) {
+          msg = '올바른 이메일 형식이 아닙니다';
+        } else if (error.message.includes('Password')) {
+          msg = '비밀번호는 8자 이상이어야 합니다';
+        } else if (error.message.includes('rate limit') || error.message.includes('too many')) {
+          msg = '잠시 후 다시 시도해주세요 (요청 횟수 초과)';
+        } else if (error.message) {
+          msg = error.message;
+        }
+        showToast(msg);
         btn.disabled = false;
         btn.textContent = '회원가입';
         return;
