@@ -385,7 +385,7 @@
               전체 <strong>0</strong>개 과정
             </p>
           </div>
-          <div class="grid-2" id="courseGrid">
+          <div class="grid-3" id="courseGrid">
             <!-- JS로 렌더링 -->
           </div>
           <!-- 빈 상태 -->
@@ -566,6 +566,7 @@
         '<div class="cg-card__body">' +
           '<span class="cg-card__step">' + escapeHtml(stepText) + '</span>' +
           '<p class="cg-card__title">' + escapeHtml(course.title) + '</p>' +
+          (course.report_title ? '<p class="cg-card__sub">' + escapeHtml(course.report_title) + '</p>' : '') +
           '<div class="cg-card__meta">' +
             '<span class="cg-card__duration">' +
               '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
