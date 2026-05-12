@@ -228,12 +228,12 @@
           <label class="agree-item">
             <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreeTerms">
             [필수] 이용약관 동의
-            <span class="agree-link" onclick="openTerms('terms')">보기</span>
+            <span class="agree-link" onclick="event.stopPropagation(); openTerms('terms')">보기</span>
           </label>
           <label class="agree-item">
             <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreePrivacy">
             [필수] 개인정보 처리방침 동의
-            <span class="agree-link" onclick="openTerms('privacy')">보기</span>
+            <span class="agree-link" onclick="event.stopPropagation(); openTerms('privacy')">보기</span>
           </label>
           <label class="agree-item">
             <input type="checkbox" class="agree-check" name="agree">
@@ -305,9 +305,20 @@
     function agreeAndClose() {
       if (_currentTermsId) {
         var cb = document.getElementById(_currentTermsId);
-        if (cb) { cb.checked = true; cb.dispatchEvent(new Event('change')); }
+        if (cb) { cb.checked = true; updateAgreeAll(); }
       }
       closeTerms();
+    }
+    function updateAgreeAll() {
+      var all = document.querySelectorAll('.agree-check');
+      var checked = document.querySelectorAll('.agree-check:checked');
+      document.getElementById('agreeAll').checked = all.length === checked.length;
+      var allRequired = Array.from(document.querySelectorAll('.agree-check[data-required]'))
+        .every(function(c) { return c.checked; });
+      if (allRequired) {
+        document.getElementById('agreeError').classList.remove('show');
+        document.getElementById('agreeBox').classList.remove('error');
+      }
     }
     document.getElementById('termsModal').addEventListener('click', function(e) {
       if (e.target === this) closeTerms();
@@ -322,22 +333,11 @@
 
     function toggleAll(el) {
       document.querySelectorAll('.agree-check').forEach(function(c) { c.checked = el.checked; });
-      if (el.checked) document.getElementById('agreeError').classList.remove('show');
+      updateAgreeAll();
     }
 
     document.querySelectorAll('.agree-check').forEach(function(c) {
-      c.addEventListener('change', function() {
-        var all = document.querySelectorAll('.agree-check');
-        var checked = document.querySelectorAll('.agree-check:checked');
-        document.getElementById('agreeAll').checked = all.length === checked.length;
-        /* 필수 체크박스 모두 체크되면 에러 제거 */
-        var allRequired = Array.from(document.querySelectorAll('.agree-check[data-required]'))
-          .every(function(c) { return c.checked; });
-        if (allRequired) {
-          document.getElementById('agreeError').classList.remove('show');
-          document.getElementById('agreeBox').classList.remove('error');
-        }
-      });
+      c.addEventListener('change', updateAgreeAll);
     });
 
     /* 실시간 에러 클리어 */
