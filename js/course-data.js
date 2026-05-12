@@ -15,6 +15,7 @@ const COURSES = [
     youtube: "https://youtu.be/9OozugKBd2Y?si=v_ZvLy8d388f9Anv",
     level: "basic",
     feature: ["query"],
+    industry: ["retail"],
     difficulty: "입문",
     duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -28,6 +29,7 @@ const COURSES = [
     youtube: null,
     level: "basic",
     feature: ["query"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "4분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -41,6 +43,7 @@ const COURSES = [
     youtube: "https://youtu.be/F7WMNRP4_8I?si=daQO1hYWhXxwKhQ2",
     level: "basic",
     feature: ["query"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -54,6 +57,7 @@ const COURSES = [
     youtube: null,
     level: "basic",
     feature: ["query"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "3분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -67,6 +71,7 @@ const COURSES = [
     youtube: "https://youtu.be/JQvScyETVy4?si=Dh-kcDYLjMrAszlf",
     level: "basic",
     feature: ["query"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -80,6 +85,7 @@ const COURSES = [
     youtube: null,
     level: "basic",
     feature: ["query"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -95,6 +101,7 @@ const COURSES = [
     youtube: "https://youtu.be/yfw-dPxx-ks?si=6T_77QgcoIv43ZxK",
     level: "basic",
     feature: ["excel"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "6분",
     thumbnail: "assets/images/thumb-report.jpg"
@@ -108,6 +115,7 @@ const COURSES = [
     youtube: "https://youtu.be/qMYiUBNQ53U?si=nXoMCHxTEzW-YDSu",
     level: "basic",
     feature: ["excel"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "4분",
     thumbnail: "assets/images/thumb-report.jpg"
@@ -123,6 +131,7 @@ const COURSES = [
     youtube: "https://youtu.be/wKkwd6Z1qxo?si=kKKiYycu0UUtIIXy",
     level: "applied",
     feature: ["excel"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "14분",
     thumbnail: "assets/images/thumb-report.jpg"
@@ -136,6 +145,7 @@ const COURSES = [
     youtube: "https://youtu.be/9hmLHN5DHG8?si=JMVLDQ5wgqEpN_2N",
     level: "applied",
     feature: ["excel"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "13분",
     thumbnail: "assets/images/thumb-report.jpg"
@@ -151,6 +161,7 @@ const COURSES = [
     youtube: "https://youtu.be/fJ_gwH8m8CQ?si=vsetEGKbsMvqZBou",
     level: "applied",
     feature: ["excel", "visual"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "16분",
     thumbnail: "assets/images/thumb-dashboard.jpg"
@@ -164,6 +175,7 @@ const COURSES = [
     youtube: "https://youtu.be/BOOttYyVJyY?si=pYRm6e2aw9OaKbaE",
     level: "applied",
     feature: ["excel", "visual"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "7분",
     thumbnail: "assets/images/thumb-dashboard.jpg"
@@ -177,6 +189,7 @@ const COURSES = [
     youtube: "https://youtu.be/-mByUDITNfA?si=VmMIwpsiqCqkISUP",
     level: "applied",
     feature: ["excel", "visual"],
+    industry: ["retail"],
     difficulty: "고급",
     duration: "10분",
     thumbnail: "assets/images/thumb-dashboard.jpg"
@@ -190,6 +203,7 @@ const COURSES = [
     youtube: "https://youtu.be/7LuAmSWLXg0?si=Yd4mvEF_khL3ztY6",
     level: "applied",
     feature: ["excel", "visual"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "7분",
     thumbnail: "assets/images/thumb-dashboard.jpg"
@@ -203,6 +217,7 @@ const COURSES = [
     youtube: "https://youtu.be/tO-TJAnV2zc?si=SNLPCcgwGkrj0eAd",
     level: "applied",
     feature: ["excel", "visual"],
+    industry: ["retail"],
     difficulty: "중상급",
     duration: "4분",
     thumbnail: "assets/images/thumb-dashboard.jpg"
@@ -218,6 +233,7 @@ const COURSES = [
     youtube: "https://youtu.be/lOLbbgINspw?si=t4flwXt_xpa7AEnN",
     level: "applied",
     feature: ["data"],
+    industry: ["retail"],
     difficulty: "초급",
     duration: "6분",
     thumbnail: "assets/images/thumb-uiux.jpg"
@@ -233,6 +249,7 @@ const COURSES = [
     youtube: "https://youtu.be/jJKDg2S3CGs?si=mIvN0ICSLraCYCrO",
     level: "advanced",
     feature: ["data"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "11분",
     thumbnail: "assets/images/thumb-uiux.jpg"
@@ -246,6 +263,7 @@ const COURSES = [
     youtube: "https://youtu.be/1zeSPWWkAqg?si=v9FSil-qIjRo9cAE",
     level: "advanced",
     feature: ["data"],
+    industry: ["retail"],
     difficulty: "중상급",
     duration: "12분",
     thumbnail: "assets/images/thumb-uiux.jpg"
@@ -261,6 +279,7 @@ const COURSES = [
     youtube: "https://youtu.be/wJskWphv5zo?si=P6lkqFW53qjoZZVi",
     level: "applied",
     feature: ["excel", "data"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "14분",
     thumbnail: "assets/images/thumb-uiux.jpg"
@@ -274,6 +293,7 @@ const COURSES = [
     youtube: "https://youtu.be/MgPC5eIwEjw?si=8Tq5ybI7GToTfvFL",
     level: "applied",
     feature: ["excel", "data"],
+    industry: ["retail"],
     difficulty: "중상급",
     duration: "9분",
     thumbnail: "assets/images/thumb-uiux.jpg"
@@ -289,6 +309,7 @@ const COURSES = [
     youtube: "https://youtu.be/3GBdauqfJG4?si=oDuz6btLw0Iq9Zjb",
     level: "expert",
     feature: ["system"],
+    industry: ["retail"],
     difficulty: "중급",
     duration: "4분",
     thumbnail: "assets/images/thumb-olap.jpg"
