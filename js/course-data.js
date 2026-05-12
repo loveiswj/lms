@@ -316,3 +316,32 @@ const COURSES = [
   }
 
 ];
+
+/* ── 라벨 매핑 ── */
+var LEVEL_LABELS = { basic: "기초", applied: "응용", advanced: "심화", expert: "전문" };
+var INDUSTRY_LABELS = { retail: "소매·소비재", finance: "금융 서비스", public: "공공 부문", manufacturing: "제조업" };
+var FEATURE_LABELS = { query: "데이터 조회", excel: "엑셀 자동화", visual: "시각화 분석", data: "데이터 저장", system: "시스템 운영" };
+
+/* ── 과목 단건 조회 ── */
+function getCourseById(id) {
+  return COURSES.find(function(c) { return c.id === Number(id); }) || null;
+}
+
+/* ── YouTube URL에서 Video ID 추출 ── */
+function extractYoutubeId(url) {
+  if (!url) return null;
+  var m = url.match(/youtu\.be\/([^?&\s]+)/);
+  if (m) return m[1];
+  m = url.match(/[?&]v=([^?&\s]+)/);
+  if (m) return m[1];
+  return null;
+}
+
+/* ── 관련 과목 (같은 기능, 현재 제외) ── */
+function getRelatedCourses(course, limit) {
+  limit = limit || 3;
+  return COURSES.filter(function(c) {
+    return c.id !== course.id &&
+      c.feature.some(function(f) { return course.feature.indexOf(f) !== -1; });
+  }).slice(0, limit);
+}
