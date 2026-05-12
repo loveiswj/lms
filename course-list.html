@@ -530,10 +530,10 @@
 
     /* ── 레벨 헬퍼 ── */
     var LEVEL_MAP = {
-      basic:    { lv: "Lv.1", text: "기초" },
-      applied:  { lv: "Lv.2", text: "응용" },
-      advanced: { lv: "Lv.3", text: "심화" },
-      expert:   { lv: "Lv.4", text: "전문" }
+      basic:    "기초",
+      applied:  "응용",
+      advanced: "심화",
+      expert:   "전문"
     };
 
     var FEATURE_LABEL = {
@@ -546,11 +546,10 @@
 
     /* ── 과목 카드 HTML ── */
     function renderCard(course) {
-      var lv = LEVEL_MAP[course.level] || { lv: "Lv.1", text: course.level };
+      var lvText = LEVEL_MAP[course.level] || course.level;
       var featureText = course.feature && course.feature.length
         ? (FEATURE_LABEL[course.feature[0]] || course.feature[0])
         : "";
-      var stepText = lv.text + (featureText ? " · " + featureText : "");
       var comingSoon = !course.youtube
         ? '<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.55);color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:0.05em;">준비중</span>'
         : '';
@@ -560,13 +559,13 @@
           '<div class="cg-card__thumb-placeholder" style="display:none">' +
             '<svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#CBD5E1;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' +
           '</div>' +
-          '<span class="cg-card__level">' + lv.lv + '</span>' +
+          '<span class="cg-card__level">' + escapeHtml(lvText) + '</span>' +
           comingSoon +
         '</div>' +
         '<div class="cg-card__body">' +
-          '<span class="cg-card__step">' + escapeHtml(stepText) + '</span>' +
+          '<p class="cg-card__report">' + escapeHtml(course.report_title || "") + '</p>' +
           '<p class="cg-card__title">' + escapeHtml(course.title) + '</p>' +
-          (course.report_title ? '<p class="cg-card__sub">' + escapeHtml(course.report_title) + '</p>' : '') +
+          (featureText ? '<p class="cg-card__sub">' + escapeHtml(featureText) + '</p>' : '') +
           '<div class="cg-card__meta">' +
             '<span class="cg-card__duration">' +
               '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
