@@ -317,6 +317,31 @@ const COURSES = [
 
 ];
 
+/* ── 챕터 타임스탬프 (임시 샘플) ── */
+var CHAPTERS = {
+  1:  [ {time:0,  label:"소개"}, {time:12, label:"항목 끌어다 놓기"}, {time:40, label:"결과 확인"} ],
+  2:  [ {time:0,  label:"소개"}, {time:30, label:"정렬·필터 적용"}, {time:120, label:"계산 컬럼 추가"}, {time:200, label:"마무리"} ],
+  3:  [ {time:0,  label:"소개"}, {time:15, label:"행·열 배치"}, {time:45, label:"교차표 완성"} ],
+  4:  [ {time:0,  label:"소개"}, {time:30, label:"그룹핑 설정"}, {time:120, label:"상세리스트 분석"}, {time:160, label:"완성"} ],
+  5:  [ {time:0,  label:"소개"}, {time:12, label:"차트 추가"}, {time:40, label:"유형 변경"}, {time:55, label:"완성"} ],
+  6:  [ {time:0,  label:"소개"}, {time:15, label:"차트 색상·범위 설정"}, {time:45, label:"계열 구성"} ],
+  7:  [ {time:0,  label:"소개"}, {time:40, label:"엑셀에 데이터 연결"}, {time:150, label:"기간 선택 설정"}, {time:270, label:"자동화 확인"}, {time:340, label:"완성"} ],
+  8:  [ {time:0,  label:"소개"}, {time:40, label:"피벗테이블 추가"}, {time:130, label:"슬라이서 연결"}, {time:200, label:"완성"} ],
+  9:  [ {time:0,  label:"소개"}, {time:60, label:"엑셀 화면 설계"}, {time:240, label:"데이터 연결"}, {time:480, label:"수식 설정"}, {time:660, label:"웹 변환"}, {time:800, label:"결과 확인"} ],
+  10: [ {time:0,  label:"소개"}, {time:60, label:"상품 분석 화면 설계"}, {time:300, label:"다양한 관점 설정"}, {time:600, label:"웹 전환"}, {time:740, label:"완성"} ],
+  11: [ {time:0,  label:"소개"}, {time:60, label:"시트별 구성"}, {time:240, label:"이미지·표 배치"}, {time:500, label:"차트 구성"}, {time:760, label:"현황판 완성"}, {time:920, label:"결과 확인"} ],
+  12: [ {time:0,  label:"소개"}, {time:60, label:"기존 양식 연결"}, {time:240, label:"기간 선택 설정"}, {time:370, label:"완성"} ],
+  13: [ {time:0,  label:"소개"}, {time:80, label:"화면 양식 설계"}, {time:280, label:"수식 설정"}, {time:460, label:"데이터 자동 채우기"}, {time:560, label:"완성"} ],
+  14: [ {time:0,  label:"소개"}, {time:60, label:"회원 차트 설계"}, {time:220, label:"성별·연령 분석"}, {time:360, label:"웹 대시보드 전환"}, {time:400, label:"완성"} ],
+  15: [ {time:0,  label:"소개"}, {time:30, label:"동작 설정"}, {time:140, label:"상세 데이터 연결"}, {time:210, label:"완성"} ],
+  16: [ {time:0,  label:"소개"}, {time:60, label:"데이터 저장 모듈 연결"}, {time:220, label:"입력·수정 설정"}, {time:330, label:"완성"} ],
+  17: [ {time:0,  label:"소개"}, {time:80, label:"고객 정보 조회"}, {time:280, label:"매출 데이터 연결"}, {time:500, label:"수정·저장 설정"}, {time:630, label:"완성"} ],
+  18: [ {time:0,  label:"소개"}, {time:80, label:"직원 정보 입력"}, {time:340, label:"수정 기능"}, {time:520, label:"저장 설정"}, {time:680, label:"완성"} ],
+  19: [ {time:0,  label:"소개"}, {time:80, label:"엑셀 파일 불러오기"}, {time:280, label:"웹 입력 설정"}, {time:580, label:"저장 연결"}, {time:780, label:"완성"} ],
+  20: [ {time:0,  label:"소개"}, {time:60, label:"DB 연동 시트 생성"}, {time:230, label:"저장 기능 연결"}, {time:410, label:"조회·저장 확인"}, {time:520, label:"완성"} ],
+  21: [ {time:0,  label:"소개"}, {time:50, label:"i-META 구조 이해"}, {time:160, label:"논리 구조 설계"}, {time:220, label:"완성"} ]
+};
+
 /* ── 라벨 매핑 ── */
 var LEVEL_LABELS = { basic: "기초", applied: "응용", advanced: "심화", expert: "전문" };
 var INDUSTRY_LABELS = { retail: "소매·소비재", finance: "금융 서비스", public: "공공 부문", manufacturing: "제조업" };
