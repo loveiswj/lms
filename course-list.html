@@ -565,7 +565,7 @@
         '<div class="cg-card__body">' +
           '<p class="cg-card__report">' + escapeHtml(course.report_title || "") + '</p>' +
           '<p class="cg-card__title">' + escapeHtml(course.title) + '</p>' +
-          (featureText ? '<p class="cg-card__sub">' + escapeHtml(featureText) + '</p>' : '') +
+          (course.outcome ? '<p class="cg-card__sub">' + escapeHtml(course.outcome) + '</p>' : '') +
           '<div class="cg-card__meta">' +
             '<span class="cg-card__duration">' +
               '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>' +
