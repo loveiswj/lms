@@ -430,7 +430,7 @@
 
   function seekVideo(seconds, el) {
     /* 활성 항목 표시 */
-    var items = document.querySelectorAll('.video-timeline__item, .chap-btn');
+    var items = document.querySelectorAll('.video-timeline__item, .chap-btn, .chap-item');
     items.forEach(function(i) { i.classList.remove('is-active'); });
     if (el) el.classList.add('is-active');
     /* 영상 이동 */
@@ -528,15 +528,17 @@
         var timelineHtml = '';
         if (chapters.length) {
           var chapListHtml = chapters.map(function(ch, idx) {
-            return '<button class="chap-btn" onclick="seekVideo(' + ch.time + ', this)">' +
-              '<span class="chap-btn__time">' + formatVideoTime(ch.time) + '</span>' +
-              '<span class="chap-btn__label">' + escapeHtml(ch.label) + '</span>' +
-            '</button>';
+            return '<li class="chap-item" onclick="seekVideo(' + ch.time + ', this)">' +
+              '<span class="chap-item__num">' + (idx + 1) + '</span>' +
+              '<span class="chap-item__time">' + formatVideoTime(ch.time) + '</span>' +
+              '<span class="chap-item__label">' + escapeHtml(ch.label) + '</span>' +
+              '<svg class="chap-item__play" width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>' +
+            '</li>';
           }).join('');
           timelineHtml =
             '<div class="chap-bar">' +
               '<span class="chap-bar__heading">목차</span>' +
-              '<div class="chap-bar__scroll">' + chapListHtml + '</div>' +
+              '<ul class="chap-list">' + chapListHtml + '</ul>' +
             '</div>';
         }
 
