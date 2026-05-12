@@ -162,12 +162,19 @@
             </button>
             <div class="mega-menu">
               <div class="mega-menu__nav">
-                <div class="mega-menu__nav-item is-active" data-target="lf-excel">[엑셀 자동화]</div>
+                <div class="mega-menu__nav-item is-active" data-target="lf-query">[데이터 조회]</div>
+                <div class="mega-menu__nav-item" data-target="lf-excel">[엑셀 자동화]</div>
                 <div class="mega-menu__nav-item" data-target="lf-visual">[시각화 분석]</div>
                 <div class="mega-menu__nav-item" data-target="lf-data">[데이터 저장]</div>
                 <div class="mega-menu__nav-item" data-target="lf-system">[시스템 운영]</div>
               </div>
-              <div class="mega-menu__panel is-active" data-panel="lf-excel">
+              <div class="mega-menu__panel is-active" data-panel="lf-query">
+                <div class="mega-menu__panel-title">[데이터 조회]</div>
+                <div class="mega-menu__links">
+                  <a href="course-list.html?category=feature&value=query" class="mega-menu__link"><strong>마우스 동작 하나로 완성되는 쉽고 빠른 데이터 조회</strong></a>
+                </div>
+              </div>
+              <div class="mega-menu__panel" data-panel="lf-excel">
                 <div class="mega-menu__panel-title">[엑셀 자동화]</div>
                 <div class="mega-menu__links">
                   <a href="course-list.html?category=feature&value=excel" class="mega-menu__link"><strong>엑셀 리포팅 및 정형 보고서 생성</strong></a>
@@ -321,6 +328,10 @@
               </div>
               <div class="filter-group__body">
                 <label class="filter-option">
+                  <input type="checkbox" name="feature" value="query">
+                  <span class="filter-option__text">데이터 조회</span>
+                </label>
+                <label class="filter-option">
                   <input type="checkbox" name="feature" value="excel">
                   <span class="filter-option__text">엑셀 자동화</span>
                 </label>
@@ -451,6 +462,7 @@
           expert:   "[전문] 관리자 과정"
         },
         feature: {
+          query:  "데이터 조회",
           excel:  "엑셀 자동화",
           visual: "시각화 분석",
           data:   "데이터 저장",
@@ -580,7 +592,7 @@
       var tags = [];
       var names = {
         level:   { basic:"기초 과정", applied:"응용 과정", advanced:"심화 과정", expert:"전문 과정" },
-        feature: { excel:"엑셀 자동화", visual:"시각화 분석", data:"데이터 저장", system:"시스템 운영" }
+        feature: { query:"데이터 조회", excel:"엑셀 자동화", visual:"시각화 분석", data:"데이터 저장", system:"시스템 운영" }
       };
 
       ["level", "feature"].forEach(function (group) {

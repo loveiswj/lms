@@ -5,7 +5,7 @@
 
 const COURSES = [
 
-  /* ── [기초] 사용자 과정 · 시각화 분석 ── */
+  /* ── [기초] 사용자 과정 · 데이터 조회 ── */
   {
     id: 1,
     product: "i-META View",
@@ -14,7 +14,7 @@ const COURSES = [
     outcome: "보고싶은 항목을 끌어다 놓으면 데이터가 바로 조회돼요.",
     youtube: "https://youtu.be/9OozugKBd2Y?si=v_ZvLy8d388f9Anv",
     level: "basic",
-    feature: ["visual"],
+    feature: ["query"],
     difficulty: "입문",
     duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -27,7 +27,7 @@ const COURSES = [
     outcome: "정렬·필터·계산 컬럼 추가까지 조회된 화면에서 바로 적용할 수 있어요.",
     youtube: null,
     level: "basic",
-    feature: ["visual"],
+    feature: ["query"],
     difficulty: "초급",
     duration: "4분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -40,7 +40,7 @@ const COURSES = [
     outcome: "행과 열에 원하는 항목을 끌어다 놓으면 상품별·매장별 매출 실적이 교차표로 한눈에 보여요.",
     youtube: "https://youtu.be/F7WMNRP4_8I?si=daQO1hYWhXxwKhQ2",
     level: "basic",
-    feature: ["visual"],
+    feature: ["query"],
     difficulty: "초급",
     duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -53,7 +53,7 @@ const COURSES = [
     outcome: "그룹핑·상세리스트 분석까지, 하나의 보고서에서 매출 원인을 추적할 수 있어요.",
     youtube: null,
     level: "basic",
-    feature: ["visual"],
+    feature: ["query"],
     difficulty: "중급",
     duration: "3분",
     thumbnail: "assets/images/thumb-olap.jpg"
@@ -66,10 +66,10 @@ const COURSES = [
     outcome: "차트를 추가하고 유형을 바꾸는 것만으로 기간별·상품별 매출 추이가 시각화돼요.",
     youtube: "https://youtu.be/JQvScyETVy4?si=Dh-kcDYLjMrAszlf",
     level: "basic",
-    feature: ["visual"],
+    feature: ["query"],
     difficulty: "초급",
     duration: "1분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 6,
@@ -79,10 +79,10 @@ const COURSES = [
     outcome: "차트 유형·색상·조회 범위·계열을 자유롭게 바꿔 원하는 형태의 시각화를 만들 수 있어요.",
     youtube: null,
     level: "basic",
-    feature: ["visual"],
+    feature: ["query"],
     difficulty: "중급",
     duration: "1분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb-olap.jpg"
   },
 
   /* ── [기초] 사용자 과정 · 엑셀 자동화 ── */
