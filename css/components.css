@@ -2590,9 +2590,24 @@
    COURSE DETAIL PAGE
    ════════════════════════════════════════ */
 .detail-hero {
-  background: linear-gradient(120deg, var(--navy-dark) 0%, var(--navy) 100%);
+  background: var(--hero-bg) url('../assets/images/main.jpg') center/cover no-repeat;
   padding: 56px 0;
   color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 16, 31, 0.75);
+  pointer-events: none;
+}
+
+.detail-hero .container {
+  position: relative;
+  z-index: 1;
 }
 
 .detail-hero__tags {
