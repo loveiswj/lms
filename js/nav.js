@@ -50,7 +50,8 @@
 
     // 메가메뉴 탭 (좌측 nav-item ↔ 우측 panel 연동)
     document.querySelectorAll(".mega-menu__nav-item").forEach(function (navItem) {
-      navItem.addEventListener("click", function () {
+      navItem.addEventListener("click", function (e) {
+        e.stopPropagation();
         const target = this.dataset.target;
         const megaMenu = this.closest(".mega-menu");
         if (!megaMenu) return;
