@@ -218,10 +218,8 @@
   }
 
   window.navLogout = function () {
-    if (typeof _supabase === "undefined") { window.location.href = "index.html"; return; }
-    _supabase.auth.signOut()
-      .catch(function () {})
-      .finally(function () { window.location.href = "index.html"; });
+    if (typeof _supabase !== "undefined") _supabase.auth.signOut().catch(function(){});
+    window.location.href = "index.html";
   };
 
   /* ────────────────────────────────────────
