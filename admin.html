@@ -328,6 +328,39 @@
 
   /* ── 대시보드 ── */
   function renderDashboard() {
+    var today = new Date().toISOString().slice(0, 10);
+
+    /* 오늘의 현황 */
+    var todayUsers    = _data.users.filter(function(u) { return (u.created_at || '').slice(0, 10) === today; }).length;
+    var todayPosts    = _data.posts.filter(function(p) { return (p.created_at || '').slice(0, 10) === today; }).length;
+    var todayComments = _data.comments.filter(function(c) { return (c.created_at || '').slice(0, 10) === today; }).length;
+
+    /* 미답변 Q&A: category='qa' 이고 댓글 0개인 게시글 */
+    var unanswered = _data.posts.filter(function(p) {
+      if (p.category !== 'qa') return false;
+      return _data.comments.filter(function(c) { return c.post_id === p.id; }).length === 0;
+    });
+
+    var unansweredRows = unanswered.length === 0
+      ? '<tr class="empty-row"><td colspan="4">미답변 Q&A가 없습니다 👍</td></tr>'
+      : unanswered.slice(0, 10).map(function(p) {
+          var daysDiff = Math.floor((new Date() - new Date(p.created_at)) / 86400000);
+          var urgency  = daysDiff >= 3 ? 'color:#DC2626;font-weight:700;' : daysDiff >= 1 ? 'color:#D97706;' : 'color:#059669;';
+          return '<tr>' +
+            '<td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' +
+              '<strong>' + escHtml(p.title) + '</strong>' +
+            '</td>' +
+            '<td>' + escHtml(p.author_name) + '</td>' +
+            '<td style="' + urgency + '">' + (daysDiff === 0 ? '오늘' : daysDiff + '일 전') + '</td>' +
+            '<td>' +
+              '<button onclick="showTab(\'community\');setTimeout(function(){openCommentWriteModal(' + p.id + ')},150)" ' +
+                'style="padding:5px 12px;background:#2563EB;color:#fff;border:none;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);">' +
+                '답변하기' +
+              '</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+
     var totalUsers   = _data.users.length;
     var totalEnroll  = _data.enrollments.length;
     var totalRevenue = _data.enrollments.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
@@ -356,7 +389,33 @@
       '</tr>';
     }).join('');
 
-    return '<div class="kpi-grid">' +
+    return '' +
+
+    /* ── 오늘의 현황 ── */
+    '<div style="margin-bottom:8px;">' +
+      '<p style="font-size:11px;font-weight:700;color:var(--text-hint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">TODAY ' + today + '</p>' +
+      '<div class="kpi-grid">' +
+        todayKpiCard('오늘 신규 가입', todayUsers, '명', '👤') +
+        todayKpiCard('오늘 새 게시글', todayPosts, '개', '📝') +
+        todayKpiCard('오늘 달린 댓글', todayComments, '개', '💬') +
+        todayKpiCard('미답변 Q&amp;A', unanswered.length, '건', unanswered.length > 0 ? '🔴' : '✅') +
+      '</div>' +
+    '</div>' +
+
+    /* ── 미답변 Q&A 액션 리스트 ── */
+    '<div class="admin-card" style="margin-bottom:24px;border-left:3px solid ' + (unanswered.length > 0 ? '#DC2626' : '#10B981') + ';">' +
+      '<div class="admin-card-header">' +
+        '<span class="admin-card-title">' + (unanswered.length > 0 ? '🔴 미답변 Q&amp;A — 답변이 필요합니다' : '✅ 미답변 Q&amp;A 없음') + '</span>' +
+        '<span style="font-size:12px;color:var(--text-hint);">3일↑ 빨강 · 1~2일 주황 · 오늘 초록</span>' +
+      '</div>' +
+      '<table class="admin-table">' +
+        '<thead><tr><th>제목</th><th>작성자</th><th>경과</th><th>액션</th></tr></thead>' +
+        '<tbody>' + unansweredRows + '</tbody>' +
+      '</table>' +
+    '</div>' +
+
+    /* ── 기존 KPI 카드 ── */
+    '<div class="kpi-grid">' +
       kpiCard('전체 수강생', totalUsers, '명') +
       kpiCard('수강 신청', totalEnroll, '건') +
       kpiCard('누적 매출', formatPrice(totalRevenue).replace('원',''), '원') +
@@ -382,6 +441,13 @@
     return '<div class="kpi-card">' +
       '<div class="kpi-label">' + label + '</div>' +
       '<div class="kpi-value">' + value + '<span>' + unit + '</span></div>' +
+    '</div>';
+  }
+
+  function todayKpiCard(label, value, unit, icon) {
+    return '<div class="kpi-card" style="background:linear-gradient(135deg,#F8FAFC,#fff);">' +
+      '<div class="kpi-label">' + icon + ' ' + label + '</div>' +
+      '<div class="kpi-value" style="font-size:24px;">' + value + '<span>' + unit + '</span></div>' +
     '</div>';
   }
 
