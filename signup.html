@@ -110,9 +110,12 @@
       background: #DCFCE7;
       padding: 2px 8px;
       border-radius: 10px;
+      white-space: nowrap;
     }
     .agree-link { margin-left: auto; font-size: 12px; color: var(--navy-light); text-decoration: none; cursor: pointer; }
     .agree-link:hover { text-decoration: underline; }
+    /* 동의완료 상태에서 "보기" 링크 숨김 — ::after 뱃지와 겹치지 않게 */
+    .agree-item.is-agreed .agree-link { display: none; }
     .agree-box.error { border-color: #EF4444; background: #FFF5F5; }
     /* 약관 모달 */
     .terms-modal-bg {
@@ -478,15 +481,13 @@
         return;
       }
 
-      /* phone / company / department 업데이트 */
+      /* profiles 테이블에 upsert (row 없어도 새로 생성) */
       if (data.user) {
-        var profileUpdate = {};
-        if (document.getElementById('phone').value) profileUpdate.phone = document.getElementById('phone').value;
-        if (document.getElementById('company').value) profileUpdate.company = document.getElementById('company').value;
-        if (document.getElementById('department').value) profileUpdate.department = document.getElementById('department').value;
-        if (Object.keys(profileUpdate).length > 0) {
-          await _supabase.from('profiles').update(profileUpdate).eq('id', data.user.id);
-        }
+        var profileData = { id: data.user.id, name: name.value.trim() };
+        if (document.getElementById('phone').value) profileData.phone = document.getElementById('phone').value;
+        if (document.getElementById('company').value) profileData.company = document.getElementById('company').value;
+        if (document.getElementById('department').value) profileData.department = document.getElementById('department').value;
+        await _supabase.from('profiles').upsert(profileData, { onConflict: 'id' });
       }
 
       showToast('가입 완료! 이메일 인증 후 로그인해주세요');
