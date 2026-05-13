@@ -245,17 +245,17 @@
             <input type="checkbox" id="agreeAll" onchange="toggleAll(this)">
             전체 동의
           </label>
-          <div class="agree-item" onclick="openTerms('terms')">
+          <div class="agree-item" onclick="handleAgreeClick(this, 'terms')">
             <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreeTerms" onclick="event.stopPropagation()">
             <span>[필수] 이용약관 동의</span>
             <span class="agree-link">보기</span>
           </div>
-          <div class="agree-item" onclick="openTerms('privacy')">
+          <div class="agree-item" onclick="handleAgreeClick(this, 'privacy')">
             <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreePrivacy" onclick="event.stopPropagation()">
             <span>[필수] 개인정보 처리방침 동의</span>
             <span class="agree-link">보기</span>
           </div>
-          <div class="agree-item" onclick="openTerms('marketing')">
+          <div class="agree-item" onclick="handleAgreeClick(this, 'marketing')">
             <input type="checkbox" class="agree-check" name="agree" id="agreeMarketing" onclick="event.stopPropagation()">
             <span>[선택] 마케팅 정보 수신 동의</span>
             <span class="agree-link">보기</span>
@@ -320,6 +320,16 @@
               '<h4>미동의 안내</h4>마케팅 정보 수신에 동의하지 않으셔도 서비스 이용에는 제한이 없습니다.'
       }
     };
+
+    function handleAgreeClick(el, type) {
+      var cb = el.querySelector('input');
+      if (cb.checked) {
+        cb.checked = false;
+        updateAgreeAll();
+      } else {
+        openTerms(type);
+      }
+    }
 
     function openTerms(type) {
       _currentTermsId = TERMS_CONTENT[type].targetId;
