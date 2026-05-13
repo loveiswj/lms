@@ -358,10 +358,10 @@
   <!-- ══ 프로필 헤더 ══ -->
   <div class="profile-header">
     <div class="container">
-      <div class="profile-avatar" id="profileAvatar">홍</div>
+      <div class="profile-avatar" id="profileAvatar"></div>
       <div class="profile-info">
-        <div class="profile-name" id="profileName">홍길동</div>
-        <div class="profile-email" id="profileEmail">hong@example.com</div>
+        <div class="profile-name" id="profileName"></div>
+        <div class="profile-email" id="profileEmail"></div>
         <div class="profile-badges">
           <span class="profile-badge">수강생</span>
           <span class="profile-badge gold" id="profileLevel">Lv.1 입문자</span>
@@ -502,9 +502,16 @@
       if (name === 'community') loadMyPosts();
     }
 
-    function logout(e) {
+    async function logout(e) {
       e.preventDefault();
-      if (typeof _supabase !== 'undefined') _supabase.auth.signOut().catch(function(){});
+      try {
+        if (typeof _supabase !== 'undefined') {
+          await Promise.race([
+            _supabase.auth.signOut(),
+            new Promise(function(r) { setTimeout(r, 1500); })
+          ]);
+        }
+      } catch(err) {}
       window.location.href = 'index.html';
     }
 

@@ -218,8 +218,15 @@
     });
   }
 
-  window.navLogout = function () {
-    if (typeof _supabase !== "undefined") _supabase.auth.signOut().catch(function(){});
+  window.navLogout = async function () {
+    try {
+      if (typeof _supabase !== "undefined") {
+        await Promise.race([
+          _supabase.auth.signOut(),
+          new Promise(function(r) { setTimeout(r, 1500); })
+        ]);
+      }
+    } catch(e) {}
     window.location.href = "index.html";
   };
 
