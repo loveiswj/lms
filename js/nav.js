@@ -218,15 +218,15 @@
     });
   }
 
-  window.navLogout = async function () {
-    try {
-      if (typeof _supabase !== "undefined") {
-        await Promise.race([
-          _supabase.auth.signOut(),
-          new Promise(function(r) { setTimeout(r, 1500); })
-        ]);
+  window.navLogout = function () {
+    /* localStorage에서 Supabase 세션 즉시 제거 */
+    Object.keys(localStorage).forEach(function(key) {
+      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1) {
+        localStorage.removeItem(key);
       }
-    } catch(e) {}
+    });
+    /* 서버 측 토큰 무효화 (백그라운드) */
+    if (typeof _supabase !== "undefined") _supabase.auth.signOut().catch(function(){});
     window.location.href = "index.html";
   };
 
