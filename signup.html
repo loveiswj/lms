@@ -509,8 +509,8 @@
         await _supabase.from('profiles').upsert(profileData, { onConflict: 'id' });
       }
 
-      showToast('가입 완료! 이메일 인증 후 로그인해주세요');
-      setTimeout(function() { window.location.href = 'login.html'; }, 2500);
+      showToast('가입이 완료되었습니다! 잠시 후 이동합니다');
+      setTimeout(function() { window.location.href = 'index.html'; }, 2000);
     });
   </script>
 </body>
