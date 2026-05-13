@@ -504,7 +504,7 @@
 
     async function logout(e) {
       e.preventDefault();
-      await _supabase.auth.signOut();
+      try { await _supabase.auth.signOut(); } catch(err) {}
       window.location.href = 'index.html';
     }
 
@@ -842,9 +842,10 @@
       USER.name  = document.getElementById('settingName').value;
       USER.phone = document.getElementById('settingPhone').value;
       USER.role  = document.getElementById('settingRole').value;
-      var { error } = await _supabase.from('profiles').update({
+      var { error } = await _supabase.from('profiles').upsert({
+        id: session.user.id, email: session.user.email,
         name: USER.name, phone: USER.phone, role: USER.role
-      }).eq('id', session.user.id);
+      }, { onConflict: 'id' });
       if (error) { showToast('저장 중 오류가 발생했습니다'); return; }
       renderProfile();
       showToast('프로필이 저장되었습니다');
@@ -944,11 +945,15 @@
         .eq('id', userId)
         .single();
 
+      USER.email = session.user.email;
       if (profile) {
         USER.name  = profile.name  || session.user.email.split('@')[0];
-        USER.email = session.user.email;
         USER.phone = profile.phone || '';
         USER.role  = profile.role  || '';
+      } else {
+        USER.name = session.user.user_metadata && session.user.user_metadata.name
+          ? session.user.user_metadata.name
+          : session.user.email.split('@')[0];
       }
 
       /* 수강 정보 로드 (enrollments + progress JOIN) */
