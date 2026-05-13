@@ -160,6 +160,15 @@
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       <span>매출 현황</span>
     </a>
+    <div class="sidebar-section">콘텐츠</div>
+    <a class="sidebar-menu-item" data-tab="faq" onclick="showTab('faq')">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>FAQ 관리</span>
+    </a>
+    <a class="sidebar-menu-item" data-tab="community" onclick="showTab('community')">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>커뮤니티 관리</span>
+    </a>
     <div class="sidebar-section">시스템</div>
     <a class="sidebar-menu-item" href="index.html" target="_blank">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -190,6 +199,61 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- FAQ 추가/수정 모달 -->
+<div id="faqModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:560px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <h2 id="faqModalTitle" style="font-size:17px;font-weight:800;color:var(--navy);">FAQ 추가</h2>
+      <button onclick="closeFAQModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-hint);">✕</button>
+    </div>
+    <input type="hidden" id="faqId">
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--text-hint);margin-bottom:6px;">카테고리</label>
+      <select id="faqCategory" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);">
+        <option>일반</option><option>수강</option><option>결제</option><option>수료증</option><option>기술지원</option><option>기타</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--text-hint);margin-bottom:6px;">질문 *</label>
+      <input id="faqQuestion" type="text" placeholder="질문을 입력하세요" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);box-sizing:border-box;">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--text-hint);margin-bottom:6px;">답변 *</label>
+      <textarea id="faqAnswer" rows="5" placeholder="답변을 입력하세요" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
+    </div>
+    <div style="margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+      <input type="checkbox" id="faqPublished" checked style="width:16px;height:16px;cursor:pointer;">
+      <label for="faqPublished" style="font-size:14px;font-weight:600;cursor:pointer;">공개 (FAQ 페이지에 표시)</label>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeFAQModal()" style="padding:10px 20px;background:#F3F4F6;color:var(--text-primary);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">취소</button>
+      <button onclick="saveFAQ()" style="padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 관리자 댓글 작성 모달 -->
+<div id="commentModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:520px;max-width:95vw;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <h2 style="font-size:17px;font-weight:800;color:var(--navy);">관리자 댓글 작성</h2>
+      <button onclick="closeCommentModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-hint);">✕</button>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--text-hint);margin-bottom:6px;">게시글 선택</label>
+      <select id="commentPostSelect" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);"></select>
+    </div>
+    <div style="margin-bottom:24px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--text-hint);margin-bottom:6px;">댓글 내용 *</label>
+      <textarea id="commentContent" rows="4" placeholder="댓글 내용을 입력하세요" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeCommentModal()" style="padding:10px 20px;background:#F3F4F6;color:var(--text-primary);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">취소</button>
+      <button onclick="saveComment()" style="padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">등록</button>
+    </div>
+  </div>
+</div>
+
 <script src="js/supabase-client.js"></script>
 <script src="js/course-data.js"></script>
 <script>
@@ -197,7 +261,7 @@
   var ADMIN_EMAILS = ['loveiswj@gmail.com', 'wjkim1363@bimatrix.co.kr'];
 
   var _currentTab = 'dashboard';
-  var _data = { users: [], enrollments: [], progress: [], certificates: [] };
+  var _data = { users: [], enrollments: [], progress: [], certificates: [], faqs: [], posts: [], comments: [] };
   var _userSearch = '';
   var _enrollSearch = '';
 
@@ -222,16 +286,22 @@
 
   /* ── 데이터 로드 ── */
   async function loadAll() {
-    var [p, e, pr, c] = await Promise.all([
+    var [p, e, pr, c, fq, ps, cm] = await Promise.all([
       _supabase.from('profiles').select('*').order('created_at', { ascending: false }),
       _supabase.from('enrollments').select('*').order('enrolled_at', { ascending: false }),
       _supabase.from('progress').select('*'),
-      _supabase.from('certificates').select('*')
+      _supabase.from('certificates').select('*'),
+      _supabase.from('faqs').select('*').order('order_num').order('created_at'),
+      _supabase.from('community_posts').select('*').order('created_at', { ascending: false }),
+      _supabase.from('community_comments').select('*').order('created_at', { ascending: false })
     ]);
     _data.users        = p.data  || [];
     _data.enrollments  = e.data  || [];
     _data.progress     = pr.data || [];
     _data.certificates = c.data  || [];
+    _data.faqs         = fq.data || [];
+    _data.posts        = ps.data || [];
+    _data.comments     = cm.data || [];
   }
 
   /* ── 탭 전환 (URL hash 유지) ── */
@@ -241,7 +311,7 @@
     document.querySelectorAll('.sidebar-menu-item[data-tab]').forEach(function(el) {
       el.classList.toggle('active', el.dataset.tab === tab);
     });
-    var titles = { dashboard:'대시보드', users:'수강생 관리', enrollments:'수강 현황', revenue:'매출 현황' };
+    var titles = { dashboard:'대시보드', users:'수강생 관리', enrollments:'수강 현황', revenue:'매출 현황', faq:'FAQ 관리', community:'커뮤니티 관리' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     renderTab(tab);
   }
@@ -252,6 +322,8 @@
     if (tab === 'users')       el.innerHTML = renderUsers(_userSearch);
     if (tab === 'enrollments') el.innerHTML = renderEnrollments(_enrollSearch);
     if (tab === 'revenue')     el.innerHTML = renderRevenue();
+    if (tab === 'faq')         renderFAQTab();
+    if (tab === 'community')   renderCommunityTab();
   }
 
   /* ── 대시보드 ── */
@@ -489,6 +561,240 @@
     '</div>';
   }
 
+  /* ══════════════════════════════════════
+     FAQ 관리
+  ══════════════════════════════════════ */
+  var FAQ_CATS = ['일반','수강','결제','수료증','기술지원','기타'];
+
+  async function renderFAQTab() {
+    var el = document.getElementById('adminContent');
+    var list = _data.faqs;
+    var rows = list.length === 0
+      ? '<tr class="empty-row"><td colspan="5">등록된 FAQ가 없습니다. 위 버튼으로 추가하세요.</td></tr>'
+      : list.map(function(f) {
+          return '<tr>' +
+            '<td><span class="badge badge-blue">' + f.category + '</span></td>' +
+            '<td style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + escHtml(f.question) + '">' + escHtml(f.question) + '</td>' +
+            '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-hint);font-size:13px;" title="' + escHtml(f.answer) + '">' + escHtml(f.answer) + '</td>' +
+            '<td>' + (f.is_published ? '<span class="badge badge-green">공개</span>' : '<span class="badge badge-gray">비공개</span>') + '</td>' +
+            '<td>' +
+              '<button onclick="openFAQModal(' + f.id + ')" style="' + btnStyle('#EFF6FF','#2563EB') + '">수정</button> ' +
+              '<button onclick="deleteFAQ(' + f.id + ')" style="' + btnStyle('#FEF2F2','#DC2626') + '">삭제</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+
+    el.innerHTML =
+      '<div class="admin-card">' +
+        '<div class="admin-card-header">' +
+          '<span class="admin-card-title">FAQ 목록 (' + list.length + '개)</span>' +
+          '<button onclick="openFAQModal(null)" style="padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);">+ FAQ 추가</button>' +
+        '</div>' +
+        '<table class="admin-table">' +
+          '<thead><tr><th>카테고리</th><th>질문</th><th>답변 미리보기</th><th>상태</th><th>작업</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table>' +
+      '</div>';
+  }
+
+  function openFAQModal(id) {
+    var faq = id ? _data.faqs.find(function(f) { return f.id === id; }) : null;
+    var modal = document.getElementById('faqModal');
+    document.getElementById('faqModalTitle').textContent = faq ? 'FAQ 수정' : 'FAQ 추가';
+    document.getElementById('faqId').value = faq ? faq.id : '';
+    document.getElementById('faqCategory').value = faq ? faq.category : '일반';
+    document.getElementById('faqQuestion').value = faq ? faq.question : '';
+    document.getElementById('faqAnswer').value = faq ? faq.answer : '';
+    document.getElementById('faqPublished').checked = faq ? faq.is_published : true;
+    modal.style.display = 'flex';
+  }
+
+  function closeFAQModal() {
+    document.getElementById('faqModal').style.display = 'none';
+  }
+
+  async function saveFAQ() {
+    var id       = document.getElementById('faqId').value;
+    var category = document.getElementById('faqCategory').value.trim();
+    var question = document.getElementById('faqQuestion').value.trim();
+    var answer   = document.getElementById('faqAnswer').value.trim();
+    var pub      = document.getElementById('faqPublished').checked;
+    if (!question || !answer) { showToast('질문과 답변을 입력해주세요'); return; }
+
+    var payload = { category: category, question: question, answer: answer, is_published: pub, updated_at: new Date().toISOString() };
+    var res;
+    if (id) {
+      res = await _supabase.from('faqs').update(payload).eq('id', parseInt(id));
+    } else {
+      payload.order_num = _data.faqs.length;
+      res = await _supabase.from('faqs').insert(payload);
+    }
+
+    if (res.error) { showToast('저장 실패: ' + res.error.message); return; }
+    showToast(id ? 'FAQ가 수정되었습니다' : 'FAQ가 등록되었습니다');
+    closeFAQModal();
+    var fqRes = await _supabase.from('faqs').select('*').order('order_num').order('created_at');
+    _data.faqs = fqRes.data || [];
+    renderFAQTab();
+  }
+
+  async function deleteFAQ(id) {
+    if (!confirm('이 FAQ를 삭제하시겠습니까?')) return;
+    var res = await _supabase.from('faqs').delete().eq('id', id);
+    if (res.error) { showToast('삭제 실패: ' + res.error.message); return; }
+    showToast('FAQ가 삭제되었습니다');
+    _data.faqs = _data.faqs.filter(function(f) { return f.id !== id; });
+    renderFAQTab();
+  }
+
+  /* ══════════════════════════════════════
+     커뮤니티 관리
+  ══════════════════════════════════════ */
+  var _commTab = 'posts';
+  var POST_CAT_MAP = { notice:'공지', qa:'Q&A', review:'후기', free:'자유' };
+
+  async function renderCommunityTab() {
+    var el = document.getElementById('adminContent');
+    el.innerHTML =
+      '<div class="admin-card">' +
+        '<div class="tab-row">' +
+          '<button class="tab-btn' + (_commTab==='posts'?' active':'') + '" onclick="_commTab=\'posts\';renderCommunityTab()">게시글 (' + _data.posts.length + ')</button>' +
+          '<button class="tab-btn' + (_commTab==='comments'?' active':'') + '" onclick="_commTab=\'comments\';renderCommunityTab()">댓글 (' + _data.comments.length + ')</button>' +
+        '</div>' +
+        '<div id="commTabContent"></div>' +
+      '</div>';
+
+    if (_commTab === 'posts') renderPostsPanel();
+    else renderCommentsPanel();
+  }
+
+  function renderPostsPanel() {
+    var rows = _data.posts.length === 0
+      ? '<tr class="empty-row"><td colspan="6">게시글이 없습니다</td></tr>'
+      : _data.posts.map(function(p) {
+          var catLabel = POST_CAT_MAP[p.category] || p.category;
+          var badges = (p.is_pinned ? '<span class="badge badge-gold" style="margin-right:2px;">📌고정</span>' : '') +
+                       (p.is_hidden ? '<span class="badge badge-gray">숨김</span>' : '<span class="badge badge-green">공개</span>');
+          return '<tr>' +
+            '<td><span class="badge badge-blue">' + catLabel + '</span></td>' +
+            '<td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(p.title) + '</td>' +
+            '<td>' + escHtml(p.author_name) + '</td>' +
+            '<td style="text-align:center;">' + _data.comments.filter(function(c){return c.post_id===p.id;}).length + '</td>' +
+            '<td>' + badges + '</td>' +
+            '<td style="white-space:nowrap;">' +
+              '<button onclick="pinPost(' + p.id + ',' + (!p.is_pinned) + ')" style="' + btnStyle('#FFFBEB','#D97706') + '">' + (p.is_pinned?'고정해제':'고정') + '</button> ' +
+              '<button onclick="hidePost(' + p.id + ',' + (!p.is_hidden) + ')" style="' + btnStyle('#F3F4F6','#374151') + '">' + (p.is_hidden?'공개':'숨김') + '</button> ' +
+              '<button onclick="deletePost(' + p.id + ')" style="' + btnStyle('#FEF2F2','#DC2626') + '">삭제</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+
+    document.getElementById('commTabContent').innerHTML =
+      '<div style="padding:16px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:flex-end;">' +
+        '<button onclick="openCommentWriteModal(null)" style="padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);">+ 관리자 댓글 작성</button>' +
+      '</div>' +
+      '<table class="admin-table">' +
+        '<thead><tr><th>유형</th><th>제목</th><th>작성자</th><th>댓글</th><th>상태</th><th>작업</th></tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>';
+  }
+
+  function renderCommentsPanel() {
+    var rows = _data.comments.length === 0
+      ? '<tr class="empty-row"><td colspan="4">댓글이 없습니다</td></tr>'
+      : _data.comments.map(function(c) {
+          var post = _data.posts.find(function(p){return p.id===c.post_id;});
+          return '<tr>' +
+            '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:var(--text-hint);">' + (post ? escHtml(post.title) : '#' + c.post_id) + '</td>' +
+            '<td>' + escHtml(c.author_name) + '</td>' +
+            '<td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(c.content) + '</td>' +
+            '<td><button onclick="deleteComment(' + c.id + ')" style="' + btnStyle('#FEF2F2','#DC2626') + '">삭제</button></td>' +
+          '</tr>';
+        }).join('');
+
+    document.getElementById('commTabContent').innerHTML =
+      '<table class="admin-table">' +
+        '<thead><tr><th>게시글</th><th>작성자</th><th>댓글 내용</th><th>작업</th></tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>';
+  }
+
+  async function pinPost(id, val) {
+    var res = await _supabase.from('community_posts').update({ is_pinned: val }).eq('id', id);
+    if (res.error) { showToast('오류: ' + res.error.message); return; }
+    var p = _data.posts.find(function(p){return p.id===id;}); if (p) p.is_pinned = val;
+    showToast(val ? '게시글이 고정되었습니다' : '고정이 해제되었습니다');
+    renderCommunityTab();
+  }
+
+  async function hidePost(id, val) {
+    var res = await _supabase.from('community_posts').update({ is_hidden: val }).eq('id', id);
+    if (res.error) { showToast('오류: ' + res.error.message); return; }
+    var p = _data.posts.find(function(p){return p.id===id;}); if (p) p.is_hidden = val;
+    showToast(val ? '게시글이 숨김 처리되었습니다' : '게시글이 공개되었습니다');
+    renderCommunityTab();
+  }
+
+  async function deletePost(id) {
+    if (!confirm('이 게시글과 모든 댓글을 삭제하시겠습니까?')) return;
+    var res = await _supabase.from('community_posts').delete().eq('id', id);
+    if (res.error) { showToast('삭제 실패: ' + res.error.message); return; }
+    _data.posts    = _data.posts.filter(function(p){return p.id!==id;});
+    _data.comments = _data.comments.filter(function(c){return c.post_id!==id;});
+    showToast('게시글이 삭제되었습니다');
+    renderCommunityTab();
+  }
+
+  async function deleteComment(id) {
+    if (!confirm('이 댓글을 삭제하시겠습니까?')) return;
+    var res = await _supabase.from('community_comments').delete().eq('id', id);
+    if (res.error) { showToast('삭제 실패: ' + res.error.message); return; }
+    _data.comments = _data.comments.filter(function(c){return c.id!==id;});
+    showToast('댓글이 삭제되었습니다');
+    renderCommunityTab();
+  }
+
+  /* ── 관리자 댓글 작성 모달 ── */
+  function openCommentWriteModal(postId) {
+    var modal = document.getElementById('commentModal');
+    var sel = document.getElementById('commentPostSelect');
+    sel.innerHTML = _data.posts.map(function(p) {
+      return '<option value="' + p.id + '"' + (postId===p.id?' selected':'') + '>' + escHtml(p.title.slice(0,40)) + '</option>';
+    }).join('');
+    document.getElementById('commentContent').value = '';
+    modal.style.display = 'flex';
+  }
+
+  function closeCommentModal() {
+    document.getElementById('commentModal').style.display = 'none';
+  }
+
+  async function saveComment() {
+    var postId  = parseInt(document.getElementById('commentPostSelect').value);
+    var content = document.getElementById('commentContent').value.trim();
+    if (!content) { showToast('댓글 내용을 입력해주세요'); return; }
+
+    var { data: { session } } = await _supabase.auth.getSession();
+    var res = await _supabase.from('community_comments').insert({
+      post_id: postId, author_id: session.user.id,
+      author_name: '운영팀', content: content
+    });
+    if (res.error) { showToast('등록 실패: ' + res.error.message); return; }
+    showToast('댓글이 등록되었습니다');
+    closeCommentModal();
+    var cmRes = await _supabase.from('community_comments').select('*').order('created_at', { ascending: false });
+    _data.comments = cmRes.data || [];
+    renderCommunityTab();
+  }
+
+  /* ── 공통 헬퍼 ── */
+  function escHtml(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function btnStyle(bg, color) {
+    return 'padding:4px 10px;background:' + bg + ';color:' + color + ';border:none;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);';
+  }
+
   /* ── 초기화 ── */
   async function init() {
     var { data: { session } } = await _supabase.auth.getSession();
@@ -507,7 +813,7 @@
 
     /* URL hash로 초기 탭 결정 */
     var hash = window.location.hash.replace('#', '');
-    var validTabs = ['dashboard','users','enrollments','revenue'];
+    var validTabs = ['dashboard','users','enrollments','revenue','faq','community'];
     var initTab = validTabs.includes(hash) ? hash : 'dashboard';
     showTab(initTab);
   }
