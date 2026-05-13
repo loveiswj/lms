@@ -245,21 +245,21 @@
             <input type="checkbox" id="agreeAll" onchange="toggleAll(this)">
             전체 동의
           </label>
-          <label class="agree-item">
-            <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreeTerms">
-            [필수] 이용약관 동의
-            <span class="agree-link" onclick="event.stopPropagation(); openTerms('terms')">보기</span>
-          </label>
-          <label class="agree-item">
-            <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreePrivacy">
-            [필수] 개인정보 처리방침 동의
-            <span class="agree-link" onclick="event.stopPropagation(); openTerms('privacy')">보기</span>
-          </label>
-          <label class="agree-item">
-            <input type="checkbox" class="agree-check" name="agree" id="agreeMarketing">
-            [선택] 마케팅 정보 수신 동의
-            <span class="agree-link" onclick="event.stopPropagation(); openTerms('marketing')">보기</span>
-          </label>
+          <div class="agree-item" onclick="openTerms('terms')">
+            <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreeTerms" onclick="event.stopPropagation()">
+            <span>[필수] 이용약관 동의</span>
+            <span class="agree-link">보기</span>
+          </div>
+          <div class="agree-item" onclick="openTerms('privacy')">
+            <input type="checkbox" class="agree-check" data-required="true" name="agree" id="agreePrivacy" onclick="event.stopPropagation()">
+            <span>[필수] 개인정보 처리방침 동의</span>
+            <span class="agree-link">보기</span>
+          </div>
+          <div class="agree-item" onclick="openTerms('marketing')">
+            <input type="checkbox" class="agree-check" name="agree" id="agreeMarketing" onclick="event.stopPropagation()">
+            <span>[선택] 마케팅 정보 수신 동의</span>
+            <span class="agree-link">보기</span>
+          </div>
         </div>
         <div class="form-error" id="agreeError" style="margin-bottom:12px;">위 필수 약관 두 항목에 체크해주세요</div>
 
