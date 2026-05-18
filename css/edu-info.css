@@ -85,15 +85,15 @@
   margin: 0 auto;
 }
 .ei-courses__title {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 800;
   color: #06101F;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .ei-courses__hint {
-  font-size: 13px;
+  font-size: 14px;
   color: #3B82F6;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 /* ── 과정 카드 그리드 ── */
@@ -145,25 +145,26 @@
 
 /* 뱃지 */
 .ei-card__badge {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: #94A3B8;
   margin-bottom: 16px;
+  text-align: center;
 }
 .ei-card__badge--trinity { color: #7C3AED; }
 
 /* 아이콘 */
 .ei-card__icon-wrap {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
   background: #EFF6FF;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
+  margin: 0 auto 20px;
   color: #2563EB;
   transition: background 0.18s;
 }
@@ -172,11 +173,12 @@
 
 /* 과정명 */
 .ei-card__name {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   color: #0F172A;
   margin-bottom: 14px;
   line-height: 1.3;
+  text-align: center;
 }
 
 /* 구분선 */
@@ -190,13 +192,14 @@
 .ei-card__info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
+  align-items: center;
 }
 .ei-card__row {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: #64748B;
   line-height: 1.5;
 }
@@ -245,7 +248,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 14px;
   color: #6B7280;
 }
 .ei-detail__meta-item svg { color: #9CA3AF; }
@@ -255,20 +258,20 @@
 .ei-curriculum {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13.5px;
+  font-size: 14px;
 }
 .ei-curriculum th {
   background: #2C3E6B;
   color: #fff;
-  padding: 10px 14px;
+  padding: 11px 16px;
   text-align: left;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13px;
 }
 .ei-curriculum th:first-child { border-radius: 8px 0 0 0; }
 .ei-curriculum th:last-child  { border-radius: 0 8px 0 0; }
 .ei-curriculum td {
-  padding: 10px 14px;
+  padding: 11px 16px;
   border-bottom: 1px solid #E5E7EB;
   color: #374151;
   vertical-align: top;
