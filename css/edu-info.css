@@ -150,21 +150,21 @@
   letter-spacing: .12em;
   text-transform: uppercase;
   color: #94A3B8;
-  margin-bottom: 16px;
-  text-align: center;
+  margin-bottom: 14px;
+  text-align: right;
 }
 .ei-card__badge--trinity { color: #7C3AED; }
 
 /* 아이콘 */
 .ei-card__icon-wrap {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 14px;
   background: #EFF6FF;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
+  margin: 0 0 16px 0;
   color: #2563EB;
   transition: background 0.18s;
 }
@@ -173,12 +173,12 @@
 
 /* 과정명 */
 .ei-card__name {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: #0F172A;
   margin-bottom: 14px;
   line-height: 1.3;
-  text-align: center;
+  text-align: left;
 }
 
 /* 구분선 */
@@ -193,13 +193,13 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
-  align-items: center;
+  align-items: flex-start;
 }
 .ei-card__row {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #64748B;
   line-height: 1.5;
 }
@@ -254,6 +254,20 @@
 .ei-detail__meta-item svg { color: #9CA3AF; }
 .ei-detail__meta-item strong { color: #374151; font-weight: 600; }
 
+/* detail 타이틀 */
+.ei-detail__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #06101F;
+  margin-bottom: 8px;
+}
+.ei-detail__desc-text {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
 /* 커리큘럼 테이블 */
 .ei-curriculum {
   width: 100%;
@@ -271,31 +285,85 @@
 .ei-curriculum th:first-child { border-radius: 8px 0 0 0; }
 .ei-curriculum th:last-child  { border-radius: 0 8px 0 0; }
 .ei-curriculum td {
-  padding: 11px 16px;
+  padding: 13px 16px;
   border-bottom: 1px solid #E5E7EB;
   color: #374151;
   vertical-align: top;
   line-height: 1.6;
 }
 .ei-curriculum tr:last-child td { border-bottom: none; }
-.ei-curriculum tr:nth-child(even) td { background: #F8F9FB; }
-.ei-curriculum td:first-child {
+
+/* 과정 열 (rowspan) */
+.ei-curriculum__step-cell {
+  vertical-align: top;
+  min-width: 100px;
+  background: #F8FAFF;
+  border-right: 2px solid #E2E8F0;
+  padding: 16px 14px;
+}
+.ei-curriculum__step-num {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #3B82F6;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.ei-curriculum__step-label {
+  font-size: 13px;
   font-weight: 700;
   color: #06101F;
+  line-height: 1.4;
 }
-.ei-curriculum__step {
-  color: #2C3E6B;
+
+/* 교육내용 열 */
+.ei-curriculum__subject {
+  display: block;
+  font-size: 14px;
   font-weight: 700;
-  min-width: 110px;
-  vertical-align: top;
-  line-height: 1.5;
+  color: #0F172A;
+  margin-bottom: 6px;
 }
-.ei-curriculum__time {
-  color: #6B7280;
-  font-size: 12px;
+.ei-curriculum__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ei-curriculum__items li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748B;
+  line-height: 1.6;
+}
+.ei-curriculum__items li::before {
+  content: '✓';
+  color: #3B82F6;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* 교육시간 열 */
+.ei-curriculum__time-cell {
   white-space: nowrap;
-  min-width: 76px;
+  min-width: 100px;
   vertical-align: top;
+  background: #FAFBFF;
+}
+.ei-curriculum__session {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 3px;
+}
+.ei-curriculum__time-range {
+  display: block;
+  font-size: 11.5px;
+  color: #9CA3AF;
 }
 
 /* 준비중 안내 */

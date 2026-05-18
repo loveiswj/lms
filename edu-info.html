@@ -283,24 +283,6 @@
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px; width:auto; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:12px;">
           <p class="footer-desc">IT 지식 없이도 시작할 수 있는<br>실무 BI 교육 플랫폼입니다.</p>
         </div>
-        <div class="footer-links">
-          <div>
-            <p class="footer-links__group-title">교육 과정</p>
-            <a href="course-list.html?category=industry&value=finance" class="footer-links__link">금융 서비스</a>
-            <a href="course-list.html?category=industry&value=manufacturing" class="footer-links__link">제조업</a>
-            <a href="course-list.html?category=industry&value=public" class="footer-links__link">공공 부문</a>
-          </div>
-          <div>
-            <p class="footer-links__group-title">고객지원</p>
-            <a href="faq.html" class="footer-links__link">자주 묻는 질문</a>
-            <a href="community.html" class="footer-links__link">1:1 문의</a>
-          </div>
-          <div>
-            <p class="footer-links__group-title">회사</p>
-            <a href="apply.html" class="footer-links__link">교육신청</a>
-            <a href="apply.html" class="footer-links__link">기업 교육 문의</a>
-          </div>
-        </div>
       </div>
       <div class="footer-bottom">
         <p>© 2025 비아이매트릭스 아카데미. All rights reserved.</p>
@@ -317,6 +299,7 @@
     var COURSES = {
       user: {
         badge: 'AUD플랫폼', name: '사용자 교육',
+        desc: 'AUD플랫폼을 활용한 실무 BI 분석 화면 제작을 단계별로 경험합니다. 엑셀 기반 보고서부터 대시보드, 차트 분석까지 현업 사용자 관점에서 핵심 기능을 익힙니다.',
         meta: [
           { icon: 'clock',    text: '1일 (7교시)' },
           { icon: 'money',    text: '200,000원 (1인)' },
@@ -335,6 +318,7 @@
       },
       dev: {
         badge: 'AUD플랫폼', name: '개발자 교육',
+        desc: '3일 과정으로 i-META 설계부터 조회·수정 화면 개발, 대시보드 구현까지 개발자 관점의 전체 개발 흐름을 집중적으로 습득합니다.',
         meta: [
           { icon: 'clock',    text: '3일 (18h)' },
           { icon: 'money',    text: '500,000원 (1인)' },
@@ -371,6 +355,7 @@
       },
       admin: {
         badge: 'AUD플랫폼', name: '관리자 교육',
+        desc: 'AUD플랫폼 아키텍처 이해부터 Admin 설정, i-META 제작·배포까지 시스템 운영 담당자를 위한 전문 과정입니다.',
         meta: [
           { icon: 'clock',    text: '1일 (8교시)' },
           { icon: 'money',    text: '200,000원 (1인)' },
@@ -390,6 +375,7 @@
       },
       imatrix: {
         badge: 'AUD플랫폼', name: 'i-MATRIX 교육',
+        desc: 'i-MATRIX Designer를 활용한 화면 개발 실습 과정입니다. 데이터 셋 생성부터 조회·수정 화면 구현, 이벤트 처리까지 실무 예제 중심으로 진행합니다.',
         meta: [
           { icon: 'clock',    text: '1일 (7교시)' },
           { icon: 'money',    text: '200,000원 (1인)' },
@@ -408,6 +394,7 @@
       },
       trinity: {
         badge: 'TRINITY', name: 'TRINITY 개발자 교육',
+        desc: '사용자·개발자·관리자 과정 수료자 대상 심화 과정입니다. AI Agent 제작, i-META 학습, ReAct Flow 구현 등 TRINITY 플랫폼의 핵심 기능을 2일간 집중 실습합니다.',
         meta: [
           { icon: 'clock',    text: '2일 (12h)' },
           { icon: 'money',    text: '500,000원 (1인)' },
@@ -442,18 +429,56 @@
       person:   '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
     };
 
-    function nl(s) { return s.replace(/\n/g, '<br>'); }
-
     function buildTable(rows) {
-      var body = rows.map(function (r) {
-        return '<tr>' +
-          '<td class="ei-curriculum__step">' + nl(r[0]) + '</td>' +
-          '<td class="ei-curriculum__time">'  + nl(r[1]) + '</td>' +
-          '<td>' + nl(r[2]) + '</td>' +
-        '</tr>';
+      /* rowspan 계산: step이 빈 행은 0, step이 있으면 연속된 빈 행 수+1 */
+      var spans = rows.map(function(r, i) {
+        if (!r[0]) return 0;
+        var count = 1;
+        var j = i + 1;
+        while (j < rows.length && !rows[j][0]) { count++; j++; }
+        return count;
+      });
+
+      var body = rows.map(function(r, i) {
+        var cells = '';
+
+        /* 과정 열 (rowspan) */
+        if (spans[i] > 0) {
+          var stepParts = r[0].split('\n');
+          var stepNum   = stepParts[0];
+          var stepLabel = stepParts.slice(1).join(' ');
+          cells += '<td class="ei-curriculum__step-cell" rowspan="' + spans[i] + '">' +
+            '<span class="ei-curriculum__step-num">' + stepNum + '</span>' +
+            (stepLabel ? '<span class="ei-curriculum__step-label">' + stepLabel + '</span>' : '') +
+            '</td>';
+        }
+
+        /* 교육내용 열: 첫 줄 = 제목, 나머지 = 체크 아이템 */
+        var contentParts = r[2].split('\n');
+        var subject = contentParts[0];
+        var items   = contentParts.slice(1);
+        var contentHtml = '<strong class="ei-curriculum__subject">' + subject + '</strong>';
+        if (items.length > 0) {
+          contentHtml += '<ul class="ei-curriculum__items">' +
+            items.map(function(item) { return '<li>' + item + '</li>'; }).join('') +
+            '</ul>';
+        }
+        cells += '<td>' + contentHtml + '</td>';
+
+        /* 교육시간 열 */
+        var timeParts  = r[1].split('\n');
+        var session    = timeParts[0];
+        var timeRange  = timeParts[1] || '';
+        cells += '<td class="ei-curriculum__time-cell">' +
+          '<span class="ei-curriculum__session">' + session + '</span>' +
+          (timeRange ? '<span class="ei-curriculum__time-range">' + timeRange + '</span>' : '') +
+          '</td>';
+
+        return '<tr>' + cells + '</tr>';
       }).join('');
+
       return '<table class="ei-curriculum">' +
-        '<thead><tr><th>구분</th><th>교육 시간</th><th>교육 내용</th></tr></thead>' +
+        '<thead><tr><th>과정</th><th>교육 내용</th><th>교육 시간</th></tr></thead>' +
         '<tbody>' + body + '</tbody>' +
         '</table>';
     }
@@ -467,11 +492,13 @@
       var body   = document.getElementById('detailBody');
 
       badge.textContent = data.badge;
-      dname.textContent = data.name;
+      dname.textContent = data.name + ' 커리큘럼';
 
       meta.innerHTML = data.meta.map(function (m) {
         return '<div class="ei-detail__meta-item">' + ICONS[m.icon] + '<span>' + m.text + '</span></div>';
       }).join('');
+
+      var descHtml = data.desc ? '<p class="ei-detail__desc-text">' + data.desc + '</p>' : '';
 
       if (data.days) {
         var tabsHtml = '<div class="ei-day-tabs">';
@@ -485,7 +512,7 @@
           panelsHtml += '<div class="ei-day-panel" data-day="' + i + '" style="display:' + (i === 0 ? 'block' : 'none') + '">' + buildTable(day.curriculum) + '</div>';
         });
 
-        body.innerHTML = tabsHtml + panelsHtml;
+        body.innerHTML = descHtml + tabsHtml + panelsHtml;
 
         body.querySelectorAll('.ei-day-tab').forEach(function (tab) {
           tab.addEventListener('click', function () {
@@ -498,7 +525,7 @@
           });
         });
       } else {
-        body.innerHTML = buildTable(data.curriculum);
+        body.innerHTML = descHtml + buildTable(data.curriculum);
       }
 
       detail.classList.add('is-visible');
