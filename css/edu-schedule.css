@@ -61,19 +61,19 @@
 
 /* ── 달력 사이드 ── */
 .es-cal-side {
-  background:#F4F7FB;
+  background:#fff;
   display:flex; flex-direction:column;
-  border:1px solid #C9D4E2;
+  border:1px solid #E2E8F0;
   border-bottom:none;
   border-radius:10px 10px 0 0;
   overflow:hidden;
-  box-shadow:0 2px 8px rgba(30,50,90,.07);
+  box-shadow:0 2px 8px rgba(30,50,90,.05);
 }
 .es-cal-head {
   display:flex; align-items:center; justify-content:center; gap:14px;
   padding:16px 20px 14px;
-  border-bottom:1px solid #D9E2EE;
-  background:#EAF0F7;
+  border-bottom:1px solid #E2E8F0;
+  background:#fff;
 }
 .es-cal-head__title {
   font-size:16px; font-weight:700; color:#1A2332;
@@ -90,7 +90,7 @@
 .es-cal-side .fc { padding:0; }
 .es-cal-side .fc-theme-standard td,
 .es-cal-side .fc-theme-standard th { border-color:#D9E2EE; }
-.es-cal-side .fc-col-header-cell { background:#EAF0F7; }
+.es-cal-side .fc-col-header-cell { background:#fff; }
 .es-cal-side .fc-col-header-cell-cushion {
   font-size:13px; font-weight:600; color:#6B7A99;
   text-decoration:none; display:block; padding:8px 0;
@@ -105,9 +105,8 @@
 
 /* 이벤트 바 */
 .es-cal-side .fc-event {
-  border-width:1.5px !important; border-style:solid !important;
+  border-width:0 !important;
   border-radius:4px !important;
-  background:#fff !important;
   cursor:pointer; margin:1px 4px !important;
   padding:0; transition:opacity .15s;
 }
@@ -219,7 +218,7 @@
 
 /* ── 안내 섹션 ── */
 .es-info-section {
-  background:#EEF2F8;
+  background:#fff;
   padding:20px 0 28px;
 }
 .es-info-grid {
