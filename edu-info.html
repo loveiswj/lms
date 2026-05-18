@@ -570,6 +570,13 @@
           renderDetail(this.dataset.course);
         });
       });
+
+      /* 기본 선택: 사용자 교육 */
+      var defaultCard = document.querySelector('.ei-card[data-course="user"]');
+      if (defaultCard) {
+        defaultCard.classList.add('is-active');
+        renderDetail('user');
+      }
     });
 
   })();
