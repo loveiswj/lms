@@ -70,6 +70,60 @@
       .clist-hero { padding: 52px 20px 48px; }
       .clist-hero__title { font-size: 26px; }
     }
+    /* ── 카테고리 탭바 ── */
+    .cat-tabs {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cat-tabs::-webkit-scrollbar { display: none; }
+    .cat-tabs__inner {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 24px;
+      white-space: nowrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .cat-tabs__label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-hint);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 0 6px;
+      flex-shrink: 0;
+    }
+    .cat-tabs__divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+      margin: 0 8px;
+      flex-shrink: 0;
+    }
+    .cat-tabs__btn {
+      padding: 14px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      color: var(--text-sub);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+      margin-bottom: -1px;
+    }
+    .cat-tabs__btn:hover { color: var(--navy); }
+    .cat-tabs__btn--active {
+      color: var(--navy);
+      border-bottom-color: var(--navy);
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -130,6 +184,32 @@
       <p class="clist-hero__desc" id="heroDesc">업종·역할·기능에 맞는 과정을 골라보세요</p>
     </div>
   </section>
+
+  <!-- ══ 카테고리 탭바 ══ -->
+  <div class="cat-tabs">
+    <div class="cat-tabs__inner">
+      <button class="cat-tabs__btn cat-tabs__btn--active" data-group="" data-value="">전체</button>
+      <span class="cat-tabs__divider"></span>
+      <span class="cat-tabs__label">업종별</span>
+      <button class="cat-tabs__btn" data-group="industry" data-value="finance">금융 서비스</button>
+      <button class="cat-tabs__btn" data-group="industry" data-value="public">공공 부문</button>
+      <button class="cat-tabs__btn" data-group="industry" data-value="retail">소매·소비재</button>
+      <button class="cat-tabs__btn" data-group="industry" data-value="manufacturing">제조업</button>
+      <span class="cat-tabs__divider"></span>
+      <span class="cat-tabs__label">단계별</span>
+      <button class="cat-tabs__btn" data-group="level" data-value="basic">기초</button>
+      <button class="cat-tabs__btn" data-group="level" data-value="applied">응용</button>
+      <button class="cat-tabs__btn" data-group="level" data-value="advanced">심화</button>
+      <button class="cat-tabs__btn" data-group="level" data-value="expert">전문</button>
+      <span class="cat-tabs__divider"></span>
+      <span class="cat-tabs__label">기능별</span>
+      <button class="cat-tabs__btn" data-group="feature" data-value="query">데이터 조회</button>
+      <button class="cat-tabs__btn" data-group="feature" data-value="excel">엑셀 자동화</button>
+      <button class="cat-tabs__btn" data-group="feature" data-value="visual">시각화 분석</button>
+      <button class="cat-tabs__btn" data-group="feature" data-value="data">데이터 저장</button>
+      <button class="cat-tabs__btn" data-group="feature" data-value="system">시스템 운영</button>
+    </div>
+  </div>
 
   <!-- ══ 리스트 헤더 ══ -->
   <div class="list-header">
@@ -669,12 +749,42 @@
       document.getElementById("resetAllFilters").addEventListener("click", window.resetFilters);
     }
 
+    /* ── 카테고리 탭바 ── */
+    function initCatTabs() {
+      var tabs = document.querySelectorAll(".cat-tabs__btn");
+      tabs.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var group = this.dataset.group;
+          var value = this.dataset.value;
+
+          /* 전체 초기화 후 선택한 필터만 적용 */
+          activeFilters = { industry: [], level: [], feature: [] };
+          document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(function (cb) {
+            cb.checked = false;
+          });
+
+          if (group && value) {
+            activeFilters[group].push(value);
+            var cb = document.querySelector('input[name="' + group + '"][value="' + value + '"]');
+            if (cb) cb.checked = true;
+          }
+
+          /* 탭 활성화 */
+          tabs.forEach(function (t) { t.classList.remove("cat-tabs__btn--active"); });
+          this.classList.add("cat-tabs__btn--active");
+
+          updateUI();
+        });
+      });
+    }
+
     /* ── 초기화 ── */
     document.addEventListener("DOMContentLoaded", function () {
       initFilterAccordion();
       initCheckboxes();
       initFromUrl();
       initMobileFilterDrawer();
+      initCatTabs();
       updateUI();
     });
 
