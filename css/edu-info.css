@@ -300,156 +300,152 @@
 
 /* ── 교육장 안내 ── */
 .ei-venue {
-  background: #06101F;
-  padding: 72px 24px;
+  background: linear-gradient(160deg, #0D1B35 0%, #06101F 100%);
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.ei-venue::before {
+  content: '';
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  top: -120px;
+  left: -80px;
+  pointer-events: none;
 }
 .ei-venue__inner {
   max-width: 1060px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  gap: 60px;
   align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.ei-venue__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #60A5FA;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 16px;
 }
 .ei-venue__title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
   color: #fff;
-  letter-spacing: -0.8px;
-  margin-bottom: 10px;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  line-height: 1.2;
 }
 .ei-venue__desc {
-  font-size: 14px;
-  color: rgba(255,255,255,0.55);
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
   line-height: 1.8;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
-.ei-venue__items {
+.ei-venue__cards {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
   margin-bottom: 28px;
 }
-.ei-venue__item {
+.ei-venue__card {
   display: flex;
-  gap: 14px;
   align-items: flex-start;
+  gap: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: background 0.2s;
 }
-.ei-venue__item-icon {
+.ei-venue__card:hover { background: rgba(255,255,255,0.08); }
+.ei-venue__card-icon {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   background: rgba(59,130,246,0.15);
-  border-radius: 8px;
+  border: 1px solid rgba(59,130,246,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #60A5FA;
 }
-.ei-venue__item-label {
+.ei-venue__card-title {
   font-size: 14px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
-.ei-venue__item-sub {
+.ei-venue__card-sub {
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.45);
   line-height: 1.7;
 }
 .ei-venue__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #F87171;
+  color: #FCA5A5;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  line-height: 1.6;
 }
+.ei-venue__notice svg { flex-shrink: 0; margin-top: 2px; color: #F87171; }
 
-/* 지도 카드 */
-.ei-venue__map {
-  display: block;
+/* 지도 */
+.ei-venue__right { position: relative; }
+.ei-venue__map-wrap {
   position: relative;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
-  height: 280px;
-  text-decoration: none;
-  cursor: pointer;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
 }
-.ei-venue__map-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(135deg, #e8eef6 25%, #d4dce8 50%, #e0e8f0 75%),
-    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(150,170,200,0.25) 39px, rgba(150,170,200,0.25) 40px),
-    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(150,170,200,0.25) 39px, rgba(150,170,200,0.25) 40px);
-  background-blend-mode: normal;
+.ei-venue__iframe {
+  display: block;
+  width: 100%;
+  height: 360px;
+  border: none;
+  filter: saturate(0.9) contrast(1.02);
 }
-/* 도로 느낌 선 */
-.ei-venue__map-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, transparent 35%, rgba(240,220,130,0.7) 35%, rgba(240,220,130,0.7) 48%, transparent 48%),
-    linear-gradient(to right, transparent 42%, rgba(120,200,120,0.6) 42%, rgba(120,200,120,0.6) 56%, transparent 56%);
-}
-.ei-venue__map:hover .ei-venue__map-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(44,62,107,0.08);
-}
-.ei-venue__map-pin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-}
-.ei-venue__map-label {
-  background: #fff;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #06101F;
-  text-align: center;
-  line-height: 1.5;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
-  white-space: nowrap;
-}
-.ei-venue__map-label small {
-  font-weight: 500;
-  color: #6B7280;
-}
-.ei-venue__map-cta {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
+.ei-venue__map-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 14px;
   background: #2C3E6B;
   color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 14px;
-  border-radius: 999px;
-  box-shadow: 0 2px 10px rgba(44,62,107,0.3);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
   transition: background 0.15s;
 }
-.ei-venue__map:hover .ei-venue__map-cta { background: #3b4f87; }
+.ei-venue__map-btn:hover { background: #3b4f87; }
 
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
   .ei-card-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) {
-  .ei-venue__inner { grid-template-columns: 1fr; gap: 32px; }
-  .ei-venue__map   { height: 220px; }
+  .ei-venue__inner  { grid-template-columns: 1fr; gap: 36px; }
+  .ei-venue__iframe { height: 260px; }
 }
 @media (max-width: 640px) {
   .ei-hero__title  { font-size: 28px; }
