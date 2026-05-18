@@ -196,7 +196,6 @@
           <span class="ei-detail__badge" id="detailBadge"></span>
           <span class="ei-detail__name" id="detailName"></span>
         </div>
-        <div class="ei-detail__meta" id="detailMeta"></div>
         <div id="detailBody"></div>
       </div>
 
@@ -488,13 +487,10 @@
       var detail = document.getElementById('courseDetail');
       var badge  = document.getElementById('detailBadge');
       var dname  = document.getElementById('detailName');
-      var meta   = document.getElementById('detailMeta');
       var body   = document.getElementById('detailBody');
 
       badge.textContent = data.badge;
       dname.textContent = data.name + ' 커리큘럼';
-
-      meta.innerHTML = '';
 
       var descHtml = data.desc ? '<p class="ei-detail__desc-text">' + data.desc + '</p>' : '';
 
