@@ -61,7 +61,7 @@
 /* ── 소개 섹션 ── */
 .ei-intro {
   padding: 64px 24px 48px;
-  max-width: 1060px;
+  max-width: 1240px;
   margin: 0 auto;
   border-bottom: 1px solid #E5E7EB;
 }
@@ -81,7 +81,7 @@
 /* ── 과정 섹션 ── */
 .ei-courses {
   padding: 56px 24px 80px;
-  max-width: 1060px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 .ei-courses__title {
@@ -414,7 +414,7 @@
   pointer-events: none;
 }
 .ei-venue__inner {
-  max-width: 1060px;
+  max-width: 1240px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
