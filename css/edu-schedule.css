@@ -1,0 +1,279 @@
+/* ══════════════════════════════════════════
+   edu-schedule.css  —  교육일정 페이지
+══════════════════════════════════════════ */
+
+/* ── 페이지 헤더 ── */
+.es-page-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 32px 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.es-page-header__text h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #06101F;
+  letter-spacing: -1.5px;
+  margin-bottom: 8px;
+}
+.es-page-header__text p {
+  font-size: 14px;
+  color: #6B7280;
+}
+.es-page-header__deco {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.es-deco-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+.es-deco-circle--red {
+  background: conic-gradient(from 0deg, #EF4444 0%, #F97316 50%, #EF4444 100%);
+  box-shadow: -12px 0 0 0 #374151;
+  position: relative;
+}
+.es-deco-circle--gray {
+  background: #374151;
+}
+.es-divider {
+  border: none;
+  border-top: 1px solid #E5E7EB;
+  margin: 0;
+}
+
+/* ── 섹션 헤더 ── */
+.es-section-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 32px 20px;
+}
+.es-section-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #06101F;
+  margin-bottom: 4px;
+}
+.es-section-header p {
+  font-size: 13px;
+  color: #9CA3AF;
+}
+
+/* ── 메인 레이아웃 ── */
+.es-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px 64px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── 달력 패널 ── */
+.es-calendar-panel {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.es-cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid #F3F4F6;
+}
+.es-cal-nav__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: .02em;
+  min-width: 80px;
+}
+.es-nav-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B7280;
+  transition: all 0.15s;
+  font-size: 14px;
+  font-weight: 600;
+}
+.es-nav-btn:hover { background: #F9FAFB; border-color: #D1D5DB; color: #111827; }
+
+/* FullCalendar 오버라이드 */
+.es-calendar-panel .fc { padding: 0; }
+.es-calendar-panel .fc-theme-standard td,
+.es-calendar-panel .fc-theme-standard th { border-color: #F3F4F6; }
+.es-calendar-panel .fc-col-header-cell {
+  background: #F9FAFB;
+  padding: 8px 0;
+}
+.es-calendar-panel .fc-col-header-cell-cushion {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6B7280;
+  text-decoration: none;
+}
+.es-calendar-panel .fc-daygrid-day { min-height: 88px; }
+.es-calendar-panel .fc-daygrid-day-number {
+  font-size: 12px;
+  color: #374151;
+  padding: 6px 8px;
+  text-decoration: none;
+}
+.es-calendar-panel .fc-day-today { background: #EFF6FF !important; }
+.es-calendar-panel .fc-day-today .fc-daygrid-day-number { color: #2563EB; font-weight: 700; }
+.es-calendar-panel .fc-daygrid-day.fc-day-sat .fc-daygrid-day-number { color: #3B82F6; }
+.es-calendar-panel .fc-daygrid-day.fc-day-sun .fc-daygrid-day-number { color: #EF4444; }
+.es-calendar-panel .fc-event {
+  border: none !important;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 1px 3px !important;
+  padding: 2px 5px;
+}
+.es-calendar-panel .fc-event:hover { filter: brightness(0.95); }
+.es-calendar-panel .fc-event-title { white-space: nowrap; overflow: hidden; }
+.es-calendar-panel .fc-daygrid-more-link { font-size: 11px; color: #6B7280; }
+.es-calendar-panel .fc-event--highlight { outline: 2px solid #2563EB; outline-offset: 1px; }
+
+/* ── 우측 상세 패널 ── */
+.es-detail-panel {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 20px;
+  position: sticky;
+  top: 80px;
+}
+.es-detail-panel__head {
+  font-size: 15px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+/* 상세 테이블 */
+.es-table-wrap { overflow-x: auto; margin-bottom: 20px; }
+.es-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.es-table th {
+  background: #F9FAFB;
+  color: #6B7280;
+  font-weight: 600;
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 1px solid #E5E7EB;
+  border-top: 1px solid #E5E7EB;
+}
+.es-table td {
+  padding: 9px 10px;
+  text-align: center;
+  color: #374151;
+  border-bottom: 1px solid #F3F4F6;
+  vertical-align: middle;
+}
+.es-table tr:last-child td { border-bottom: none; }
+.es-table tr.is-selected td { background: #EFF6FF; }
+.es-table td.course-name { text-align: left; font-weight: 600; color: #06101F; }
+
+/* 상태 뱃지 */
+.es-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.es-badge--open    { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+.es-badge--closed  { background: #F3F4F6; color: #6B7280; border: 1px solid #E5E7EB; }
+.es-badge--waiting { background: #FFF7ED; color: #D97706; border: 1px solid #FDE68A; }
+
+/* 빈 상태 */
+.es-empty {
+  text-align: center;
+  padding: 32px 0;
+  color: #9CA3AF;
+  font-size: 13px;
+}
+
+/* 확인사항 */
+.es-notice {
+  background: #F9FAFB;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.es-notice__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+.es-notice__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.es-notice__list li {
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.7;
+  padding-left: 12px;
+  position: relative;
+}
+.es-notice__list li::before { content: '·'; position: absolute; left: 0; }
+
+/* 다운로드 버튼 */
+.es-download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.es-download-btn:hover { background: #F9FAFB; border-color: #9CA3AF; }
+
+/* ── 반응형 ── */
+@media (max-width: 1024px) {
+  .es-layout { grid-template-columns: 1fr; }
+  .es-detail-panel { position: static; }
+}
+@media (max-width: 640px) {
+  .es-page-header { padding: 32px 20px 24px; }
+  .es-page-header__deco { display: none; }
+  .es-section-header { padding: 20px 20px 16px; }
+  .es-layout { padding: 0 20px 48px; }
+  .es-page-header__text h1 { font-size: 28px; }
+}
