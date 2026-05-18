@@ -87,7 +87,7 @@
     }
     .comm-sub-nav__item {
       padding: 14px 20px;
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-sub);
       cursor: pointer;
@@ -125,6 +125,10 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 32px 24px 64px;
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 28px;
+      align-items: start;
     }
 
     /* ══ 필터 칩 ══ */
@@ -557,18 +561,6 @@
       margin: 28px 0 14px;
     }
 
-    /* ══ 카테고리 그룹 타이틀 ══ */
-    .faq-group__title {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--blue, #2563EB);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin: 40px 0 12px;
-      display: block;
-    }
-    .faq-group__title:first-child { margin-top: 0; }
-
     /* ══ 토스트 ══ */
     .toast {
       position: fixed;
@@ -666,6 +658,8 @@
     <div class="comm-sub-nav__inner">
       <div class="comm-sub-nav__item active" data-cat="all" onclick="setSubNav(this,'all')">전체 글</div>
       <div class="comm-sub-nav__item" data-cat="qa" onclick="setSubNav(this,'qa')">Q&amp;A</div>
+      <div class="comm-sub-nav__item" data-cat="free" onclick="setSubNav(this,'free')">자유게시판</div>
+      <div class="comm-sub-nav__item" data-cat="review" onclick="setSubNav(this,'review')">수강후기</div>
       <div class="comm-sub-nav__item" data-cat="notice" onclick="setSubNav(this,'notice')">공지사항</div>
       <div class="comm-sub-nav__spacer"></div>
       <button class="comm-sub-nav__write" onclick="goWrite()">+ 글쓰기</button>
@@ -678,6 +672,20 @@
 
       <!-- 왼쪽: 목록 -->
       <div class="comm-main">
+        <!-- 필터 칩 -->
+        <div class="comm-filter" id="filterChips">
+          <div class="comm-filter__chip active" data-filter="all" onclick="setFilter(this,'all')">전체</div>
+          <div class="comm-filter__chip" data-filter="notice" onclick="setFilter(this,'notice')">공지</div>
+          <div class="comm-filter__chip" data-filter="qa" onclick="setFilter(this,'qa')">Q&amp;A</div>
+          <div class="comm-filter__chip" data-filter="free" onclick="setFilter(this,'free')">자유</div>
+          <div class="comm-filter__chip" data-filter="review" onclick="setFilter(this,'review')">후기</div>
+        </div>
+
+        <!-- 툴바 -->
+        <div class="comm-toolbar">
+          <p class="comm-toolbar__count">전체 <strong id="postCount">0</strong>개 게시글</p>
+        </div>
+
         <!-- 게시글 목록 -->
         <div id="postList"></div>
 
@@ -692,6 +700,58 @@
         </div>
       </div>
 
+      <!-- 오른쪽: 사이드바 -->
+      <aside class="comm-sidebar">
+        <!-- 제품 탭 -->
+        <div class="comm-sidebar__card">
+          <div class="comm-sidebar__title">제품별 인기글</div>
+          <div class="product-tab-row">
+            <div class="product-tab active" onclick="setProductTab(this,'all')">전체</div>
+            <div class="product-tab" onclick="setProductTab(this,'aud')">AUD</div>
+            <div class="product-tab" onclick="setProductTab(this,'gmatrix')">G-MATRIX</div>
+            <div class="product-tab" onclick="setProductTab(this,'trinity')">TRINITY</div>
+          </div>
+          <div id="popularList">
+            <div class="popular-post" onclick="goDetail(1)">
+              <span class="popular-post__num">1</span>
+              <span class="popular-post__title">AUD로 월간 매출 대시보드 만든 후기</span>
+            </div>
+            <div class="popular-post" onclick="goDetail(2)">
+              <span class="popular-post__num">2</span>
+              <span class="popular-post__title">EPA 과정 수강 후 업무 자동화 성공했습니다</span>
+            </div>
+            <div class="popular-post" onclick="goDetail(3)">
+              <span class="popular-post__num">3</span>
+              <span class="popular-post__title">OLAP 분석 처음 해봤는데 생각보다 쉬워요</span>
+            </div>
+            <div class="popular-post" onclick="goDetail(4)">
+              <span class="popular-post__num">4</span>
+              <span class="popular-post__title">대시보드 강의 질문 — 필터 연동 방법</span>
+            </div>
+            <div class="popular-post" onclick="goDetail(5)">
+              <span class="popular-post__num">5</span>
+              <span class="popular-post__title">수강 3개월차 솔직한 리뷰</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 커뮤니티 통계 -->
+        <div class="comm-sidebar__card">
+          <div class="comm-sidebar__title">커뮤니티 현황</div>
+          <div class="stat-row">
+            <span class="stat-row__label">전체 게시글</span>
+            <span class="stat-row__val" id="statTotal">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__label">오늘 게시글</span>
+            <span class="stat-row__val" id="statToday">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__label">Q&amp;A 답변 대기</span>
+            <span class="stat-row__val" id="statQna">0</span>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 
@@ -950,37 +1010,18 @@
       if (el) el.classList.add('active');
     }
 
-    /* ── 게시글 렌더링 (FAQ 아코디언 포맷) ── */
-    function makePostItems(posts) {
-      return posts.map(function(p) {
-        return '<div class="faq-item-new">' +
-          '<button class="faq-q" onclick="toggleCommPost(this)">' +
-            '<span>' + p.title + '</span>' +
-            '<svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>' +
-          '</button>' +
-          '<div class="faq-a">' +
-            '<p style="margin-bottom:10px;">' + p.excerpt + '</p>' +
-            '<p style="font-size:13px;color:#94A3B8;">' +
-              p.author + ' · ' + p.date + ' · 조회 ' + p.views + ' · 추천 ' + p.likes +
-            '</p>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-    }
-
-    function makeGroup(posts, label, isFirst) {
-      if (posts.length === 0) return '';
-      return '<span class="faq-group__title"' + (isFirst ? ' style="margin-top:0;"' : '') + '>' + label + '</span>' +
-        '<div class="faq-list-new">' + makePostItems(posts) + '</div>';
-    }
-
+    /* ── 게시글 렌더링 ── */
     function renderPosts() {
       var cat = state.currentCat;
+      var filter = state.currentFilter;
+      var badgeMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
+      var badgeClass = { notice: 'post-card__badge--notice', qa: 'post-card__badge--qa', review: 'post-card__badge--review', free: '' };
 
+      var today = new Date().toISOString().slice(0, 10);
       var allPosts = state.dbPosts.length > 0
         ? state.dbPosts.map(function(p) {
             return { id: p.id, cat: p.category, title: p.title,
-                     excerpt: (p.content || '').slice(0, 200), author: p.author_name,
+                     excerpt: (p.content || '').slice(0, 120), author: p.author_name,
                      date: (p.created_at || '').slice(0, 10),
                      views: p.views || 0, likes: p.likes || 0, comments: 0 };
           })
@@ -988,8 +1029,14 @@
 
       var filtered = allPosts.filter(function(p) {
         if (cat !== 'all' && p.cat !== cat) return false;
+        if (filter !== 'all' && p.cat !== filter) return false;
         return true;
       });
+
+      document.getElementById('postCount').textContent = filtered.length;
+      document.getElementById('statTotal').textContent = allPosts.length;
+      document.getElementById('statToday').textContent = allPosts.filter(function(p) { return p.date === today; }).length;
+      document.getElementById('statQna').textContent = allPosts.filter(function(p) { return p.cat === 'qa'; }).length;
 
       var list = document.getElementById('postList');
       var empty = document.getElementById('emptyState');
@@ -1001,41 +1048,20 @@
       }
       empty.style.display = 'none';
 
-      var html = '';
-      if (cat === 'all') {
-        var noticePosts = filtered.filter(function(p) { return p.cat === 'notice'; });
-        var qaPosts     = filtered.filter(function(p) { return p.cat === 'qa'; });
-        var otherPosts  = filtered.filter(function(p) { return p.cat !== 'notice' && p.cat !== 'qa'; });
-        var isFirst = true;
-        if (noticePosts.length) { html += makeGroup(noticePosts, '공지사항', isFirst); isFirst = false; }
-        if (qaPosts.length)     { html += makeGroup(qaPosts, 'Q&amp;A', isFirst); isFirst = false; }
-        if (otherPosts.length)  { html += (isFirst ? '' : '<span class="faq-group__title">기타</span>') + '<div class="faq-list-new">' + makePostItems(otherPosts) + '</div>'; }
-      } else if (cat === 'notice') {
-        html = makeGroup(filtered, '공지사항', true);
-      } else if (cat === 'qa') {
-        html = makeGroup(filtered, 'Q&amp;A', true);
-      } else {
-        html = '<div class="faq-list-new">' + makePostItems(filtered) + '</div>';
-      }
-
-      list.innerHTML = html;
-    }
-
-    function toggleCommPost(btn) {
-      var item = btn.closest('.faq-item-new');
-      var answer = item.querySelector('.faq-a');
-      var isOpen = item.classList.contains('is-open');
-      document.querySelectorAll('#postList .faq-item-new.is-open').forEach(function(el) {
-        el.classList.remove('is-open');
-        var a = el.querySelector('.faq-a');
-        a.style.maxHeight = '0';
-        a.style.opacity = '0';
-      });
-      if (!isOpen) {
-        item.classList.add('is-open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-        answer.style.opacity = '1';
-      }
+      list.innerHTML = filtered.map(function(p) {
+        return '<div class="post-card" onclick="goDetail(' + p.id + ')">' +
+          '<div class="post-card__top"><span class="post-card__badge ' + (badgeClass[p.cat] || '') + '">' + (badgeMap[p.cat] || '일반') + '</span></div>' +
+          '<div class="post-card__title">' + p.title + '</div>' +
+          '<div class="post-card__excerpt">' + p.excerpt + '</div>' +
+          '<div class="post-card__meta">' +
+            '<span class="post-card__meta-item">' + p.author + '</span>' +
+            '<span class="post-card__meta-item">' + p.date + '</span>' +
+            '<span class="post-card__meta-item">조회 ' + p.views + '</span>' +
+            '<span class="post-card__meta-item">댓글 ' + p.comments + '</span>' +
+            '<span class="post-card__meta-item">추천 ' + p.likes + '</span>' +
+          '</div>' +
+        '</div>';
+      }).join('');
     }
 
     /* ── 글쓰기 제출 ── */
@@ -1179,7 +1205,6 @@
     window.setSubNav = setSubNav;
     window.setFilter = setFilter;
     window.setProductTab = setProductTab;
-    window.toggleCommPost = toggleCommPost;
     window.goBoard = goBoard;
     window.goWrite = goWrite;
     window.goDetail = goDetail;
