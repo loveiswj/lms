@@ -295,65 +295,126 @@
   <script src="js/supabase-client.js"></script>
   <script src="js/nav.js"></script>
   <script>
-  /* ── 교육안내 카드 클릭 → 커리큘럼 상세 ── */
   (function () {
 
-    /* 커리큘럼 데이터 — 엑셀 받으면 여기에 채워 넣습니다 */
     var COURSES = {
       user: {
-        badge: 'AUD플랫폼',
-        name:  '사용자 교육',
-        meta:  [
-          { icon: 'clock',    text: '1일 (6h)' },
+        badge: 'AUD플랫폼', name: '사용자 교육',
+        meta: [
+          { icon: 'clock',    text: '1일 (7교시)' },
           { icon: 'money',    text: '200,000원 (1인)' },
           { icon: 'calendar', text: '월 2회 (1, 3주차)' },
           { icon: 'person',   text: '현업사용자' }
         ],
-        curriculum: null  /* TODO: 엑셀 데이터 입력 후 채울 예정 */
+        curriculum: [
+          ['STEP 1\n솔루션 및\n개발 방법론 소개', '1교시\n10:00~10:50', 'AUD플랫폼 소개\nLowCode 활용 사례를 통한 샘플 소개'],
+          ['', '2교시\n11:00~11:50', '월별 매출 분석(PPDM 활용)\nPPDM 개발 방법론 소개\n파생공법 활용 월별 매출 분석 예제 실습'],
+          ['STEP 2\n조회 화면 구현', '3교시\n13:00~13:50', '영업 실적 보고서(Report)\n엑셀 형태로 웹에서 보기\n데이터 연결하기\n데이터 가공해서 활용하기'],
+          ['STEP 3\n대시보드 화면 구현', '4교시\n14:00~14:50', '고객별 매출 현황\n엑셀 형태로 대시보드 생성하기\n차트로 데이터 표현하기'],
+          ['STEP 4\n조회/분석 화면 구현', '5교시\n15:00~15:50', '지점별 매출 실적 / 상품별 매출 분석\n지점별 실적을 표로 한눈에 보기\n필요한 수치 계산하여 표시하기\n지역별로 잘 팔리는 상품 찾아보기\n데이터 묶어서 분석하기'],
+          ['', '6교시\n16:00~16:40', '기간별 매출 추이 현황(Chart)\n기간별 매출 금액 추이 확인하기\n데이터 차트로 표현하기'],
+          ['STEP 5\nQ/A', '7교시\n16:40~17:00', '솔루션 Q/A']
+        ]
       },
       dev: {
-        badge: 'AUD플랫폼',
-        name:  '개발자 교육',
-        meta:  [
+        badge: 'AUD플랫폼', name: '개발자 교육',
+        meta: [
           { icon: 'clock',    text: '3일 (18h)' },
           { icon: 'money',    text: '500,000원 (1인)' },
           { icon: 'calendar', text: '월 2회 (2, 4주차)' },
           { icon: 'person',   text: '개발자' }
         ],
-        curriculum: null
+        days: [
+          { label: '1일차', curriculum: [
+            ['STEP 1\n솔루션 및\n개발 방법론 소개', '1교시\n10:00~10:30', 'AUD플랫폼 소개\nLowCode 활용 사례를 통한 샘플 소개'],
+            ['', '2교시\n10:30~11:50', '월별 매출 분석(PPDM 활용)\nPPDM 개발 방법론 소개\n엑셀 기본 알아보기\n파생공법 활용 예제 실습'],
+            ['STEP 2\n업무화면 제작', '3교시\n13:00~14:30', '지역별 신규 고객 현황\n지역별 신규 고객 추이 분석 화면 만들기'],
+            ['', '4교시\n14:40~15:30', '연도별 재무제표\n연도별 재무제표 화면 만들기'],
+            ['', '5교시\n15:40~16:30', '건설유형별 매출현황\n공사유형별 원가·손익 분석 화면 만들기'],
+            ['STEP 3\nQ/A', '6교시\n16:40~17:00', '솔루션 Q/A']
+          ]},
+          { label: '2일차', curriculum: [
+            ['STEP 1\ni-META 이해', '1교시\n10:00~10:50', 'i-META 제작\ni-META 소개\ni-META File 생성하기'],
+            ['STEP 2\n기본 화면 구현', '2교시\n11:00~11:50', '지점별 매출 실적\n지점별 실적을 표로 한눈에 보기\n필요한 수치 계산하여 표시하기'],
+            ['STEP 3\n조회 화면 구현', '3교시\n13:00~13:50', '상품별 매출 분석\n지역별로 잘 팔리는 상품 찾아보기\n데이터 묶어서 분석하기'],
+            ['', '4교시\n14:00~14:50', '고객 등급별 매출 현황\n고객 등급에 따른 매출 상세 보기\n조건 바꿔가며 조회하기\n차트 선택 시 연동 설정하기'],
+            ['', '5교시\n15:00~15:50', '상품별 실적\n상품별 전월/전년 대비 증감률을 분석하기\n엑셀 형태로 웹에서 보기\n여러 데이터 합쳐서 활용하기\n데이터 가공해서 활용하기'],
+            ['STEP 4\n대시보드 화면 구현', '6교시\n16:00~16:40', '매출 현황\n주요 지표를 차트로 만들어 실적 대시보드 구성하기\n데이터 가공해서 활용하기'],
+            ['STEP 5\nQ/A', '7교시\n16:40~17:00', '솔루션 Q/A']
+          ]},
+          { label: '3일차', curriculum: [
+            ['STEP 1\n조회/수정\n화면 구현', '1교시\n10:00~10:50', '고객 정보 관리\n고객 정보 조회하고 입력하는 화면 만들기\n검색/추가/삭제/저장 기능 사용하기'],
+            ['', '2교시\n11:00~11:50', '고객별 매출 실적 관리\n고객 정보 선택 시 해당 고객 매출 정보 조회·등록 화면 만들기\n컨트롤 간 연동 기능 구현하기'],
+            ['', '3교시\n13:00~14:50', '인사 관리\n직원 정보 등록·수정·삭제하기\n입력 양식 활용하기\n저장 기능 연결하기'],
+            ['', '4교시\n15:00~15:50', '매출 계획 관리\n엑셀 양식으로 데이터 조회하고 입력하기\n엑셀 연동 기능 활용하기(EPA모듈)\n입력 데이터 저장 처리하기'],
+            ['STEP 2\n분석 화면 구현', '5교시\n16:00~16:40', '매출 분석\n엑셀로 입력한 데이터를 다양한 형태로 분석하기\n유연한 테이블 형식으로 데이터 재구성하기(i-META 생성)'],
+            ['STEP 3\nQ/A', '6교시\n16:40~17:00', '솔루션 Q/A']
+          ]}
+        ]
       },
       admin: {
-        badge: 'AUD플랫폼',
-        name:  '관리자 교육',
-        meta:  [
-          { icon: 'clock',    text: '1일 (6h)' },
+        badge: 'AUD플랫폼', name: '관리자 교육',
+        meta: [
+          { icon: 'clock',    text: '1일 (8교시)' },
           { icon: 'money',    text: '200,000원 (1인)' },
           { icon: 'calendar', text: '월 1회 (2주차)' },
           { icon: 'person',   text: '개발자/운영자' }
         ],
-        curriculum: null
+        curriculum: [
+          ['STEP 1\nAUD플랫폼\n아키텍처', '1교시\n10:00~10:20', '솔루션 아키텍처 소개\n지원 환경, 아키텍처 구조\n권한 처리\n다국어 활용'],
+          ['STEP 2\nAdmin', '2교시\n10:20~10:50', '관리자 화면 시연\n권한 설정, 데이터베이스 연결, 형상관리\n시스템 옵션, Log 모니터링\n공통 데이터소스 생성'],
+          ['', '3교시\n11:00~11:50', '모듈 제작 및 배포하기\n모듈 제작 및 배포 방법\n디버깅 방법'],
+          ['STEP 3\ni-META 제작', '4교시\n13:00~13:50', 'i-META 기본\ni-META 소개\n스키마 및 테이블 등록, 권한 관리'],
+          ['', '5교시\n14:00~14:50', 'i-META 제작\ni-META File 생성\n테이블 조인, 필드 정의, 데이터 필터 및 권한 설정'],
+          ['', '6교시\n15:00~15:50', 'i-META 제작 (계속)\n계산필드 정의\n정합성 검사\nField Group, Drill To Detail 설정'],
+          ['', '7교시\n16:00~16:40', 'i-META 활용\ni-META File 활용 데이터 조회\n공유/배포 및 권한 적용'],
+          ['STEP 4\nQ/A', '8교시\n16:40~17:00', '솔루션 Q/A']
+        ]
       },
       imatrix: {
-        badge: 'AUD플랫폼',
-        name:  'i-MATRIX 교육',
-        meta:  [
-          { icon: 'clock',    text: '1일 (6h)' },
+        badge: 'AUD플랫폼', name: 'i-MATRIX 교육',
+        meta: [
+          { icon: 'clock',    text: '1일 (7교시)' },
           { icon: 'money',    text: '200,000원 (1인)' },
           { icon: 'calendar', text: '월 1회 (3주차)' },
           { icon: 'person',   text: 'i-MATRIX 개발자' }
         ],
-        curriculum: null
+        curriculum: [
+          ['STEP 1\n솔루션 소개', '1교시\n10:00~10:20', 'AUD플랫폼 소개\nLowCode 활용 사례를 통한 샘플 소개'],
+          ['', '2교시\n10:20~10:50', '개발 방법론 소개\nPPDM 개발 방법론 소개\n개발 방법론 활용 예시 소개'],
+          ['', '3교시\n11:00~11:50', '기본 화면 구현\ni-MATRIX Designer 기본 사용 방법\n변수 활용\nEvent 설정 방법'],
+          ['STEP 2\n조회 화면 구현', '4교시\n13:00~13:50', '고객 등급별 매출 추이\n데이터 셋 생성 및 연동\n화면 개발에 필요한 주요 수식 및 기능\n조건 컨트롤 생성 및 속성 활용\nEvent 활용'],
+          ['', '5교시\n14:00~15:50', '주요 점포별 매출 실적 현황\n데이터 추출 및 연결\nPPDM 개발 방법론 활용 보고서 구현'],
+          ['STEP 3\n조회/수정\n화면 구현', '6교시\n16:00~16:40', '매장별 매출 계획 관리\n데이터 유효성 검사\n데이터 저장 Event 구현'],
+          ['STEP 4\nQ/A', '7교시\n16:40~17:00', '솔루션 Q/A']
+        ]
       },
       trinity: {
-        badge: 'TRINITY',
-        name:  'TRINITY 개발자 교육',
-        meta:  [
+        badge: 'TRINITY', name: 'TRINITY 개발자 교육',
+        meta: [
           { icon: 'clock',    text: '2일 (12h)' },
           { icon: 'money',    text: '500,000원 (1인)' },
           { icon: 'calendar', text: '월 1회 (3주차)' },
           { icon: 'person',   text: '사용자/개발자/관리자 수료자' }
         ],
-        curriculum: null
+        days: [
+          { label: '1일차', curriculum: [
+            ['STEP 1\n솔루션 소개', '1교시\n10:00~10:50', 'G-MATRIX 및 TRINITY 소개\nTRINITY 핵심요소 이해하기'],
+            ['', '2교시\n11:00~11:50', '주요 구축 사례\nTRINITY 실제 도입 사례'],
+            ['STEP 2\nTRINITY\n기본 실습', '3교시\n13:00~13:50', 'TRINITY 이해하기\nTRINITY의 개념 정의 (용어/Designer/Portal)'],
+            ['', '4교시\n14:00~14:50', 'Agent 이해와 제작 실습\n시연으로 이해하는 TRINITY 동작방식\n(컴포넌트의 활용 및 Flow 제작 방식 이해)'],
+            ['', '5교시\n15:00~15:50', 'Agent 응용 제작 실습\n(URL, 문서 활용 Flow 제작)'],
+            ['', '6교시\n16:00~16:30', 'TRINITY의 미래\nTRINITY! 어떤 Agent까지 만들 수 있나?\nTRINITY 개발방법론 소개'],
+            ['STEP 3\nQ/A', '7교시\n16:30~16:50', '질의/응답']
+          ]},
+          { label: '2일차', curriculum: [
+            ['STEP 1\nTRINITY\n응용 실습', '1교시\n10:00~10:50', 'ReAct Agent 살펴보기\nReAct Agent를 활용한 매출실적 Agent 살펴보기'],
+            ['', '2교시\n11:00~11:50', 'i-META 제작 및 학습\ni-META 제작 Tip\ni-META 학습 (i-META, 값, 용어 학습)'],
+            ['', '3교시\n13:00~15:30', '매출실적 Agent 제작하기\n메타 스키마 Flow 제작하기\nReAct Agent Flow 제작하기\n업무 시나리오 기반 프롬프트 및 온톨로지 작성하기'],
+            ['STEP 2\n관리자 교육', '4교시\n15:40~16:30', 'TRINITY 설치 및 관리자 기능 소개\n관리자 기능 및 권한 관리 설정\nTRINITY 디버깅 방법\nTRINITY 패치 방법 및 기술지원 방법'],
+            ['STEP 3\nQ/A', '5교시\n16:30~16:50', '질의/응답']
+          ]}
+        ]
       }
     };
 
@@ -364,49 +425,67 @@
       person:   '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
     };
 
+    function nl(s) { return s.replace(/\n/g, '<br>'); }
+
+    function buildTable(rows) {
+      var body = rows.map(function (r) {
+        return '<tr>' +
+          '<td class="ei-curriculum__step">' + nl(r[0]) + '</td>' +
+          '<td class="ei-curriculum__time">'  + nl(r[1]) + '</td>' +
+          '<td>' + nl(r[2]) + '</td>' +
+        '</tr>';
+      }).join('');
+      return '<table class="ei-curriculum">' +
+        '<thead><tr><th>구분</th><th>교육 시간</th><th>교육 내용</th></tr></thead>' +
+        '<tbody>' + body + '</tbody>' +
+        '</table>';
+    }
+
     function renderDetail(key) {
       var data   = COURSES[key];
       var detail = document.getElementById('courseDetail');
       var badge  = document.getElementById('detailBadge');
-      var name   = document.getElementById('detailName');
+      var dname  = document.getElementById('detailName');
       var meta   = document.getElementById('detailMeta');
       var body   = document.getElementById('detailBody');
 
       badge.textContent = data.badge;
-      name.textContent  = data.name;
+      dname.textContent = data.name;
 
       meta.innerHTML = data.meta.map(function (m) {
-        return '<div class="ei-detail__meta-item">' +
-          ICONS[m.icon] +
-          '<span>' + m.text + '</span>' +
-        '</div>';
+        return '<div class="ei-detail__meta-item">' + ICONS[m.icon] + '<span>' + m.text + '</span></div>';
       }).join('');
 
-      if (data.curriculum) {
-        /* 커리큘럼 테이블 렌더링 (엑셀 입력 후 활성화) */
-        var rows = data.curriculum.map(function (row) {
-          return '<tr>' + row.map(function (cell, i) {
-            return i === 0 ? '<td>' + cell + '</td>' : '<td>' + cell + '</td>';
-          }).join('') + '</tr>';
-        }).join('');
-        body.innerHTML =
-          '<table class="ei-curriculum">' +
-            '<thead><tr><th>구분</th><th>내용</th><th>비고</th></tr></thead>' +
-            '<tbody>' + rows + '</tbody>' +
-          '</table>';
+      if (data.days) {
+        var tabsHtml = '<div class="ei-day-tabs">';
+        data.days.forEach(function (day, i) {
+          tabsHtml += '<button class="ei-day-tab' + (i === 0 ? ' is-active' : '') + '" data-day="' + i + '">' + day.label + '</button>';
+        });
+        tabsHtml += '</div>';
+
+        var panelsHtml = '';
+        data.days.forEach(function (day, i) {
+          panelsHtml += '<div class="ei-day-panel" data-day="' + i + '" style="display:' + (i === 0 ? 'block' : 'none') + '">' + buildTable(day.curriculum) + '</div>';
+        });
+
+        body.innerHTML = tabsHtml + panelsHtml;
+
+        body.querySelectorAll('.ei-day-tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            var idx = this.dataset.day;
+            body.querySelectorAll('.ei-day-tab').forEach(function (t) { t.classList.remove('is-active'); });
+            this.classList.add('is-active');
+            body.querySelectorAll('.ei-day-panel').forEach(function (p) {
+              p.style.display = p.dataset.day === idx ? 'block' : 'none';
+            });
+          });
+        });
       } else {
-        body.innerHTML =
-          '<div class="ei-detail__empty">' +
-            '<p>커리큘럼 내용을 준비 중입니다.</p>' +
-          '</div>';
+        body.innerHTML = buildTable(data.curriculum);
       }
 
       detail.classList.add('is-visible');
-
-      /* 상세 영역으로 스크롤 */
-      setTimeout(function () {
-        detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 50);
+      setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
