@@ -812,46 +812,12 @@
       document.getElementById("resetAllFilters").addEventListener("click", window.resetFilters);
     }
 
-    /* ── 카테고리 GNB 메가메뉴 ── */
-    function initCatGnb() {
-      var items = document.querySelectorAll(".gnb__item");
-      items.forEach(function (item) {
-        var trigger = item.querySelector(".gnb__trigger");
-        if (!trigger) return;
-
-        trigger.addEventListener("click", function () {
-          var isOpen = item.classList.contains("is-open");
-          items.forEach(function (i) { i.classList.remove("is-open"); });
-          if (!isOpen) item.classList.add("is-open");
-        });
-
-        var navItems = item.querySelectorAll(".mega-menu__nav-item");
-        navItems.forEach(function (navItem) {
-          navItem.addEventListener("mouseenter", function () {
-            var target = this.dataset.target;
-            navItems.forEach(function (n) { n.classList.remove("is-active"); });
-            item.querySelectorAll(".mega-menu__panel").forEach(function (p) { p.classList.remove("is-active"); });
-            this.classList.add("is-active");
-            var panel = item.querySelector('[data-panel="' + target + '"]');
-            if (panel) panel.classList.add("is-active");
-          });
-        });
-      });
-
-      document.addEventListener("click", function (e) {
-        if (!e.target.closest(".gnb__item")) {
-          items.forEach(function (i) { i.classList.remove("is-open"); });
-        }
-      });
-    }
-
     /* ── 초기화 ── */
     document.addEventListener("DOMContentLoaded", function () {
       initFilterAccordion();
       initCheckboxes();
       initFromUrl();
       initMobileFilterDrawer();
-      initCatGnb();
       updateUI();
     });
 
