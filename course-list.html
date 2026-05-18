@@ -13,6 +13,64 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
+  <style>
+    .clist-hero {
+      background: #06101F url('assets/images/main.jpg') center/cover no-repeat;
+      padding: 72px 24px 64px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .clist-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(6,16,31,0.80);
+      pointer-events: none;
+    }
+    .clist-hero__dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .clist-hero__inner {
+      position: relative;
+      z-index: 2;
+    }
+    .clist-hero__eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 18px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: rgba(59,130,246,.18);
+      color: #93C5FD;
+      border: 1px solid rgba(59,130,246,.35);
+    }
+    .clist-hero__title {
+      font-size: 38px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+    .clist-hero__desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+    }
+    @media (max-width: 640px) {
+      .clist-hero { padding: 52px 20px 48px; }
+      .clist-hero__title { font-size: 26px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -242,6 +300,16 @@
     </div>
   </div>
 
+  <!-- ══ 히어로 ══ -->
+  <section class="clist-hero">
+    <div class="clist-hero__dots"></div>
+    <div class="clist-hero__inner">
+      <div class="clist-hero__eyebrow">교육 동영상</div>
+      <h1 class="clist-hero__title" id="heroTitle">전체 교육 과정</h1>
+      <p class="clist-hero__desc" id="heroDesc">업종·역할·기능에 맞는 과정을 골라보세요</p>
+    </div>
+  </section>
+
   <!-- ══ 리스트 헤더 ══ -->
   <div class="list-header">
     <div class="list-header__inner">
@@ -250,8 +318,6 @@
         <span class="breadcrumb__sep">›</span>
         <span class="breadcrumb__current" id="breadcrumbCurrent">전체 과정</span>
       </nav>
-      <h1 style="font-size:24px; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px;" id="pageTitle">전체 과정</h1>
-      <p class="list-header__meta" id="pageDesc">업종·역할·기능에 맞는 과정을 골라보세요</p>
       <div class="active-filters" id="activeFilters"></div>
     </div>
   </div>
@@ -476,8 +542,8 @@
 
     /* ── 페이지 타이틀 업데이트 ── */
     function updatePageTitle(category, value) {
-      var titleEl = document.getElementById("pageTitle");
-      var descEl  = document.getElementById("pageDesc");
+      var titleEl = document.getElementById("heroTitle");
+      var descEl  = document.getElementById("heroDesc");
       var bcEl    = document.getElementById("breadcrumbCurrent");
 
       if (!category || !value) return;
