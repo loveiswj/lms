@@ -248,13 +248,13 @@
 
     var MOCK_DETAIL = {
       '2026-5': [
-        { round:'1차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.04(월)', duration:'1일', deadline:'2026.04.29(수)', capacity:'24명', registered:'11명', status:'마감',   waiting:'0명' },
-        { round:'1차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.11(월)', duration:'3일', deadline:'2026.05.06(수)', capacity:'24명', registered:'22명', status:'마감',   waiting:'0명' },
-        { round:'1차', curriculum:'관리자 교육',         start_date_fmt:'2026.05.14(목)', duration:'1일', deadline:'2026.05.06(수)', capacity:'24명', registered:'10명', status:'마감',   waiting:'0명' },
-        { round:'2차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.18(월)', duration:'1일', deadline:'2026.05.13(수)', capacity:'24명', registered:'17명', status:'마감',   waiting:'0명' },
-        { round:'1차', curriculum:'i-MATRIX 교육',      start_date_fmt:'2026.05.19(화)', duration:'1일', deadline:'—',              capacity:'24명', registered:'6명',  status:'신청중', waiting:'0명' },
-        { round:'1차', curriculum:'TRINITY 개발자 교육', start_date_fmt:'2026.05.21(목)', duration:'2일', deadline:'2026.05.18(월)', capacity:'24명', registered:'22명', status:'신청중', waiting:'0명' },
-        { round:'2차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.26(화)', duration:'3일', deadline:'2026.05.20(수)', capacity:'24명', registered:'19명', status:'신청중', waiting:'0명' }
+        { round:'1차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.04(월)', duration:'1일', deadline:'2026.04.29(수)', capacity:'24명', registered:'11명', status:'접수마감', waiting:'0명' },
+        { round:'1차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.11(월)', duration:'3일', deadline:'2026.05.06(수)', capacity:'24명', registered:'22명', status:'접수마감', waiting:'0명' },
+        { round:'1차', curriculum:'관리자 교육',         start_date_fmt:'2026.05.14(목)', duration:'1일', deadline:'2026.05.06(수)', capacity:'24명', registered:'10명', status:'접수마감', waiting:'0명' },
+        { round:'2차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.18(월)', duration:'1일', deadline:'2026.05.13(수)', capacity:'24명', registered:'15명', status:'접수마감', waiting:'0명' },
+        { round:'1차', curriculum:'i-MATRIX 교육',      start_date_fmt:'2026.05.19(화)', duration:'1일', deadline:'2026.05.13(수)', capacity:'24명', registered:'6명',  status:'신청중',  waiting:'0명' },
+        { round:'1차', curriculum:'TRINITY 개발자 교육', start_date_fmt:'2026.05.21(목)', duration:'2일', deadline:'2026.05.18(월)', capacity:'24명', registered:'22명', status:'신청중',  waiting:'0명' },
+        { round:'2차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.26(화)', duration:'3일', deadline:'2026.05.20(수)', capacity:'24명', registered:'19명', status:'신청중',  waiting:'0명' }
       ]
     };
 
@@ -309,6 +309,21 @@
       });
     }
 
+    /* 연속된 동일 값의 rowspan 배열 계산 (0 = 해당 셀 생략) */
+    function computeSpans(rows, key) {
+      var n = rows.length, spans = [];
+      for (var k = 0; k < n; k++) spans[k] = 1;
+      for (var i = 0; i < n; i++) {
+        if (spans[i] === 0) continue;
+        for (var j = i + 1; j < n; j++) {
+          if (rows[j][key] && rows[j][key] !== '—' && rows[j][key] === rows[i][key]) {
+            spans[i]++; spans[j] = 0;
+          } else { break; }
+        }
+      }
+      return spans;
+    }
+
     /* 테이블 렌더링 */
     function applyDetailData(rows) {
       var tb = document.getElementById('scheduleBody');
@@ -316,15 +331,27 @@
         tb.innerHTML = '<tr><td colspan="9" class="es-empty">해당 교육 일정이 없습니다.</td></tr>';
         return;
       }
-      tb.innerHTML = rows.map(function (r) {
+      var roundSpans    = computeSpans(rows, 'round');
+      var deadlineSpans = computeSpans(rows, 'deadline');
+      tb.innerHTML = rows.map(function (r, i) {
         var bc  = DOT_COLOR_MAP[r.curriculum] || '#1D4ED8';
         var cls = r.status === '신청중' ? 'badge-open' : r.status === '대기신청' ? 'badge-wait' : 'badge-closed';
+        var roundCell = '';
+        if (roundSpans[i] > 0) {
+          var rAttr = roundSpans[i] > 1 ? ' rowspan="' + roundSpans[i] + '"' : '';
+          roundCell = '<td class="td-c"' + rAttr + '>' + (r.round || '') + '</td>';
+        }
+        var dlCell = '';
+        if (deadlineSpans[i] > 0) {
+          var dAttr = deadlineSpans[i] > 1 ? ' rowspan="' + deadlineSpans[i] + '"' : '';
+          dlCell = '<td class="td-c"' + dAttr + '>' + stripYear(r.deadline) + '</td>';
+        }
         return '<tr>' +
-          '<td class="td-c">' + (r.round || '') + '</td>' +
+          roundCell +
           '<td class="td-name"><span class="td-dot" style="background:' + bc + '"></span>' + r.curriculum + '</td>' +
           '<td class="td-c">' + stripYear(r.start_date_fmt) + '</td>' +
           '<td class="td-c">' + r.duration + '</td>' +
-          '<td class="td-c">' + stripYear(r.deadline) + '</td>' +
+          dlCell +
           '<td class="td-c">' + r.capacity + '</td>' +
           '<td class="td-c">' + r.registered + '</td>' +
           '<td class="td-c">' + r.waiting + '</td>' +

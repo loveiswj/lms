@@ -155,15 +155,17 @@
 .es-table-wrap { overflow-x:auto; margin-top:4px; flex:1; }
 .es-table { width:100%; border-collapse:collapse; font-size:12px; table-layout:auto; }
 .es-table th {
-  background:#EAF0F7; color:#5A6A85; font-size:12px; font-weight:600;
-  padding:7px 8px; text-align:center;
-  border-top:1px solid #C9D4E2; border-bottom:1px solid #C9D4E2;
+  background:#F1F5F9; color:#64748B; font-size:12px; font-weight:600;
+  padding:9px 10px; text-align:center;
+  border-top:none; border-bottom:2px solid #E2E8F0;
+  border-left:none; border-right:none;
   white-space:nowrap;
 }
 .es-table td {
-  padding:9px 8px; color:#2D3A4E;
-  border-bottom:1px solid #EAF0F7; vertical-align:middle;
-  white-space:nowrap;
+  padding:10px 10px; color:#1E293B;
+  border-bottom:1px solid #F1F5F9;
+  border-left:none; border-right:none;
+  vertical-align:middle; white-space:nowrap;
 }
 .es-table tr:last-child td { border-bottom:none; }
 .es-table tr:hover td { background:#F5F8FC; }
@@ -179,12 +181,12 @@
 
 /* 상태 뱃지 */
 .es-badge {
-  display:inline-block; padding:2px 8px; border-radius:4px;
-  font-size:11px; font-weight:600;
+  display:inline-block; padding:3px 11px; border-radius:999px;
+  font-size:11.5px; font-weight:600; white-space:nowrap;
 }
-.badge-open   { background:#EBF4FF; color:#1D6FD8; border:1px solid #B3D4F5; }
-.badge-closed { background:#F0F3F7; color:#8A96A7; border:1px solid #C9D4E2; }
-.badge-wait   { background:#FFF6ED; color:#C07A20; border:1px solid #F5D08A; }
+.badge-open   { background:transparent; color:#1D6FD8; border:1.5px solid #1D6FD8; }
+.badge-closed { background:transparent; color:#9CA3AF; border:1.5px solid #D1D5DB; }
+.badge-wait   { background:transparent; color:#C07A20; border:1.5px solid #F5D08A; }
 
 /* 빈 상태 */
 .es-empty { text-align:center; padding:40px; color:#8A96A7; font-size:14px; }
