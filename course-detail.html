@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>과정 상세 — AUD Academy</title>
+  <title>과정 상세 — 비아이매트릭스 아카데미</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
@@ -486,9 +486,11 @@
 
       heroEl.innerHTML =
         '<div class="detail-hero">' +
+          '<div class="detail-hero__dots"></div>' +
           '<div class="container">' +
+            '<div class="detail-hero__eyebrow">교육 동영상</div>' +
             '<div class="detail-hero__tags">' + industryTags + featureTags + '</div>' +
-            '<p style="font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:8px;">' + escapeHtml(course.report_title || '') + '</p>' +
+            '<p style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:8px;">' + escapeHtml(course.report_title || '') + '</p>' +
             '<h1 class="detail-hero__title">' + escapeHtml(course.title) + '</h1>' +
             '<p class="detail-hero__outcome">' + escapeHtml(course.outcome || '') + '</p>' +
             '<div class="detail-hero__meta">' +
