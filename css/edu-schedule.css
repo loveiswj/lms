@@ -4,27 +4,21 @@
 
 /* ── 히어로 ── */
 .es-hero {
-  background: #06101F url('../assets/images/main.jpg') center/cover no-repeat;
-  padding: 72px 24px 64px;
-  position: relative; overflow: hidden; text-align: center;
+  background: #fff;
+  padding: 60px 24px 52px;
+  text-align: center;
+  border-bottom: 1px solid #E5E7EB;
 }
-.es-hero::after {
-  content:''; position:absolute; inset:0;
-  background: rgba(6,16,31,0.82); pointer-events:none;
-}
-.es-hero__dots {
-  position:absolute; inset:0; pointer-events:none; z-index:1;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 0);
-  background-size: 44px 44px;
-}
-.es-hero__inner { position:relative; z-index:2; max-width:600px; margin:0 auto; }
+.es-hero::after { display: none; }
+.es-hero__dots  { display: none; }
+.es-hero__inner { max-width: 600px; margin: 0 auto; }
 .es-hero__eyebrow {
   display:inline-block; margin-bottom:14px; padding:4px 16px; border-radius:999px;
   font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
-  background:rgba(59,130,246,.18); color:#93C5FD; border:1px solid rgba(59,130,246,.35);
+  background: rgba(37,99,235,.08); color: #2563EB; border: 1px solid rgba(37,99,235,.2);
 }
-.es-hero__title { font-size:36px; font-weight:800; color:#fff; letter-spacing:-1px; margin-bottom:12px; }
-.es-hero__desc  { font-size:14px; color:rgba(255,255,255,.5); line-height:1.85; }
+.es-hero__title { font-size:36px; font-weight:800; color:#06101F; letter-spacing:-1px; margin-bottom:12px; }
+.es-hero__desc  { font-size:14px; color:#6B7280; line-height:1.85; }
 
 /* ── 레이아웃 ── */
 .es-inner { max-width:1300px; margin:0 auto; padding:0 40px; }
