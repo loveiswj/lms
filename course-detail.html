@@ -688,14 +688,22 @@
 
       if (!courseId || typeof COURSES === "undefined") {
         document.getElementById("detailHero").innerHTML =
-          '<div class="detail-hero"><div class="container"><p style="color:#fff;padding:40px 0;">과정을 찾을 수 없습니다. <a href="course-list.html" style="color:var(--gold);">전체 과정 보기</a></p></div></div>';
+          '<div class="detail-hero"><div class="detail-hero__dots"></div><div class="container" style="text-align:center;padding:40px 0;">' +
+          '<div class="detail-hero__eyebrow">교육 동영상</div>' +
+          '<h1 class="detail-hero__title" style="max-width:100%;">과정을 찾을 수 없습니다</h1>' +
+          '<p class="detail-hero__outcome"><a href="course-list.html" style="color:var(--gold);text-decoration:underline;">전체 과정 보기 →</a></p>' +
+          '</div></div>';
         return;
       }
 
       var course = getCourseById(courseId);
       if (!course) {
         document.getElementById("detailHero").innerHTML =
-          '<div class="detail-hero"><div class="container"><p style="color:#fff;padding:40px 0;">존재하지 않는 과정입니다. <a href="course-list.html" style="color:var(--gold);">전체 과정 보기</a></p></div></div>';
+          '<div class="detail-hero"><div class="detail-hero__dots"></div><div class="container" style="text-align:center;padding:40px 0;">' +
+          '<div class="detail-hero__eyebrow">교육 동영상</div>' +
+          '<h1 class="detail-hero__title" style="max-width:100%;">존재하지 않는 과정입니다</h1>' +
+          '<p class="detail-hero__outcome"><a href="course-list.html" style="color:var(--gold);text-decoration:underline;">전체 과정 보기 →</a></p>' +
+          '</div></div>';
         return;
       }
 
