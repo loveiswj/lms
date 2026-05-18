@@ -824,9 +824,12 @@
       <!-- 댓글 -->
       <div class="comments-section">
         <div class="comments-section__title">댓글 <span id="commentTitle">0</span>개</div>
-        <div class="comment-write">
-          <input class="comment-write__input" id="commentInput" placeholder="댓글을 입력하세요">
+        <div id="adminCommentForm" class="comment-write" style="display:none;">
+          <input class="comment-write__input" id="commentInput" placeholder="관리자 댓글을 입력하세요">
           <button class="comment-write__btn" onclick="submitComment()">등록</button>
+        </div>
+        <div id="commentNotice" style="padding:14px 16px;background:#F8F9FB;border-radius:8px;margin-bottom:24px;font-size:14px;color:var(--text-hint);border:1px solid var(--border);">
+          💬 운영팀이 검토 후 답변드립니다.
         </div>
         <div id="commentList"></div>
       </div>
@@ -920,12 +923,16 @@
       { id: 8, cat: 'review', title: '비전공자도 할 수 있어요 — TRINITY 과정 후기', excerpt: '전산 지식이 전혀 없었는데 기초부터 차근차근 알려줘서 6주 만에 실무에 적용할 수 있게 됐습니다.', author: '한비전공', date: '2026-04-30', views: 320, likes: 45, comments: 22 },
     ];
 
+    var ADMIN_EMAILS = ['loveiswj@gmail.com', 'wjkim1363@bimatrix.co.kr'];
+
     var state = {
       currentCat: 'all',
       currentFilter: 'all',
       currentDetailId: null,
       session: null,
-      likes: {}
+      likes: {},
+      isAdmin: false,
+      dbPosts: []
     };
 
     /* ── 토스트 ── */
@@ -952,25 +959,45 @@
       showPage('pagewrite');
       document.getElementById('writeForm').reset();
     }
-    function goDetail(id) {
+    async function goDetail(id) {
       state.currentDetailId = id;
-      var post = POSTS.find(function(p) { return p.id === id; });
-      if (!post) return;
-      post.views = (post.views || 0) + 1;
       var catMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
-      var detailBadgeEl = document.getElementById('detailBadge');
-      detailBadgeEl.textContent = catMap[post.cat] || '일반';
-      detailBadgeEl.className = 'detail-header__badge post-card__badge post-card__badge--' + (post.cat || 'free');
-      document.getElementById('detailTitle').textContent = post.title;
-      document.getElementById('detailAuthor').textContent = post.author;
-      document.getElementById('detailDate').textContent = post.date;
-      document.getElementById('detailViews').textContent = post.views;
-      document.getElementById('detailBody').textContent = post.excerpt;
-      document.getElementById('likeCount').textContent = post.likes || 0;
-      document.getElementById('detailCommentCount').textContent = post.comments || 0;
-      document.getElementById('commentTitle').textContent = post.comments || 0;
-      document.getElementById('commentList').innerHTML = '';
+
+      var dbPost = state.dbPosts.find(function(p) { return p.id === id; });
+      if (dbPost) {
+        var cat = dbPost.category;
+        var detailBadgeEl = document.getElementById('detailBadge');
+        detailBadgeEl.textContent = catMap[cat] || '일반';
+        detailBadgeEl.className = 'detail-header__badge post-card__badge post-card__badge--' + (cat || 'free');
+        document.getElementById('detailTitle').textContent = dbPost.title;
+        document.getElementById('detailAuthor').textContent = dbPost.author_name;
+        document.getElementById('detailDate').textContent = (dbPost.created_at || '').slice(0, 10);
+        document.getElementById('detailViews').textContent = (dbPost.views || 0) + 1;
+        document.getElementById('detailBody').textContent = dbPost.content;
+        document.getElementById('likeCount').textContent = dbPost.likes || 0;
+        _supabase.from('community_posts').update({ views: (dbPost.views || 0) + 1 }).eq('id', id).then(function(){});
+        dbPost.views = (dbPost.views || 0) + 1;
+        await loadComments(id);
+      } else {
+        var post = POSTS.find(function(p) { return p.id === id; });
+        if (!post) return;
+        post.views = (post.views || 0) + 1;
+        var detailBadgeEl = document.getElementById('detailBadge');
+        detailBadgeEl.textContent = catMap[post.cat] || '일반';
+        detailBadgeEl.className = 'detail-header__badge post-card__badge post-card__badge--' + (post.cat || 'free');
+        document.getElementById('detailTitle').textContent = post.title;
+        document.getElementById('detailAuthor').textContent = post.author;
+        document.getElementById('detailDate').textContent = post.date;
+        document.getElementById('detailViews').textContent = post.views;
+        document.getElementById('detailBody').textContent = post.excerpt;
+        document.getElementById('likeCount').textContent = post.likes || 0;
+        document.getElementById('detailCommentCount').textContent = post.comments || 0;
+        document.getElementById('commentTitle').textContent = post.comments || 0;
+        document.getElementById('commentList').innerHTML = '';
+      }
+
       document.getElementById('likeBtn').classList.remove('active');
+      updateCommentUI();
       showPage('pagedetail');
     }
     function goMypage() { showPage('pagemypage'); loadMypage(); }
@@ -1009,16 +1036,26 @@
       var badgeMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
       var badgeClass = { notice: 'post-card__badge--notice', qa: 'post-card__badge--qa', review: 'post-card__badge--review', free: '' };
 
-      var filtered = POSTS.filter(function(p) {
+      var today = new Date().toISOString().slice(0, 10);
+      var allPosts = state.dbPosts.length > 0
+        ? state.dbPosts.map(function(p) {
+            return { id: p.id, cat: p.category, title: p.title,
+                     excerpt: (p.content || '').slice(0, 120), author: p.author_name,
+                     date: (p.created_at || '').slice(0, 10),
+                     views: p.views || 0, likes: p.likes || 0, comments: 0 };
+          })
+        : POSTS;
+
+      var filtered = allPosts.filter(function(p) {
         if (cat !== 'all' && p.cat !== cat) return false;
         if (filter !== 'all' && p.cat !== filter) return false;
         return true;
       });
 
       document.getElementById('postCount').textContent = filtered.length;
-      document.getElementById('statTotal').textContent = POSTS.length;
-      document.getElementById('statToday').textContent = POSTS.filter(function(p) { return p.date === '2026-05-08'; }).length;
-      document.getElementById('statQna').textContent = POSTS.filter(function(p) { return p.cat === 'qa'; }).length;
+      document.getElementById('statTotal').textContent = allPosts.length;
+      document.getElementById('statToday').textContent = allPosts.filter(function(p) { return p.date === today; }).length;
+      document.getElementById('statQna').textContent = allPosts.filter(function(p) { return p.cat === 'qa'; }).length;
 
       var list = document.getElementById('postList');
       var empty = document.getElementById('emptyState');
@@ -1047,24 +1084,36 @@
     }
 
     /* ── 글쓰기 제출 ── */
-    function submitWrite(e) {
+    async function submitWrite(e) {
       e.preventDefault();
       var title = document.getElementById('writeTitle').value.trim();
-      var body = document.getElementById('writeBody').value.trim();
-      var cat = document.getElementById('writeCat').value;
+      var body  = document.getElementById('writeBody').value.trim();
+      var cat   = document.getElementById('writeCat').value;
       if (!title || !body) { showToast('제목과 내용을 입력해주세요'); return; }
-      var newPost = {
-        id: Date.now(),
-        cat: cat,
-        title: title,
-        excerpt: body.slice(0, 120),
-        author: '나',
-        date: new Date().toISOString().slice(0, 10),
-        views: 0,
-        likes: 0,
-        comments: 0
-      };
-      POSTS.unshift(newPost);
+
+      if (state.session && typeof _supabase !== 'undefined') {
+        var authorName = state.session.user.email.split('@')[0];
+        try {
+          var profRes = await _supabase.from('profiles').select('name').eq('id', state.session.user.id).single();
+          if (profRes.data && profRes.data.name) authorName = profRes.data.name;
+        } catch(e) {}
+
+        var dbRes = await _supabase.from('community_posts').insert({
+          category: cat, title: title, content: body,
+          author_id: state.session.user.id, author_name: authorName
+        }).select().single();
+
+        if (!dbRes.error && dbRes.data) {
+          state.dbPosts.unshift(dbRes.data);
+          showToast('게시글이 등록됐습니다');
+          goBoard();
+          return;
+        }
+      }
+
+      POSTS.unshift({ id: Date.now(), cat: cat, title: title,
+        excerpt: body.slice(0, 120), author: '나',
+        date: new Date().toISOString().slice(0, 10), views: 0, likes: 0, comments: 0 });
       showToast('게시글이 등록됐습니다');
       goBoard();
     }
@@ -1087,24 +1136,67 @@
       document.getElementById('likeCount').textContent = post.likes;
     }
 
-    /* ── 댓글 등록 ── */
-    function submitComment() {
+    /* ── 댓글 등록 (관리자 전용) ── */
+    async function submitComment() {
+      if (!state.isAdmin) { showToast('관리자만 댓글을 작성할 수 있습니다'); return; }
       var input = document.getElementById('commentInput');
       var text = input.value.trim();
       if (!text) { showToast('댓글을 입력해주세요'); return; }
-      var id = state.currentDetailId;
-      var post = POSTS.find(function(p) { return p.id === id; });
-      if (post) { post.comments += 1; }
-      var commentList = document.getElementById('commentList');
-      var item = document.createElement('div');
-      item.className = 'comment-item';
-      item.innerHTML = '<div class="comment-item__top"><span class="comment-item__author">나</span><span class="comment-item__date">' + new Date().toLocaleDateString('ko-KR') + '</span></div><div class="comment-item__body">' + text + '</div>';
-      commentList.appendChild(item);
-      var cnt = parseInt(document.getElementById('commentTitle').textContent || '0') + 1;
-      document.getElementById('commentTitle').textContent = cnt;
-      document.getElementById('detailCommentCount').textContent = cnt;
+
+      var res = await _supabase.from('community_comments').insert({
+        post_id: state.currentDetailId,
+        author_id: state.session.user.id,
+        author_name: '운영팀',
+        content: text
+      });
+      if (res.error) { showToast('등록 실패: ' + res.error.message); return; }
       input.value = '';
       showToast('댓글이 등록됐습니다');
+      await loadComments(state.currentDetailId);
+    }
+
+    /* ── DB 댓글 로드 ── */
+    async function loadComments(postId) {
+      var res = await _supabase.from('community_comments').select('*').eq('post_id', postId).order('created_at');
+      var comments = res.data || [];
+      document.getElementById('commentTitle').textContent = comments.length;
+      document.getElementById('detailCommentCount').textContent = comments.length;
+      document.getElementById('commentList').innerHTML = comments.map(function(c) {
+        return '<div class="comment-item">' +
+          '<div class="comment-item__top">' +
+            '<span class="comment-item__author" style="color:var(--navy);">🛡 ' + c.author_name + '</span>' +
+            '<span class="comment-item__date">' + new Date(c.created_at).toLocaleDateString('ko-KR') + '</span>' +
+          '</div>' +
+          '<div class="comment-item__body">' + c.content + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    /* ── 댓글 UI 표시/숨김 ── */
+    function updateCommentUI() {
+      var form   = document.getElementById('adminCommentForm');
+      var notice = document.getElementById('commentNotice');
+      if (state.isAdmin) {
+        form.style.display = 'flex';
+        notice.style.display = 'none';
+      } else {
+        form.style.display = 'none';
+        notice.style.display = 'block';
+      }
+    }
+
+    /* ── DB 게시글 로드 ── */
+    async function loadPostsFromDB() {
+      if (typeof _supabase === 'undefined') return;
+      var res = await _supabase.from('community_posts')
+        .select('*')
+        .eq('is_hidden', false)
+        .order('is_pinned', { ascending: false })
+        .order('created_at', { ascending: false });
+      if (!res.error && res.data) {
+        state.dbPosts = res.data;
+      }
+      renderPosts();
     }
 
     /* ── 내 활동 ── */
@@ -1146,8 +1238,13 @@
       initFromUrl();
       if (typeof _supabase !== 'undefined') {
         _supabase.auth.getSession().then(function(res) {
-          state.session = res.data && res.data.session;
+          state.session = (res.data && res.data.session) || null;
+          if (state.session) {
+            state.isAdmin = ADMIN_EMAILS.includes(state.session.user.email);
+          }
+          updateCommentUI();
         });
+        loadPostsFromDB();
       }
     });
 

@@ -16,7 +16,7 @@
     <div class="container">
       <div class="header-main">
 
-        <a href="index.html" class="logo-new">
+        <a href="index.html" class="logo-new" onclick="if(location.pathname.endsWith('index.html')||location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
 
@@ -24,8 +24,8 @@
           <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_INFO.jsp" target="_blank" rel="noopener" class="gnb-simple__link">교육안내</a>
           <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_SCHEDULE.jsp" target="_blank" rel="noopener" class="gnb-simple__link">교육일정</a>
           <a href="course-list.html" class="gnb-simple__link">교육동영상</a>
-          <a href="course-list.html" class="gnb-simple__link">교육신청</a>
-          <a href="#faq" class="gnb-simple__link">FAQ</a>
+          <a href="apply.html" class="gnb-simple__link">교육신청</a>
+          <a href="faq.html" class="gnb-simple__link">FAQ</a>
           <a href="community.html" class="gnb-simple__link">커뮤니티</a>
         </nav>
 
@@ -68,8 +68,8 @@
       <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_INFO.jsp" target="_blank" rel="noopener">교육안내</a>
       <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_SCHEDULE.jsp" target="_blank" rel="noopener">교육일정</a>
       <a href="course-list.html">교육동영상</a>
-      <a href="course-list.html">교육신청</a>
-      <a href="#faq">FAQ</a>
+      <a href="apply.html">교육신청</a>
+      <a href="faq.html">FAQ</a>
       <a href="community.html">커뮤니티</a>
     </div>
     <div class="mobile-nav__actions">
@@ -79,178 +79,198 @@
 
   <!-- ══ 히어로 ══ -->
   <section class="hero">
-    <div class="hero__bg-dots"></div>
+    <div id="unicorn-bg" class="hero__animation-bg" data-us-project="krvLrHX3sj3cg8BHywDj"></div>
+    <!--<div class="hero__bg-dots"></div>-->
     <div class="container">
       <div class="hero__inner">
 
         <div class="hero__content">
-          <h1 class="hero__title">데이터로 성장하는<br>사람들의 학습 플랫폼</h1>
+          <h1 class="hero__title">데이터로 성장하는 사람들의<br>학습 플랫폼</h1>
           <p class="hero__sub">비아이매트릭스의 기술력, 당신의 성장에서 시작됩니다.</p>
           <div class="hero__btns">
-            <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_INFO.jsp" target="_blank" rel="noopener" class="btn btn--blue btn--lg">교육 안내 &nbsp;→</a>
-            <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_SCHEDULE.jsp" target="_blank" rel="noopener" class="btn btn--outline-white btn--lg">교육 일정 보기 &nbsp;→</a>
+            <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_INFO.jsp" target="_blank" rel="noopener" class="btn btn--white btn--herobtn">교육 안내 보기</a>
+            <a href="https://edu.bimatrix.co.kr/extention/sso/SimpleSSO_EDU_SCHEDULE.jsp" target="_blank" rel="noopener" class="btn btn--outline-white btn--herobtn">교육 일정 보기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="Process-platform-section">
+    <div class="container">
+
+      <!-- 섹션 헤더 -->
+      <div class="Process-section-header">
+        <div class="Process-section-header__head">
+          <!--<p class="Process-section-header__eyebrow">Process</p>-->
+          <h2 class="Process-section-header__title">쉼 없는 혁신</h2>
+        </div>
+        <p class="Process-section-header__desc">비아이매트릭스는 데이터 중심의 교육 서비스를 통해 새로운 기준을 열어가고 있습니다.<br>우리의 혁신은 더 많은 사람들이 데이터 역량을 키울 수 있도록 확장되는 변화의 시작입니다.</p>
+      </div>
+
+      <!-- Pill 탭 -->
+      <div class="Process-pill-tabs" role="tablist">
+        <button class="Process-pill is-active" data-Process-tab="aud" role="tab">AUD플랫폼 교육과정</button>
+        <button class="Process-pill" data-Process-tab="trinity" role="tab">TRINITY 교육과정</button>
+      </div>
+
+      <!-- AUD 패널 -->
+      <div class="Process-panel" id="Process-panel-aud">
+
+        <!-- 와이드 배너 카드 -->
+        <div class="Process-banner Process-banner--aud">
+          <div class="Process-banner__content">
+            <p class="Process-banner__text">근거 없는 보고는 줄이고, 실시간 데이터 기반의 의사결정을 시작하세요.<br><strong>당신의 직관에 확신을 더하는, AUD플랫폼</strong></p>
           </div>
         </div>
 
-        <div class="hero__dashboard">
-          <div class="dash-card">
-            <div class="dash-card__header">
-              <span class="dash-card__title">학습 현황 서비스</span>
-              <div class="dash-card__dots">
-                <span></span><span></span><span></span>
-              </div>
+        <!-- 하단 카드 -->
+        <div class="Process-cards">
+
+          <div class="Process-card">
+            <div class="Process-card__top">
+              <h3 class="Process-card__title">사용자 교육</h3>
+              <p class="Process-card__desc">엑셀 보고서에 담긴 업무 노하우 그대로, 수작업 없이 한 번에 업무를 완료합니다.</p>
             </div>
-            <div class="dash-stats">
-              <div class="dash-stat">
-                <div class="dash-stat__val">12</div>
-                <div class="dash-stat__label">수강 과정</div>
-              </div>
-              <div class="dash-stat">
-                <div class="dash-stat__val">28</div>
-                <div class="dash-stat__label">완료 강의</div>
-              </div>
-              <div class="dash-stat">
-                <div class="dash-stat__val">124h</div>
-                <div class="dash-stat__label">학습 시간</div>
-              </div>
-              <div class="dash-stat">
-                <div class="dash-stat__val">16</div>
-                <div class="dash-stat__label">수료 과정</div>
-              </div>
-            </div>
-            <div class="dash-charts">
-              <div class="dash-chart-area">
-                <div class="dash-chart-label">학습 종료</div>
-                <svg viewBox="0 0 200 60" preserveAspectRatio="none" class="dash-line-svg">
+            <div class="Process-card__bottom">
+              <div class="Process-card__icon">
+                <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+                  <circle cx="36" cy="36" r="32" fill="url(#g4)" opacity="0.18"/>
+                  <text x="36" y="46" text-anchor="middle" font-size="36">📊</text>
                   <defs>
-                    <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.35"/>
-                      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+                    <linearGradient id="g4" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#2563eb"/>
                     </linearGradient>
                   </defs>
-                  <polygon points="0,60 0,50 30,40 60,44 90,24 120,28 150,14 180,9 200,4 200,60" fill="url(#lg1)"/>
-                  <polyline points="0,50 30,40 60,44 90,24 120,28 150,14 180,9 200,4"
-                    fill="none" stroke="#3B82F6" stroke-width="2" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <div class="dash-chart-area">
-                <div class="dash-chart-label">과정 VS. 분포</div>
-                <div class="dash-donut-wrap">
-                  <svg viewBox="0 0 80 80" class="dash-donut-svg">
-                    <circle cx="40" cy="40" r="26" fill="none" stroke="#1E3A6E" stroke-width="12"/>
-                    <circle cx="40" cy="40" r="26" fill="none" stroke="#3B82F6" stroke-width="12"
-                      stroke-dasharray="65 98" stroke-dashoffset="-5" stroke-linecap="round"/>
-                    <circle cx="40" cy="40" r="26" fill="none" stroke="#0D9488" stroke-width="12"
-                      stroke-dasharray="33 130" stroke-dashoffset="-75" stroke-linecap="round"/>
-                    <circle cx="40" cy="40" r="26" fill="none" stroke="#F59E0B" stroke-width="12"
-                      stroke-dasharray="18 145" stroke-dashoffset="-113" stroke-linecap="round"/>
-                  </svg>
-                  <div class="dash-donut-legend">
-                    <div><span style="background:#3B82F6"></span>AUD</div>
-                    <div><span style="background:#0D9488"></span>TRINITY</div>
-                    <div><span style="background:#F59E0B"></span>G-MTX</div>
-                  </div>
-                </div>
-              </div>
+              <ul class="Process-card__meta-list">
+                <li><span>대상</span>현업</li>
+                <li><span>교육기간</span>1일</li>
+                <li><span>교육주기</span>월 2회 (1, 3주차)</li>
+              </ul>
             </div>
           </div>
-        </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 플랫폼 카드 ══ -->
-  <section class="platforms-section">
-    <div class="container">
-      <div class="platforms-grid">
-
-        <a href="course-list.html?category=feature&value=epa" class="platform-card platform-card--v2 is-active" data-course-tab="aud">
-          <span class="platform-card__link">과정 보기 →</span>
-          <img src="assets/images/audlogo.png" alt="AUD Platform" class="platform-card__logo-big">
-          <p class="platform-card__tagline">"당신의 직관에 '확신'을 더하는 법"</p>
-          <p class="platform-card__desc">근거 없는 보고는 이제 그만. 실시간 데이터로 설득력 있는 의사결정을 시작하세요.</p>
-        </a>
-
-        <a href="course-list.html" class="platform-card platform-card--v2" data-course-tab="trinity">
-          <span class="platform-card__link">과정 보기 →</span>
-          <img src="assets/images/trinitylogo.png" alt="TRINITY" class="platform-card__logo-big">
-          <p class="platform-card__tagline">"데이터, 이제 공부하지 말고 대화하세요"</p>
-          <p class="platform-card__desc">복잡한 상관분석도 질문 한 줄이면 충분합니다. Trinity가 당신의 전략에 확신을 더합니다.</p>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 과정별 교육 카드 ══ -->
-  <section class="course-tabs-section">
-    <div class="container">
-
-      <!-- AUD Platform 과정 -->
-      <div class="course-cards-panel" id="courseTab-aud">
-        <div class="course-cards-grid">
-
-          <div class="course-card">
-            <div class="course-card__num">01</div>
-            <h3 class="course-card__title">사용자 교육</h3>
-            <p class="course-card__desc">엑셀 보고서에 담긴 업무 노하우 그대로, 수작업 없이 한 번에 업무를 완료합니다.</p>
-            <ul class="course-card__meta">
-              <li><span>대상</span>현업</li>
-              <li><span>교육기간</span>1일</li>
-              <li><span>교육주기</span>월 2회 (1, 3주차)</li>
-            </ul>
+          <div class="Process-card">
+            <div class="Process-card__top">
+              <h3 class="Process-card__title">개발자 교육</h3>
+              <p class="Process-card__desc">익숙한 도구로 입력·수정·조회까지 가능한 시스템을 구현합니다.</p>
+            </div>
+            <div class="Process-card__bottom">
+              <div class="Process-card__icon">
+                <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+                  <circle cx="36" cy="36" r="32" fill="url(#g4)" opacity="0.18"/>
+                  <text x="36" y="46" text-anchor="middle" font-size="36">📊</text>
+                  <defs>
+                    <linearGradient id="g4" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#2563eb"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <ul class="Process-card__meta-list">
+                <li><span>대상</span>개발자</li>
+                <li><span>교육기간</span>3일</li>
+                <li><span>교육주기</span>월 2회 (2, 4주차)</li>
+              </ul>
+            </div>
           </div>
 
-          <div class="course-card">
-            <div class="course-card__num">02</div>
-            <h3 class="course-card__title">개발자 교육</h3>
-            <p class="course-card__desc">익숙한 도구로 입력·수정·조회까지 가능한 시스템을 구현합니다.</p>
-            <ul class="course-card__meta">
-              <li><span>대상</span>개발자</li>
-              <li><span>교육기간</span>3일</li>
-              <li><span>교육주기</span>월 2회 (2, 4주차)</li>
-            </ul>
+          <div class="Process-card">
+            <div class="Process-card__top">
+              <h3 class="Process-card__title">관리자 교육</h3>
+              <p class="Process-card__desc">흩어진 데이터를 업무별로 체계화하고, 화면별 권한 설정까지 완성합니다.</p>
+            </div>
+            <div class="Process-card__bottom">
+              <div class="Process-card__icon">
+                <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+                  <circle cx="36" cy="36" r="32" fill="url(#g4)" opacity="0.18"/>
+                  <text x="36" y="46" text-anchor="middle" font-size="36">📊</text>
+                  <defs>
+                    <linearGradient id="g4" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#2563eb"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <ul class="Process-card__meta-list">
+                <li><span>대상</span>개발자 / 운영자</li>
+                <li><span>교육기간</span>1일</li>
+                <li><span>교육주기</span>월 1회 (2주차)</li>
+              </ul>
+            </div>
           </div>
 
-          <div class="course-card">
-            <div class="course-card__num">03</div>
-            <h3 class="course-card__title">관리자 교육</h3>
-            <p class="course-card__desc">흩어진 데이터를 업무별로 체계화하고, 화면별 권한 설정까지 완성합니다.</p>
-            <ul class="course-card__meta">
-              <li><span>대상</span>개발자 / 운영자</li>
-              <li><span>교육기간</span>1일</li>
-              <li><span>교육주기</span>월 1회 (2주차)</li>
-            </ul>
-          </div>
-
-          <div class="course-card">
-            <div class="course-card__num">04</div>
-            <h3 class="course-card__title">i-MATRIX 교육</h3>
-            <p class="course-card__desc">별도의 변환 없이 엑셀 그대로 활용하여, 시스템을 구축합니다.</p>
-            <ul class="course-card__meta">
-              <li><span>대상</span>i-MATRIX 개발자</li>
-              <li><span>교육기간</span>1일</li>
-              <li><span>교육주기</span>월 1회 (3주차)</li>
-            </ul>
+          <div class="Process-card">
+            <div class="Process-card__top">
+              <h3 class="Process-card__title">i-MATRIX 교육</h3>
+              <p class="Process-card__desc">별도의 변환 없이 엑셀 그대로 활용하여, 시스템을 구축합니다.</p>
+            </div>
+            <div class="Process-card__bottom">
+              <div class="Process-card__icon">
+                <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+                  <circle cx="36" cy="36" r="32" fill="url(#g4)" opacity="0.18"/>
+                  <text x="36" y="46" text-anchor="middle" font-size="36">📊</text>
+                  <defs>
+                    <linearGradient id="g4" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#2563eb"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <ul class="Process-card__meta-list">
+                <li><span>대상</span>i-MATRIX 개발자</li>
+                <li><span>교육기간</span>1일</li>
+                <li><span>교육주기</span>월 1회 (3주차)</li>
+              </ul>
+            </div>
           </div>
 
         </div>
       </div>
 
-      <!-- TRINITY 과정 -->
-      <div class="course-cards-panel is-hidden" id="courseTab-trinity">
-        <div class="course-cards-grid">
+      <!-- TRINITY 패널 -->
+      <div class="Process-panel Process-panel--hidden" id="Process-panel-trinity">
 
-          <div class="course-card course-card--teal">
-            <div class="course-card__num">01</div>
-            <h3 class="course-card__title">TRINITY 개발자 교육</h3>
-            <p class="course-card__desc">우리 회사 데이터를 이해하는 AI Agent를 직접 만듭니다.</p>
-            <ul class="course-card__meta">
-              <li><span>대상</span><span>AUD 플랫폼 교육 수료자<br>(사용자·개발자·관리자)</span></li>
-              <li><span>교육기간</span>2일</li>
-              <li><span>교육주기</span>매월 3주차</li>
-            </ul>
+        <!-- 와이드 배너 카드 -->
+        <div class="Process-banner Process-banner--trinity">
+          <div class="Process-banner__content">
+            <p class="Process-banner__text">복잡한 상관분석도 질문 한 줄이면 충분합니다. Trinity가 당신의 전략에 확신을 더합니다.<br><strong>데이터, 이제 공부하지 말고 TRINITY와 대화하세요.</strong></p>
+          </div>
+        </div>
+
+        <!-- 하단 카드 (1개) -->
+        <div class="Process-cards Process-cards--single">
+
+          <div class="Process-card Process-card--teal">
+            <div class="Process-card__top">
+              <h3 class="Process-card__title">TRINITY 개발자 교육</h3>
+              <p class="Process-card__desc">우리 회사 데이터를 이해하는 AI Agent를 직접 만듭니다.</p>
+            </div>
+            <div class="Process-card__bottom">
+              <div class="Process-card__icon">
+                <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+                  <circle cx="36" cy="36" r="32" fill="url(#g4)" opacity="0.18"/>
+                  <text x="36" y="46" text-anchor="middle" font-size="36">📊</text>
+                  <defs>
+                    <linearGradient id="g4" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#2563eb"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <ul class="Process-card__meta-list">
+                <li><span>대상</span>AUD 플랫폼 교육 수료자<br>(사용자·개발자·관리자)</li>
+                <li><span>교육기간</span>2일</li>
+                <li><span>교육주기</span>매월 3주차</li>
+              </ul>
+            </div>
           </div>
 
         </div>
@@ -262,9 +282,12 @@
   <!-- ══ 인기 교육 영상 ══ -->
   <section class="videos-section">
     <div class="container">
-      <div class="section-head-row">
-        <h2 class="section__title">오프라인 정규 과정 그대로: 디지털 클래스</h2>
-        <a href="#" class="section-more-link">전체 영상 보기 →</a>
+      <div class="bottom-col-head">
+        <div>
+          <p class="bottom-col-head__eyebrow">Digital Class</p>
+          <h2 class="bottom-col-head__title">오프라인 정규 과정 그대로: 디지털 클래스</h2>
+        </div>
+        <a href="course-list.html" class="section-more-link-new">전체 영상 보기 <span>→</span></a>
       </div>
       <div class="videos-grid" id="videosGrid">
         <div class="data-loading" style="grid-column:span 4">영상을 불러오는 중...</div>
@@ -272,120 +295,120 @@
     </div>
   </section>
 
-  <!-- ══ FAQ + 커뮤니티 ══ -->
-  <section class="bottom-section" id="faq">
+  <!-- ══ 커뮤니티 ══ -->
+  <section class="community-section-standalone">
     <div class="container">
-      <div class="bottom-grid">
+      <div class="bottom-col-head">
+        <div class="bottom-col-head__text">
+          <p class="bottom-col-head__eyebrow">Community</p>
+          <h2 class="bottom-col-head__title">커뮤니티</h2>
+        </div>
+        <a href="community.html" class="section-more-link-new">커뮤니티 바로가기 <span>→</span></a>
+      </div>
 
-        <!-- FAQ -->
-        <div class="faq-col">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
-            <h2 class="section__title" style="margin-bottom:0;">자주 묻는 물음 (FAQ)</h2>
-            <a href="course-list.html" style="font-size:14px; color:var(--blue,#2563EB); font-weight:600; text-decoration:none;">전체 영상 보기 →</a>
+      <div class="community-split-grid">
+
+        <!-- 카드 1: 온라인 커뮤니티 -->
+        <div class="comm-card comm-card--online">
+          <div class="comm-card__head">
+            <p class="comm-card__title">온라인 커뮤니티</p>
+            <p class="comm-card__desc">다양한 주제의 질문과 정보 공유</p>
           </div>
-          <div class="faq-list-new">
-
-            <div class="faq-item-new">
-              <button class="faq-q" onclick="toggleFaqNew(this)">
-                <span>교육 신청은 어떻게 하나요?</span>
-                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-              </button>
-              <div class="faq-a">
-                <p>회원가입 후 교육 과정 페이지에서 원하는 과정을 선택하고 신청하시면 됩니다. 기업 교육의 경우 별도 문의 바랍니다.</p>
+          <div class="comm-btn-row">
+            <a href="community.html?tab=notice" class="comm-btn">
+              <div class="comm-btn__icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
               </div>
-            </div>
-
-            <div class="faq-item-new">
-              <button class="faq-q" onclick="toggleFaqNew(this)">
-                <span>교육 수료증을 받을 수 있나요?</span>
-                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-              </button>
-              <div class="faq-a">
-                <p>영상을 80% 이상 수강하면 마이페이지에서 수료증을 바로 발급받을 수 있습니다. PDF로 저장하거나 이메일로 전송할 수 있습니다.</p>
+              <p class="comm-btn__label">공지 게시판</p>
+              <p class="comm-btn__sub" id="noticePreview">자주묻는 질문을 나눠보는 공간</p>
+            </a>
+            <a href="community.html?tab=qa" class="comm-btn">
+              <div class="comm-btn__icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
               </div>
-            </div>
-
-            <div class="faq-item-new">
-              <button class="faq-q" onclick="toggleFaqNew(this)">
-                <span>환불 기준은 어떻게 되나요?</span>
-                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-              </button>
-              <div class="faq-a">
-                <p>결제 후 7일 이내, 수강 진도 10% 미만인 경우 전액 환불됩니다. 자세한 내용은 이용약관을 확인해 주세요.</p>
+              <p class="comm-btn__label">Q&amp;A 질문</p>
+              <p class="comm-btn__sub" id="qaPreview">질문하고 전문가에게 답변 받기</p>
+            </a>
+            <a href="community.html?tab=free" class="comm-btn">
+              <div class="comm-btn__icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
               </div>
-            </div>
-
-            <div class="faq-item-new">
-              <button class="faq-q" onclick="toggleFaqNew(this)">
-                <span>기업 정액 교육도 가능한가요?</span>
-                <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
-              </button>
-              <div class="faq-a">
-                <p>5인 이상 팀 교육은 별도 기업 교육 패키지로 제공됩니다. 업종·직무 맞춤 커리큘럼 구성, 현장 강사 파견이 가능합니다.</p>
-              </div>
-            </div>
-
+              <p class="comm-btn__label">스터디 그룹</p>
+              <p class="comm-btn__sub" id="reviewPreview">함께 성장하는 학습공동체</p>
+            </a>
           </div>
         </div>
 
-        <!-- 커뮤니티 -->
-        <div class="community-col" id="community">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
-            <h2 class="section__title" style="margin-bottom:0;">커뮤니티</h2>
-            <a href="course-list.html" style="font-size:14px; color:var(--blue,#2563EB); font-weight:600; text-decoration:none;">전체 영상 보기 →</a>
+        <!-- 카드 2: 오프라인 모임 -->
+        <div class="comm-card comm-card--offline" id="offlineEventCard">
+          <div class="comm-card__head">
+            <p class="comm-card__title">오프라인 모임 신청</p>
+            <p class="comm-card__desc">현장에서 만나는 교육 세미나</p>
           </div>
-          <div class="community-card">
-
-            <!-- 온라인 커뮤니티 -->
-            <div class="community-card__online">
-              <p class="community-card__sub-title">온라인 커뮤니티</p>
-              <p class="community-card__sub-desc">다양한 주제의 질문과 정보 공유</p>
-              <div class="community-list-v2">
-                <a href="community.html?tab=notice" class="community-item-v2">
-                  <div class="community-item-v2__icon">
-                    <svg width="18" height="18" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                  </div>
-                  <div class="community-item-v2__body">
-                    <p class="community-item-v2__cat">공지 게시판</p>
-                    <p class="community-item-v2__text" id="noticePreview">자주묻는 질문을 나눠보는 공간</p>
-                  </div>
-                </a>
-                <a href="community.html?tab=qa" class="community-item-v2">
-                  <div class="community-item-v2__icon">
-                    <svg width="18" height="18" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                  </div>
-                  <div class="community-item-v2__body">
-                    <p class="community-item-v2__cat">Q&amp;A 질문</p>
-                    <p class="community-item-v2__text" id="qaPreview">질문하고 전문가에게 답변 받기</p>
-                  </div>
-                </a>
-                <a href="community.html?tab=free" class="community-item-v2">
-                  <div class="community-item-v2__icon">
-                    <svg width="18" height="18" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-                  </div>
-                  <div class="community-item-v2__body">
-                    <p class="community-item-v2__cat">스터디 그룹</p>
-                    <p class="community-item-v2__text" id="reviewPreview">함께 성장하는 학습공동체</p>
-                  </div>
-                </a>
-              </div>
+          <div class="comm-offline-body">
+            <img src="assets/images/hero-02.jpg" alt="오프라인 모임" class="comm-offline-img">
+            <div class="comm-offline-info">
+              <p class="comm-offline-name">BI MATRIX USER MEETUP</p>
+              <p class="comm-offline-detail">📅 2026.10.21 (수) &nbsp;14:00 ~ 17:00</p>
+              <p class="comm-offline-detail">📍 서울 강남구 테헤란로 125, 5층</p>
+              <a href="#" class="comm-offline-btn" onclick="openOfflineModal(event)">모임 신청하기 →</a>
             </div>
+          </div>
+        </div>
 
-            <!-- 오프라인 모임 -->
-            <div class="community-card__offline" id="offlineEventCard">
-              <p class="community-card__sub-title">오프라인 모임 신청</p>
-              <p class="community-card__sub-desc">현장에서 만나는 교육 세미나</p>
-              <div class="offline-event-v2">
-                <img src="assets/images/hero-02.jpg" alt="오프라인 모임" class="offline-event-v2__img">
-                <div class="offline-event-v2__body">
-                  <p class="offline-event-v2__name">BI MATRIX USER MEETUP</p>
-                  <p class="offline-event-v2__info">📅 2026.10.21 (수) &nbsp;14:00 ~ 17:00</p>
-                  <p class="offline-event-v2__info">📍 서울 강남구 테헤란로 125, 5층</p>
-                  <a href="#" class="offline-event-v2__btn" onclick="openOfflineModal(event)">모임 신청하기 →</a>
-                </div>
-              </div>
-            </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ══ 자주 하는 질문 ══ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="bottom-col-head">
+        <div class="bottom-col-head__text">
+          <p class="bottom-col-head__eyebrow">FAQ</p>
+          <h2 class="bottom-col-head__title">자주 하는 질문</h2>
+        </div>
+        <a href="faq.html" class="section-more-link-new">FAQ 바로가기 <span>→</span></a>
+      </div>
+      <div class="faq-list-new">
+
+        <div class="faq-item-new">
+          <button class="faq-q" onclick="toggleFaqNew(this)">
+            <span>교육 신청은 어떻게 하나요?</span>
+            <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>회원가입 후 교육 과정 페이지에서 원하는 과정을 선택하고 신청하시면 됩니다. 기업 교육의 경우 별도 문의 바랍니다.</p>
+          </div>
+        </div>
+
+        <div class="faq-item-new">
+          <button class="faq-q" onclick="toggleFaqNew(this)">
+            <span>교육 수료증을 받을 수 있나요?</span>
+            <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>영상을 80% 이상 수강하면 마이페이지에서 수료증을 바로 발급받을 수 있습니다. PDF로 저장하거나 이메일로 전송할 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="faq-item-new">
+          <button class="faq-q" onclick="toggleFaqNew(this)">
+            <span>환불 기준은 어떻게 되나요?</span>
+            <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>결제 후 7일 이내, 수강 진도 10% 미만인 경우 전액 환불됩니다. 자세한 내용은 이용약관을 확인해 주세요.</p>
+          </div>
+        </div>
+
+        <div class="faq-item-new">
+          <button class="faq-q" onclick="toggleFaqNew(this)">
+            <span>기업 정액 교육도 가능한가요?</span>
+            <svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>5인 이상 팀 교육은 별도 기업 교육 패키지로 제공됩니다. 업종·직무 맞춤 커리큘럼 구성, 현장 강사 파견이 가능합니다.</p>
           </div>
         </div>
 
@@ -555,6 +578,20 @@
     </div>
   </div>
 
+  <script>
+    /* ── 플랫폼 탭 토글 (Process pill style) ── */
+    document.querySelectorAll('.Process-pill').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var tab = this.getAttribute('data-Process-tab');
+        document.querySelectorAll('.Process-pill').forEach(function(b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        document.querySelectorAll('.Process-panel').forEach(function(p) { p.classList.add('Process-panel--hidden'); });
+        var panel = document.getElementById('Process-panel-' + tab);
+        if (panel) panel.classList.remove('Process-panel--hidden');
+      });
+    });
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/course-data.js"></script>
@@ -564,9 +601,23 @@
   <script>
     function toggleFaqNew(btn) {
       const item = btn.closest('.faq-item-new');
+      const answer = item.querySelector('.faq-a');
       const isOpen = item.classList.contains('is-open');
-      document.querySelectorAll('.faq-item-new.is-open').forEach(el => el.classList.remove('is-open'));
-      if (!isOpen) item.classList.add('is-open');
+
+      // 현재 열린 항목 닫기
+      document.querySelectorAll('.faq-item-new.is-open').forEach(function(el) {
+        el.classList.remove('is-open');
+        const a = el.querySelector('.faq-a');
+        a.style.maxHeight = '0';
+        a.style.opacity = '0';
+      });
+
+      // 클릭한 항목 열기
+      if (!isOpen) {
+        item.classList.add('is-open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        answer.style.opacity = '1';
+      }
     }
 
     /* ── 오프라인 행사 신청 모달 ── */
@@ -680,6 +731,24 @@
       if (e.key === 'Escape') closeOfflineModal();
     });
   </script>
+
+<script type="text/javascript">
+  !function(){
+    if(!window.UnicornStudio){
+      window.UnicornStudio={isInitialized:!1};
+      var i=document.createElement("script");
+      i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js";
+      i.onload=function(){
+        if(!window.UnicornStudio.isInitialized){
+          UnicornStudio.init();
+          window.UnicornStudio.isInitialized=!0;
+        }
+      };
+      (document.head || document.body).appendChild(i);
+    }
+  }();
+</script>
+
 
 </body>
 </html>

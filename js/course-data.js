@@ -1,318 +1,372 @@
 /* =========================================
    course-data.js — 비아이매트릭스 아카데미
-   보유 영상 기반 강의 데이터 (20개)
+   영상타이틀_20260512_수정.csv 기반
    ========================================= */
 
 const COURSES = [
 
-  /* ── i-META View · OLAP 조회 ── */
+  /* ── [기초] 사용자 과정 · 데이터 조회 ── */
   {
     id: 1,
     product: "i-META View",
-    title: "드래그만으로 지점별 매출 실적을 내가 원하는 항목으로 조회할 수 있어요",
-    report_title: "지점별 매출 실적(List) - 기본",
-    industry: ["retail", "finance", "manufacturing", "public"],
-    role: ["analyst"],
-    feature: ["olap"],
-    level: "lv1",
+    report_title: "지점별 매출 실적 조회 - 기본",
+    title: "원하는 항목만 끌어다 놓아 매출을 분석하세요",
+    outcome: "보고싶은 항목을 끌어다 놓으면 데이터가 바로 조회돼요.",
+    youtube: "https://youtu.be/9OozugKBd2Y?si=v_ZvLy8d388f9Anv",
+    level: "basic",
+    feature: ["query"],
+    industry: ["retail"],
+    difficulty: "입문",
     duration: "1분",
-    price: 90000,
-    outcome: "데이터 파일에서 보고싶은 항목을 화면에 끌어다 놓으면 화면에 데이터가 바로 조회돼요.",
-    step: "OLAP · 기본 조회",
     thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 2,
     product: "i-META View",
-    title: "조회한 데이터를 내 업무에 맞게 가공할 수 있어요",
-    report_title: "지점별 매출 실적(List) - 응용",
-    industry: ["retail", "finance", "manufacturing", "public"],
-    role: ["analyst"],
-    feature: ["olap"],
-    level: "lv1",
+    report_title: "지점별 매출 실적 조회 - 활용",
+    title: "데이터를 원하는 방식으로 활용하세요",
+    outcome: "정렬·필터·계산 컬럼 추가까지 조회된 화면에서 바로 적용할 수 있어요.",
+    youtube: "https://www.youtube.com/watch?v=yYuw4njyU-o",
+    level: "basic",
+    feature: ["query"],
+    industry: ["retail"],
+    difficulty: "초급",
     duration: "4분",
-    price: 90000,
-    outcome: "정렬·필터·소계·화면 재구성(단위 변환)·계절 컬럼 추가까지, 별도 엑셀 작업 없이 조회 화면에서 바로 처리할 수 있어요.",
-    step: "OLAP · 데이터 가공",
     thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 3,
     product: "i-META View",
-    title: "상품 정보를 피벗 형태로 배치해 다양한 관점으로 매출을 분석할 수 있어요",
-    report_title: "상품별 매출 분석(CrossTab) - 기본",
-    industry: ["retail", "manufacturing"],
-    role: ["analyst"],
-    feature: ["olap"],
-    level: "lv1",
-    duration: "2분",
-    price: 90000,
-    outcome: "행과 열에 원하는 항목을 끌어다 놓으면 상품별·매장별 매출 순위 교차표가 바로 나와요.",
-    step: "OLAP · CrossTab 기본",
+    report_title: "상품별 피벗 매출 분석 - 기본",
+    title: "상품 매출을 다양한 관점으로 분석하세요",
+    outcome: "행과 열에 원하는 항목을 끌어다 놓으면 상품별·매장별 매출 실적이 교차표로 한눈에 보여요.",
+    youtube: "https://youtu.be/F7WMNRP4_8I?si=daQO1hYWhXxwKhQ2",
+    level: "basic",
+    feature: ["query"],
+    industry: ["retail"],
+    difficulty: "초급",
+    duration: "1분",
     thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 4,
     product: "i-META View",
-    title: "피벗 분석의 심화 기능으로 상품 매출을 깊이 있게 파고들 수 있어요",
-    report_title: "상품별 매출 분석(CrossTab) - 응용",
-    industry: ["retail", "manufacturing"],
-    role: ["analyst"],
-    feature: ["olap"],
-    level: "lv1",
+    report_title: "상품별 피벗 매출 분석 - 활용",
+    title: "안 팔리는 상품, 원인까지 분석해보세요",
+    outcome: "그룹핑·상세리스트 분석까지, 하나의 보고서에서 매출 원인을 추적할 수 있어요.",
+    youtube: "https://www.youtube.com/watch?v=7WCNuL_SPSs",
+    level: "basic",
+    feature: ["query"],
+    industry: ["retail"],
+    difficulty: "중급",
     duration: "3분",
-    price: 90000,
-    outcome: "구조 변경(소계 생성)·그룹핑·정렬·필터·비교 지표·배경 데이터 확인까지 보고서 한 장에서 전부 처리할 수 있어요.",
-    step: "OLAP · CrossTab 응용",
     thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 5,
     product: "i-META View",
-    title: "숫자로 보던 매출 데이터의 추세를 추가하여 흐름과 추이를 한눈에 볼 수 있어요",
-    report_title: "기간별 매출 추이 현황(Chart) - 기본",
-    industry: ["retail", "finance", "manufacturing", "public"],
-    role: ["analyst", "finance"],
-    feature: ["olap", "dashboard"],
-    level: "lv1",
+    report_title: "기간별 매출 추이 현황 - 기본",
+    title: "차트로 매출 흐름을 읽어보세요",
+    outcome: "차트를 추가하고 유형을 바꾸는 것만으로 기간별·상품별 매출 추이가 시각화돼요.",
+    youtube: "https://youtu.be/JQvScyETVy4?si=Dh-kcDYLjMrAszlf",
+    level: "basic",
+    feature: ["query"],
+    industry: ["retail"],
+    difficulty: "초급",
     duration: "1분",
-    price: 90000,
-    outcome: "수치로 보면 찾기 어렵던 항목과 추세 유형을 시각화하고 기준·범위를 조정해 추이를 쉽게 파악할 수 있어요.",
-    step: "OLAP · 차트 기본",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb-olap.jpg"
   },
   {
     id: 6,
     product: "i-META View",
-    title: "차트 유형·색상·조건 범위·계열을 바꿔 내 보고서에 딱 맞는 차트를 만들 수 있어요",
-    report_title: "기간별 매출 추이 현황(Chart) - 응용",
-    industry: ["retail", "finance", "manufacturing", "public"],
-    role: ["analyst", "finance"],
-    feature: ["olap", "dashboard"],
-    level: "lv1",
-    duration: "2분",
-    price: 90000,
-    outcome: "다양한 속성 설정만으로 차트의 모양과 전달하는 데이터 범위를 자유롭게 조절할 수 있어요.",
-    step: "OLAP · 차트 응용",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
-  },
-  {
-    id: 7,
-    product: "i-META View",
-    title: "데이터 다운로드 없이 자동 연동된 엑셀 보고서로 매장별 매출 현황을 만들 수 있어요",
-    report_title: "매장별 매출 현황",
+    report_title: "기간별 매출 추이 현황 - 활용",
+    title: "내 보고서에 맞는 차트를 구성하세요",
+    outcome: "차트 유형·색상·조회 범위·계열을 자유롭게 바꿔 원하는 형태의 시각화를 만들 수 있어요.",
+    youtube: "https://www.youtube.com/watch?v=64dfVn6VirQ",
+    level: "basic",
+    feature: ["query"],
     industry: ["retail"],
-    role: ["analyst"],
-    feature: ["report"],
-    level: "lv1",
-    duration: "6분",
-    price: 90000,
-    outcome: "빈 엑셀에 데이터를 결합하여 기간만 선택하면 매장별 매출 합계·기획·계산·각종 서식까지 한 번에 완성돼요.",
-    step: "Report · 엑셀 연동",
-    thumbnail: "assets/images/thumb-report.jpg"
+    difficulty: "중급",
+    duration: "1분",
+    thumbnail: "assets/images/thumb-olap.jpg"
   },
 
-  /* ── i-MATRIX · 보고서 자동화 ── */
+  /* ── [기초] 사용자 과정 · 엑셀 자동화 ── */
+  {
+    id: 7,
+    product: "i-MATRIX",
+    report_title: "매장별 매출 현황",
+    title: "매일 반복하는 엑셀 업무를 줄여보세요",
+    outcome: "빈 엑셀에 데이터를 연결하면 기간만 선택해도 최신 매장별 매출이 자동으로 채워져요.",
+    youtube: "https://youtu.be/yfw-dPxx-ks?si=6T_77QgcoIv43ZxK",
+    level: "basic",
+    feature: ["excel"],
+    industry: ["retail"],
+    difficulty: "초급",
+    duration: "6분",
+    thumbnail: "assets/images/thumb-report.jpg"
+  },
   {
     id: 8,
     product: "i-MATRIX",
-    title: "매일 다운로드해야 피벗 돌리던 작업을 기간만 선택하면 자동 완성되는 엑셀 보고서로 만들 수 있어요",
     report_title: "상품별 매출 실적 현황",
-    industry: ["retail", "manufacturing"],
-    role: ["analyst"],
-    feature: ["report"],
-    level: "lv2",
-    duration: "3분",
-    price: 220000,
-    outcome: "데이터가 연동된 엑셀에 피벗테이블과 슬라이서 필터를 추가하면 상품별 매출 분석 보고서가 완성돼요.",
-    step: "G-MATRIX · 보고서 자동화",
+    title: "피벗 분석 보고서를 자동화하세요",
+    outcome: "데이터가 연동된 엑셀에 피벗테이블과 슬라이서를 추가하면 상품별 매출 분석 보고서가 완성돼요.",
+    youtube: "https://youtu.be/qMYiUBNQ53U?si=nXoMCHxTEzW-YDSu",
+    level: "basic",
+    feature: ["excel"],
+    industry: ["retail"],
+    difficulty: "중급",
+    duration: "4분",
+    thumbnail: "assets/images/thumb-report.jpg"
+  },
+
+  /* ── [응용] 실무 활용 과정 · 엑셀 자동화 ── */
+  {
+    id: 9,
+    product: "i-AUD",
+    report_title: "영업 실적 보고서",
+    title: "엑셀 설계만으로 웹 보고서를 완성하세요",
+    outcome: "엑셀로 화면을 설계하면 수식·레이아웃·차트가 그대로 웹으로 전환돼요.",
+    youtube: "https://youtu.be/wKkwd6Z1qxo?si=kKKiYycu0UUtIIXy",
+    level: "applied",
+    feature: ["excel"],
+    industry: ["retail"],
+    difficulty: "초급",
+    duration: "14분",
     thumbnail: "assets/images/thumb-report.jpg"
   },
   {
-    id: 9,
-    product: "i-MATRIX",
-    title: "매일 영업 보고서에 붙여 넣던 수작업을 엑셀 밖에서 처리하여 자동으로 만들 수 있어요",
-    report_title: "영업 실적 보고서",
-    industry: ["retail", "finance", "manufacturing"],
-    role: ["analyst", "finance"],
-    feature: ["epa", "report"],
-    level: "lv2",
-    duration: "14분",
-    price: 220000,
-    outcome: "엑셀에서 영업 실적을 수식·자동화·차트까지 3가지 기능으로 엑셀 데이터와 연동 전환해요. 개발자에게 요청하지 않아도 돼요.",
-    step: "G-MATRIX · EPA 보고서",
-    thumbnail: "assets/images/thumb-epa.jpg"
-  },
-  {
-    id: 20,
-    product: "i-MATRIX",
-    title: "엑셀에서 매장별 매출 계획을 직접 수정하고 DB에 저장까지 되는 관리 화면을 만들 수 있어요",
-    report_title: "매장별 매출 계획 관리",
-    industry: ["retail", "manufacturing"],
-    role: ["finance", "analyst"],
-    feature: ["uiux"],
-    level: "lv2",
-    duration: "9분",
-    price: 220000,
-    outcome: "DB 연결 시트를 자동으로 생성하고 저장·조회 기능을 연결한 엑셀이 실무 데이터 관리 도구가 돼요.",
-    step: "G-MATRIX · 관리화면",
-    thumbnail: "assets/images/thumb-uiux.jpg"
-  },
-
-  /* ── i-AUD · 통합 보고서 ── */
-  {
     id: 10,
     product: "i-AUD",
-    title: "전월·전년 비교와 고객 등급별 실적, 표 하나에 다 담은 통합 보고서를 엑셀로 직접 만들 수 있어요",
-    report_title: "상품별 실적",
-    industry: ["retail", "finance"],
-    role: ["analyst"],
-    feature: ["epa", "report"],
-    level: "lv2",
+    report_title: "상품별 매출 실적",
+    title: "복잡한 상품 분석도 하나의 화면으로 구성하세요",
+    outcome: "다양한 분석 관점을 담은 엑셀 보고서를 수식 그대로 웹 화면으로 전환할 수 있어요.",
+    youtube: "https://youtu.be/9hmLHN5DHG8?si=JMVLDQ5wgqEpN_2N",
+    level: "applied",
+    feature: ["excel"],
+    industry: ["retail"],
+    difficulty: "중급",
     duration: "13분",
-    price: 220000,
-    outcome: "다양한 분석 관점을 엑셀로 설계하면 레이아웃과 수식이 틀에 맞게 자동 반영돼요. 개발자 없이 완성돼요.",
-    step: "AUD · 통합 보고서",
-    thumbnail: "assets/images/thumb-epa.jpg"
+    thumbnail: "assets/images/thumb-report.jpg"
   },
+
+  /* ── [응용] 실무 활용 과정 · 엑셀 자동화 + 시각화 분석 ── */
   {
     id: 11,
     product: "i-AUD",
-    title: "영업 실적 대시보드를 매일 붙여 넣던 작업 없이 데이터가 연결된 화면으로 직접 만들 수 있어요",
-    report_title: "매출 현황",
-    industry: ["retail", "finance", "manufacturing"],
-    role: ["analyst", "finance"],
-    feature: ["epa", "report", "dashboard"],
-    level: "lv2",
+    report_title: "전사 매출 현황",
+    title: "여러 시트를 하나의 대시보드로 완성하세요",
+    outcome: "엑셀 시트별 이미지·표·차트를 하나의 현황판으로 구성할 수 있어요.",
+    youtube: "https://youtu.be/fJ_gwH8m8CQ?si=vsetEGKbsMvqZBou",
+    level: "applied",
+    feature: ["excel", "visual"],
+    industry: ["retail"],
+    difficulty: "중급",
     duration: "16분",
-    price: 220000,
-    outcome: "엑셀 시트를 따로 쓰지 않고 이미지·차트를 한 화면에 연결해 완성해요.",
-    step: "AUD · 매출 대시보드",
     thumbnail: "assets/images/thumb-dashboard.jpg"
   },
   {
     id: 12,
-    product: "i-AUD",
-    title: "매달 손으로 범위 조정하던 엑셀 보고서를 기간만 선택하면 자동 완성되는 정기 보고서로 만들 수 있어요",
+    product: "i-MATRIX",
     report_title: "고객 등급별 매출 추이",
-    industry: ["retail", "finance"],
-    role: ["marketing"],
-    feature: ["report"],
-    level: "lv2",
+    title: "고객 등급별 매출 흐름을 한눈에 확인하세요",
+    outcome: "기존 엑셀 양식에 조회 기능을 연결하면 선택한 기간의 데이터만 자동으로 표시돼요.",
+    youtube: "https://youtu.be/BOOttYyVJyY?si=pYRm6e2aw9OaKbaE",
+    level: "applied",
+    feature: ["excel", "visual"],
+    industry: ["retail"],
+    difficulty: "중급",
     duration: "7분",
-    price: 220000,
-    outcome: "기준에 맞는 엑셀 양식을 구성하면 선택한 기간의 데이터가 화면에 자동 표시되는 보고서가 완성돼요.",
-    step: "AUD · 정기 보고서",
-    thumbnail: "assets/images/thumb-report.jpg"
+    thumbnail: "assets/images/thumb-dashboard.jpg"
   },
   {
     id: 13,
-    product: "i-AUD",
-    title: "복잡한 엑셀 작업 없이 조회된 데이터를 채워 지정 점포별 매출 보고서를 만들 수 있어요",
-    report_title: "주요 점포별 매출 실적 현황",
+    product: "i-MATRIX",
+    report_title: "주요 점포 매출 현황",
+    title: "복잡한 수식도 그대로 활용하세요",
+    outcome: "화면 양식을 먼저 설계하면 데이터가 자동으로 가공되어 원하는 형태로 채워져요.",
+    youtube: "https://youtu.be/-mByUDITNfA?si=VmMIwpsiqCqkISUP",
+    level: "applied",
+    feature: ["excel", "visual"],
     industry: ["retail"],
-    role: ["finance", "analyst"],
-    feature: ["report"],
-    level: "lv2",
+    difficulty: "고급",
     duration: "10분",
-    price: 220000,
-    outcome: "화면에서 선택만 하고 자동화 기능을 연결하면 점포별 보고서가 완성돼요.",
-    step: "AUD · 점포별 보고서",
-    thumbnail: "assets/images/thumb-report.jpg"
+    thumbnail: "assets/images/thumb-dashboard.jpg"
   },
-
-  /* ── i-AUD · 고객 대시보드 ── */
   {
     id: 14,
     product: "i-AUD",
-    title: "고객별 매출 대시보드를 엑셀로 직접 만들 수 있어요",
-    report_title: "고객별 매출 현황(기본)",
-    industry: ["retail", "finance"],
-    role: ["marketing"],
-    feature: ["epa", "dashboard"],
-    level: "lv1",
+    report_title: "고객별 매출 현황 - 기본",
+    title: "회원 특성별 매출을 시각화하세요",
+    outcome: "회원카드·성별·결혼여부·연령대·등급 차트를 엑셀로 설계하면 그대로 웹 대시보드로 전환돼요.",
+    youtube: "https://youtu.be/7LuAmSWLXg0?si=Yd4mvEF_khL3ztY6",
+    level: "applied",
+    feature: ["excel", "visual"],
+    industry: ["retail"],
+    difficulty: "초급",
     duration: "7분",
-    price: 90000,
-    outcome: "회원카드·성별·연령·부서·업태 등의 차트를 엑셀로 설계하면 레이아웃·수식·그래프로 자동 연결돼요.",
-    step: "AUD · 고객 대시보드 기본",
     thumbnail: "assets/images/thumb-dashboard.jpg"
   },
   {
     id: 15,
     product: "i-AUD",
-    title: "차트 막대를 클릭하면 해당 고객의 상세 데이터가 팝업으로 열리는 기능을 코딩 없이 추가할 수 있어요",
-    report_title: "고객별 매출 현황(응용)",
-    industry: ["retail", "finance"],
-    role: ["marketing"],
-    feature: ["epa", "dashboard"],
-    level: "lv1",
+    report_title: "고객별 매출 현황 - 활용",
+    title: "대시보드에 차트 클릭으로 상세 정보까지 연결하세요",
+    outcome: "동작 설정으로 차트와 상세 데이터가 연결된 인터랙티브 보고서가 완성돼요.",
+    youtube: "https://youtu.be/tO-TJAnV2zc?si=SNLPCcgwGkrj0eAd",
+    level: "applied",
+    feature: ["excel", "visual"],
+    industry: ["retail"],
+    difficulty: "중상급",
     duration: "4분",
-    price: 90000,
-    outcome: "이벤트 콘솔을 설정하는 것만으로 차트와 상세 데이터가 연결돼요. 개발자 없이 인터랙티브 보고서가 완성돼요.",
-    step: "AUD · 고객 대시보드 응용",
     thumbnail: "assets/images/thumb-dashboard.jpg"
   },
 
-  /* ── i-AUD · 관리화면 (UI/UX) ── */
+  /* ── [응용] 실무 활용 과정 · 데이터 저장 ── */
   {
     id: 16,
     product: "i-AUD",
-    title: "코딩 없이 고객 정보를 직접 조회·수정·삭제까지 할 수 있는 관리 화면을 만들 수 있어요",
     report_title: "고객 정보 관리",
-    industry: ["retail", "finance"],
-    role: ["marketing"],
-    feature: ["uiux"],
-    level: "lv1",
+    title: "고객 관리 업무를 위한 관리 화면도 직접 만들 수 있습니다",
+    outcome: "데이터 저장 모듈만 연결하면 조회·입력·수정·저장 기능까지 한 번에 구성돼요.",
+    youtube: "https://youtu.be/lOLbbgINspw?si=t4flwXt_xpa7AEnN",
+    level: "applied",
+    feature: ["data"],
+    industry: ["retail"],
+    difficulty: "초급",
     duration: "6분",
-    price: 90000,
-    outcome: "데이터 처리 모듈을 설정하는 것만으로 변경 사항이 바로 저장되는 실무 관리 화면이 완성돼요.",
-    step: "AUD · 고객 관리화면",
     thumbnail: "assets/images/thumb-uiux.jpg"
   },
+
+  /* ── [심화] 개발자 과정 · 데이터 저장 ── */
   {
     id: 17,
     product: "i-AUD",
-    title: "고객을 선택하면 해당 고객의 상세 매출 내역이 리스트로 연결되는 관리 화면을 만들 수 있어요",
     report_title: "고객별 매출 실적",
-    industry: ["retail", "finance"],
-    role: ["marketing"],
-    feature: ["uiux"],
-    level: "lv1",
+    title: "고객과 매출 정보를 하나로 연결하세요",
+    outcome: "고객 정보와 매출 정보를 하나의 화면에서 조회·수정·저장할 수 있어요.",
+    youtube: "https://youtu.be/jJKDg2S3CGs?si=mIvN0ICSLraCYCrO",
+    level: "advanced",
+    feature: ["data"],
+    industry: ["retail"],
+    difficulty: "중급",
     duration: "11분",
-    price: 90000,
-    outcome: "고객 정보와 매출 정보를 연결, 두 가지 데이터를 한 화면에서 조회·수정까지 할 수 있는 관리화면이 완성돼요.",
-    step: "AUD · 매출 관리화면",
     thumbnail: "assets/images/thumb-uiux.jpg"
   },
   {
     id: 18,
     product: "i-AUD",
-    title: "입력 폼과 목록을 연결해 임직원 정보를 편하게 수정·관리하는 화면을 코딩 없이 만들 수 있어요",
     report_title: "인사 관리",
-    industry: ["retail", "finance", "manufacturing", "public"],
-    role: ["analyst", "developer"],
-    feature: ["uiux"],
-    level: "lv2",
+    title: "직원 관리 화면도 손쉽게 구현하세요",
+    outcome: "직원정보를 입력·수정하는 인사관리 화면을 만들 수 있어요.",
+    youtube: "https://youtu.be/1zeSPWWkAqg?si=v9FSil-qIjRo9cAE",
+    level: "advanced",
+    feature: ["data"],
+    industry: ["retail"],
+    difficulty: "중상급",
     duration: "12분",
-    price: 220000,
-    outcome: "근속년수 자동 계산, 직급 수 집계, 수정·조회까지 — 실무에서 바로 쓸 수 있는 관리 화면이 완성돼요.",
-    step: "AUD · 인사 관리화면",
     thumbnail: "assets/images/thumb-uiux.jpg"
   },
+
+  /* ── [응용] 실무 활용 과정 · 엑셀 자동화 + 데이터 저장 ── */
   {
     id: 19,
     product: "i-AUD",
-    title: "기간을 선택하면 매출 계획을 직접 상품 기준으로 분류하고 수정·저장까지 할 수 있는 화면을 만들 수 있어요",
     report_title: "매출 계획 입력",
-    industry: ["retail", "finance", "manufacturing"],
-    role: ["finance"],
-    feature: ["epa", "uiux"],
-    level: "lv2",
+    title: "엑셀 장표 그대로 웹에서 활용하세요",
+    outcome: "사용하던 엑셀파일 그대로 웹에서 입력하고 저장할 수 있어요.",
+    youtube: "https://youtu.be/wJskWphv5zo?si=P6lkqFW53qjoZZVi",
+    level: "applied",
+    feature: ["excel", "data"],
+    industry: ["retail"],
+    difficulty: "중급",
     duration: "14분",
-    price: 220000,
-    outcome: "매장·지역·유형·항목 교차 탭을 표 형태 그대로 직접 입력하고 저장할 수 있는 화면이 완성돼요.",
-    step: "AUD · 계획 입력화면",
     thumbnail: "assets/images/thumb-uiux.jpg"
+  },
+  {
+    id: 20,
+    product: "i-MATRIX",
+    report_title: "매장별 매출 계획 관리",
+    title: "매출 계획 데이터를 직접 수정하고 저장하세요",
+    outcome: "DB 연동 시트를 자동 생성하고 저장·조회 기능까지 연결할 수 있어요.",
+    youtube: "https://youtu.be/MgPC5eIwEjw?si=8Tq5ybI7GToTfvFL",
+    level: "applied",
+    feature: ["excel", "data"],
+    industry: ["retail"],
+    difficulty: "중상급",
+    duration: "9분",
+    thumbnail: "assets/images/thumb-uiux.jpg"
+  },
+
+  /* ── [전문] 관리자 과정 · 시스템 운영 ── */
+  {
+    id: 21,
+    product: "i-META",
+    report_title: "i-META 제작하기",
+    title: "사용자가 원하는 데이터를 쉽게 찾고 활용하도록 지원하세요",
+    outcome: "데이터를 논리 구조로 설계해 누구나 쉽게 분석 데이터를 가져올 수 있는 i-META 파일을 만들 수 있어요.",
+    youtube: "https://youtu.be/3GBdauqfJG4?si=oDuz6btLw0Iq9Zjb",
+    level: "expert",
+    feature: ["system"],
+    industry: ["retail"],
+    difficulty: "중급",
+    duration: "4분",
+    thumbnail: "assets/images/thumb-olap.jpg"
   }
 
 ];
+
+/* ── 챕터 타임스탬프 (임시 샘플) ── */
+var CHAPTERS = {
+  1:  [ {time:0,  label:"소개"}, {time:12, label:"항목 끌어다 놓기"}, {time:40, label:"결과 확인"} ],
+  2:  [ {time:0,  label:"소개"}, {time:30, label:"정렬·필터 적용"}, {time:120, label:"계산 컬럼 추가"}, {time:200, label:"마무리"} ],
+  3:  [ {time:0,  label:"소개"}, {time:15, label:"행·열 배치"}, {time:45, label:"교차표 완성"} ],
+  4:  [ {time:0,  label:"소개"}, {time:30, label:"그룹핑 설정"}, {time:120, label:"상세리스트 분석"}, {time:160, label:"완성"} ],
+  5:  [ {time:0,  label:"소개"}, {time:12, label:"차트 추가"}, {time:40, label:"유형 변경"}, {time:55, label:"완성"} ],
+  6:  [ {time:0,  label:"소개"}, {time:15, label:"차트 색상·범위 설정"}, {time:45, label:"계열 구성"} ],
+  7:  [ {time:0,  label:"소개"}, {time:40, label:"엑셀에 데이터 연결"}, {time:150, label:"기간 선택 설정"}, {time:270, label:"자동화 확인"}, {time:340, label:"완성"} ],
+  8:  [ {time:0,  label:"소개"}, {time:40, label:"피벗테이블 추가"}, {time:130, label:"슬라이서 연결"}, {time:200, label:"완성"} ],
+  9:  [ {time:0,  label:"소개"}, {time:60, label:"엑셀 화면 설계"}, {time:240, label:"데이터 연결"}, {time:480, label:"수식 설정"}, {time:660, label:"웹 변환"}, {time:800, label:"결과 확인"} ],
+  10: [ {time:0,  label:"소개"}, {time:60, label:"상품 분석 화면 설계"}, {time:300, label:"다양한 관점 설정"}, {time:600, label:"웹 전환"}, {time:740, label:"완성"} ],
+  11: [ {time:0,  label:"소개"}, {time:60, label:"시트별 구성"}, {time:240, label:"이미지·표 배치"}, {time:500, label:"차트 구성"}, {time:760, label:"현황판 완성"}, {time:920, label:"결과 확인"} ],
+  12: [ {time:0,  label:"소개"}, {time:60, label:"기존 양식 연결"}, {time:240, label:"기간 선택 설정"}, {time:370, label:"완성"} ],
+  13: [ {time:0,  label:"소개"}, {time:80, label:"화면 양식 설계"}, {time:280, label:"수식 설정"}, {time:460, label:"데이터 자동 채우기"}, {time:560, label:"완성"} ],
+  14: [ {time:0,  label:"소개"}, {time:60, label:"회원 차트 설계"}, {time:220, label:"성별·연령 분석"}, {time:360, label:"웹 대시보드 전환"}, {time:400, label:"완성"} ],
+  15: [ {time:0,  label:"소개"}, {time:30, label:"동작 설정"}, {time:140, label:"상세 데이터 연결"}, {time:210, label:"완성"} ],
+  16: [ {time:0,  label:"소개"}, {time:60, label:"데이터 저장 모듈 연결"}, {time:220, label:"입력·수정 설정"}, {time:330, label:"완성"} ],
+  17: [ {time:0,  label:"소개"}, {time:80, label:"고객 정보 조회"}, {time:280, label:"매출 데이터 연결"}, {time:500, label:"수정·저장 설정"}, {time:630, label:"완성"} ],
+  18: [ {time:0,  label:"소개"}, {time:80, label:"직원 정보 입력"}, {time:340, label:"수정 기능"}, {time:520, label:"저장 설정"}, {time:680, label:"완성"} ],
+  19: [ {time:0,  label:"소개"}, {time:80, label:"엑셀 파일 불러오기"}, {time:280, label:"웹 입력 설정"}, {time:580, label:"저장 연결"}, {time:780, label:"완성"} ],
+  20: [ {time:0,  label:"소개"}, {time:60, label:"DB 연동 시트 생성"}, {time:230, label:"저장 기능 연결"}, {time:410, label:"조회·저장 확인"}, {time:520, label:"완성"} ],
+  21: [ {time:0,  label:"소개"}, {time:50, label:"i-META 구조 이해"}, {time:160, label:"논리 구조 설계"}, {time:220, label:"완성"} ]
+};
+
+/* ── 라벨 매핑 ── */
+var LEVEL_LABELS = { basic: "기초", applied: "응용", advanced: "심화", expert: "전문" };
+var INDUSTRY_LABELS = { retail: "소매·소비재", finance: "금융 서비스", public: "공공 부문", manufacturing: "제조업" };
+var FEATURE_LABELS = { query: "데이터 조회", excel: "엑셀 자동화", visual: "시각화 분석", data: "데이터 저장", system: "시스템 운영" };
+
+/* ── 과목 단건 조회 ── */
+function getCourseById(id) {
+  return COURSES.find(function(c) { return c.id === Number(id); }) || null;
+}
+
+/* ── YouTube URL에서 Video ID 추출 ── */
+function extractYoutubeId(url) {
+  if (!url) return null;
+  var m = url.match(/youtu\.be\/([^?&\s]+)/);
+  if (m) return m[1];
+  m = url.match(/[?&]v=([^?&\s]+)/);
+  if (m) return m[1];
+  return null;
+}
+
+/* ── 관련 과목 (같은 기능, 현재 제외) ── */
+function getRelatedCourses(course, limit) {
+  limit = limit || 3;
+  return COURSES.filter(function(c) {
+    return c.id !== course.id &&
+      c.feature.some(function(f) { return course.feature.indexOf(f) !== -1; });
+  }).slice(0, limit);
+}

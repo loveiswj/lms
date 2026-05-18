@@ -358,10 +358,10 @@
   <!-- ══ 프로필 헤더 ══ -->
   <div class="profile-header">
     <div class="container">
-      <div class="profile-avatar" id="profileAvatar">홍</div>
+      <div class="profile-avatar" id="profileAvatar"></div>
       <div class="profile-info">
-        <div class="profile-name" id="profileName">홍길동</div>
-        <div class="profile-email" id="profileEmail">hong@example.com</div>
+        <div class="profile-name" id="profileName"></div>
+        <div class="profile-email" id="profileEmail"></div>
         <div class="profile-badges">
           <span class="profile-badge">수강생</span>
           <span class="profile-badge gold" id="profileLevel">Lv.1 입문자</span>
@@ -502,9 +502,15 @@
       if (name === 'community') loadMyPosts();
     }
 
-    async function logout(e) {
+    function logout(e) {
       e.preventDefault();
-      await _supabase.auth.signOut();
+      /* localStorage에서 Supabase 세션 즉시 제거 */
+      Object.keys(localStorage).forEach(function(key) {
+        if (key.startsWith('sb-') || key.indexOf('supabase') !== -1) {
+          localStorage.removeItem(key);
+        }
+      });
+      if (typeof _supabase !== 'undefined') _supabase.auth.signOut().catch(function(){});
       window.location.href = 'index.html';
     }
 
@@ -842,9 +848,10 @@
       USER.name  = document.getElementById('settingName').value;
       USER.phone = document.getElementById('settingPhone').value;
       USER.role  = document.getElementById('settingRole').value;
-      var { error } = await _supabase.from('profiles').update({
+      var { error } = await _supabase.from('profiles').upsert({
+        id: session.user.id, email: session.user.email,
         name: USER.name, phone: USER.phone, role: USER.role
-      }).eq('id', session.user.id);
+      }, { onConflict: 'id' });
       if (error) { showToast('저장 중 오류가 발생했습니다'); return; }
       renderProfile();
       showToast('프로필이 저장되었습니다');
@@ -931,46 +938,53 @@
 
     /* ── Supabase 데이터 로드 및 초기화 ── */
     async function init() {
-      /* 로그인 확인 */
-      var { data: { session } } = await _supabase.auth.getSession();
-      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        /* 로그인 확인 */
+        var { data: { session } } = await _supabase.auth.getSession();
+        if (!session) { window.location.href = 'login.html'; return; }
 
-      var userId = session.user.id;
-
-      /* 프로필 로드 */
-      var { data: profile } = await _supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
-      if (profile) {
-        USER.name  = profile.name  || session.user.email.split('@')[0];
+        var userId = session.user.id;
         USER.email = session.user.email;
-        USER.phone = profile.phone || '';
-        USER.role  = profile.role  || '';
-      }
+        USER.name  = (session.user.user_metadata && session.user.user_metadata.name)
+          ? session.user.user_metadata.name
+          : session.user.email.split('@')[0];
 
-      /* 수강 정보 로드 (enrollments + progress JOIN) */
-      var { data: enrollData } = await _supabase
-        .from('enrollments')
-        .select('course_id, enrolled_at')
-        .eq('user_id', userId);
+        /* 프로필 로드 */
+        var { data: profile } = await _supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', userId)
+          .single();
 
-      var { data: progressData } = await _supabase
-        .from('progress')
-        .select('course_id, progress_pct')
-        .eq('user_id', userId);
+        if (profile) {
+          if (profile.name)  USER.name  = profile.name;
+          if (profile.phone) USER.phone = profile.phone;
+          if (profile.role)  USER.role  = profile.role;
+        }
 
-      if (enrollData) {
-        ENROLLMENTS = enrollData.map(function(e) {
-          var p = (progressData || []).find(function(p) { return p.course_id === e.course_id; });
-          return {
-            courseId:   e.course_id,
-            progress:   p ? p.progress_pct : 0,
-            enrolledAt: e.enrolled_at ? e.enrolled_at.slice(0, 10) : ''
-          };
-        });
+        /* 수강 정보 로드 (enrollments + progress JOIN) */
+        var { data: enrollData } = await _supabase
+          .from('enrollments')
+          .select('course_id, enrolled_at')
+          .eq('user_id', userId);
+
+        var { data: progressData } = await _supabase
+          .from('progress')
+          .select('course_id, progress_pct')
+          .eq('user_id', userId);
+
+        if (enrollData) {
+          ENROLLMENTS = enrollData.map(function(e) {
+            var p = (progressData || []).find(function(p) { return p.course_id === e.course_id; });
+            return {
+              courseId:   e.course_id,
+              progress:   p ? p.progress_pct : 0,
+              enrolledAt: e.enrolled_at ? e.enrolled_at.slice(0, 10) : ''
+            };
+          });
+        }
+      } catch(e) {
+        /* 어떤 오류가 나도 렌더는 실행 */
       }
 
       renderProfile();

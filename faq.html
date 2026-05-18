@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -572,6 +572,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
   <script src="js/nav.js"></script>
   <script>
     function toggleFaq(btn) {
@@ -589,6 +591,46 @@
       btn.classList.add('active');
       document.getElementById('tab-' + tabId).classList.add('active');
     }
+
+    /* ── Supabase FAQ 로드 ── */
+    function makeFaqItemHtml(f) {
+      return '<div class="faq-item">' +
+        '<button class="faq-item__q" onclick="toggleFaq(this)">' +
+          f.question +
+          '<svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>' +
+        '</button>' +
+        '<div class="faq-item__a"><p>' + f.answer.replace(/\n/g, '<br>') + '</p></div>' +
+      '</div>';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof _supabase === 'undefined') return;
+      _supabase.from('faqs').select('*').eq('is_published', true).order('order_num').order('created_at')
+        .then(function(res) {
+          if (res.error || !res.data || res.data.length === 0) return;
+          var faqs = res.data;
+
+          /* 카테고리별 그룹핑 */
+          var groups = {};
+          faqs.forEach(function(f) {
+            var cat = f.category || '일반';
+            if (!groups[cat]) groups[cat] = [];
+            groups[cat].push(f);
+          });
+
+          /* tab-all 맨 위에 DB FAQ 섹션 삽입 */
+          var tabAll = document.getElementById('tab-all');
+          var html = '<p class="faq-group__title" style="color:#2563EB;">운영팀 FAQ</p>' +
+            '<div class="faq-list">';
+          faqs.forEach(function(f) { html += makeFaqItemHtml(f); });
+          html += '</div>';
+
+          var firstChild = tabAll.firstElementChild;
+          var wrapper = document.createElement('div');
+          wrapper.innerHTML = html;
+          tabAll.insertBefore(wrapper, firstChild);
+        });
+    });
   </script>
 </body>
 </html>

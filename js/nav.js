@@ -50,7 +50,8 @@
 
     // 메가메뉴 탭 (좌측 nav-item ↔ 우측 panel 연동)
     document.querySelectorAll(".mega-menu__nav-item").forEach(function (navItem) {
-      navItem.addEventListener("click", function () {
+      navItem.addEventListener("click", function (e) {
+        e.stopPropagation();
         const target = this.dataset.target;
         const megaMenu = this.closest(".mega-menu");
         if (!megaMenu) return;
@@ -218,10 +219,15 @@
   }
 
   window.navLogout = function () {
-    if (typeof _supabase === "undefined") return;
-    _supabase.auth.signOut().then(function () {
-      window.location.href = "index.html";
+    /* localStorage에서 Supabase 세션 즉시 제거 */
+    Object.keys(localStorage).forEach(function(key) {
+      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1) {
+        localStorage.removeItem(key);
+      }
     });
+    /* 서버 측 토큰 무효화 (백그라운드) */
+    if (typeof _supabase !== "undefined") _supabase.auth.signOut().catch(function(){});
+    window.location.href = "index.html";
   };
 
   /* ────────────────────────────────────────
