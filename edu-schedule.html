@@ -72,11 +72,11 @@
           <p>달력에서 교육을 클릭하면 우측 테이블에 해당 일정이 표시됩니다.</p>
         </div>
         <div class="es-legend">
-          <span class="es-leg"><i style="--c:#3D5A80"></i>개발자</span>
-          <span class="es-leg"><i style="--c:#2D6A4F"></i>관리자</span>
-          <span class="es-leg"><i style="--c:#5C4A8A"></i>TRINITY</span>
-          <span class="es-leg"><i style="--c:#4A7FA0"></i>사용자</span>
-          <span class="es-leg"><i style="--c:#7A6050"></i>i-MATRIX</span>
+          <span class="es-leg"><i style="--c:#1E40AF"></i>개발자</span>
+          <span class="es-leg"><i style="--c:#0E7490"></i>관리자</span>
+          <span class="es-leg"><i style="--c:#6B21A8"></i>TRINITY</span>
+          <span class="es-leg"><i style="--c:#1D4ED8"></i>사용자</span>
+          <span class="es-leg"><i style="--c:#1D4ED8"></i>i-MATRIX</span>
         </div>
       </div>
 
@@ -258,17 +258,6 @@
       ]
     };
 
-    /* 과정별 색상 (테두리·dot용) */
-    var COURSE_COLOR = {
-      '개발자 교육':         '#3D5A80',
-      '관리자 교육':         '#2D6A4F',
-      'TRINITY 개발자 교육': '#5C4A8A',
-      '사용자 교육':         '#4A7FA0',
-      'i-MATRIX 교육':      '#7A6050',
-      'i-MATRIX 심화 교육':  '#7A6050',
-      '기본 교육':           '#4A7FA0'
-    };
-
     var curYear = 2026, curMonth = 5;
     var calendar, selectedId = null;
 
@@ -285,6 +274,22 @@
       '#DDF4F4': '#0E7490',
       '#E3DDF4': '#6B21A8'
     };
+
+    /* 테이블 도트 색상 (달력 fill 계열과 통일) */
+    var DOT_COLOR_MAP = {
+      '사용자 교육':         '#1D4ED8',
+      '개발자 교육':         '#1E40AF',
+      '관리자 교육':         '#0E7490',
+      'TRINITY 개발자 교육': '#6B21A8',
+      'i-MATRIX 교육':      '#1D4ED8',
+      'i-MATRIX 심화 교육':  '#1D4ED8',
+      '기본 교육':           '#1D4ED8'
+    };
+
+    /* 날짜에서 연도(YYYY.) 제거 */
+    function stripYear(s) {
+      return (s && s !== '—') ? s.replace(/^\d{4}\./, '') : (s || '—');
+    }
 
     /* 달력 렌더링 */
     function applyCalData(events) {
@@ -312,14 +317,14 @@
         return;
       }
       tb.innerHTML = rows.map(function (r) {
-        var bc  = COURSE_COLOR[r.curriculum] || '#BFDBFE';
+        var bc  = DOT_COLOR_MAP[r.curriculum] || '#1D4ED8';
         var cls = r.status === '신청중' ? 'badge-open' : r.status === '대기신청' ? 'badge-wait' : 'badge-closed';
         return '<tr>' +
           '<td class="td-c">' + (r.round || '') + '</td>' +
           '<td class="td-name"><span class="td-dot" style="background:' + bc + '"></span>' + r.curriculum + '</td>' +
-          '<td class="td-c">' + r.start_date_fmt + '</td>' +
+          '<td class="td-c">' + stripYear(r.start_date_fmt) + '</td>' +
           '<td class="td-c">' + r.duration + '</td>' +
-          '<td class="td-c">' + (r.deadline || '—') + '</td>' +
+          '<td class="td-c">' + stripYear(r.deadline) + '</td>' +
           '<td class="td-c">' + r.capacity + '</td>' +
           '<td class="td-c">' + r.registered + '</td>' +
           '<td class="td-c">' + r.waiting + '</td>' +

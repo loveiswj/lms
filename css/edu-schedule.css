@@ -153,15 +153,15 @@
 
 /* 테이블 */
 .es-table-wrap { overflow-x:auto; margin-top:4px; flex:1; }
-.es-table { width:100%; border-collapse:collapse; font-size:11.5px; table-layout:auto; }
+.es-table { width:100%; border-collapse:collapse; font-size:12px; table-layout:auto; }
 .es-table th {
-  background:#EAF0F7; color:#5A6A85; font-size:11px; font-weight:600;
+  background:#EAF0F7; color:#5A6A85; font-size:12px; font-weight:600;
   padding:7px 8px; text-align:center;
   border-top:1px solid #C9D4E2; border-bottom:1px solid #C9D4E2;
   white-space:nowrap;
 }
 .es-table td {
-  padding:8px 8px; color:#2D3A4E;
+  padding:9px 8px; color:#2D3A4E;
   border-bottom:1px solid #EAF0F7; vertical-align:middle;
   white-space:nowrap;
 }
