@@ -63,11 +63,8 @@
 .es-cal-side {
   background:#fff;
   display:flex; flex-direction:column;
-  border:1px solid #E2E8F0;
-  border-bottom:none;
-  border-radius:10px 10px 0 0;
+  border:none;
   overflow:hidden;
-  box-shadow:0 2px 8px rgba(30,50,90,.05);
 }
 .es-cal-head {
   display:flex; align-items:center; justify-content:center; gap:14px;
@@ -128,10 +125,8 @@
   display:flex; flex-direction:column;
   padding:14px 16px 16px; min-width:0;
   background:#fff;
-  border:1px solid #C9D4E2;
-  border-bottom:none;
-  border-radius:10px 10px 0 0;
-  box-shadow:0 2px 8px rgba(30,50,90,.07);
+  border:none;
+  border-left:1px solid #E2E8F0;
   overflow:hidden;
 }
 .es-detail-head {
