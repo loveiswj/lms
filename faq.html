@@ -62,16 +62,6 @@
       line-height: 1.8;
     }
 
-    /* ── 본문 ── */
-    .faq-body {
-      background: #F8F9FB;
-      padding: 40px 24px 80px;
-    }
-    .faq-wrap {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
     /* ── 카테고리 탭바 (커뮤니티 서브네비 스타일) ── */
     .faq-tab-bar {
       background: #fff;
@@ -112,64 +102,14 @@
     .faq-group { display: none; }
     .faq-group.active { display: block; }
     .faq-group__title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #94A3B8;
-      letter-spacing: .08em;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin: 32px 0 12px;
     }
-
-    /* ── FAQ 아이템 ── */
-    .faq-list {
-      background: #fff;
-      border: 1px solid #E2E8F0;
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 32px;
-    }
-    .faq-item {
-      border-bottom: 1px solid #F1F5F9;
-    }
-    .faq-item:last-child { border-bottom: none; }
-    .faq-item__q {
-      width: 100%;
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      background: none;
-      border: none;
-      font-size: 15px;
-      font-weight: 600;
-      color: #0F172A;
-      text-align: left;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: background .15s;
-    }
-    .faq-item__q:hover { background: #F8F9FB; }
-    .faq-item__icon {
-      flex-shrink: 0;
-      width: 22px;
-      height: 22px;
-      color: #94A3B8;
-      transition: transform .2s;
-    }
-    .faq-item.is-open .faq-item__icon { transform: rotate(180deg); color: #1B2B4B; }
-    .faq-item.is-open .faq-item__q { color: #1B2B4B; }
-    .faq-item__a {
-      display: none;
-      padding: 0 24px 20px;
-      font-size: 14px;
-      color: #475569;
-      line-height: 1.8;
-      border-top: 1px solid #F1F5F9;
-    }
-    .faq-item.is-open .faq-item__a { display: block; }
-    .faq-item__a p { margin-bottom: 8px; }
-    .faq-item__a p:last-child { margin-bottom: 0; }
+    .faq-group__title:first-child { margin-top: 0; }
 
     /* ── 문의 배너 ── */
     .faq-contact {
@@ -287,122 +227,122 @@
   </div>
 
   <!-- ══ FAQ 본문 ══ -->
-  <div class="faq-body">
-    <div class="faq-wrap">
+  <section class="faq-section" style="border-top:none; padding-top:40px; padding-bottom:80px;">
+    <div class="container">
 
       <!-- 전체 -->
       <div class="faq-group active" id="tab-all">
 
         <p class="faq-group__title">교육 신청</p>
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 신청은 어떻게 하나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>담당 영업 대표를 통해 교육 일정과 비용을 확인한 후 신청서를 작성해 접수하시면 됩니다. 자세한 절차는 <a href="apply.html" style="color:#2563EB;">교육신청 페이지</a>를 참고해주세요.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               개인도 신청할 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>정규 오프라인 교육은 비아이매트릭스 솔루션 도입 고객을 대상으로 진행됩니다. 개인 수강을 원하시는 경우 담당 영업 대표에게 별도 문의해 주세요.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               신청 후 취소할 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>교육 시작 3영업일 전까지 취소 가능합니다. 그 이후 취소 시에는 비용이 발생할 수 있으니 담당 영업 대표에게 미리 연락해 주세요.</p>
             </div>
           </div>
         </div>
 
         <p class="faq-group__title">교육 내용</p>
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 수료증을 받을 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>온라인 동영상 강의는 80% 이상 수강 시 마이페이지에서 수료증을 발급받을 수 있습니다. PDF 저장 및 이메일 전송이 가능합니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 장소는 어디인가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>정규 오프라인 교육은 비아이매트릭스 교육장에서 진행됩니다. 기업 맞춤 교육의 경우 협의를 통해 고객사 현장 또는 원격으로도 진행 가능합니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 정원이 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>모든 교육 과정은 최대 24명 정원으로 운영되며, 선착순으로 마감됩니다. 접수 마감일 기준 신청 인원이 10명 이하일 경우 폐강될 수 있습니다.</p>
             </div>
           </div>
         </div>
 
         <p class="faq-group__title">비용 · 환불</p>
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 비용은 얼마인가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>모든 교육 과정은 유상으로 진행됩니다. 기본 비용은 1일 300,000원 (VAT 별도)이며, 정확한 견적은 교육 신청 시 담당 영업 대표에게 문의해 주세요.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               세금계산서 발행이 가능한가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>네, 세금계산서 발행이 가능합니다. 결제 완료 후 담당 영업 대표에게 사업자 정보를 전달해 주시면 처리해 드립니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               환불 기준은 어떻게 되나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>교육 시작 3영업일 전까지 전액 환불됩니다. 그 이후에는 환불이 제한될 수 있으며, 자세한 사항은 담당 영업 대표에게 문의해 주세요.</p>
             </div>
           </div>
         </div>
 
         <p class="faq-group__title">기업 교육</p>
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               기업 맞춤 교육도 가능한가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>5인 이상 팀 교육의 경우 기업 맞춤 커리큘럼 구성이 가능합니다. 업종·직무에 맞는 내용으로 구성하며, 현장 강사 파견 또는 원격 교육 방식을 선택할 수 있습니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               여러 부서가 함께 수강할 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>가능합니다. 부서별로 필요한 커리큘럼을 다르게 구성하거나, 공통 과정을 함께 수강하는 방식으로 진행할 수 있습니다. 담당 영업 대표와 협의해 주세요.</p>
             </div>
           </div>
@@ -412,31 +352,31 @@
 
       <!-- 교육 신청 탭 -->
       <div class="faq-group" id="tab-apply">
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 신청은 어떻게 하나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>담당 영업 대표를 통해 교육 일정과 비용을 확인한 후 신청서를 작성해 접수하시면 됩니다. 자세한 절차는 <a href="apply.html" style="color:#2563EB;">교육신청 페이지</a>를 참고해주세요.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               개인도 신청할 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>정규 오프라인 교육은 비아이매트릭스 솔루션 도입 고객을 대상으로 진행됩니다. 개인 수강을 원하시는 경우 담당 영업 대표에게 별도 문의해 주세요.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               신청 후 취소할 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>교육 시작 3영업일 전까지 취소 가능합니다. 그 이후 취소 시에는 비용이 발생할 수 있으니 담당 영업 대표에게 미리 연락해 주세요.</p>
             </div>
           </div>
@@ -445,31 +385,31 @@
 
       <!-- 교육 내용 탭 -->
       <div class="faq-group" id="tab-course">
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 수료증을 받을 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>온라인 동영상 강의는 80% 이상 수강 시 마이페이지에서 수료증을 발급받을 수 있습니다. PDF 저장 및 이메일 전송이 가능합니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 장소는 어디인가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>정규 오프라인 교육은 비아이매트릭스 교육장에서 진행됩니다. 기업 맞춤 교육의 경우 협의를 통해 고객사 현장 또는 원격으로도 진행 가능합니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 정원이 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>모든 교육 과정은 최대 24명 정원으로 운영되며, 선착순으로 마감됩니다. 접수 마감일 기준 신청 인원이 10명 이하일 경우 폐강될 수 있습니다.</p>
             </div>
           </div>
@@ -478,31 +418,31 @@
 
       <!-- 비용·환불 탭 -->
       <div class="faq-group" id="tab-cost">
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               교육 비용은 얼마인가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>모든 교육 과정은 유상으로 진행됩니다. 기본 비용은 1일 300,000원 (VAT 별도)이며, 정확한 견적은 교육 신청 시 담당 영업 대표에게 문의해 주세요.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               세금계산서 발행이 가능한가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>네, 세금계산서 발행이 가능합니다. 결제 완료 후 담당 영업 대표에게 사업자 정보를 전달해 주시면 처리해 드립니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               환불 기준은 어떻게 되나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>교육 시작 3영업일 전까지 전액 환불됩니다. 그 이후에는 환불이 제한될 수 있으며, 자세한 사항은 담당 영업 대표에게 문의해 주세요.</p>
             </div>
           </div>
@@ -511,22 +451,22 @@
 
       <!-- 기업 교육 탭 -->
       <div class="faq-group" id="tab-corp">
-        <div class="faq-list">
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+        <div class="faq-list-new">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               기업 맞춤 교육도 가능한가요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>5인 이상 팀 교육의 경우 기업 맞춤 커리큘럼 구성이 가능합니다. 업종·직무에 맞는 내용으로 구성하며, 현장 강사 파견 또는 원격 교육 방식을 선택할 수 있습니다.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-item__q" onclick="toggleFaq(this)">
+          <div class="faq-item-new">
+            <button class="faq-q" onclick="toggleFaqNew(this)">
               여러 부서가 함께 수강할 수 있나요?
-              <svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-item__a">
+            <div class="faq-a">
               <p>가능합니다. 부서별로 필요한 커리큘럼을 다르게 구성하거나, 공통 과정을 함께 수강하는 방식으로 진행할 수 있습니다. 담당 영업 대표와 협의해 주세요.</p>
             </div>
           </div>
@@ -545,7 +485,7 @@
       </div>
 
     </div>
-  </div>
+  </section>
 
   <!-- ══ 푸터 ══ -->
     <footer class="site-footer">
@@ -566,13 +506,21 @@
   <script src="js/supabase-client.js"></script>
   <script src="js/nav.js"></script>
   <script>
-    function toggleFaq(btn) {
-      var item = btn.closest('.faq-item');
+    function toggleFaqNew(btn) {
+      var item = btn.closest('.faq-item-new');
+      var answer = item.querySelector('.faq-a');
       var isOpen = item.classList.contains('is-open');
-      document.querySelectorAll('.faq-item.is-open').forEach(function(el) {
+      document.querySelectorAll('.faq-item-new.is-open').forEach(function(el) {
         el.classList.remove('is-open');
+        var a = el.querySelector('.faq-a');
+        a.style.maxHeight = '0';
+        a.style.opacity = '0';
       });
-      if (!isOpen) item.classList.add('is-open');
+      if (!isOpen) {
+        item.classList.add('is-open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        answer.style.opacity = '1';
+      }
     }
 
     function switchTab(btn, tabId) {
@@ -584,12 +532,12 @@
 
     /* ── Supabase FAQ 로드 ── */
     function makeFaqItemHtml(f) {
-      return '<div class="faq-item">' +
-        '<button class="faq-item__q" onclick="toggleFaq(this)">' +
-          f.question +
-          '<svg class="faq-item__icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>' +
+      return '<div class="faq-item-new">' +
+        '<button class="faq-q" onclick="toggleFaqNew(this)">' +
+          '<span>' + f.question + '</span>' +
+          '<svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>' +
         '</button>' +
-        '<div class="faq-item__a"><p>' + f.answer.replace(/\n/g, '<br>') + '</p></div>' +
+        '<div class="faq-a"><p>' + f.answer.replace(/\n/g, '<br>') + '</p></div>' +
       '</div>';
     }
 
@@ -611,7 +559,7 @@
           /* tab-all 맨 위에 DB FAQ 섹션 삽입 */
           var tabAll = document.getElementById('tab-all');
           var html = '<p class="faq-group__title" style="color:#2563EB;">운영팀 FAQ</p>' +
-            '<div class="faq-list">';
+            '<div class="faq-list-new">';
           faqs.forEach(function(f) { html += makeFaqItemHtml(f); });
           html += '</div>';
 
