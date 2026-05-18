@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>교육일정 — 비아이매트릭스 아카데미</title>
-  <meta name="description" content="비아이매트릭스 아카데미 월별 교육 일정 및 신청 현황을 확인하세요.">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
@@ -21,149 +20,189 @@
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
         <nav class="gnb-simple" id="gnbSimple">
-          <a href="edu-info.html" class="gnb-simple__link">교육안내</a>
+          <a href="edu-info.html"     class="gnb-simple__link">교육안내</a>
           <a href="edu-schedule.html" class="gnb-simple__link gnb-simple__link--active">교육일정</a>
-          <a href="course-list.html" class="gnb-simple__link">교육동영상</a>
-          <a href="apply.html" class="gnb-simple__link">교육신청</a>
-          <a href="faq.html" class="gnb-simple__link">FAQ</a>
-          <a href="community.html" class="gnb-simple__link">커뮤니티</a>
+          <a href="course-list.html"  class="gnb-simple__link">교육동영상</a>
+          <a href="apply.html"        class="gnb-simple__link">교육신청</a>
+          <a href="faq.html"          class="gnb-simple__link">FAQ</a>
+          <a href="community.html"    class="gnb-simple__link">커뮤니티</a>
         </nav>
         <div class="header-actions" id="headerActions">
           <a href="login.html" class="header-actions__link">로그인</a>
           <span class="header-actions__divider"></span>
           <a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>
         </div>
-        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
-          <span class="hamburger__line"></span>
-          <span class="hamburger__line"></span>
-          <span class="hamburger__line"></span>
+        <button class="hamburger" id="hamburger" aria-label="메뉴">
+          <span class="hamburger__line"></span><span class="hamburger__line"></span><span class="hamburger__line"></span>
         </button>
       </div>
     </div>
-    <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
+    <div class="mobile-nav" id="mobileNav">
       <div class="mobile-nav__header">
-        <div class="logo-new">
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
-        </div>
-        <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
+        <div class="logo-new"><img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img"></div>
+        <button class="mobile-nav__close" id="mobileNavClose">✕</button>
       </div>
       <div class="mobile-nav__links">
-        <a href="edu-info.html">교육안내</a>
-        <a href="edu-schedule.html">교육일정</a>
-        <a href="course-list.html">교육동영상</a>
-        <a href="apply.html">교육신청</a>
-        <a href="faq.html">FAQ</a>
-        <a href="community.html">커뮤니티</a>
+        <a href="edu-info.html">교육안내</a><a href="edu-schedule.html">교육일정</a>
+        <a href="course-list.html">교육동영상</a><a href="apply.html">교육신청</a>
+        <a href="faq.html">FAQ</a><a href="community.html">커뮤니티</a>
       </div>
-      <div class="mobile-nav__actions">
-        <a href="login.html" class="btn btn--primary btn--full">로그인</a>
-      </div>
+      <div class="mobile-nav__actions"><a href="login.html" class="btn btn--primary btn--full">로그인</a></div>
     </div>
   </header>
 
-  <!-- ══ 페이지 헤더 ══ -->
-  <div class="es-page-header">
-    <div class="es-page-header__text">
-      <h1>교육 일정</h1>
-      <p>정기적으로 진행하는 교육 일정과 신청 절차를 확인하세요.</p>
+  <!-- ══ 히어로 ══ -->
+  <section class="es-hero">
+    <div class="es-hero__dots"></div>
+    <div class="es-hero__inner">
+      <div class="es-hero__eyebrow">Education Schedule</div>
+      <h1 class="es-hero__title">교육 일정</h1>
+      <p class="es-hero__desc">정기 교육 일정과 신청 현황을 한눈에 확인하세요.<br>달력에서 일정을 클릭하면 상세 현황이 바로 표시됩니다.</p>
     </div>
-    <div class="es-page-header__deco">
-      <svg width="140" height="72" viewBox="0 0 140 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="36" cy="36" r="36" fill="#EF4444" opacity=".9"/>
-        <circle cx="60" cy="36" r="36" fill="#374151" opacity=".15"/>
-        <ellipse cx="48" cy="36" rx="18" ry="36" fill="#D97706" opacity=".7"/>
-        <circle cx="110" cy="36" r="30" fill="#374151"/>
-      </svg>
-    </div>
-  </div>
-  <hr class="es-divider">
+  </section>
 
-  <!-- ══ 섹션 헤더 ══ -->
-  <div class="es-section-header">
-    <h2>교육 일정 및 신청 현황 조회</h2>
-    <p>교육 일정을 확인하세요.</p>
-  </div>
+  <!-- ══ 메인 ══ -->
+  <div class="es-wrap">
+    <div class="es-inner">
 
-  <!-- ══ 메인 레이아웃 ══ -->
-  <div class="es-layout">
-
-    <!-- 달력 패널 -->
-    <div class="es-calendar-panel">
-      <div class="es-cal-nav">
-        <button class="es-nav-btn" id="prevBtn" aria-label="이전 달">
-          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-        <span class="es-cal-nav__title" id="calTitle">2026.05</span>
-        <button class="es-nav-btn" id="nextBtn" aria-label="다음 달">
-          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-      </div>
-      <div id="calendar"></div>
-    </div>
-
-    <!-- 상세 패널 -->
-    <div class="es-detail-panel">
-      <div class="es-detail-panel__head">일정 상세</div>
-
-      <div class="es-table-wrap">
-        <table class="es-table">
-          <thead>
-            <tr>
-              <th>회차</th>
-              <th>과정명</th>
-              <th>시작일</th>
-              <th>기간</th>
-              <th>접수 마감</th>
-              <th>정원</th>
-              <th>신청</th>
-              <th>대기</th>
-              <th>상태</th>
-            </tr>
-          </thead>
-          <tbody id="scheduleBody">
-            <tr><td colspan="9" class="es-empty">불러오는 중...</td></tr>
-          </tbody>
-        </table>
+      <!-- 페이지 헤더 -->
+      <div class="es-page-head">
+        <div class="es-page-head__text">
+          <h2>교육 일정 및 신청 현황</h2>
+          <p>달력에서 교육을 클릭하면 우측 테이블에 해당 일정이 표시됩니다.</p>
+        </div>
+        <div class="es-legend">
+          <span class="es-leg"><i style="--c:#3D5A80"></i>개발자</span>
+          <span class="es-leg"><i style="--c:#2D6A4F"></i>관리자</span>
+          <span class="es-leg"><i style="--c:#5C4A8A"></i>TRINITY</span>
+          <span class="es-leg"><i style="--c:#4A7FA0"></i>사용자</span>
+          <span class="es-leg"><i style="--c:#7A6050"></i>i-MATRIX</span>
+        </div>
       </div>
 
-      <div class="es-notice">
-        <p class="es-notice__title">확인사항</p>
-        <ul class="es-notice__list">
-          <li>정원 24명 선착순으로 마감되며, 정원 초과 시 대기자로 등록됩니다.</li>
-          <li>신청 인원이 10명 미만인 경우, 교육이 취소될 수 있습니다.</li>
-          <li>수강 확정 안내는 마감 다음날 이메일로 발송됩니다.</li>
-          <li>사전 취소 없는 무단 불참시, 향후 수강이 제한됩니다.</li>
-        </ul>
-      </div>
+      <!-- 통합 카드 -->
+      <div class="es-card">
 
-      <button class="es-download-btn" id="downloadBtn">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-        연간 일정 다운로드
-      </button>
+        <!-- ── 좌: 달력 ── -->
+        <div class="es-cal-side">
+          <div class="es-cal-head">
+            <button class="es-nav-btn" id="prevBtn">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <span id="calTitle" class="es-cal-head__title">2026.05</span>
+            <button class="es-nav-btn" id="nextBtn">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div id="calendar"></div>
+        </div>
+
+        <!-- ── 우: 상세 ── -->
+        <div class="es-detail-side">
+
+          <!-- 상세 헤더 -->
+          <div class="es-detail-head">
+            <div class="es-detail-head__label">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              일정 상세
+            </div>
+            <div class="es-detail-head__right">
+              <span class="es-hint" id="detailHint">이번 달 전체</span>
+              <button class="es-reset-btn" id="resetBtn" style="display:none">전체 보기</button>
+            </div>
+          </div>
+
+          <!-- 테이블 -->
+          <div class="es-table-wrap">
+            <table class="es-table">
+              <thead>
+                <tr>
+                  <th>회차</th>
+                  <th style="text-align:left">과정명</th>
+                  <th>시작일</th>
+                  <th>기간</th>
+                  <th>접수 마감</th>
+                  <th>정원</th>
+                  <th>신청</th>
+                  <th>대기</th>
+                  <th>상태</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody">
+                <tr><td colspan="9" class="es-empty">불러오는 중...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 하단 영역 -->
+          <div class="es-detail-footer">
+            <div class="es-notice">
+              <strong>확인사항</strong>
+              <ul>
+                <li>정원 24명 선착순으로 마감되며, 정원 초과 시 대기자로 등록됩니다.</li>
+                <li>신청 인원이 10명 미만인 경우 교육이 취소될 수 있습니다.</li>
+                <li>수강 확정 안내는 마감 다음날 이메일로 발송됩니다.</li>
+                <li>사전 취소 없는 무단 불참 시 향후 수강이 제한됩니다.</li>
+              </ul>
+            </div>
+            <button class="es-download-btn" id="downloadBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              연간 일정 다운로드
+            </button>
+          </div>
+
+        </div>
+      </div><!-- /.es-card -->
+
     </div>
-
   </div>
+
+  <!-- ══ 안내 섹션 ══ -->
+  <section class="es-info-section">
+    <div class="es-inner">
+      <div class="es-info-grid">
+        <div class="es-info-card">
+          <div class="es-info-card__header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            교육 비용 안내
+          </div>
+          <ul class="es-info-list">
+            <li>전 과정 유상 진행 <strong>1일 300,000원 (VAT 별도)</strong></li>
+            <li>정확한 비용 및 견적은 교육 신청 시 담당 영업대표에게 문의해주세요.</li>
+          </ul>
+        </div>
+        <div class="es-info-card">
+          <div class="es-info-card__header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            교육 운영 정책
+          </div>
+          <ul class="es-info-list">
+            <li><strong>정원</strong> 과정당 최대 24명, 선착순 마감</li>
+            <li><strong>폐강</strong> 접수 마감일 기준 신청 인원 10명 이하 시 폐강될 수 있습니다. (폐강 시 개별 메일 안내)</li>
+            <li><strong>무단 불참</strong> 사전 취소 없는 불참 시 향후 수강이 제한됩니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ══ 푸터 ══ -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-inner">
         <div>
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px; width:auto; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:12px;">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.85;margin-bottom:12px;">
           <p class="footer-desc">IT 지식 없이도 시작할 수 있는<br>실무 BI 교육 플랫폼입니다.</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 비아이매트릭스 아카데미. All rights reserved.</p>
-      </div>
+      <div class="footer-bottom"><p>© 2025 비아이매트릭스 아카데미. All rights reserved.</p></div>
     </div>
   </footer>
 
@@ -171,203 +210,231 @@
   <script src="js/supabase-client.js"></script>
   <script src="js/nav.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
   <script>
   (function () {
 
-    /* API 베이스 URL — 운영 환경에서는 window.EDU_API_BASE 로 덮어쓰기 */
-    var API_BASE = window.EDU_API_BASE || 'http://localhost:8000';
+    /* 과정명 축약 */
+    function shorten(title) {
+      return title
+        .replace('TRINITY 개발자 교육', 'TRINITY')
+        .replace('i-MATRIX 심화 교육', 'i-MX 심화')
+        .replace('i-MATRIX 교육', 'i-MATRIX')
+        .replace('개발자 교육', '개발자')
+        .replace('사용자 교육', '사용자')
+        .replace('관리자 교육', '관리자')
+        .replace('신규 직원 교육', '신규직원')
+        .replace('기본 교육', '기본');
+    }
 
-    /* ── 목업 데이터 (API 미연결 시 대체) ── */
-    var MOCK_CALENDAR = {
+    /* 목업 */
+    var MOCK_CAL = {
       '2026-5': [
-        { schdule_date:'2026-05-04', end_date:'2026-05-04', curriculum:'사용자 교육',         bg_color:'#E3F0FF', title:'사용자 교육 (1차)' },
-        { schdule_date:'2026-05-11', end_date:'2026-05-13', curriculum:'개발자 교육',         bg_color:'#B1D4FF', title:'개발자 교육 (1차)' },
-        { schdule_date:'2026-05-14', end_date:'2026-05-14', curriculum:'관리자 교육',         bg_color:'#DDF4F4', title:'관리자 교육 (1차)' },
-        { schdule_date:'2026-05-18', end_date:'2026-05-18', curriculum:'사용자 교육',         bg_color:'#E3F0FF', title:'사용자 교육 (2차)' },
-        { schdule_date:'2026-05-19', end_date:'2026-05-19', curriculum:'i-MATRIX 교육',      bg_color:'#E3F0FF', title:'i-MATRIX 교육 (1차)' },
-        { schdule_date:'2026-05-21', end_date:'2026-05-22', curriculum:'TRINITY 개발자 교육', bg_color:'#E3DDF4', title:'TRINITY 개발자 교육 (1차)' },
-        { schdule_date:'2026-05-26', end_date:'2026-05-28', curriculum:'개발자 교육',         bg_color:'#B1D4FF', title:'개발자 교육 (2차)' }
+        { schdule_date:'2026-05-04', end_date:'2026-05-04', curriculum:'사용자 교육',         round:'1차', bg_color:'#4A7FA0', title:'사용자 교육 (1차)' },
+        { schdule_date:'2026-05-11', end_date:'2026-05-13', curriculum:'개발자 교육',         round:'1차', bg_color:'#3D5A80', title:'개발자 교육 (1차)' },
+        { schdule_date:'2026-05-14', end_date:'2026-05-14', curriculum:'관리자 교육',         round:'1차', bg_color:'#2D6A4F', title:'관리자 교육 (1차)' },
+        { schdule_date:'2026-05-18', end_date:'2026-05-18', curriculum:'사용자 교육',         round:'2차', bg_color:'#4A7FA0', title:'사용자 교육 (2차)' },
+        { schdule_date:'2026-05-19', end_date:'2026-05-19', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#7A6050', title:'i-MATRIX 교육 (1차)' },
+        { schdule_date:'2026-05-21', end_date:'2026-05-22', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#5C4A8A', title:'TRINITY 개발자 교육 (1차)' },
+        { schdule_date:'2026-05-26', end_date:'2026-05-28', curriculum:'개발자 교육',         round:'2차', bg_color:'#3D5A80', title:'개발자 교육 (2차)' }
       ],
       '2026-6': [
-        { schdule_date:'2026-06-02', end_date:'2026-06-02', curriculum:'사용자 교육',         bg_color:'#E3F0FF', title:'사용자 교육 (1차)' },
-        { schdule_date:'2026-06-09', end_date:'2026-06-11', curriculum:'개발자 교육',         bg_color:'#B1D4FF', title:'개발자 교육 (1차)' },
-        { schdule_date:'2026-06-11', end_date:'2026-06-11', curriculum:'관리자 교육',         bg_color:'#DDF4F4', title:'관리자 교육 (1차)' },
-        { schdule_date:'2026-06-16', end_date:'2026-06-17', curriculum:'TRINITY 개발자 교육', bg_color:'#E3DDF4', title:'TRINITY 개발자 교육 (1차)' },
-        { schdule_date:'2026-06-23', end_date:'2026-06-23', curriculum:'i-MATRIX 교육',      bg_color:'#E3F0FF', title:'i-MATRIX 교육 (1차)' }
+        { schdule_date:'2026-06-02', end_date:'2026-06-02', curriculum:'사용자 교육',         round:'1차', bg_color:'#4A7FA0', title:'사용자 교육 (1차)' },
+        { schdule_date:'2026-06-09', end_date:'2026-06-11', curriculum:'개발자 교육',         round:'1차', bg_color:'#3D5A80', title:'개발자 교육 (1차)' },
+        { schdule_date:'2026-06-16', end_date:'2026-06-17', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#5C4A8A', title:'TRINITY 개발자 교육 (1차)' },
+        { schdule_date:'2026-06-23', end_date:'2026-06-23', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#7A6050', title:'i-MATRIX 교육 (1차)' }
       ]
     };
 
     var MOCK_DETAIL = {
       '2026-5': [
-        { round:'',   curriculum:'사용자 교육',         start_date_fmt:'2026.05.04(월)', duration:'1일', deadline:'2026.04.29(수)', capacity:'24명', registered:'11명', status:'마감',    waiting:'0명' },
-        { round:'1차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.11(월)', duration:'3일', deadline:'2026.05.06(수)', capacity:'24명', registered:'22명', status:'마감',    waiting:'0명' },
-        { round:'',   curriculum:'관리자 교육',         start_date_fmt:'2026.05.14(목)', duration:'1일', deadline:'2026.05.06(수)', capacity:'24명', registered:'10명', status:'마감',    waiting:'0명' },
-        { round:'2차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.18(월)', duration:'1일', deadline:'2026.05.13(수)', capacity:'24명', registered:'17명', status:'마감',    waiting:'0명' },
-        { round:'1차', curriculum:'i-MATRIX 교육',      start_date_fmt:'2026.05.19(화)', duration:'1일', deadline:'',              capacity:'24명', registered:'6명',  status:'신청중',  waiting:'0명' },
-        { round:'',   curriculum:'TRINITY 개발자 교육', start_date_fmt:'2026.05.21(목)', duration:'2일', deadline:'2026.05.18(월)', capacity:'24명', registered:'22명', status:'신청중',  waiting:'0명' },
-        { round:'2차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.26(화)', duration:'3일', deadline:'2026.05.20(수)', capacity:'24명', registered:'19명', status:'신청중',  waiting:'0명' }
+        { round:'1차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.04(월)', duration:'1일', deadline:'2026.04.29(수)', capacity:'24명', registered:'11명', status:'마감',   waiting:'0명' },
+        { round:'1차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.11(월)', duration:'3일', deadline:'2026.05.06(수)', capacity:'24명', registered:'22명', status:'마감',   waiting:'0명' },
+        { round:'1차', curriculum:'관리자 교육',         start_date_fmt:'2026.05.14(목)', duration:'1일', deadline:'2026.05.06(수)', capacity:'24명', registered:'10명', status:'마감',   waiting:'0명' },
+        { round:'2차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.18(월)', duration:'1일', deadline:'2026.05.13(수)', capacity:'24명', registered:'17명', status:'마감',   waiting:'0명' },
+        { round:'1차', curriculum:'i-MATRIX 교육',      start_date_fmt:'2026.05.19(화)', duration:'1일', deadline:'—',              capacity:'24명', registered:'6명',  status:'신청중', waiting:'0명' },
+        { round:'1차', curriculum:'TRINITY 개발자 교육', start_date_fmt:'2026.05.21(목)', duration:'2일', deadline:'2026.05.18(월)', capacity:'24명', registered:'22명', status:'신청중', waiting:'0명' },
+        { round:'2차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.26(화)', duration:'3일', deadline:'2026.05.20(수)', capacity:'24명', registered:'19명', status:'신청중', waiting:'0명' }
       ]
     };
 
-    /* ── 상태 ── */
-    var curYear  = 2026;
-    var curMonth = 5;
-    var calendar;
-    var selectedEventId = null;
+    /* 과정별 색상 (테두리·dot용) */
+    var COURSE_COLOR = {
+      '개발자 교육':         '#3D5A80',
+      '관리자 교육':         '#2D6A4F',
+      'TRINITY 개발자 교육': '#5C4A8A',
+      '사용자 교육':         '#4A7FA0',
+      'i-MATRIX 교육':      '#7A6050',
+      'i-MATRIX 심화 교육':  '#7A6050',
+      '기본 교육':           '#4A7FA0'
+    };
 
-    /* FullCalendar end_date 는 exclusive → 1일 추가 */
-    function fcEnd(dateStr) {
-      var d = new Date(dateStr + 'T00:00:00');
-      d.setDate(d.getDate() + 1);
-      return d.toISOString().slice(0, 10);
+    var curYear = 2026, curMonth = 5;
+    var calendar, selectedId = null;
+
+    function fcEnd(d) {
+      var dt = new Date(d + 'T00:00:00');
+      dt.setDate(dt.getDate() + 1);
+      return dt.toISOString().slice(0, 10);
     }
 
-    function textColor(bg) {
-      var map = {
-        '#B1D4FF': '#1E40AF',
-        '#DDF4F4': '#0E7490',
-        '#E3DDF4': '#5B21B6',
-        '#E3F0FF': '#1D4ED8',
-        '#D1D5DB': '#374151'
-      };
-      return map[bg] || '#1D4ED8';
-    }
-
-    /* ── 달력 이벤트 렌더링 ── */
-    function applyCalendarData(events) {
+    /* 달력 렌더링 */
+    function applyCalData(events) {
       calendar.removeAllEvents();
       events.forEach(function (ev) {
         calendar.addEvent({
-          id:              ev.schdule_date + '-' + ev.curriculum,
+          id:              ev.schdule_date + '|' + ev.curriculum,
           title:           ev.title,
           start:           ev.schdule_date,
           end:             fcEnd(ev.end_date || ev.schdule_date),
-          backgroundColor: ev.bg_color,
+          backgroundColor: '#ffffff',
           borderColor:     ev.bg_color,
-          textColor:       textColor(ev.bg_color),
-          extendedProps:   ev
+          textColor:       ev.bg_color,
+          extendedProps:   { curriculum: ev.curriculum, round: ev.round, schdule_date: ev.schdule_date }
         });
       });
     }
 
-    /* ── 우측 테이블 렌더링 ── */
+    /* 테이블 렌더링 */
     function applyDetailData(rows) {
-      var tbody = document.getElementById('scheduleBody');
-      if (!rows || rows.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" class="es-empty">이번 달 교육 일정이 없습니다.</td></tr>';
+      var tb = document.getElementById('scheduleBody');
+      if (!rows || !rows.length) {
+        tb.innerHTML = '<tr><td colspan="9" class="es-empty">해당 교육 일정이 없습니다.</td></tr>';
         return;
       }
-      tbody.innerHTML = rows.map(function (r) {
-        var badgeClass = r.status === '신청중'  ? 'es-badge--open'
-                       : r.status === '대기신청' ? 'es-badge--waiting'
-                       : 'es-badge--closed';
-        return '<tr data-curriculum="' + r.curriculum + '" data-start="' + r.start_date_fmt + '" class="es-table__row">' +
-          '<td>' + (r.round || '') + '</td>' +
-          '<td class="course-name">' + r.curriculum + '</td>' +
-          '<td>' + r.start_date_fmt + '</td>' +
-          '<td>' + r.duration + '</td>' +
-          '<td>' + (r.deadline || '') + '</td>' +
-          '<td>' + r.capacity + '</td>' +
-          '<td>' + r.registered + '</td>' +
-          '<td>' + r.waiting + '</td>' +
-          '<td><span class="es-badge ' + badgeClass + '">' + r.status + '</span></td>' +
+      tb.innerHTML = rows.map(function (r) {
+        var bc  = COURSE_COLOR[r.curriculum] || '#BFDBFE';
+        var cls = r.status === '신청중' ? 'badge-open' : r.status === '대기신청' ? 'badge-wait' : 'badge-closed';
+        return '<tr>' +
+          '<td class="td-c">' + (r.round || '') + '</td>' +
+          '<td class="td-name"><span class="td-dot" style="background:' + bc + '"></span>' + r.curriculum + '</td>' +
+          '<td class="td-c">' + r.start_date_fmt + '</td>' +
+          '<td class="td-c">' + r.duration + '</td>' +
+          '<td class="td-c">' + (r.deadline || '—') + '</td>' +
+          '<td class="td-c">' + r.capacity + '</td>' +
+          '<td class="td-c">' + r.registered + '</td>' +
+          '<td class="td-c">' + r.waiting + '</td>' +
+          '<td class="td-c"><span class="es-badge ' + cls + '">' + r.status + '</span></td>' +
           '</tr>';
       }).join('');
     }
 
-    /* ── API 호출 (실패 시 목업 대체) ── */
-    function loadMonth(year, month) {
-      var mockKey = year + '-' + month;
-      var ym      = year + '&month=' + String(month).padStart(2, '0');
-
-      /* 달력 */
-      fetch(API_BASE + '/api/v1/education/calendar?year=' + ym)
-        .then(function (r) { return r.json(); })
-        .then(applyCalendarData)
-        .catch(function () { applyCalendarData(MOCK_CALENDAR[mockKey] || []); });
-
-      /* 상세 (월 전체) */
-      fetch(API_BASE + '/api/v1/education/detail?year=' + ym)
-        .then(function (r) { return r.json(); })
-        .then(applyDetailData)
-        .catch(function () { applyDetailData(MOCK_DETAIL[mockKey] || []); });
+    /* Supabase 타임아웃 래퍼 (2.5초 내 응답 없으면 reject → mock fallback) */
+    function sbFetch(fn, params) {
+      return new Promise(function (resolve, reject) {
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (!settled) { settled = true; reject(new Error('timeout')); }
+        }, 2500);
+        _supabase.rpc(fn, params).then(function (r) {
+          if (settled) return;
+          settled = true; clearTimeout(timer);
+          if (r.error) reject(r.error); else resolve(r.data || []);
+        }).catch(function (e) {
+          if (!settled) { settled = true; clearTimeout(timer); reject(e); }
+        });
+      });
     }
 
-    function loadDetail(year, month, date) {
-      var mockKey = year + '-' + month;
-      var ym      = year + '&month=' + String(month).padStart(2, '0');
-
-      fetch(API_BASE + '/api/v1/education/detail?year=' + ym + '&date=' + date)
-        .then(function (r) { return r.json(); })
+    /* API 호출 */
+    function loadMonth(y, m) {
+      var key = y + '-' + m;
+      sbFetch('get_education_calendar', { p_year: y, p_month: m })
+        .then(applyCalData)
+        .catch(function () { applyCalData(MOCK_CAL[key] || []); });
+      sbFetch('get_education_detail', { p_year: y, p_month: m, p_date: null })
         .then(applyDetailData)
-        .catch(function () { applyDetailData(MOCK_DETAIL[mockKey] || []); });
+        .catch(function () { applyDetailData(MOCK_DETAIL[key] || []); });
     }
 
-    /* ── 내비게이션 라벨 갱신 ── */
-    function updateNavLabel() {
+    function loadDetail(y, m, date, curriculum, round) {
+      var key = y + '-' + m;
+      document.getElementById('detailHint').textContent = curriculum + (round ? ' ' + round : '');
+      document.getElementById('resetBtn').style.display = 'inline-flex';
+      sbFetch('get_education_detail', { p_year: y, p_month: m, p_date: date })
+        .then(function (data) {
+          applyDetailData(data.filter(function (x) {
+            return x.curriculum === curriculum && (!round || x.round === round);
+          }));
+        })
+        .catch(function () {
+          var d = (MOCK_DETAIL[key] || []).filter(function (x) {
+            return x.curriculum === curriculum && (!round || x.round === round);
+          });
+          applyDetailData(d);
+        });
+    }
+
+    function resetDetail() {
+      document.getElementById('detailHint').textContent = '이번 달 전체';
+      document.getElementById('resetBtn').style.display = 'none';
+      if (selectedId) {
+        var ev = calendar.getEventById(selectedId);
+        if (ev) ev.setClassNames([]);
+        selectedId = null;
+      }
+      var key = curYear + '-' + curMonth;
+      sbFetch('get_education_detail', { p_year: curYear, p_month: curMonth, p_date: null })
+        .then(applyDetailData)
+        .catch(function () { applyDetailData(MOCK_DETAIL[key] || []); });
+    }
+
+    function setLabel() {
       document.getElementById('calTitle').textContent =
         curYear + '.' + String(curMonth).padStart(2, '0');
     }
 
-    /* ── 달력 이벤트 클릭 ── */
-    function onEventClick(info) {
-      info.jsEvent.preventDefault();
-      var ev = info.event;
-
-      /* 기존 하이라이트 해제 */
-      if (selectedEventId) {
-        var prev = calendar.getEventById(selectedEventId);
-        if (prev) prev.setClassNames([]);
-      }
-      ev.setClassNames(['fc-event--highlight']);
-      selectedEventId = ev.id;
-
-      /* 해당 날짜로 우측 테이블 필터 */
-      loadDetail(curYear, curMonth, ev.startStr);
-    }
-
-    /* ── DOMContentLoaded ── */
     document.addEventListener('DOMContentLoaded', function () {
       calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView:    'dayGridMonth',
         initialDate:    '2026-05-01',
         headerToolbar:  false,
         height:         'auto',
+        fixedWeekCount: false,
         dayMaxEvents:   3,
+        hiddenDays:     [0, 6],
         dayHeaderContent: function (arg) {
-          return ['일', '월', '화', '수', '목', '금', '토'][arg.date.getDay()];
+          return ['일','월','화','수','목','금','토'][arg.date.getDay()];
         },
-        eventClick: onEventClick,
-        dayCellClassNames: function (arg) {
-          var d = arg.date.getDay();
-          if (d === 0) return ['fc-day-sun'];
-          if (d === 6) return ['fc-day-sat'];
-          return [];
+        eventContent: function (arg) {
+          return { html: '<div class="fc-ev-label">' + shorten(arg.event.title) + '</div>' };
+        },
+        eventClick: function (info) {
+          info.jsEvent.preventDefault();
+          var ev = info.event;
+          if (selectedId) {
+            var prev = calendar.getEventById(selectedId);
+            if (prev) prev.setClassNames([]);
+          }
+          ev.setClassNames(['fc-ev-selected']);
+          selectedId = ev.id;
+          loadDetail(curYear, curMonth, ev.startStr, ev.extendedProps.curriculum, ev.extendedProps.round);
         }
       });
       calendar.render();
 
       document.getElementById('prevBtn').addEventListener('click', function () {
-        curMonth--;
-        if (curMonth < 1) { curMonth = 12; curYear--; }
-        calendar.prev();
-        updateNavLabel();
+        if (--curMonth < 1) { curMonth = 12; curYear--; }
+        calendar.prev(); setLabel();
+        selectedId = null;
+        document.getElementById('detailHint').textContent = '이번 달 전체';
+        document.getElementById('resetBtn').style.display = 'none';
         loadMonth(curYear, curMonth);
       });
-
       document.getElementById('nextBtn').addEventListener('click', function () {
-        curMonth++;
-        if (curMonth > 12) { curMonth = 1; curYear++; }
-        calendar.next();
-        updateNavLabel();
+        if (++curMonth > 12) { curMonth = 1; curYear++; }
+        calendar.next(); setLabel();
+        selectedId = null;
+        document.getElementById('detailHint').textContent = '이번 달 전체';
+        document.getElementById('resetBtn').style.display = 'none';
         loadMonth(curYear, curMonth);
       });
-
+      document.getElementById('resetBtn').addEventListener('click', resetDetail);
       document.getElementById('downloadBtn').addEventListener('click', function () {
         alert('연간 일정 다운로드 기능은 준비 중입니다.');
       });
 
-      updateNavLabel();
+      setLabel();
       loadMonth(curYear, curMonth);
     });
 

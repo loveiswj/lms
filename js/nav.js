@@ -186,35 +186,78 @@
   /* ────────────────────────────────────────
      로그인 상태 헤더 반영
   ──────────────────────────────────────── */
+
+  /* localStorage에서 만료되지 않은 세션을 동기적으로 읽기 */
+  function getLocalSession() {
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].startsWith('sb-') && keys[i].endsWith('-auth-token')) {
+          var data = JSON.parse(localStorage.getItem(keys[i]));
+          if (data && data.access_token && data.user) {
+            var exp = data.expires_at;
+            if (exp && (Date.now() / 1000) > exp) return null; // 만료
+            return data;
+          }
+        }
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function renderLoggedIn(actionsEl, name) {
+    actionsEl.innerHTML =
+      '<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">' + name + '님</span>' +
+      '<span class="header-actions__divider"></span>' +
+      '<a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a>' +
+      '<button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';
+  }
+
+  function renderLoggedOut(actionsEl) {
+    actionsEl.innerHTML =
+      '<a href="login.html" class="header-actions__link">로그인</a>' +
+      '<span class="header-actions__divider"></span>' +
+      '<a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';
+  }
+
   function initAuth() {
     if (typeof _supabase === "undefined") return;
 
+    var actionsEl = document.querySelector(".header-actions");
+    if (!actionsEl) return;
+
+    /* 1단계: localStorage 즉시 읽어 깜빡임 없이 바로 적용 */
+    var local = getLocalSession();
+    if (local) {
+      var quickName = local.user.email ? local.user.email.split("@")[0] : '사용자';
+      renderLoggedIn(actionsEl, quickName);
+    }
+
+    /* 2단계: 서버 세션 검증 후 프로필명으로 업데이트 */
     _supabase.auth.getSession().then(function (res) {
       var session = res.data && res.data.session;
-      var actionsEl = document.querySelector(".header-actions");
-      if (!actionsEl) return;
 
       if (session) {
-        /* 프로필 이름 가져오기 */
         _supabase.from("profiles").select("name").eq("id", session.user.id).single()
           .then(function (r) {
             var name = (r.data && r.data.name) || session.user.email.split("@")[0];
-            actionsEl.innerHTML =
-              '<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">' + name + '님</span>' +
-              '<span class="header-actions__divider"></span>' +
-              '<a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a>' +
-              '<button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';
+            renderLoggedIn(actionsEl, name);
+          })
+          .catch(function () {
+            renderLoggedIn(actionsEl, session.user.email.split("@")[0]);
           });
 
-        /* 모바일 nav 로그인 버튼도 교체 */
         var mobileLoginBtn = document.getElementById("mobileLoginBtn");
-        if (mobileLoginBtn) {
-          mobileLoginBtn.textContent = "마이페이지";
-          mobileLoginBtn.href = "mypage.html";
-        }
+        if (mobileLoginBtn) { mobileLoginBtn.textContent = "마이페이지"; mobileLoginBtn.href = "mypage.html"; }
         var mobileSignupBtn = document.getElementById("mobileSignupBtn");
         if (mobileSignupBtn) mobileSignupBtn.style.display = "none";
+
+      } else if (local) {
+        /* 로컬엔 있었지만 서버에선 만료 → 로그아웃 상태로 복원 */
+        renderLoggedOut(actionsEl);
       }
+    }).catch(function () {
+      /* 네트워크 오류 시 로컬 세션 상태 유지 */
     });
   }
 
