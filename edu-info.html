@@ -494,9 +494,7 @@
       badge.textContent = data.badge;
       dname.textContent = data.name + ' 커리큘럼';
 
-      meta.innerHTML = data.meta.map(function (m) {
-        return '<div class="ei-detail__meta-item">' + ICONS[m.icon] + '<span>' + m.text + '</span></div>';
-      }).join('');
+      meta.innerHTML = '';
 
       var descHtml = data.desc ? '<p class="ei-detail__desc-text">' + data.desc + '</p>' : '';
 
