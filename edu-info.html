@@ -429,19 +429,20 @@
     };
 
     function buildTable(rows) {
-      /* rowspan 계산: step이 빈 행은 0, step이 있으면 연속된 빈 행 수+1 */
+      /* rowspan 계산 */
       var spans = rows.map(function(r, i) {
         if (!r[0]) return 0;
-        var count = 1;
-        var j = i + 1;
+        var count = 1, j = i + 1;
         while (j < rows.length && !rows[j][0]) { count++; j++; }
         return count;
       });
 
+      var clockIcon = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;color:#9CA3AF;"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>';
+
       var body = rows.map(function(r, i) {
         var cells = '';
 
-        /* 과정 열 (rowspan) */
+        /* 열1: 과정 (rowspan) */
         if (spans[i] > 0) {
           var stepParts = r[0].split('\n');
           var stepNum   = stepParts[0];
@@ -452,32 +453,30 @@
             '</td>';
         }
 
-        /* 교육내용 열: 첫 줄 = 제목, 나머지 = 체크 아이템 */
+        /* 열2: 교육내용 제목 (첫 줄) */
         var contentParts = r[2].split('\n');
-        var subject = contentParts[0];
-        var items   = contentParts.slice(1);
-        var contentHtml = '<strong class="ei-curriculum__subject">' + subject + '</strong>';
-        if (items.length > 0) {
-          contentHtml += '<ul class="ei-curriculum__items">' +
-            items.map(function(item) { return '<li>' + item + '</li>'; }).join('') +
-            '</ul>';
-        }
-        cells += '<td>' + contentHtml + '</td>';
+        cells += '<td class="ei-curriculum__subject-cell"><strong>' + contentParts[0] + '</strong></td>';
 
-        /* 교육시간 열 */
-        var timeParts  = r[1].split('\n');
-        var session    = timeParts[0];
-        var timeRange  = timeParts[1] || '';
+        /* 열3: 세부 항목 (나머지 줄, 체크마크) */
+        var items = contentParts.slice(1);
+        var itemsHtml = items.length > 0
+          ? '<ul class="ei-curriculum__items">' + items.map(function(it) { return '<li>' + it + '</li>'; }).join('') + '</ul>'
+          : '';
+        cells += '<td class="ei-curriculum__items-cell">' + itemsHtml + '</td>';
+
+        /* 열4: 교육시간 */
+        var timeParts = r[1].split('\n');
+        var session   = timeParts[0];
+        var timeRange = timeParts[1] ? timeParts[1].replace('~', '~​') : '';
         cells += '<td class="ei-curriculum__time-cell">' +
-          '<span class="ei-curriculum__session">' + session + '</span>' +
-          (timeRange ? '<span class="ei-curriculum__time-range">' + timeRange + '</span>' : '') +
+          clockIcon + session + (timeRange ? '<br><span style="padding-left:17px;font-size:11.5px;color:#9CA3AF;">' + timeRange + '</span>' : '') +
           '</td>';
 
         return '<tr>' + cells + '</tr>';
       }).join('');
 
       return '<table class="ei-curriculum">' +
-        '<thead><tr><th>과정</th><th>교육 내용</th><th>교육 시간</th></tr></thead>' +
+        '<thead><tr><th>과정</th><th colspan="2">교육 내용</th><th>교육 시간</th></tr></thead>' +
         '<tbody>' + body + '</tbody>' +
         '</table>';
     }

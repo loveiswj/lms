@@ -317,13 +317,18 @@
   line-height: 1.4;
 }
 
-/* 교육내용 열 */
-.ei-curriculum__subject {
-  display: block;
+/* 교육내용 제목 열 */
+.ei-curriculum__subject-cell {
+  min-width: 140px;
+  vertical-align: top;
   font-size: 14px;
   font-weight: 700;
   color: #0F172A;
-  margin-bottom: 6px;
+}
+
+/* 세부항목 열 */
+.ei-curriculum__items-cell {
+  vertical-align: top;
 }
 .ei-curriculum__items {
   margin: 0;
@@ -349,21 +354,12 @@
 /* 교육시간 열 */
 .ei-curriculum__time-cell {
   white-space: nowrap;
-  min-width: 100px;
+  min-width: 130px;
   vertical-align: top;
   background: #FAFBFF;
-}
-.ei-curriculum__session {
-  display: block;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   color: #374151;
-  margin-bottom: 3px;
-}
-.ei-curriculum__time-range {
-  display: block;
-  font-size: 11.5px;
-  color: #9CA3AF;
 }
 
 /* 준비중 안내 */
