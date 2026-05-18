@@ -70,60 +70,6 @@
       .clist-hero { padding: 52px 20px 48px; }
       .clist-hero__title { font-size: 26px; }
     }
-    /* ── 카테고리 탭바 ── */
-    .cat-tabs {
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .cat-tabs::-webkit-scrollbar { display: none; }
-    .cat-tabs__inner {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 0 24px;
-      white-space: nowrap;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .cat-tabs__label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-hint);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 0 6px;
-      flex-shrink: 0;
-    }
-    .cat-tabs__divider {
-      width: 1px;
-      height: 16px;
-      background: var(--border);
-      margin: 0 8px;
-      flex-shrink: 0;
-    }
-    .cat-tabs__btn {
-      padding: 14px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      font-family: var(--font);
-      color: var(--text-sub);
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-      flex-shrink: 0;
-      margin-bottom: -1px;
-    }
-    .cat-tabs__btn:hover { color: var(--navy); }
-    .cat-tabs__btn--active {
-      color: var(--navy);
-      border-bottom-color: var(--navy);
-      font-weight: 700;
-    }
   </style>
 </head>
 <body>
@@ -185,31 +131,148 @@
     </div>
   </section>
 
-  <!-- ══ 카테고리 탭바 ══ -->
-  <div class="cat-tabs">
-    <div class="cat-tabs__inner">
-      <button class="cat-tabs__btn cat-tabs__btn--active" data-group="" data-value="">전체</button>
-      <span class="cat-tabs__divider"></span>
-      <span class="cat-tabs__label">업종별</span>
-      <button class="cat-tabs__btn" data-group="industry" data-value="finance">금융 서비스</button>
-      <button class="cat-tabs__btn" data-group="industry" data-value="public">공공 부문</button>
-      <button class="cat-tabs__btn" data-group="industry" data-value="retail">소매·소비재</button>
-      <button class="cat-tabs__btn" data-group="industry" data-value="manufacturing">제조업</button>
-      <span class="cat-tabs__divider"></span>
-      <span class="cat-tabs__label">단계별</span>
-      <button class="cat-tabs__btn" data-group="level" data-value="basic">기초</button>
-      <button class="cat-tabs__btn" data-group="level" data-value="applied">응용</button>
-      <button class="cat-tabs__btn" data-group="level" data-value="advanced">심화</button>
-      <button class="cat-tabs__btn" data-group="level" data-value="expert">전문</button>
-      <span class="cat-tabs__divider"></span>
-      <span class="cat-tabs__label">기능별</span>
-      <button class="cat-tabs__btn" data-group="feature" data-value="query">데이터 조회</button>
-      <button class="cat-tabs__btn" data-group="feature" data-value="excel">엑셀 자동화</button>
-      <button class="cat-tabs__btn" data-group="feature" data-value="visual">시각화 분석</button>
-      <button class="cat-tabs__btn" data-group="feature" data-value="data">데이터 저장</button>
-      <button class="cat-tabs__btn" data-group="feature" data-value="system">시스템 운영</button>
+  <!-- ══ 카테고리 GNB ══ -->
+  <nav class="gnb" aria-label="과정 카테고리">
+    <div class="container">
+      <div class="gnb__inner">
+        <!-- 업종별 -->
+        <div class="gnb__item">
+          <button class="gnb__trigger">업종별
+            <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu__nav">
+              <div class="mega-menu__nav-item is-active" data-target="di-all">전체 업종</div>
+              <div class="mega-menu__nav-item" data-target="di-finance">금융 서비스</div>
+              <div class="mega-menu__nav-item" data-target="di-public">공공 부문</div>
+              <div class="mega-menu__nav-item" data-target="di-retail">소매·소비재</div>
+              <div class="mega-menu__nav-item" data-target="di-mfg">제조업</div>
+            </div>
+            <div class="mega-menu__panel is-active" data-panel="di-all">
+              <div class="mega-menu__panel-title">업종별 과정</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=industry&value=finance" class="mega-menu__link"><strong>금융 서비스</strong><span>은행·증권·보험</span></a>
+                <a href="course-list.html?category=industry&value=public" class="mega-menu__link"><strong>공공 부문</strong><span>공공기관·지자체</span></a>
+                <a href="course-list.html?category=industry&value=retail" class="mega-menu__link"><strong>소매·소비재</strong><span>유통·리테일</span></a>
+                <a href="course-list.html?category=industry&value=manufacturing" class="mega-menu__link"><strong>제조업</strong><span>생산·품질·SCM</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="di-finance">
+              <div class="mega-menu__panel-title">금융 서비스</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=industry&value=finance" class="mega-menu__link"><strong>전체 금융 과정</strong><span>은행·증권·보험</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="di-public">
+              <div class="mega-menu__panel-title">공공 부문</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=industry&value=public" class="mega-menu__link"><strong>전체 공공 과정</strong><span>공공기관·지자체</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="di-retail">
+              <div class="mega-menu__panel-title">소매·소비재</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=industry&value=retail" class="mega-menu__link"><strong>전체 소매 과정</strong><span>유통·리테일</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="di-mfg">
+              <div class="mega-menu__panel-title">제조업</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=industry&value=manufacturing" class="mega-menu__link"><strong>전체 제조 과정</strong><span>생산·품질·SCM</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 단계별 -->
+        <div class="gnb__item">
+          <button class="gnb__trigger">단계별
+            <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu__nav">
+              <div class="mega-menu__nav-item is-active" data-target="dr-basic">[기초] 사용자 과정</div>
+              <div class="mega-menu__nav-item" data-target="dr-applied">[응용] 실무 활용 과정</div>
+              <div class="mega-menu__nav-item" data-target="dr-advanced">[심화] 개발자 과정</div>
+              <div class="mega-menu__nav-item" data-target="dr-expert">[전문] 관리자 과정</div>
+            </div>
+            <div class="mega-menu__panel is-active" data-panel="dr-basic">
+              <div class="mega-menu__panel-title">[기초] 사용자 과정</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=level&value=basic" class="mega-menu__link"><strong>기초 과정 전체 보기</strong></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="dr-applied">
+              <div class="mega-menu__panel-title">[응용] 실무 활용 과정</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=level&value=applied" class="mega-menu__link"><strong>응용 과정 전체 보기</strong></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="dr-advanced">
+              <div class="mega-menu__panel-title">[심화] 개발자 과정</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=level&value=advanced" class="mega-menu__link"><strong>심화 과정 전체 보기</strong></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="dr-expert">
+              <div class="mega-menu__panel-title">[전문] 관리자 과정</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=level&value=expert" class="mega-menu__link"><strong>전문 과정 전체 보기</strong></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 기능별 -->
+        <div class="gnb__item">
+          <button class="gnb__trigger">기능별
+            <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu__nav">
+              <div class="mega-menu__nav-item is-active" data-target="df-query">데이터 조회</div>
+              <div class="mega-menu__nav-item" data-target="df-excel">엑셀 자동화</div>
+              <div class="mega-menu__nav-item" data-target="df-visual">시각화 분석</div>
+              <div class="mega-menu__nav-item" data-target="df-data">데이터 저장</div>
+              <div class="mega-menu__nav-item" data-target="df-system">시스템 운영</div>
+            </div>
+            <div class="mega-menu__panel is-active" data-panel="df-query">
+              <div class="mega-menu__panel-title">데이터 조회</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=feature&value=query" class="mega-menu__link"><strong>데이터 조회 과정 보기</strong><span>마우스 동작으로 빠른 데이터 조회</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="df-excel">
+              <div class="mega-menu__panel-title">엑셀 자동화</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=feature&value=excel" class="mega-menu__link"><strong>엑셀 자동화 과정 보기</strong><span>엑셀 리포팅 및 정형 보고서 생성</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="df-visual">
+              <div class="mega-menu__panel-title">시각화 분석</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=feature&value=visual" class="mega-menu__link"><strong>시각화 분석 과정 보기</strong><span>다양한 차트 기반 대시보드</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="df-data">
+              <div class="mega-menu__panel-title">데이터 저장</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=feature&value=data" class="mega-menu__link"><strong>데이터 저장 과정 보기</strong><span>데이터 입력·수정 및 DB 반영</span></a>
+              </div>
+            </div>
+            <div class="mega-menu__panel" data-panel="df-system">
+              <div class="mega-menu__panel-title">시스템 운영</div>
+              <div class="mega-menu__links">
+                <a href="course-list.html?category=feature&value=system" class="mega-menu__link"><strong>시스템 운영 과정 보기</strong><span>솔루션 환경·권한 관리 설정</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 전체 과정 링크 -->
+        <div class="gnb__extra">
+          <a href="course-list.html" class="gnb__extra-link">전체 과정</a>
+        </div>
+      </div>
     </div>
-  </div>
+  </nav>
 
   <!-- ══ 리스트 헤더 ══ -->
   <div class="list-header">
@@ -749,32 +812,36 @@
       document.getElementById("resetAllFilters").addEventListener("click", window.resetFilters);
     }
 
-    /* ── 카테고리 탭바 ── */
-    function initCatTabs() {
-      var tabs = document.querySelectorAll(".cat-tabs__btn");
-      tabs.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var group = this.dataset.group;
-          var value = this.dataset.value;
+    /* ── 카테고리 GNB 메가메뉴 ── */
+    function initCatGnb() {
+      var items = document.querySelectorAll(".gnb__item");
+      items.forEach(function (item) {
+        var trigger = item.querySelector(".gnb__trigger");
+        if (!trigger) return;
 
-          /* 전체 초기화 후 선택한 필터만 적용 */
-          activeFilters = { industry: [], level: [], feature: [] };
-          document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(function (cb) {
-            cb.checked = false;
-          });
-
-          if (group && value) {
-            activeFilters[group].push(value);
-            var cb = document.querySelector('input[name="' + group + '"][value="' + value + '"]');
-            if (cb) cb.checked = true;
-          }
-
-          /* 탭 활성화 */
-          tabs.forEach(function (t) { t.classList.remove("cat-tabs__btn--active"); });
-          this.classList.add("cat-tabs__btn--active");
-
-          updateUI();
+        trigger.addEventListener("click", function () {
+          var isOpen = item.classList.contains("is-open");
+          items.forEach(function (i) { i.classList.remove("is-open"); });
+          if (!isOpen) item.classList.add("is-open");
         });
+
+        var navItems = item.querySelectorAll(".mega-menu__nav-item");
+        navItems.forEach(function (navItem) {
+          navItem.addEventListener("mouseenter", function () {
+            var target = this.dataset.target;
+            navItems.forEach(function (n) { n.classList.remove("is-active"); });
+            item.querySelectorAll(".mega-menu__panel").forEach(function (p) { p.classList.remove("is-active"); });
+            this.classList.add("is-active");
+            var panel = item.querySelector('[data-panel="' + target + '"]');
+            if (panel) panel.classList.add("is-active");
+          });
+        });
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".gnb__item")) {
+          items.forEach(function (i) { i.classList.remove("is-open"); });
+        }
       });
     }
 
@@ -784,7 +851,7 @@
       initCheckboxes();
       initFromUrl();
       initMobileFilterDrawer();
-      initCatTabs();
+      initCatGnb();
       updateUI();
     });
 
