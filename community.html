@@ -974,10 +974,7 @@
         filtered.map(function(p) {
           return '<div class="faq-item-new">' +
             '<button class="faq-q" onclick="toggleCommPost(this)">' +
-              '<span>' +
-                '<span class="post-card__badge ' + (badgeClass[p.cat] || '') + '" style="margin-right:10px;">' + (badgeMap[p.cat] || '일반') + '</span>' +
-                p.title +
-              '</span>' +
+              '<span>' + p.title + '</span>' +
               '<svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>' +
             '</button>' +
             '<div class="faq-a">' +
