@@ -174,7 +174,7 @@
 /* 테이블 */
 .es-table-wrap {
   overflow:hidden; margin-top:6px; flex:1;
-  border:1px solid #E6E6E6; border-radius:12px;
+  border:1px solid #E6E6E6; border-radius:6px;
 }
 .es-table { width:100%; border-collapse:separate; border-spacing:0; font-size:14px; table-layout:auto; }
 .es-table th {
@@ -253,7 +253,7 @@
   display:grid; grid-template-columns:1fr 1fr; gap:16px;
 }
 .es-info-card {
-  background:#fff; border:1px solid var(--es-border); border-radius:12px;
+  background:#fff; border:1px solid var(--es-border); border-radius:6px;
   padding:22px 26px;
 }
 .es-info-card__header {
