@@ -202,7 +202,7 @@
   display:inline-block; padding:3px 10px; border-radius:20px;
   font-size:11px; font-weight:700; border:1px solid;
 }
-.badge-open      { background:#56A3FF; color:#2187FF; border-color:#2187FF; }
+.badge-open      { background:#F4F9FF; color:#2187FF; border-color:#2187FF; }
 .badge-scheduled { background:#F2FAF6; color:#05A749; border-color:#05A749; }
 .badge-closed    { background:#F9FAFB; color:#B7BCC8; border-color:#B7BCC8; }
 .badge-wait      { background:#56A3FF; color:#2187FF; border-color:#2187FF; }
