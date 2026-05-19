@@ -354,14 +354,13 @@
       calendar.removeAllEvents();
       events.forEach(function (ev) {
         calendar.addEvent({
-          id:              ev.start_date + '|' + ev.curriculum,
+          id:              ev.curriculum + '||' + ev.round,
           title:           ev.curriculum + ' (' + ev.round + ')',
           start:           ev.start_date,
           end:             fcEnd(ev.end_date || ev.start_date),
           backgroundColor: COURSE_BG[ev.curriculum] || '#E8EEF6',
           borderColor:     'transparent',
-          textColor:       COURSE_COLOR[ev.curriculum] || '#1E3A5F',
-          extendedProps:   { curriculum: ev.curriculum, round: ev.round, start_date: ev.start_date }
+          textColor:       COURSE_COLOR[ev.curriculum] || '#1E3A5F'
         });
       });
     }
@@ -483,7 +482,8 @@
           }
           ev.setClassNames(['fc-ev-selected']);
           selectedId = ev.id;
-          loadDetail(ev.extendedProps.curriculum, ev.extendedProps.round);
+          var parts = ev.id.split('||');
+          loadDetail(parts[0], parts[1]);
         }
       });
       calendar.render();
