@@ -10,7 +10,7 @@
   --es-trinity: #673AB7;
   --es-imatrix: #795548;
   --es-bg:      #EEF2F8;
-  --es-border:  #C9D4E2;
+  --es-border:  #E6E6E6;
   --es-text-h:  #1A1A1A;
   --es-text-b:  #4A4A4A;
   --es-text-s:  #737373;
@@ -84,8 +84,8 @@
 .es-cal-head {
   display:flex; align-items:center; justify-content:center; gap:16px;
   padding:16px 20px 14px;
-  border-bottom:1px solid #E8EEF6;
-  background:#F6F9FD;
+  border-bottom:1px solid #E6E6E6;
+  background:#fff;
 }
 .es-cal-head__title {
   font-size:17px; font-weight:700; color:var(--es-text-h);
@@ -96,13 +96,13 @@
   background:#fff; cursor:pointer; display:flex; align-items:center;
   justify-content:center; color:#8A96A7; transition:all .15s;
 }
-.es-nav-btn:hover { background:#EEF2F8; border-color:#A0AEBE; color:var(--es-text-h); }
+.es-nav-btn:hover { background:#EEF2F8; border-color:#E6E6E6; color:var(--es-text-h); }
 
 /* FullCalendar 오버라이드 */
 .es-cal-side .fc { padding:0; }
 .es-cal-side .fc-theme-standard td,
-.es-cal-side .fc-theme-standard th { border-color:#E8EEF6; }
-.es-cal-side .fc-col-header-cell { background:#F6F9FD; }
+.es-cal-side .fc-theme-standard th { border-color:#E6E6E6; }
+.es-cal-side .fc-col-header-cell { background:#fff; }
 .es-cal-side .fc-col-header-cell-cushion {
   font-size:12.5px; font-weight:600; color:#6B7A99;
   text-decoration:none; display:block; padding:9px 0;
@@ -182,7 +182,7 @@
 }
 .es-table td {
   padding:9px 10px; color:#575B6A; font-size:12px;
-  border-bottom:1px solid #EDF1F7; vertical-align:middle;
+  border-bottom:1px solid #E6E6E6; vertical-align:middle;
   white-space:nowrap;
 }
 .es-table tr:last-child td { border-bottom:none; }
@@ -215,7 +215,7 @@
 .es-detail-footer {
   display:flex; align-items:flex-end; justify-content:space-between;
   gap:16px; margin-top:16px; padding-top:14px;
-  border-top:1px solid #EDF1F7; flex-wrap:wrap;
+  border-top:1px solid #E6E6E6; flex-wrap:wrap;
 }
 .es-notice { flex:1; min-width:0; }
 .es-notice strong {
@@ -237,7 +237,7 @@
   box-shadow:0 1px 4px rgba(30,50,90,.06);
 }
 .es-download-btn:hover {
-  background:#F5F8FC; border-color:#A0AEBE; color:var(--es-text-h);
+  background:#F5F8FC; border-color:#E6E6E6; color:var(--es-text-h);
   box-shadow:0 3px 10px rgba(30,50,90,.10);
 }
 
@@ -257,7 +257,7 @@
   display:flex; align-items:center; gap:8px;
   font-size:14px; font-weight:700; color:var(--es-text-h);
   margin-bottom:14px; padding-bottom:12px;
-  border-bottom:1px solid #EDF1F7;
+  border-bottom:1px solid #E6E6E6;
 }
 .es-info-card__header svg { color:var(--es-user); flex-shrink:0; }
 .es-info-list { margin:0; padding:0; list-style:none; }
@@ -265,7 +265,7 @@
   font-size:13px; color:var(--es-text-b); line-height:1.85;
   padding-left:12px; position:relative; margin-bottom:4px;
 }
-.es-info-list li::before { content:'·'; position:absolute; left:0; color:#A0AEBE; }
+.es-info-list li::before { content:'·'; position:absolute; left:0; color:#E6E6E6; }
 .es-info-list li:last-child { margin-bottom:0; }
 .es-info-list strong { font-weight:600; color:var(--es-text-h); }
 
