@@ -84,8 +84,9 @@
 }
 .es-cal-head {
   display:flex; align-items:center; justify-content:space-between;
-  width:100%; padding:0 0; box-sizing:border-box;
-  height:56px; margin-bottom:12px;
+  width:100%; padding:0 20px; box-sizing:border-box;
+  height:56px;
+  border-bottom:1px solid #E6E6E6;
   background:#fff;
 }
 .es-cal-head__title {
@@ -159,7 +160,7 @@
 }
 .es-detail-head__label {
   display:flex; align-items:center; gap:7px;
-  font-size:18px; font-weight:700; color:#34394B;
+  font-size:17px; font-weight:700; color:#34394B;
 }
 .es-detail-head__right { display:flex; align-items:center; gap:8px; }
 

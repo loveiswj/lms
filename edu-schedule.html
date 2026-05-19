@@ -73,31 +73,29 @@
         </div>
       </div>
 
-      <!-- 달력 헤더 (전체 너비) -->
-      <div class="es-cal-head">
-        <div style="display:flex;align-items:center;gap:16px;">
-          <button class="es-nav-btn" id="prevBtn">
-            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          <span id="calTitle" class="es-cal-head__title">2026.05</span>
-          <button class="es-nav-btn" id="nextBtn">
-            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-        <button class="es-download-btn" id="downloadBtn">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          연간 일정 다운로드
-        </button>
-      </div>
-
       <!-- 통합 카드 -->
       <div class="es-card">
 
         <!-- ── 좌: 달력 ── -->
         <div class="es-cal-side">
+          <div class="es-cal-head">
+            <div style="display:flex;align-items:center;gap:16px;">
+              <button class="es-nav-btn" id="prevBtn">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <span id="calTitle" class="es-cal-head__title">2026.05</span>
+              <button class="es-nav-btn" id="nextBtn">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            <button class="es-download-btn" id="downloadBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              연간 일정 다운로드
+            </button>
+          </div>
           <div id="calendar"></div>
         </div>
 
@@ -159,18 +157,6 @@
         </div>
       </div><!-- /.es-card -->
 
-      <!-- 하단 영역 -->
-      <div class="es-detail-footer">
-        <div class="es-notice">
-          <strong>확인사항</strong>
-          <ul>
-            <li>정원 24명 선착순으로 마감되며, 정원 초과 시 대기자로 등록됩니다.</li>
-            <li>신청 인원이 10명 미만인 경우 교육이 취소될 수 있습니다.</li>
-            <li>수강 확정 안내는 마감 다음날 이메일로 발송됩니다.</li>
-            <li>사전 취소 없는 무단 불참 시 향후 수강이 제한됩니다.</li>
-          </ul>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -181,16 +167,6 @@
       <div class="es-info-grid">
         <div class="es-info-card">
           <div class="es-info-card__header">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            교육 비용 안내
-          </div>
-          <ul class="es-info-list">
-            <li>전 과정 유상 진행 <strong>1일 300,000원 (VAT 별도)</strong></li>
-            <li>정확한 비용 및 견적은 교육 신청 시 담당 영업대표에게 문의해주세요.</li>
-          </ul>
-        </div>
-        <div class="es-info-card">
-          <div class="es-info-card__header">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
             교육 운영 정책
           </div>
@@ -198,6 +174,16 @@
             <li><strong>정원</strong> 과정당 최대 24명, 선착순 마감</li>
             <li><strong>폐강</strong> 접수 마감일 기준 신청 인원 10명 이하 시 폐강될 수 있습니다. (폐강 시 개별 메일 안내)</li>
             <li><strong>무단 불참</strong> 사전 취소 없는 불참 시 향후 수강이 제한됩니다.</li>
+          </ul>
+        </div>
+        <div class="es-info-card">
+          <div class="es-info-card__header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            교육 비용 안내
+          </div>
+          <ul class="es-info-list">
+            <li>전 과정 유상 진행 <strong>1일 300,000원 (VAT 별도)</strong></li>
+            <li>정확한 비용 및 견적은 교육 신청 시 담당 영업대표에게 문의해주세요.</li>
           </ul>
         </div>
       </div>
