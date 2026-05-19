@@ -389,7 +389,11 @@
       }
       tb.innerHTML = rows.map(function (r) {
         var bc  = COURSE_COLOR[r.curriculum] || '#BFDBFE';
-        var cls = r.status === '신청중' ? 'badge-open' : r.status === '대기신청' ? 'badge-wait' : 'badge-closed';
+        var cls = r.status === '신청중'  ? 'badge-open'
+                : r.status === '접수예정' ? 'badge-scheduled'
+                : r.status === '대기신청' ? 'badge-wait'
+                : r.status === '폐강'    ? 'badge-cancel'
+                : 'badge-closed';
         return '<tr>' +
           '<td class="td-c">' + (r.round || '') + '</td>' +
           '<td class="td-name">' + r.curriculum + '</td>' +
