@@ -71,13 +71,6 @@
           <h2>교육 일정 및 신청 현황</h2>
           <p>달력에서 교육을 클릭하면 우측 테이블에 해당 일정이 표시됩니다.</p>
         </div>
-        <div class="es-legend">
-          <span class="es-leg"><i style="--c:#2C4A6F"></i>개발자</span>
-          <span class="es-leg"><i style="--c:#2E7D32"></i>관리자</span>
-          <span class="es-leg"><i style="--c:#673AB7"></i>TRINITY</span>
-          <span class="es-leg"><i style="--c:#1E88E5"></i>사용자</span>
-          <span class="es-leg"><i style="--c:#795548"></i>i-MATRIX</span>
-        </div>
       </div>
 
       <!-- 통합 카드 -->
@@ -311,19 +304,19 @@
     /* 목업 */
     var MOCK_CAL = {
       '2026-5': [
-        { schdule_date:'2026-05-04', end_date:'2026-05-04', curriculum:'사용자 교육',         round:'1차', bg_color:'#1E88E5', title:'사용자 교육 (1차)' },
-        { schdule_date:'2026-05-11', end_date:'2026-05-13', curriculum:'개발자 교육',         round:'1차', bg_color:'#2C4A6F', title:'개발자 교육 (1차)' },
-        { schdule_date:'2026-05-14', end_date:'2026-05-14', curriculum:'관리자 교육',         round:'1차', bg_color:'#2E7D32', title:'관리자 교육 (1차)' },
-        { schdule_date:'2026-05-18', end_date:'2026-05-18', curriculum:'사용자 교육',         round:'2차', bg_color:'#1E88E5', title:'사용자 교육 (2차)' },
-        { schdule_date:'2026-05-19', end_date:'2026-05-19', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#795548', title:'i-MATRIX 교육 (1차)' },
-        { schdule_date:'2026-05-21', end_date:'2026-05-22', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#673AB7', title:'TRINITY 개발자 교육 (1차)' },
-        { schdule_date:'2026-05-26', end_date:'2026-05-28', curriculum:'개발자 교육',         round:'2차', bg_color:'#2C4A6F', title:'개발자 교육 (2차)' }
+        { schdule_date:'2026-05-04', end_date:'2026-05-04', curriculum:'사용자 교육',         round:'1차', bg_color:'#0665D4', title:'사용자 교육 (1차)' },
+        { schdule_date:'2026-05-11', end_date:'2026-05-13', curriculum:'개발자 교육',         round:'1차', bg_color:'#0B4C98', title:'개발자 교육 (1차)' },
+        { schdule_date:'2026-05-14', end_date:'2026-05-14', curriculum:'관리자 교육',         round:'1차', bg_color:'#026D72', title:'관리자 교육 (1차)' },
+        { schdule_date:'2026-05-18', end_date:'2026-05-18', curriculum:'사용자 교육',         round:'2차', bg_color:'#0665D4', title:'사용자 교육 (2차)' },
+        { schdule_date:'2026-05-19', end_date:'2026-05-19', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#0B4C98', title:'i-MATRIX 교육 (1차)' },
+        { schdule_date:'2026-05-21', end_date:'2026-05-22', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#4C309D', title:'TRINITY 개발자 교육 (1차)' },
+        { schdule_date:'2026-05-26', end_date:'2026-05-28', curriculum:'개발자 교육',         round:'2차', bg_color:'#0B4C98', title:'개발자 교육 (2차)' }
       ],
       '2026-6': [
-        { schdule_date:'2026-06-02', end_date:'2026-06-02', curriculum:'사용자 교육',         round:'1차', bg_color:'#1E88E5', title:'사용자 교육 (1차)' },
-        { schdule_date:'2026-06-09', end_date:'2026-06-11', curriculum:'개발자 교육',         round:'1차', bg_color:'#2C4A6F', title:'개발자 교육 (1차)' },
-        { schdule_date:'2026-06-16', end_date:'2026-06-17', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#673AB7', title:'TRINITY 개발자 교육 (1차)' },
-        { schdule_date:'2026-06-23', end_date:'2026-06-23', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#795548', title:'i-MATRIX 교육 (1차)' }
+        { schdule_date:'2026-06-02', end_date:'2026-06-02', curriculum:'사용자 교육',         round:'1차', bg_color:'#0665D4', title:'사용자 교육 (1차)' },
+        { schdule_date:'2026-06-09', end_date:'2026-06-11', curriculum:'개발자 교육',         round:'1차', bg_color:'#0B4C98', title:'개발자 교육 (1차)' },
+        { schdule_date:'2026-06-16', end_date:'2026-06-17', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#4C309D', title:'TRINITY 개발자 교육 (1차)' },
+        { schdule_date:'2026-06-23', end_date:'2026-06-23', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#0B4C98', title:'i-MATRIX 교육 (1차)' }
       ]
     };
 
@@ -339,26 +332,26 @@
       ]
     };
 
-    /* 과정별 색상 (dot·텍스트용) */
+    /* 과정별 글자색 */
     var COURSE_COLOR = {
-      '개발자 교육':         '#2C4A6F',
-      '관리자 교육':         '#2E7D32',
-      'TRINITY 개발자 교육': '#673AB7',
-      '사용자 교육':         '#1E88E5',
-      'i-MATRIX 교육':      '#795548',
-      'i-MATRIX 심화 교육':  '#795548',
-      '기본 교육':           '#1E88E5'
+      '개발자 교육':         '#0B4C98',
+      '관리자 교육':         '#026D72',
+      'TRINITY 개발자 교육': '#4C309D',
+      '사용자 교육':         '#0665D4',
+      'i-MATRIX 교육':      '#0B4C98',
+      'i-MATRIX 심화 교육':  '#0B4C98',
+      '기본 교육':           '#0665D4'
     };
 
-    /* 과정별 연한 배경색 (달력 이벤트 fill용) */
+    /* 과정별 배경색 */
     var COURSE_BG = {
-      '개발자 교육':         '#CFE0F0',
-      '관리자 교육':         '#C8E6C9',
-      'TRINITY 개발자 교육': '#E0D5F5',
-      '사용자 교육':         '#BBDEFB',
-      'i-MATRIX 교육':      '#E8DDD8',
-      'i-MATRIX 심화 교육':  '#E8DDD8',
-      '기본 교육':           '#BBDEFB'
+      '개발자 교육':         '#B1D4FF',
+      '관리자 교육':         '#DDF4F4',
+      'TRINITY 개발자 교육': '#E3DDF4',
+      '사용자 교육':         '#E3F0FF',
+      'i-MATRIX 교육':      '#E3F0FF',
+      'i-MATRIX 심화 교육':  '#E3F0FF',
+      '기본 교육':           '#E3F0FF'
     };
 
     var curYear = 2026, curMonth = 5;
