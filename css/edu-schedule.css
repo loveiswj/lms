@@ -101,6 +101,7 @@
 /* FullCalendar 오버라이드 */
 .es-cal-side .fc {
   padding:0;
+  border:1px solid #E6E6E6;
   border-radius:6px;
   overflow:hidden;
 }
@@ -145,6 +146,7 @@
   padding:0 18px 18px; min-width:0;
   background:#fff;
   overflow:hidden;
+  border:1px solid #E6E6E6; border-radius:6px;
 }
 
 /* 상세 헤더 */
@@ -180,17 +182,17 @@
   overflow:hidden; margin-top:6px; flex:1;
   border:1px solid #E6E6E6; border-radius:6px;
 }
-.es-table { width:100%; border-collapse:collapse; font-size:14px; table-layout:auto; }
+.es-table { width:100%; border-collapse:separate; border-spacing:0; font-size:14px; table-layout:auto; }
 .es-table th {
   background:#E6E6E6; color:#575B6A; font-size:14px; font-weight:700;
-  padding:9px 10px; text-align:center;
-  border-top:1px solid #C8C8C8; border-bottom:1px solid #C8C8C8;
-  white-space:nowrap; letter-spacing:.02em;
+  padding:0 10px; height:44px; text-align:center;
+  border-bottom:2px solid #C8C8C8;
+  white-space:nowrap; letter-spacing:.02em; box-sizing:border-box;
 }
 .es-table td {
-  padding:9px 10px; color:#575B6A; font-size:14px;
+  padding:0 10px; color:#575B6A; font-size:14px; height:48px;
   border-bottom:1px solid #E6E6E6; vertical-align:middle;
-  white-space:nowrap; text-align:center;
+  white-space:nowrap; text-align:center; box-sizing:border-box;
 }
 .es-table tr:last-child td { border-bottom:none; }
 .es-table tr:hover td { background:#F7FAFD; }
