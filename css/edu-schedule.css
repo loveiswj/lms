@@ -150,7 +150,7 @@
 }
 .es-detail-head__label {
   display:flex; align-items:center; gap:7px;
-  font-size:15px; font-weight:700; color:var(--es-text-h);
+  font-size:18px; font-weight:700; color:#34394B;
 }
 .es-detail-head__right { display:flex; align-items:center; gap:8px; }
 
