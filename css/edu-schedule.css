@@ -101,12 +101,12 @@
 /* FullCalendar 오버라이드 */
 .es-cal-side .fc {
   padding:0;
-  border:1px solid #E6E6E6;
   border-radius:6px;
   overflow:hidden;
 }
 .es-cal-side .fc-theme-standard td,
 .es-cal-side .fc-theme-standard th { border-color:#E6E6E6; }
+.es-cal-side .fc-scrollgrid { border-color:#E6E6E6 !important; }
 .es-cal-side .fc-col-header-cell { background:#fff; }
 .es-cal-side .fc-col-header-cell-cushion {
   font-size:12.5px; font-weight:600; color:#6B7A99;
@@ -146,7 +146,6 @@
   padding:0 18px 18px; min-width:0;
   background:#fff;
   overflow:hidden;
-  border:1px solid #E6E6E6; border-radius:6px;
 }
 
 /* 상세 헤더 */
