@@ -99,7 +99,12 @@
 .es-nav-btn:hover { background:#EEF2F8; border-color:#E6E6E6; color:var(--es-text-h); }
 
 /* FullCalendar 오버라이드 */
-.es-cal-side .fc { padding:0; }
+.es-cal-side .fc {
+  padding:0;
+  border:1px solid #E6E6E6;
+  border-radius:6px;
+  overflow:hidden;
+}
 .es-cal-side .fc-theme-standard td,
 .es-cal-side .fc-theme-standard th { border-color:#E6E6E6; }
 .es-cal-side .fc-col-header-cell { background:#fff; }
