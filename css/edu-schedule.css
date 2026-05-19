@@ -113,7 +113,7 @@
 .es-cal-side .fc-daygrid-day-number {
   font-size:13px; font-weight:500; color:var(--es-text-b); text-decoration:none; padding:0;
 }
-.es-cal-side .fc-day-today { background:#EBF5FF !important; }
+.es-cal-side .fc-day-today { background:#fff !important; }
 .es-cal-side .fc-day-today .fc-daygrid-day-number { color:var(--es-user); font-weight:700; }
 
 /* 이벤트 바 */
