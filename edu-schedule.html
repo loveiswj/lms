@@ -412,23 +412,28 @@
     /* ── API 설정 (개발팀에서 받은 주소로 교체) ── */
     var API_BASE = 'https://your-company-api.com';  /* ← 여기에 실제 API 주소 입력 */
 
-    function apiFetch(url) {
-      return fetch(url, { headers: { 'Accept': 'application/json' } })
+    function apiFetch(url, timeout) {
+      var ctrl = new AbortController();
+      var timer = setTimeout(function () { ctrl.abort(); }, timeout || 3000);
+      return fetch(url, { headers: { 'Accept': 'application/json' }, signal: ctrl.signal })
         .then(function (res) {
+          clearTimeout(timer);
           if (!res.ok) throw new Error('API error ' + res.status);
           return res.json();
-        });
+        })
+        .catch(function (e) { clearTimeout(timer); throw e; });
     }
 
     /* API 호출 */
     function loadMonth(y, m) {
       var key = y + '-' + m;
+      /* 즉시 Mock 표시 후 API 성공 시 교체 */
+      applyCalData(MOCK_CAL[key] || []);
+      applyDetailData(MOCK_DETAIL[key] || []);
       apiFetch(API_BASE + '/api/edu-calendar?year=' + y + '&month=' + m)
-        .then(applyCalData)
-        .catch(function () { applyCalData(MOCK_CAL[key] || []); });
+        .then(applyCalData).catch(function () {});
       apiFetch(API_BASE + '/api/edu-detail?year=' + y + '&month=' + m)
-        .then(applyDetailData)
-        .catch(function () { applyDetailData(MOCK_DETAIL[key] || []); });
+        .then(applyDetailData).catch(function () {});
     }
 
     function setDetailHeader(label) {
@@ -444,18 +449,19 @@
     function loadDetail(y, m, date, curriculum, round) {
       var key = y + '-' + m;
       setDetailHeader(curriculum + (round ? ' ' + round : ''));
+      /* 즉시 Mock 필터링 표시 */
+      var mockFiltered = (MOCK_DETAIL[key] || []).filter(function (x) {
+        return x.curriculum === curriculum && (!round || x.round === round);
+      });
+      applyDetailData(mockFiltered);
+      /* API 성공 시 실제 데이터로 교체 */
       apiFetch(API_BASE + '/api/edu-detail?year=' + y + '&month=' + m + '&date=' + date)
         .then(function (data) {
           applyDetailData(data.filter(function (x) {
             return x.curriculum === curriculum && (!round || x.round === round);
           }));
         })
-        .catch(function () {
-          var d = (MOCK_DETAIL[key] || []).filter(function (x) {
-            return x.curriculum === curriculum && (!round || x.round === round);
-          });
-          applyDetailData(d);
-        });
+        .catch(function () {});
     }
 
     function resetDetail() {
@@ -466,9 +472,9 @@
         selectedId = null;
       }
       var key = curYear + '-' + curMonth;
+      applyDetailData(MOCK_DETAIL[key] || []);
       apiFetch(API_BASE + '/api/edu-detail?year=' + curYear + '&month=' + curMonth)
-        .then(applyDetailData)
-        .catch(function () { applyDetailData(MOCK_DETAIL[key] || []); });
+        .then(applyDetailData).catch(function () {});
     }
 
     function setLabel() {
