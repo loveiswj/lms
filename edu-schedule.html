@@ -434,14 +434,15 @@
       }
     }
 
-    function loadDetail(startDate, curriculum, round) {
+    function loadDetail(curriculum, round) {
       setDetailHeader(curriculum + (round ? ' ' + round : ''));
+      var r = monthRange(curYear, curMonth);
       _supabase.from('edu_schedule')
         .select('*')
         .eq('curriculum', curriculum)
         .eq('round', round)
-        .lte('start_date', startDate)
-        .gte('end_date', startDate)
+        .gte('start_date', r.first)
+        .lte('start_date', r.last)
         .then(function (res) {
           applyDetailData(res.data || []);
         });
@@ -494,7 +495,7 @@
           }
           ev.setClassNames(['fc-ev-selected']);
           selectedId = ev.id;
-          loadDetail(ev.extendedProps.start_date, ev.extendedProps.curriculum, ev.extendedProps.round);
+          loadDetail(ev.extendedProps.curriculum, ev.extendedProps.round);
         }
       });
       calendar.render();
