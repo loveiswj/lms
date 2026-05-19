@@ -445,11 +445,10 @@
 
     function resetDetail() {
       setDetailHeader(null);
-      if (selectedId) {
-        var ev = calendar.getEventById(selectedId);
-        if (ev) ev.setClassNames([]);
-        selectedId = null;
-      }
+      document.querySelectorAll('.es-cal-side .fc-ev-selected').forEach(function (el) {
+        el.classList.remove('fc-ev-selected');
+      });
+      selectedId = null;
       applyDetailData(cachedDetailRows);
     }
 
@@ -473,16 +472,16 @@
         eventContent: function (arg) {
           return { html: '<div class="fc-ev-label">' + shorten(arg.event.title) + '</div>' };
         },
+        eventDidMount: function (info) {
+          info.el.style.cursor = 'pointer';
+        },
         eventClick: function (info) {
-          info.jsEvent.preventDefault();
-          var ev = info.event;
-          if (selectedId) {
-            var prev = calendar.getEventById(selectedId);
-            if (prev) prev.setClassNames([]);
-          }
-          ev.setClassNames(['fc-ev-selected']);
-          selectedId = ev.id;
-          var parts = ev.id.split('||');
+          document.querySelectorAll('.es-cal-side .fc-ev-selected').forEach(function (el) {
+            el.classList.remove('fc-ev-selected');
+          });
+          info.el.classList.add('fc-ev-selected');
+          selectedId = info.event.id;
+          var parts = info.event.id.split('||');
           loadDetail(parts[0], parts[1]);
         }
       });
