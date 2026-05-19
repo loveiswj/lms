@@ -386,16 +386,11 @@
         <div class="stat-num" id="statProgress">0<span>%</span></div>
         <div class="stat-label">평균 진도율</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="statCerts">0</div>
-        <div class="stat-label">수료증 발급</div>
-      </div>
     </div>
 
     <!-- ══ 탭 ══ -->
     <div class="mypage-tabs">
       <button class="mypage-tab active" onclick="switchTab('courses')">내 강의</button>
-      <button class="mypage-tab" onclick="switchTab('certificates')">수료증</button>
       <button class="mypage-tab" onclick="switchTab('community')">내 게시글</button>
       <button class="mypage-tab" onclick="switchTab('settings')">프로필 설정</button>
     </div>
@@ -403,13 +398,6 @@
     <!-- ── 탭: 내 강의 ── -->
     <div class="tab-panel active" id="panel-courses">
       <div id="courseList">
-        <!-- JS로 렌더링 -->
-      </div>
-    </div>
-
-    <!-- ── 탭: 수료증 ── -->
-    <div class="tab-panel" id="panel-certificates">
-      <div id="certList">
         <!-- JS로 렌더링 -->
       </div>
     </div>
@@ -543,7 +531,6 @@
       document.getElementById('statEnrolled').textContent = total - completed;
       document.getElementById('statCompleted').textContent = completed;
       document.getElementById('statProgress').innerHTML = avgProgress + '<span>%</span>';
-      document.getElementById('statCerts').textContent = completed;
     }
 
     /* ── 강의 목록 렌더 ── */
@@ -589,256 +576,10 @@
               + '<div class="course-actions">'
               + '<a href="course-detail.html?id=' + course.id + '" class="btn-continue">' + (isDone ? '다시 보기' : '이어 보기') + '</a>';
 
-        if (isDone) {
-          html += '<button class="btn-certificate" onclick="downloadCert(' + course.id + ')">'
-                + '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>'
-                + '수료증 발급</button>';
-        }
-
         html += '</div></div></div>';
       });
 
       list.innerHTML = html;
-    }
-
-    /* ── 수료증 탭 렌더 ── */
-    function renderCertificates() {
-      var done = ENROLLMENTS.filter(function(e) { return e.progress === 100; });
-      var list = document.getElementById('certList');
-
-      if (done.length === 0) {
-        list.innerHTML = '<div class="empty-state">'
-          + '<svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>'
-          + '<p>아직 수료한 강의가 없어요<br>강의를 완료하면 수료증을 발급받을 수 있어요</p>'
-          + '<a href="course-list.html">강의 보러가기</a>'
-          + '</div>';
-        return;
-      }
-
-      var html = '';
-      done.forEach(function(enr) {
-        var course = COURSES.find(function(c) { return c.id === enr.courseId; });
-        if (!course) return;
-        html += '<div class="course-progress-card" style="align-items:center">'
-              + '<div class="course-thumb-placeholder" style="background:linear-gradient(135deg,#10B981,#059669)">🏆</div>'
-              + '<div class="course-info">'
-              + '<div class="course-meta-row"><span class="course-tag completed">✓ 수료 완료</span></div>'
-              + '<div class="course-progress-title">' + course.title + '</div>'
-              + '<div class="progress-text">수강 완료일: ' + enr.enrolledAt + '</div>'
-              + '<div class="course-actions">'
-              + '<button class="btn-certificate" onclick="downloadCert(' + course.id + ')">'
-              + '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>'
-              + '수료증 PDF 다운로드</button>'
-              + '</div></div></div>';
-      });
-      list.innerHTML = html;
-    }
-
-    /* ── 수료증 PDF 다운로드 ── */
-    async function downloadCert(courseId) {
-      var { data: { session } } = await _supabase.auth.getSession();
-      if (!session) { showToast('로그인이 필요합니다'); return; }
-
-      var course = COURSES.find(function(c) { return c.id === courseId; });
-      if (!course) return;
-
-      /* 수료 확인 */
-      var { data: cert } = await _supabase
-        .from('certificates')
-        .select('issued_at')
-        .eq('user_id', session.user.id)
-        .eq('course_id', courseId)
-        .single();
-      if (!cert) { showToast('수료증이 아직 발급되지 않았습니다'); return; }
-
-      var userName = USER.name || session.user.email.split('@')[0];
-      var issuedDate = cert.issued_at ? cert.issued_at.slice(0, 10) : new Date().toISOString().slice(0, 10);
-
-      /* Canvas로 수료증 생성 */
-      generateCertPDF(userName, course.title, issuedDate);
-    }
-
-    function generateCertPDF(name, courseTitle, date) {
-      var W = 1200, H = 850;
-      var canvas = document.createElement('canvas');
-      canvas.width = W; canvas.height = H;
-      var ctx = canvas.getContext('2d');
-
-      /* ── 배경 그라데이션 ── */
-      var bgGrad = ctx.createLinearGradient(0, 0, W, H);
-      bgGrad.addColorStop(0, '#FAFBFF');
-      bgGrad.addColorStop(1, '#F0F4FF');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, W, H);
-
-      /* ── 상단 navy 헤더 바 ── */
-      var headerGrad = ctx.createLinearGradient(0, 0, W, 0);
-      headerGrad.addColorStop(0, '#1A2E5A');
-      headerGrad.addColorStop(1, '#2C3E6B');
-      ctx.fillStyle = headerGrad;
-      ctx.fillRect(0, 0, W, 120);
-
-      /* ── 하단 gold 액센트 바 ── */
-      var footGrad = ctx.createLinearGradient(0, 0, W, 0);
-      footGrad.addColorStop(0, '#D97706');
-      footGrad.addColorStop(0.5, '#F59E0B');
-      footGrad.addColorStop(1, '#D97706');
-      ctx.fillStyle = footGrad;
-      ctx.fillRect(0, H - 16, W, 16);
-
-      /* ── 좌측 gold 세로 라인 ── */
-      ctx.fillStyle = '#F59E0B';
-      ctx.fillRect(60, 140, 5, H - 175);
-
-      /* ── 외곽 테두리 ── */
-      ctx.strokeStyle = '#2C3E6B';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(30, 30, W - 60, H - 60);
-
-      /* ── 헤더: 로고 + 기관명 ── */
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 15px sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText('BI MATRIX', 80, 52);
-      ctx.font = '13px sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
-      ctx.fillText('비아이매트릭스 주식회사', 80, 74);
-
-      ctx.font = 'bold 20px sans-serif';
-      ctx.fillStyle = '#F59E0B';
-      ctx.textAlign = 'right';
-      ctx.fillText('AUD Academy', W - 80, 55);
-      ctx.font = '13px sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
-      ctx.fillText('실무 BI 교육 플랫폼', W - 80, 75);
-
-      /* ── 헤더 하단 gold 라인 ── */
-      ctx.fillStyle = '#F59E0B';
-      ctx.fillRect(0, 120, W, 4);
-
-      /* ── 수료증 제목 ── */
-      ctx.textAlign = 'center';
-      ctx.font = 'bold 64px serif';
-      ctx.fillStyle = '#1A2E5A';
-      ctx.fillText('수 료 증', W / 2, 225);
-
-      /* 제목 하단 장식 라인 */
-      var lineGrad = ctx.createLinearGradient(W/2 - 180, 0, W/2 + 180, 0);
-      lineGrad.addColorStop(0, 'transparent');
-      lineGrad.addColorStop(0.3, '#F59E0B');
-      lineGrad.addColorStop(0.7, '#F59E0B');
-      lineGrad.addColorStop(1, 'transparent');
-      ctx.strokeStyle = lineGrad;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(W/2 - 180, 245); ctx.lineTo(W/2 + 180, 245);
-      ctx.stroke();
-
-      /* ── Certificate of Completion ── */
-      ctx.font = '16px sans-serif';
-      ctx.fillStyle = '#9CA3AF';
-      ctx.fillText('Certificate of Completion', W / 2, 278);
-
-      /* ── 본문: 수여 문구 ── */
-      ctx.font = '20px sans-serif';
-      ctx.fillStyle = '#4B5563';
-      ctx.fillText('아래 사람은 AUD Academy 실무 BI 교육 과정을 성실히 이수하였기에', W / 2, 340);
-      ctx.fillText('이 수료증을 수여합니다.', W / 2, 370);
-
-      /* ── 이름 섹션 ── */
-      ctx.font = '14px sans-serif';
-      ctx.fillStyle = '#9CA3AF';
-      ctx.fillText('수 료 자', W / 2, 430);
-
-      /* 이름 배경 박스 */
-      var nameBoxW = 360, nameBoxH = 68;
-      var nameBoxX = W/2 - nameBoxW/2, nameBoxY = 445;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.shadowColor = 'rgba(44,62,107,0.12)';
-      ctx.shadowBlur = 16;
-      ctx.beginPath();
-      /* roundRect 폴리필 — 구형 브라우저 대응 */
-      var r = 8;
-      ctx.moveTo(nameBoxX + r, nameBoxY);
-      ctx.lineTo(nameBoxX + nameBoxW - r, nameBoxY);
-      ctx.quadraticCurveTo(nameBoxX + nameBoxW, nameBoxY, nameBoxX + nameBoxW, nameBoxY + r);
-      ctx.lineTo(nameBoxX + nameBoxW, nameBoxY + nameBoxH - r);
-      ctx.quadraticCurveTo(nameBoxX + nameBoxW, nameBoxY + nameBoxH, nameBoxX + nameBoxW - r, nameBoxY + nameBoxH);
-      ctx.lineTo(nameBoxX + r, nameBoxY + nameBoxH);
-      ctx.quadraticCurveTo(nameBoxX, nameBoxY + nameBoxH, nameBoxX, nameBoxY + nameBoxH - r);
-      ctx.lineTo(nameBoxX, nameBoxY + r);
-      ctx.quadraticCurveTo(nameBoxX, nameBoxY, nameBoxX + r, nameBoxY);
-      ctx.closePath();
-      ctx.fill();
-      ctx.shadowBlur = 0;
-      ctx.strokeStyle = '#E5E7EB';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = 'bold 40px serif';
-      ctx.fillStyle = '#1A2E5A';
-      ctx.fillText(name, W / 2, nameBoxY + 46);
-
-      /* ── 과정명 섹션 ── */
-      ctx.font = '14px sans-serif';
-      ctx.fillStyle = '#9CA3AF';
-      ctx.fillText('수 료 과 정', W / 2, 560);
-
-      ctx.font = 'bold 24px sans-serif';
-      ctx.fillStyle = '#1A2E5A';
-      var title = courseTitle.length > 32 ? courseTitle.slice(0, 32) + '…' : courseTitle;
-      ctx.fillText(title, W / 2, 598);
-
-      /* ── 구분선 ── */
-      ctx.strokeStyle = '#E5E7EB';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(100, 630); ctx.lineTo(W - 100, 630);
-      ctx.stroke();
-
-      /* ── 하단: 날짜 + 직인 영역 ── */
-      ctx.textAlign = 'left';
-      ctx.font = '13px sans-serif';
-      ctx.fillStyle = '#9CA3AF';
-      ctx.fillText('발급일', 120, 675);
-      ctx.font = 'bold 18px sans-serif';
-      ctx.fillStyle = '#374151';
-      ctx.fillText(date, 120, 702);
-
-      /* 직인 원 */
-      ctx.textAlign = 'center';
-      ctx.beginPath();
-      ctx.arc(W - 180, 690, 52, 0, Math.PI * 2);
-      ctx.strokeStyle = '#DC2626';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(W - 180, 690, 44, 0, Math.PI * 2);
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillStyle = '#DC2626';
-      ctx.fillText('비아이매트릭스', W - 180, 684);
-      ctx.fillText('AUD Academy', W - 180, 700);
-
-      /* 발급처 */
-      ctx.textAlign = 'center';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillStyle = '#1A2E5A';
-      ctx.fillText('비아이매트릭스 주식회사  대표이사', W / 2, 780);
-
-      /* 수료번호 */
-      var certNum = 'AUD-' + date.replace(/-/g,'') + '-' + Math.floor(Math.random()*9000+1000);
-      ctx.font = '11px sans-serif';
-      ctx.fillStyle = '#D1D5DB';
-      ctx.fillText('수료번호: ' + certNum, W / 2, 810);
-
-      /* ── 다운로드 ── */
-      var link = document.createElement('a');
-      link.download = '수료증_' + name + '_' + courseTitle.slice(0, 15) + '.png';
-      link.href = canvas.toDataURL('image/png', 1.0);
-      link.click();
-      showToast('수료증이 다운로드되었습니다');
     }
 
     /* ── 프로필 저장 ── */
