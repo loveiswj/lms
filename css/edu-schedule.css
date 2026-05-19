@@ -221,7 +221,7 @@
 .es-detail-footer {
   display:flex; align-items:flex-end; justify-content:space-between;
   gap:16px; margin-top:16px; padding-top:14px;
-  border-top:1px solid #E6E6E6; flex-wrap:wrap;
+  flex-wrap:wrap;
 }
 .es-notice { flex:1; min-width:0; }
 .es-notice strong {
