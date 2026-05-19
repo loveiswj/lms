@@ -101,8 +101,6 @@
 /* FullCalendar 오버라이드 */
 .es-cal-side .fc {
   padding:0;
-  border:1px solid #E6E6E6;
-  border-radius:6px;
   overflow:hidden;
 }
 .es-cal-side .fc-theme-standard td,
@@ -146,7 +144,6 @@
   padding:0 18px 18px; min-width:0;
   background:#fff;
   overflow:hidden;
-  border:1px solid #E6E6E6; border-radius:6px;
 }
 
 /* 상세 헤더 */
