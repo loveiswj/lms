@@ -104,7 +104,7 @@
 }
 .es-cal-side .fc-theme-standard td,
 .es-cal-side .fc-theme-standard th { border-color:#E6E6E6; }
-.es-cal-side .fc-scrollgrid { border-color:#E6E6E6 !important; }
+.es-cal-side .fc-scrollgrid { border:none !important; }
 .es-cal-side .fc-col-header-cell { background:#fff; }
 .es-cal-side .fc-col-header-cell-cushion {
   font-size:12.5px; font-weight:600; color:#6B7A99;
