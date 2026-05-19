@@ -101,6 +101,7 @@
 /* FullCalendar 오버라이드 */
 .es-cal-side .fc {
   padding:0;
+  border-radius:6px;
   overflow:hidden;
 }
 .es-cal-side .fc-theme-standard td,
