@@ -283,6 +283,7 @@
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/nav.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
@@ -504,7 +505,35 @@
         resetDetail();
       });
       document.getElementById('downloadBtn').addEventListener('click', function () {
-        alert('연간 일정 다운로드 기능은 준비 중입니다.');
+        var btn = this;
+        btn.disabled = true;
+        btn.textContent = '불러오는 중...';
+        _supabase.from('edu_schedule')
+          .select('*')
+          .gte('start_date', '2026-01-01')
+          .lte('start_date', '2026-12-31')
+          .order('start_date')
+          .then(function (res) {
+            var rows = res.data || [];
+            var sheetData = [['회차','과정명','시작일','종료일','기간','접수마감','정원','신청','대기','상태']];
+            rows.forEach(function (r) {
+              sheetData.push([
+                r.round, r.curriculum,
+                r.start_date, r.end_date, r.duration,
+                r.deadline || '', 24, r.registered, r.waiting, r.status
+              ]);
+            });
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.aoa_to_sheet(sheetData);
+            ws['!cols'] = [
+              {wch:6},{wch:20},{wch:12},{wch:12},{wch:6},
+              {wch:12},{wch:6},{wch:6},{wch:6},{wch:8}
+            ];
+            XLSX.utils.book_append_sheet(wb, ws, '2026 교육일정');
+            XLSX.writeFile(wb, 'BI MATRIX 2026년 교육일정.xlsx');
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 연간 일정 다운로드';
+          });
       });
 
       setLabel();
