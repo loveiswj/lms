@@ -112,7 +112,6 @@
             </div>
             <div class="es-detail-head__right">
               <span class="es-hint-tag" id="detailHint" style="display:none"></span>
-              <button class="es-month-btn is-active" id="resetBtn">이번 달 전체</button>
             </div>
           </div>
 
@@ -291,6 +290,11 @@
   <script>
   (function () {
 
+    /* 날짜에서 연도 제거: "2026.05.04(월)" → "05.04(월)" */
+    function stripYear(str) {
+      return str.replace(/^\d{4}\./, '');
+    }
+
     /* 과정명 축약 */
     function shorten(title) {
       return title
@@ -395,10 +399,10 @@
         var cls = r.status === '신청중' ? 'badge-open' : r.status === '대기신청' ? 'badge-wait' : 'badge-closed';
         return '<tr>' +
           '<td class="td-c">' + (r.round || '') + '</td>' +
-          '<td class="td-name"><span class="td-dot" style="background:' + bc + '"></span>' + r.curriculum + '</td>' +
-          '<td class="td-c">' + r.start_date_fmt + '</td>' +
+          '<td class="td-name">' + r.curriculum + '</td>' +
+          '<td class="td-c">' + stripYear(r.start_date_fmt) + '</td>' +
           '<td class="td-c">' + r.duration + '</td>' +
-          '<td class="td-c">' + (r.deadline || '—') + '</td>' +
+          '<td class="td-c">' + stripYear(r.deadline || '—') + '</td>' +
           '<td class="td-c">' + r.capacity + '</td>' +
           '<td class="td-c">' + r.registered + '</td>' +
           '<td class="td-c">' + r.waiting + '</td>' +
@@ -437,14 +441,11 @@
 
     function setDetailHeader(label) {
       var hint = document.getElementById('detailHint');
-      var btn  = document.getElementById('resetBtn');
       if (label) {
         hint.textContent = label;
         hint.style.display = 'inline-block';
-        btn.classList.remove('is-active');
       } else {
         hint.style.display = 'none';
-        btn.classList.add('is-active');
       }
     }
 
@@ -524,7 +525,7 @@
         selectedId = null; setDetailHeader(null);
         loadMonth(curYear, curMonth);
       });
-      document.getElementById('resetBtn').addEventListener('click', resetDetail);
+      /* resetBtn 제거됨 — 월 이동 시 자동 초기화 */
       document.getElementById('downloadBtn').addEventListener('click', function () {
         alert('연간 일정 다운로드 기능은 준비 중입니다.');
       });
