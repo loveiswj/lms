@@ -61,7 +61,7 @@
 /* ── 소개 섹션 ── */
 .ei-intro {
   padding: 64px 24px 48px;
-  max-width: 1240px;
+  max-width: 1060px;
   margin: 0 auto;
   border-bottom: 1px solid #E5E7EB;
 }
@@ -81,9 +81,8 @@
 /* ── 과정 섹션 ── */
 .ei-courses {
   padding: 56px 24px 80px;
-  max-width: 1240px;
+  max-width: 1060px;
   margin: 0 auto;
-  background: #fff;
 }
 .ei-courses__title {
   font-size: 26px;
@@ -208,7 +207,7 @@
 
 /* ── 커리큘럼 상세 영역 ── */
 .ei-detail {
-  background: #fff;
+  background: #F8F9FB;
   border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 36px 32px;
@@ -273,36 +272,33 @@
 .ei-curriculum {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  overflow: hidden;
+  font-size: 14px;
 }
 .ei-curriculum th {
-  background: #fff;
-  color: #374151;
-  padding: 12px 16px;
-  text-align: center;
+  background: #2C3E6B;
+  color: #fff;
+  padding: 11px 16px;
+  text-align: left;
   font-weight: 700;
   font-size: 13px;
-  border-bottom: 2px solid #E5E7EB;
 }
+.ei-curriculum th:first-child { border-radius: 8px 0 0 0; }
+.ei-curriculum th:last-child  { border-radius: 0 8px 0 0; }
 .ei-curriculum td {
-  padding: 14px 16px;
+  padding: 13px 16px;
   border-bottom: 1px solid #E5E7EB;
   color: #374151;
-  vertical-align: middle;
+  vertical-align: top;
   line-height: 1.6;
 }
 .ei-curriculum tr:last-child td { border-bottom: none; }
 
 /* 과정 열 (rowspan) */
 .ei-curriculum__step-cell {
-  vertical-align: middle;
-  text-align: center;
-  min-width: 120px;
-  background: #fff;
-  border-right: 1px solid #E5E7EB;
+  vertical-align: top;
+  min-width: 100px;
+  background: #F8FAFF;
+  border-right: 2px solid #E2E8F0;
   padding: 16px 14px;
 }
 .ei-curriculum__step-num {
@@ -323,18 +319,16 @@
 
 /* 교육내용 제목 열 */
 .ei-curriculum__subject-cell {
-  min-width: 160px;
-  vertical-align: middle;
-  font-size: 13px;
+  min-width: 140px;
+  vertical-align: top;
+  font-size: 14px;
   font-weight: 700;
   color: #0F172A;
-  border-right: 1px solid #E5E7EB;
 }
 
 /* 세부항목 열 */
 .ei-curriculum__items-cell {
-  vertical-align: middle;
-  border-right: 1px solid #E5E7EB;
+  vertical-align: top;
 }
 .ei-curriculum__items {
   margin: 0;
@@ -360,10 +354,9 @@
 /* 교육시간 열 */
 .ei-curriculum__time-cell {
   white-space: nowrap;
-  min-width: 160px;
-  text-align: center;
-  vertical-align: middle;
-  background: #fff;
+  min-width: 130px;
+  vertical-align: top;
+  background: #FAFBFF;
   font-size: 13px;
   font-weight: 600;
   color: #374151;
@@ -404,18 +397,31 @@
 
 /* ── 교육장 안내 ── */
 .ei-venue {
-  background: #fff;
+  background: linear-gradient(160deg, #0D1B35 0%, #06101F 100%);
   padding: 80px 24px;
-  border-top: 1px solid #E5E7EB;
+  position: relative;
+  overflow: hidden;
 }
-.ei-venue::before { display: none; }
+.ei-venue::before {
+  content: '';
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  top: -120px;
+  left: -80px;
+  pointer-events: none;
+}
 .ei-venue__inner {
-  max-width: 1240px;
+  max-width: 1060px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 .ei-venue__eyebrow {
   display: inline-block;
@@ -423,9 +429,9 @@
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: #2563EB;
-  background: rgba(37,99,235,0.08);
-  border: 1px solid rgba(37,99,235,0.2);
+  color: #60A5FA;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
   border-radius: 999px;
   padding: 4px 14px;
   margin-bottom: 16px;
@@ -433,14 +439,14 @@
 .ei-venue__title {
   font-size: 32px;
   font-weight: 800;
-  color: #06101F;
+  color: #fff;
   letter-spacing: -1px;
   margin-bottom: 12px;
   line-height: 1.2;
 }
 .ei-venue__desc {
   font-size: 15px;
-  color: #6B7280;
+  color: rgba(255,255,255,0.5);
   line-height: 1.8;
   margin-bottom: 36px;
 }
@@ -454,34 +460,34 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  background: #F8F9FB;
-  border: 1px solid #E5E7EB;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 18px 20px;
   transition: background 0.2s;
 }
-.ei-venue__card:hover { background: #EEF2F8; }
+.ei-venue__card:hover { background: rgba(255,255,255,0.08); }
 .ei-venue__card-icon {
   flex-shrink: 0;
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(37,99,235,0.08);
-  border: 1px solid rgba(37,99,235,0.15);
+  background: rgba(59,130,246,0.15);
+  border: 1px solid rgba(59,130,246,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #2563EB;
+  color: #60A5FA;
 }
 .ei-venue__card-title {
   font-size: 14px;
   font-weight: 700;
-  color: #06101F;
+  color: #fff;
   margin-bottom: 5px;
 }
 .ei-venue__card-sub {
   font-size: 13px;
-  color: #6B7280;
+  color: rgba(255,255,255,0.45);
   line-height: 1.7;
 }
 .ei-venue__notice {
@@ -490,14 +496,14 @@
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #B91C1C;
-  background: rgba(239,68,68,0.06);
+  color: #FCA5A5;
+  background: rgba(239,68,68,0.08);
   border: 1px solid rgba(239,68,68,0.2);
   border-radius: 10px;
   padding: 12px 16px;
   line-height: 1.6;
 }
-.ei-venue__notice svg { flex-shrink: 0; margin-top: 2px; color: #EF4444; }
+.ei-venue__notice svg { flex-shrink: 0; margin-top: 2px; color: #F87171; }
 
 /* 지도 */
 .ei-venue__right { position: relative; }

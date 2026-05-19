@@ -284,9 +284,21 @@
   <script>
   (function () {
 
+    var DAY_KO = ['일','월','화','수','목','금','토'];
+
+    /* DATE 문자열 → "MM.DD(요일)" */
+    function fmtDate(dateStr) {
+      if (!dateStr) return '—';
+      var d = new Date(dateStr + 'T00:00:00');
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return d.getFullYear() + '.' + mm + '.' + dd + '(' + DAY_KO[d.getDay()] + ')';
+    }
+
     /* 날짜에서 연도 제거: "2026.05.04(월)" → "05.04(월)" */
     function stripYear(str) {
-      return str.replace(/^\d{4}\./, '');
+      if (!str) return '—';
+      return String(str).replace(/^\d{4}\./, '');
     }
 
     /* 과정명 축약 */
@@ -302,36 +314,6 @@
         .replace('기본 교육', '기본');
     }
 
-    /* 목업 */
-    var MOCK_CAL = {
-      '2026-5': [
-        { schdule_date:'2026-05-04', end_date:'2026-05-04', curriculum:'사용자 교육',         round:'1차', bg_color:'#0665D4', title:'사용자 교육 (1차)' },
-        { schdule_date:'2026-05-11', end_date:'2026-05-13', curriculum:'개발자 교육',         round:'1차', bg_color:'#0B4C98', title:'개발자 교육 (1차)' },
-        { schdule_date:'2026-05-14', end_date:'2026-05-14', curriculum:'관리자 교육',         round:'1차', bg_color:'#026D72', title:'관리자 교육 (1차)' },
-        { schdule_date:'2026-05-18', end_date:'2026-05-18', curriculum:'사용자 교육',         round:'2차', bg_color:'#0665D4', title:'사용자 교육 (2차)' },
-        { schdule_date:'2026-05-19', end_date:'2026-05-19', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#0B4C98', title:'i-MATRIX 교육 (1차)' },
-        { schdule_date:'2026-05-21', end_date:'2026-05-22', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#4C309D', title:'TRINITY 개발자 교육 (1차)' },
-        { schdule_date:'2026-05-26', end_date:'2026-05-28', curriculum:'개발자 교육',         round:'2차', bg_color:'#0B4C98', title:'개발자 교육 (2차)' }
-      ],
-      '2026-6': [
-        { schdule_date:'2026-06-02', end_date:'2026-06-02', curriculum:'사용자 교육',         round:'1차', bg_color:'#0665D4', title:'사용자 교육 (1차)' },
-        { schdule_date:'2026-06-09', end_date:'2026-06-11', curriculum:'개발자 교육',         round:'1차', bg_color:'#0B4C98', title:'개발자 교육 (1차)' },
-        { schdule_date:'2026-06-16', end_date:'2026-06-17', curriculum:'TRINITY 개발자 교육', round:'1차', bg_color:'#4C309D', title:'TRINITY 개발자 교육 (1차)' },
-        { schdule_date:'2026-06-23', end_date:'2026-06-23', curriculum:'i-MATRIX 교육',      round:'1차', bg_color:'#0B4C98', title:'i-MATRIX 교육 (1차)' }
-      ]
-    };
-
-    var MOCK_DETAIL = {
-      '2026-5': [
-        { round:'1차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.04(월)', duration:'1일', deadline:'2026.04.29(수)', capacity:'24명', registered:'11명', status:'마감',   waiting:'0명' },
-        { round:'1차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.11(월)', duration:'3일', deadline:'2026.05.06(수)', capacity:'24명', registered:'22명', status:'마감',   waiting:'0명' },
-        { round:'1차', curriculum:'관리자 교육',         start_date_fmt:'2026.05.14(목)', duration:'1일', deadline:'2026.05.06(수)', capacity:'24명', registered:'10명', status:'마감',   waiting:'0명' },
-        { round:'2차', curriculum:'사용자 교육',         start_date_fmt:'2026.05.18(월)', duration:'1일', deadline:'2026.05.13(수)', capacity:'24명', registered:'17명', status:'마감',   waiting:'0명' },
-        { round:'1차', curriculum:'i-MATRIX 교육',      start_date_fmt:'2026.05.19(화)', duration:'1일', deadline:'—',              capacity:'24명', registered:'6명',  status:'신청중', waiting:'0명' },
-        { round:'1차', curriculum:'TRINITY 개발자 교육', start_date_fmt:'2026.05.21(목)', duration:'2일', deadline:'2026.05.18(월)', capacity:'24명', registered:'22명', status:'신청중', waiting:'0명' },
-        { round:'2차', curriculum:'개발자 교육',         start_date_fmt:'2026.05.26(화)', duration:'3일', deadline:'2026.05.20(수)', capacity:'24명', registered:'19명', status:'신청중', waiting:'0명' }
-      ]
-    };
 
     /* 과정별 글자색 */
     var COURSE_COLOR = {
@@ -359,9 +341,11 @@
     var calendar, selectedId = null;
 
     function fcEnd(d) {
-      var dt = new Date(d + 'T00:00:00');
-      dt.setDate(dt.getDate() + 1);
-      return dt.toISOString().slice(0, 10);
+      var p = d.split('-');
+      var dt = new Date(+p[0], +p[1] - 1, +p[2] + 1);
+      return dt.getFullYear() + '-' +
+        String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+        String(dt.getDate()).padStart(2, '0');
     }
 
     /* 달력 렌더링 */
@@ -369,19 +353,19 @@
       calendar.removeAllEvents();
       events.forEach(function (ev) {
         calendar.addEvent({
-          id:              ev.schdule_date + '|' + ev.curriculum,
-          title:           ev.title,
-          start:           ev.schdule_date,
-          end:             fcEnd(ev.end_date || ev.schdule_date),
+          id:              ev.start_date + '|' + ev.curriculum,
+          title:           ev.curriculum + ' (' + ev.round + ')',
+          start:           ev.start_date,
+          end:             fcEnd(ev.end_date || ev.start_date),
           backgroundColor: COURSE_BG[ev.curriculum] || '#E8EEF6',
           borderColor:     'transparent',
-          textColor:       ev.bg_color,
-          extendedProps:   { curriculum: ev.curriculum, round: ev.round, schdule_date: ev.schdule_date }
+          textColor:       COURSE_COLOR[ev.curriculum] || '#1E3A5F',
+          extendedProps:   { curriculum: ev.curriculum, round: ev.round, start_date: ev.start_date }
         });
       });
     }
 
-    /* 테이블 렌더링 */
+    /* 테이블 렌더링 (Supabase row 그대로 받음) */
     function applyDetailData(rows) {
       var tb = document.getElementById('scheduleBody');
       if (!rows || !rows.length) {
@@ -389,7 +373,6 @@
         return;
       }
       tb.innerHTML = rows.map(function (r) {
-        var bc  = COURSE_COLOR[r.curriculum] || '#BFDBFE';
         var cls = r.status === '신청중'  ? 'badge-open'
                 : r.status === '접수예정' ? 'badge-scheduled'
                 : r.status === '대기신청' ? 'badge-wait'
@@ -398,42 +381,47 @@
         return '<tr>' +
           '<td class="td-c">' + (r.round || '') + '</td>' +
           '<td class="td-name">' + r.curriculum + '</td>' +
-          '<td class="td-c">' + stripYear(r.start_date_fmt) + '</td>' +
+          '<td class="td-c">' + stripYear(fmtDate(r.start_date)) + '</td>' +
           '<td class="td-c">' + r.duration + '</td>' +
-          '<td class="td-c">' + stripYear(r.deadline || '—') + '</td>' +
-          '<td class="td-c">' + r.capacity + '</td>' +
-          '<td class="td-c">' + r.registered + '</td>' +
-          '<td class="td-c">' + r.waiting + '</td>' +
+          '<td class="td-c">' + stripYear(fmtDate(r.deadline)) + '</td>' +
+          '<td class="td-c">24명</td>' +
+          '<td class="td-c">' + r.registered + '명</td>' +
+          '<td class="td-c">' + r.waiting + '명</td>' +
           '<td class="td-c"><span class="es-badge ' + cls + '">' + r.status + '</span></td>' +
           '</tr>';
       }).join('');
     }
 
-    /* ── API 설정 (개발팀에서 받은 주소로 교체) ── */
-    var API_BASE = 'https://your-company-api.com';  /* ← 여기에 실제 API 주소 입력 */
-
-    function apiFetch(url, timeout) {
-      var ctrl = new AbortController();
-      var timer = setTimeout(function () { ctrl.abort(); }, timeout || 3000);
-      return fetch(url, { headers: { 'Accept': 'application/json' }, signal: ctrl.signal })
-        .then(function (res) {
-          clearTimeout(timer);
-          if (!res.ok) throw new Error('API error ' + res.status);
-          return res.json();
-        })
-        .catch(function (e) { clearTimeout(timer); throw e; });
+    /* ── Supabase 연동 ── */
+    function monthRange(y, m) {
+      var first = y + '-' + String(m).padStart(2, '0') + '-01';
+      var d = new Date(y, m, 0);
+      var last  = y + '-' + String(m).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      return { first: first, last: last };
     }
 
-    /* API 호출 */
     function loadMonth(y, m) {
-      var key = y + '-' + m;
-      /* 즉시 Mock 표시 후 API 성공 시 교체 */
-      applyCalData(MOCK_CAL[key] || []);
-      applyDetailData(MOCK_DETAIL[key] || []);
-      apiFetch(API_BASE + '/api/edu-calendar?year=' + y + '&month=' + m)
-        .then(applyCalData).catch(function () {});
-      apiFetch(API_BASE + '/api/edu-detail?year=' + y + '&month=' + m)
-        .then(applyDetailData).catch(function () {});
+      var r = monthRange(y, m);
+      document.getElementById('scheduleBody').innerHTML =
+        '<tr><td colspan="9" class="es-empty">불러오는 중...</td></tr>';
+
+      _supabase.from('edu_schedule')
+        .select('curriculum, round, start_date, end_date')
+        .lte('start_date', r.last)
+        .gte('end_date', r.first)
+        .order('start_date')
+        .then(function (res) {
+          applyCalData(res.data || []);
+        });
+
+      _supabase.from('edu_schedule')
+        .select('*')
+        .gte('start_date', r.first)
+        .lte('start_date', r.last)
+        .order('start_date')
+        .then(function (res) {
+          if (!selectedId) applyDetailData(res.data || []);
+        });
     }
 
     function setDetailHeader(label) {
@@ -446,22 +434,17 @@
       }
     }
 
-    function loadDetail(y, m, date, curriculum, round) {
-      var key = y + '-' + m;
+    function loadDetail(startDate, curriculum, round) {
       setDetailHeader(curriculum + (round ? ' ' + round : ''));
-      /* 즉시 Mock 필터링 표시 */
-      var mockFiltered = (MOCK_DETAIL[key] || []).filter(function (x) {
-        return x.curriculum === curriculum && (!round || x.round === round);
-      });
-      applyDetailData(mockFiltered);
-      /* API 성공 시 실제 데이터로 교체 */
-      apiFetch(API_BASE + '/api/edu-detail?year=' + y + '&month=' + m + '&date=' + date)
-        .then(function (data) {
-          applyDetailData(data.filter(function (x) {
-            return x.curriculum === curriculum && (!round || x.round === round);
-          }));
-        })
-        .catch(function () {});
+      _supabase.from('edu_schedule')
+        .select('*')
+        .eq('curriculum', curriculum)
+        .eq('round', round)
+        .lte('start_date', startDate)
+        .gte('end_date', startDate)
+        .then(function (res) {
+          applyDetailData(res.data || []);
+        });
     }
 
     function resetDetail() {
@@ -471,10 +454,15 @@
         if (ev) ev.setClassNames([]);
         selectedId = null;
       }
-      var key = curYear + '-' + curMonth;
-      applyDetailData(MOCK_DETAIL[key] || []);
-      apiFetch(API_BASE + '/api/edu-detail?year=' + curYear + '&month=' + curMonth)
-        .then(applyDetailData).catch(function () {});
+      var r = monthRange(curYear, curMonth);
+      _supabase.from('edu_schedule')
+        .select('*')
+        .gte('start_date', r.first)
+        .lte('start_date', r.last)
+        .order('start_date')
+        .then(function (res) {
+          applyDetailData(res.data || []);
+        });
     }
 
     function setLabel() {
@@ -506,7 +494,7 @@
           }
           ev.setClassNames(['fc-ev-selected']);
           selectedId = ev.id;
-          loadDetail(curYear, curMonth, ev.startStr, ev.extendedProps.curriculum, ev.extendedProps.round);
+          loadDetail(ev.extendedProps.start_date, ev.extendedProps.curriculum, ev.extendedProps.round);
         }
       });
       calendar.render();

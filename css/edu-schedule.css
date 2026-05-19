@@ -183,7 +183,7 @@
 
 /* 테이블 */
 .es-table-wrap {
-  overflow:hidden; margin-top:0; flex:1;
+  overflow-y:auto; margin-top:0;
   border:1px solid #E6E6E6; border-radius:6px;
 }
 .es-table { width:100%; border-collapse:separate; border-spacing:0; font-size:14px; table-layout:auto; }
