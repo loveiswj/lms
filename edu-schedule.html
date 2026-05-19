@@ -409,30 +409,24 @@
       }).join('');
     }
 
-    /* Supabase 타임아웃 래퍼 (2.5초 내 응답 없으면 reject → mock fallback) */
-    function sbFetch(fn, params) {
-      return new Promise(function (resolve, reject) {
-        var settled = false;
-        var timer = setTimeout(function () {
-          if (!settled) { settled = true; reject(new Error('timeout')); }
-        }, 2500);
-        _supabase.rpc(fn, params).then(function (r) {
-          if (settled) return;
-          settled = true; clearTimeout(timer);
-          if (r.error) reject(r.error); else resolve(r.data || []);
-        }).catch(function (e) {
-          if (!settled) { settled = true; clearTimeout(timer); reject(e); }
+    /* ── API 설정 (개발팀에서 받은 주소로 교체) ── */
+    var API_BASE = 'https://your-company-api.com';  /* ← 여기에 실제 API 주소 입력 */
+
+    function apiFetch(url) {
+      return fetch(url, { headers: { 'Accept': 'application/json' } })
+        .then(function (res) {
+          if (!res.ok) throw new Error('API error ' + res.status);
+          return res.json();
         });
-      });
     }
 
     /* API 호출 */
     function loadMonth(y, m) {
       var key = y + '-' + m;
-      sbFetch('get_education_calendar', { p_year: y, p_month: m })
+      apiFetch(API_BASE + '/api/edu-calendar?year=' + y + '&month=' + m)
         .then(applyCalData)
         .catch(function () { applyCalData(MOCK_CAL[key] || []); });
-      sbFetch('get_education_detail', { p_year: y, p_month: m, p_date: null })
+      apiFetch(API_BASE + '/api/edu-detail?year=' + y + '&month=' + m)
         .then(applyDetailData)
         .catch(function () { applyDetailData(MOCK_DETAIL[key] || []); });
     }
@@ -450,7 +444,7 @@
     function loadDetail(y, m, date, curriculum, round) {
       var key = y + '-' + m;
       setDetailHeader(curriculum + (round ? ' ' + round : ''));
-      sbFetch('get_education_detail', { p_year: y, p_month: m, p_date: date })
+      apiFetch(API_BASE + '/api/edu-detail?year=' + y + '&month=' + m + '&date=' + date)
         .then(function (data) {
           applyDetailData(data.filter(function (x) {
             return x.curriculum === curriculum && (!round || x.round === round);
@@ -472,7 +466,7 @@
         selectedId = null;
       }
       var key = curYear + '-' + curMonth;
-      sbFetch('get_education_detail', { p_year: curYear, p_month: curMonth, p_date: null })
+      apiFetch(API_BASE + '/api/edu-detail?year=' + curYear + '&month=' + curMonth)
         .then(applyDetailData)
         .catch(function () { applyDetailData(MOCK_DETAIL[key] || []); });
     }
