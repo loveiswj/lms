@@ -167,12 +167,12 @@
 /* "이번 달 전체" 버튼 */
 .es-month-btn {
   display:inline-flex; align-items:center; gap:4px;
-  font-size:12.5px; font-weight:600; color:var(--es-user);
-  background:#EBF4FF; border:1px solid #B3D4F5;
+  font-size:12.5px; font-weight:500; color:#9AA3B0;
+  background:#F4F5F7; border:1px solid #E2E5EA;
   border-radius:999px; padding:4px 14px; cursor:pointer;
   font-family:inherit; transition:all .15s;
 }
-.es-month-btn:hover { background:#D6EAFF; }
+.es-month-btn:hover { background:#ECEEF2; color:#6B7280; }
 .es-month-btn.is-active { background:var(--es-user); color:#fff; border-color:var(--es-user); }
 
 /* 선택된 일정 힌트 */
