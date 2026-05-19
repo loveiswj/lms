@@ -201,7 +201,7 @@
 .es-table tr:hover td { background:#F7FAFD; }
 .td-c { text-align:center; }
 .td-name {
-  text-align:left; font-weight:600; color:#575B6A;
+  text-align:left; font-weight:400; color:#575B6A;
   display:flex; align-items:center; gap:8px;
 }
 .td-dot {
