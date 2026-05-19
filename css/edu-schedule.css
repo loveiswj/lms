@@ -83,7 +83,7 @@
   height:100%;
 }
 .es-cal-head {
-  display:flex; align-items:center; justify-content:center; gap:16px;
+  display:flex; align-items:center; justify-content:space-between;
   padding:0 20px;
   height:56px; box-sizing:border-box;
   border-bottom:1px solid #E6E6E6;
