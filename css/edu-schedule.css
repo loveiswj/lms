@@ -125,7 +125,7 @@
 .es-cal-side .fc-event:hover { opacity:.78; }
 .es-cal-side .fc-event-main { padding:0; background:transparent !important; }
 .fc-ev-label {
-  font-size:12px; font-weight:600; padding:2px 5px;
+  font-size:12px; font-weight:400; padding:2px 5px;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   line-height:1.7;
 }
