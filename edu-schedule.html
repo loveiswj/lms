@@ -335,7 +335,7 @@
       ]
     };
 
-    /* 과정별 색상 (테두리·dot용) */
+    /* 과정별 색상 (dot·텍스트용) */
     var COURSE_COLOR = {
       '개발자 교육':         '#2C4A6F',
       '관리자 교육':         '#2E7D32',
@@ -344,6 +344,17 @@
       'i-MATRIX 교육':      '#795548',
       'i-MATRIX 심화 교육':  '#795548',
       '기본 교육':           '#1E88E5'
+    };
+
+    /* 과정별 연한 배경색 (달력 이벤트 fill용) */
+    var COURSE_BG = {
+      '개발자 교육':         '#CFE0F0',
+      '관리자 교육':         '#C8E6C9',
+      'TRINITY 개발자 교육': '#E0D5F5',
+      '사용자 교육':         '#BBDEFB',
+      'i-MATRIX 교육':      '#E8DDD8',
+      'i-MATRIX 심화 교육':  '#E8DDD8',
+      '기본 교육':           '#BBDEFB'
     };
 
     var curYear = 2026, curMonth = 5;
@@ -364,8 +375,8 @@
           title:           ev.title,
           start:           ev.schdule_date,
           end:             fcEnd(ev.end_date || ev.schdule_date),
-          backgroundColor: '#ffffff',
-          borderColor:     ev.bg_color,
+          backgroundColor: COURSE_BG[ev.curriculum] || '#E8EEF6',
+          borderColor:     'transparent',
           textColor:       ev.bg_color,
           extendedProps:   { curriculum: ev.curriculum, round: ev.round, schdule_date: ev.schdule_date }
         });

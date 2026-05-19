@@ -121,13 +121,12 @@
 
 /* 이벤트 바 */
 .es-cal-side .fc-event {
-  border-width:1.5px !important; border-style:solid !important;
+  border:none !important;
   border-radius:4px !important;
-  background:#fff !important;
   cursor:pointer; margin:1px 4px !important;
   padding:0; transition:opacity .15s;
 }
-.es-cal-side .fc-event:hover { opacity:.75; }
+.es-cal-side .fc-event:hover { opacity:.78; }
 .es-cal-side .fc-event-main { padding:0; background:transparent !important; }
 .fc-ev-label {
   font-size:11px; font-weight:600; padding:2px 5px;
