@@ -339,6 +339,7 @@
 
     var curYear = 2026, curMonth = 5;
     var calendar, selectedId = null;
+    var cachedDetailRows = [];
 
     function fcEnd(d) {
       var p = d.split('-');
@@ -420,7 +421,8 @@
         .lte('start_date', r.last)
         .order('start_date')
         .then(function (res) {
-          if (!selectedId) applyDetailData(res.data || []);
+          cachedDetailRows = res.data || [];
+          if (!selectedId) applyDetailData(cachedDetailRows);
         });
     }
 
@@ -436,16 +438,10 @@
 
     function loadDetail(curriculum, round) {
       setDetailHeader(curriculum + (round ? ' ' + round : ''));
-      var r = monthRange(curYear, curMonth);
-      _supabase.from('edu_schedule')
-        .select('*')
-        .eq('curriculum', curriculum)
-        .eq('round', round)
-        .gte('start_date', r.first)
-        .lte('start_date', r.last)
-        .then(function (res) {
-          applyDetailData(res.data || []);
-        });
+      var filtered = cachedDetailRows.filter(function (row) {
+        return row.curriculum === curriculum && row.round === round;
+      });
+      applyDetailData(filtered);
     }
 
     function resetDetail() {
@@ -455,15 +451,7 @@
         if (ev) ev.setClassNames([]);
         selectedId = null;
       }
-      var r = monthRange(curYear, curMonth);
-      _supabase.from('edu_schedule')
-        .select('*')
-        .gte('start_date', r.first)
-        .lte('start_date', r.last)
-        .order('start_date')
-        .then(function (res) {
-          applyDetailData(res.data || []);
-        });
+      applyDetailData(cachedDetailRows);
     }
 
     function setLabel() {
