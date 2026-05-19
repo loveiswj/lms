@@ -17,10 +17,10 @@
   ];
 
   var SAMPLE_VIDEOS = [
-    { title: 'AUD 대시보드 실전 질문', duration: '29:16', thumbnail_url: 'assets/images/thumb-dashboard.jpg', youtube_url: '#' },
-    { title: 'G-MATRIX 콘텐츠 작성팁', duration: '15:52', thumbnail_url: 'assets/images/thumb-epa.jpg', youtube_url: '#' },
-    { title: 'TRINITY 실전 판서', duration: '21:05', thumbnail_url: 'assets/images/thumb-olap.jpg', youtube_url: '#' },
-    { title: 'BI 데이터 파이프라인', duration: '30:11', thumbnail_url: 'assets/images/thumb-report.jpg', youtube_url: '#' },
+    { title: '전사 매출 현황', duration: '29:16', thumbnail_url: 'assets/images/thumb-main-01.jpg', youtube_url: '#' },
+    { title: '상품별 피벗 매출 분석 - 기본', duration: '15:52', thumbnail_url: 'assets/images/thumb-main-02.jpg', youtube_url: '#' },
+    { title: '매장별 매출 현황', duration: '21:05', thumbnail_url: 'assets/images/thumb-main-03.jpg', youtube_url: '#' },
+    { title: '영업 실적 보고서', duration: '30:11', thumbnail_url: 'assets/images/thumb-main-04.jpg', youtube_url: '#' },
   ];
 
   /* ────────────────────────────────────────
@@ -81,8 +81,8 @@
           '<img src="' + thumb + '" alt="' + v.title + '" loading="lazy">' +
           '<div class="video-card__play">' +
             '<svg viewBox="0 0 44 44" fill="none">' +
-              '<circle cx="22" cy="22" r="22" fill="rgba(0,0,0,0.5)"/>' +
-              '<polygon points="17,13 33,22 17,31" fill="white"/>' +
+              '<circle cx="22" cy="22" r="22" fill="rgba(0,0,0,0.4)"/>' +
+              '<polygon points="18.5,15.25 30.5,22 18.5,28.75" fill="white"/>' +
             '</svg>' +
           '</div>' +
           (v.duration ? '<span class="video-card__duration">' + v.duration + '</span>' : '') +
