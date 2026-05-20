@@ -182,10 +182,6 @@
       <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253"/></svg>
       <span>수강 현황</span>
     </a>
-    <a class="sidebar-menu-item" data-tab="revenue" onclick="showTab('revenue')">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      <span>매출 현황</span>
-    </a>
 
     <div class="sidebar-section">콘텐츠</div>
     <a class="sidebar-menu-item" data-tab="faq" onclick="showTab('faq')">
@@ -238,7 +234,7 @@
     <div style="margin-bottom:16px;">
       <label style="display:block;font-size:12px;font-weight:700;color:var(--text-hint);margin-bottom:6px;">카테고리</label>
       <select id="faqCategory" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);">
-        <option>일반</option><option>수강</option><option>결제</option><option>수료증</option><option>기술지원</option><option>기타</option>
+        <option>일반</option><option>수강</option><option>기술지원</option><option>기타</option>
       </select>
     </div>
     <div style="margin-bottom:16px;">
@@ -339,7 +335,7 @@
     document.querySelectorAll('.sidebar-menu-item[data-tab]').forEach(function(el) {
       el.classList.toggle('active', el.dataset.tab === tab);
     });
-    var titles = { dashboard:'대시보드', users:'수강생 관리', enrollments:'수강 현황', revenue:'매출 현황', faq:'FAQ 관리', community:'커뮤니티 관리' };
+    var titles = { dashboard:'대시보드', users:'수강생 관리', enrollments:'수강 현황', faq:'FAQ 관리', community:'커뮤니티 관리' };
     document.getElementById('pageTitle').textContent = titles[tab] || tab;
     renderTab(tab);
   }
@@ -349,7 +345,6 @@
     if (tab === 'dashboard')   el.innerHTML = renderDashboard();
     if (tab === 'users')       el.innerHTML = renderUsers(_userSearch);
     if (tab === 'enrollments') el.innerHTML = renderEnrollments(_enrollSearch);
-    if (tab === 'revenue')     el.innerHTML = renderRevenue();
     if (tab === 'faq')         renderFAQTab();
     if (tab === 'community')   renderCommunityTab();
   }
@@ -359,7 +354,6 @@
     var today = new Date().toISOString().slice(0, 10);
 
     var totalUsers   = _data.users.length;
-    var totalRevenue = _data.enrollments.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
     var todayUsers   = _data.users.filter(function(u) { return (u.created_at || '').slice(0, 10) === today; }).length;
 
     /* 미답변 Q&A */
@@ -403,7 +397,6 @@
             '<span style="font-size:12px;font-weight:700;color:var(--navy);min-width:32px;">' + pct + '%</span>' +
           '</div>' +
         '</td>' +
-        '<td>' + formatPrice(e.paid_amount) + '</td>' +
       '</tr>';
     }).join('');
 
@@ -411,7 +404,6 @@
     '<div class="kpi-grid">' +
       kpiCard('전체 수강생', totalUsers, '명') +
       kpiCard('오늘 신규 가입', todayUsers, '명') +
-      kpiCard('누적 매출', formatPrice(totalRevenue).replace('원',''), '원') +
       kpiCard('미답변 Q&amp;A', unanswered.length, '건') +
     '</div>' +
 
@@ -434,8 +426,8 @@
         '<span style="font-size:12px;color:var(--text-hint);">최근 8건</span>' +
       '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>이름</th><th>강의</th><th>신청일</th><th>진도율</th><th>결제금액</th></tr></thead>' +
-        '<tbody>' + (recentRows || '<tr class="empty-row"><td colspan="5">수강 내역이 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>이름</th><th>강의</th><th>신청일</th><th>진도율</th></tr></thead>' +
+        '<tbody>' + (recentRows || '<tr class="empty-row"><td colspan="4">수강 내역이 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
@@ -469,8 +461,6 @@
     var rows = list.map(function(u) {
       var userEnrs  = _data.enrollments.filter(function(e) { return e.user_id === u.id; });
       var enrCount  = userEnrs.length;
-      var totalPaid = userEnrs.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
-      var certCount = _data.certificates.filter(function(c) { return c.user_id === u.id; }).length;
       var progList  = _data.progress.filter(function(p) { return p.user_id === u.id; });
       var avgPct    = progList.length > 0
         ? Math.round(progList.reduce(function(s, p) { return s + (p.progress_pct||0); }, 0) / progList.length) : 0;
@@ -479,33 +469,21 @@
         '<td style="color:var(--text-hint);font-size:13px;">' + (u.email || '—') + '</td>' +
         '<td>' + (u.phone || '—') + '</td>' +
         '<td><span class="badge badge-blue">' + enrCount + '개</span></td>' +
-        '<td><strong style="color:var(--navy);">' + (totalPaid > 0 ? formatPrice(totalPaid) : '—') + '</strong></td>' +
-        '<td>' +
-          (certCount > 0 ? '<span class="badge badge-gold">🏆 ' + certCount + '개</span>' : '<span class="badge badge-gray">—</span>') +
-        '</td>' +
         '<td style="font-size:13px;">' + avgPct + '%</td>' +
         '<td style="font-size:12px;color:var(--text-hint);">' + formatDate(u.created_at) + '</td>' +
       '</tr>';
     }).join('');
 
-    /* 총 결제 합계 */
-    var grandTotal = list.reduce(function(s, u) {
-      return s + _data.enrollments.filter(function(e) { return e.user_id === u.id; })
-        .reduce(function(ss, e) { return ss + (e.paid_amount || 0); }, 0);
-    }, 0);
-
     return '<div class="admin-card">' +
       '<div class="admin-card-header">' +
-        '<span class="admin-card-title">전체 수강생 (' + list.length + '명)' +
-          (grandTotal > 0 ? ' &nbsp;·&nbsp; <span style="font-size:13px;color:var(--gold);font-weight:700;">총 ' + formatPrice(grandTotal) + '</span>' : '') +
-        '</span>' +
+        '<span class="admin-card-title">전체 수강생 (' + list.length + '명)</span>' +
         '<input type="text" placeholder="이름·이메일·연락처 검색" value="' + (search||'') + '" ' +
           'oninput="_userSearch=this.value;renderTab(\'users\')" ' +
           'style="padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);width:200px;">' +
       '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>수강</th><th>결제금액</th><th>수료증</th><th>평균진도</th><th>가입일</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="8">검색 결과가 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>수강</th><th>평균진도</th><th>가입일</th></tr></thead>' +
+        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="6">검색 결과가 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
@@ -541,7 +519,6 @@
             '<span style="font-size:12px;font-weight:700;min-width:32px;">' + pct + '%</span>' +
           '</div>' +
         '</td>' +
-        '<td>' + formatPrice(e.paid_amount) + '</td>' +
         '<td style="font-size:12px;color:var(--text-hint);">' + formatDate(e.enrolled_at) + '</td>' +
       '</tr>';
     }).join('');
@@ -554,86 +531,17 @@
           'style="padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);width:200px;">' +
       '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>수강생</th><th>강의</th><th>상태</th><th>진도율</th><th>결제금액</th><th>신청일</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="6">검색 결과가 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>수강생</th><th>강의</th><th>상태</th><th>진도율</th><th>신청일</th></tr></thead>' +
+        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="5">검색 결과가 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
 
-  /* ── 매출 현황 ── */
-  function renderRevenue() {
-    var total = _data.enrollments.reduce(function(s, e) { return s + (e.paid_amount || 0); }, 0);
-
-    var courseRevMap = {};
-    _data.enrollments.forEach(function(e) {
-      if (!courseRevMap[e.course_id]) courseRevMap[e.course_id] = { count: 0, revenue: 0 };
-      courseRevMap[e.course_id].count++;
-      courseRevMap[e.course_id].revenue += (e.paid_amount || 0);
-    });
-
-    var rows = Object.keys(courseRevMap).sort(function(a, b) {
-      return courseRevMap[b].revenue - courseRevMap[a].revenue;
-    }).map(function(id) {
-      var course = COURSES.find(function(c) { return c.id === parseInt(id); });
-      var d = courseRevMap[id];
-      var barW = total > 0 ? Math.round(d.revenue / total * 100) : 0;
-      return '<tr>' +
-        '<td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (course ? course.title : '강의 #' + id) + '</td>' +
-        '<td style="text-align:center;">' + d.count + '명</td>' +
-        '<td><strong>' + formatPrice(d.revenue) + '</strong></td>' +
-        '<td style="width:120px;">' +
-          '<div style="height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden;">' +
-            '<div style="height:100%;background:var(--gold);width:' + barW + '%;"></div>' +
-          '</div>' +
-        '</td>' +
-      '</tr>';
-    }).join('');
-
-    /* 월별 통계 */
-    var monthMap = {};
-    _data.enrollments.forEach(function(e) {
-      if (!e.enrolled_at) return;
-      var ym = e.enrolled_at.slice(0, 7);
-      if (!monthMap[ym]) monthMap[ym] = { count: 0, revenue: 0 };
-      monthMap[ym].count++;
-      monthMap[ym].revenue += (e.paid_amount || 0);
-    });
-    var monthRows = Object.keys(monthMap).sort().reverse().slice(0, 6).map(function(ym) {
-      var d = monthMap[ym];
-      return '<tr>' +
-        '<td>' + ym + '</td>' +
-        '<td style="text-align:center;">' + d.count + '건</td>' +
-        '<td><strong>' + formatPrice(d.revenue) + '</strong></td>' +
-      '</tr>';
-    }).join('');
-
-    return '<div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">' +
-      kpiCard('누적 총 매출', formatPrice(total).replace('원',''), '원') +
-      kpiCard('총 결제 건수', _data.enrollments.length, '건') +
-      kpiCard('강의당 평균', _data.enrollments.length > 0 ? formatPrice(Math.round(total/_data.enrollments.length)).replace('원','') : '0', '원') +
-    '</div>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">' +
-      '<div class="admin-card">' +
-        '<div class="admin-card-header"><span class="admin-card-title">강의별 매출 (Top)</span></div>' +
-        '<table class="admin-table">' +
-          '<thead><tr><th>강의명</th><th>수강생</th><th>매출</th><th>비중</th></tr></thead>' +
-          '<tbody>' + (rows || '<tr class="empty-row"><td colspan="4">결제 내역이 없습니다</td></tr>') + '</tbody>' +
-        '</table>' +
-      '</div>' +
-      '<div class="admin-card">' +
-        '<div class="admin-card-header"><span class="admin-card-title">월별 매출</span></div>' +
-        '<table class="admin-table">' +
-          '<thead><tr><th>월</th><th>건수</th><th>매출</th></tr></thead>' +
-          '<tbody>' + (monthRows || '<tr class="empty-row"><td colspan="3">데이터가 없습니다</td></tr>') + '</tbody>' +
-        '</table>' +
-      '</div>' +
-    '</div>';
-  }
 
   /* ══════════════════════════════════════
      FAQ 관리
   ══════════════════════════════════════ */
-  var FAQ_CATS = ['일반','수강','결제','수료증','기술지원','기타'];
+  var FAQ_CATS = ['일반','수강','기술지원','기타'];
 
   async function renderFAQTab() {
     var el = document.getElementById('adminContent');
@@ -883,7 +791,7 @@
 
     /* URL hash로 초기 탭 결정 */
     var hash = window.location.hash.replace('#', '');
-    var validTabs = ['dashboard','users','enrollments','revenue','faq','community'];
+    var validTabs = ['dashboard','users','enrollments','faq','community'];
     var initTab = validTabs.includes(hash) ? hash : 'dashboard';
     showTab(initTab);
   }
