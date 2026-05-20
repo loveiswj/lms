@@ -1204,7 +1204,7 @@
         document.getElementById('commentList').innerHTML = '';
       }
 
-      document.getElementById('likeBtn').classList.remove('active');
+      document.getElementById('likeBtn').classList.toggle('active', !!state.likes[id]);
       document.getElementById('editForm').style.display = 'none';
       document.getElementById('detailBody').style.display = '';
       document.getElementById('detailTitle').style.display = '';
@@ -1823,7 +1823,7 @@
             '<span class="comment-item__author" style="color:var(--navy);">🛡 ' + c.author_name + '</span>' +
             '<span class="comment-item__date">' + new Date(c.created_at).toLocaleDateString('ko-KR') + '</span>' +
           '</div>' +
-          '<div class="comment-item__body">' + c.content + '</div>' +
+          '<div class="comment-item__body">' + escHtml(c.content) + '</div>' +
         '</div>';
       }).join('');
     }
@@ -1904,6 +1904,9 @@
     window.removeWriteImg = removeWriteImg;
     window.openLightbox = openLightbox;
     window.closeLightbox = closeLightbox;
+    window.editRemoveImg = editRemoveImg;
+    window.previewEditImg = previewEditImg;
+    window.removeEditImgPreview = removeEditImgPreview;
 
     /* ── 초기화 ── */
     document.addEventListener('DOMContentLoaded', function() {
