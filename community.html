@@ -672,15 +672,6 @@
 
       <!-- 왼쪽: 목록 -->
       <div class="comm-main">
-        <!-- 필터 칩 -->
-        <div class="comm-filter" id="filterChips">
-          <div class="comm-filter__chip active" data-filter="all" onclick="setFilter(this,'all')">전체</div>
-          <div class="comm-filter__chip" data-filter="notice" onclick="setFilter(this,'notice')">공지</div>
-          <div class="comm-filter__chip" data-filter="qa" onclick="setFilter(this,'qa')">Q&amp;A</div>
-          <div class="comm-filter__chip" data-filter="free" onclick="setFilter(this,'free')">자유</div>
-          <div class="comm-filter__chip" data-filter="review" onclick="setFilter(this,'review')">후기</div>
-        </div>
-
         <!-- 툴바 -->
         <div class="comm-toolbar">
           <p class="comm-toolbar__count">전체 <strong id="postCount">0</strong>개 게시글</p>
@@ -700,58 +691,6 @@
         </div>
       </div>
 
-      <!-- 오른쪽: 사이드바 -->
-      <aside class="comm-sidebar">
-        <!-- 제품 탭 -->
-        <div class="comm-sidebar__card">
-          <div class="comm-sidebar__title">제품별 인기글</div>
-          <div class="product-tab-row">
-            <div class="product-tab active" onclick="setProductTab(this,'all')">전체</div>
-            <div class="product-tab" onclick="setProductTab(this,'aud')">AUD</div>
-            <div class="product-tab" onclick="setProductTab(this,'gmatrix')">G-MATRIX</div>
-            <div class="product-tab" onclick="setProductTab(this,'trinity')">TRINITY</div>
-          </div>
-          <div id="popularList">
-            <div class="popular-post" onclick="goDetail(1)">
-              <span class="popular-post__num">1</span>
-              <span class="popular-post__title">AUD로 월간 매출 대시보드 만든 후기</span>
-            </div>
-            <div class="popular-post" onclick="goDetail(2)">
-              <span class="popular-post__num">2</span>
-              <span class="popular-post__title">EPA 과정 수강 후 업무 자동화 성공했습니다</span>
-            </div>
-            <div class="popular-post" onclick="goDetail(3)">
-              <span class="popular-post__num">3</span>
-              <span class="popular-post__title">OLAP 분석 처음 해봤는데 생각보다 쉬워요</span>
-            </div>
-            <div class="popular-post" onclick="goDetail(4)">
-              <span class="popular-post__num">4</span>
-              <span class="popular-post__title">대시보드 강의 질문 — 필터 연동 방법</span>
-            </div>
-            <div class="popular-post" onclick="goDetail(5)">
-              <span class="popular-post__num">5</span>
-              <span class="popular-post__title">수강 3개월차 솔직한 리뷰</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 커뮤니티 통계 -->
-        <div class="comm-sidebar__card">
-          <div class="comm-sidebar__title">커뮤니티 현황</div>
-          <div class="stat-row">
-            <span class="stat-row__label">전체 게시글</span>
-            <span class="stat-row__val" id="statTotal">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-row__label">오늘 게시글</span>
-            <span class="stat-row__val" id="statToday">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-row__label">Q&amp;A 답변 대기</span>
-            <span class="stat-row__val" id="statQna">0</span>
-          </div>
-        </div>
-      </aside>
     </div>
   </div>
 
