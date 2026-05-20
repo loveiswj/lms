@@ -626,7 +626,7 @@
       var hasCommunity = userPosts.length > 0;
       var qaCount   = userPosts.filter(function(p) { return p.category === 'qa'; }).length;
       return '<tr>' +
-        '<td>' + avatarCell(u.name || '—', null) + '</td>' +
+        '<td style="font-size:14px;font-weight:500;">' + escHtml(u.name || '—') + '</td>' +
         '<td style="color:#6B7280;font-size:13px;">' + escHtml(u.email || '—') + '</td>' +
         '<td>' + escHtml(u.phone || '—') + '</td>' +
         '<td>' + escHtml(u.company || '—') + '</td>' +
