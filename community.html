@@ -663,6 +663,49 @@
       .write-layout, .comm-detail-layout, .mypage-layout { padding: 20px 16px 48px; }
       .detail-header__title { font-size: 20px; }
     }
+
+    /* ── 커뮤니티 아코디언 ── */
+    .faq-group__title {
+      font-size: 17px; font-weight: 700; color: var(--navy);
+      margin: 32px 0 10px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--navy);
+    }
+    .faq-group__title:first-child { margin-top: 0; }
+    #postList .faq-item-new.is-open .faq-a { max-height: 9999px; }
+    .post-acc__title { flex: 1; text-align: left; font-size: 15px; font-weight: 600; color: var(--text-primary); margin-right: 8px; }
+    .faq-item-new.is-open .post-acc__title { color: var(--blue); }
+    .post-acc__meta { font-size: 12px; color: var(--text-hint); font-weight: 400; white-space: nowrap; margin-right: 12px; }
+    .post-acc__body { padding: 20px 30px 24px; }
+    .post-acc__content { font-size: 15px; line-height: 1.8; color: var(--text-primary); white-space: pre-wrap; margin-bottom: 20px; }
+    .post-acc__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px; padding: 12px 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 20px;
+    }
+    .post-acc__stats { font-size: 13px; color: var(--text-hint); display: flex; gap: 12px; }
+    .post-acc__btns { display: flex; align-items: center; gap: 8px; }
+    .post-acc__like {
+      display: flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 100px;
+      background: #fff; font-size: 13px; color: var(--text-sub);
+      cursor: pointer; font-family: var(--font); transition: all 0.15s;
+    }
+    .post-acc__like.active, .post-acc__like:hover { border-color: var(--navy); color: var(--navy); background: #EEF2FF; }
+    .post-acc__comments { margin-top: 8px; }
+    .post-acc__comments-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .post-acc__edit-title {
+      width: 100%; box-sizing: border-box; font-size: 15px; font-weight: 600; color: var(--navy);
+      border: 1.5px solid var(--border); border-radius: 8px; padding: 9px 12px;
+      font-family: var(--font); margin-bottom: 8px;
+    }
+    .post-acc__edit-title:focus { outline: none; border-color: var(--navy); }
+    .post-acc__edit-body {
+      width: 100%; box-sizing: border-box; min-height: 140px; font-size: 14px;
+      line-height: 1.7; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 10px 12px; font-family: var(--font); resize: vertical; margin-bottom: 8px;
+    }
+    .post-acc__edit-body:focus { outline: none; border-color: var(--navy); }
+    .post-acc__edit-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -1119,31 +1162,33 @@
       if (el) el.classList.add('active');
     }
 
-    /* ── 게시글 렌더링 ── */
+    /* ── HTML 이스케이프 ── */
+    function escHtml(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ── 게시글 렌더링 (FAQ 아코디언 스타일) ── */
     function renderPosts() {
       var cat = state.currentCat;
-      var filter = state.currentFilter;
-      var badgeMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
-      var badgeClass = { notice: 'post-card__badge--notice', qa: 'post-card__badge--qa', review: 'post-card__badge--review', free: '' };
-
-      var today = new Date().toISOString().slice(0, 10);
       var allPosts = state.dbPosts.length > 0
         ? state.dbPosts.map(function(p) {
             return { id: p.id, cat: p.category, title: p.title,
-                     excerpt: (p.content || '').slice(0, 120), author: p.author_name,
+                     content: p.content || '', author: p.author_name,
                      date: (p.created_at || '').slice(0, 10),
-                     views: p.views || 0, likes: p.likes || 0, comments: 0 };
+                     views: p.views || 0, likes: p.likes || 0,
+                     author_id: p.author_id };
           })
-        : POSTS;
+        : POSTS.map(function(p) {
+            return { id: p.id, cat: p.cat, title: p.title, content: p.excerpt,
+                     author: p.author, date: p.date, views: p.views, likes: p.likes, author_id: null };
+          });
 
       var filtered = allPosts.filter(function(p) {
         if (cat !== 'all' && p.cat !== cat) return false;
-        if (filter !== 'all' && p.cat !== filter) return false;
         return true;
       });
 
       document.getElementById('postCount').textContent = filtered.length;
-
       var list = document.getElementById('postList');
       var empty = document.getElementById('emptyState');
 
@@ -1154,20 +1199,218 @@
       }
       empty.style.display = 'none';
 
-      list.innerHTML = filtered.map(function(p) {
-        return '<div class="post-card" onclick="goDetail(' + p.id + ')">' +
-          '<div class="post-card__top"><span class="post-card__badge ' + (badgeClass[p.cat] || '') + '">' + (badgeMap[p.cat] || '일반') + '</span></div>' +
-          '<div class="post-card__title">' + p.title + '</div>' +
-          '<div class="post-card__excerpt">' + p.excerpt + '</div>' +
-          '<div class="post-card__meta">' +
-            '<span class="post-card__meta-item">' + p.author + '</span>' +
-            '<span class="post-card__meta-item">' + p.date + '</span>' +
-            '<span class="post-card__meta-item">조회 ' + p.views + '</span>' +
-            '<span class="post-card__meta-item">댓글 ' + p.comments + '</span>' +
-            '<span class="post-card__meta-item">추천 ' + p.likes + '</span>' +
-          '</div>' +
+      var notices = filtered.filter(function(p) { return p.cat === 'notice'; });
+      var qas    = filtered.filter(function(p) { return p.cat !== 'notice'; });
+
+      function renderItem(p) {
+        var sid = escHtml(String(p.id));
+        var canManage = state.session && (
+          (p.author_id && p.author_id === state.session.user.id) || state.isAdmin
+        );
+        var manageHtml = canManage
+          ? '<button class="post-actions__btn" onclick="event.stopPropagation();accEdit(\'' + sid + '\')">수정</button>' +
+            '<button class="post-actions__btn post-actions__btn--danger" onclick="event.stopPropagation();accDelete(\'' + sid + '\')">삭제</button>'
+          : '';
+        return '<div class="faq-item-new" id="post-' + sid + '">' +
+          '<button class="faq-q" onclick="togglePost(\'' + sid + '\')">' +
+            '<span class="post-acc__title">' + escHtml(p.title) + '</span>' +
+            '<span class="post-acc__meta">' + escHtml(p.author) + ' · ' + escHtml(p.date) + '</span>' +
+            '<svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</button>' +
+          '<div class="faq-a"><div class="post-acc__body">' +
+            '<div class="post-acc__content" id="post-body-' + sid + '">' + escHtml(p.content) + '</div>' +
+            '<div class="post-acc__footer">' +
+              '<div class="post-acc__stats">' +
+                '<span>조회 <span id="post-views-' + sid + '">' + p.views + '</span></span>' +
+                '<span>추천 <span id="post-likes-' + sid + '">' + p.likes + '</span></span>' +
+              '</div>' +
+              '<div class="post-acc__btns">' +
+                manageHtml +
+                '<button class="post-acc__like" id="post-like-btn-' + sid + '" onclick="event.stopPropagation();accLike(\'' + sid + '\')">' +
+                  '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' +
+                  '도움이 됐어요' +
+                '</button>' +
+              '</div>' +
+            '</div>' +
+            '<div class="post-acc__comments" id="post-comments-' + sid + '">' +
+              '<p class="post-acc__comments-title">댓글 <span id="post-ccount-' + sid + '">-</span>개</p>' +
+              '<div id="post-clist-' + sid + '"></div>' +
+              (state.session
+                ? '<div class="comment-write" style="margin-top:12px;">' +
+                    '<input class="comment-write__input" id="post-cinput-' + sid + '" placeholder="댓글을 입력하세요">' +
+                    '<button class="comment-write__btn" onclick="event.stopPropagation();accComment(\'' + sid + '\')">등록</button>' +
+                  '</div>'
+                : '<p style="font-size:13px;color:var(--text-hint);margin-top:8px;">로그인 후 댓글을 작성할 수 있습니다.</p>'
+              ) +
+            '</div>' +
+          '</div></div>' +
         '</div>';
-      }).join('');
+      }
+
+      function renderGroup(label, posts) {
+        if (!posts.length) return '';
+        return '<p class="faq-group__title">' + label + '</p>' +
+               '<div class="faq-list-new">' + posts.map(renderItem).join('') + '</div>';
+      }
+
+      list.innerHTML = renderGroup('공지사항', notices) + renderGroup('Q&A', qas);
+    }
+
+    /* ── 아코디언 토글 ── */
+    async function togglePost(id) {
+      var item = document.getElementById('post-' + id);
+      if (!item) return;
+      var isOpen = item.classList.contains('is-open');
+      document.querySelectorAll('#postList .faq-item-new.is-open').forEach(function(el) { el.classList.remove('is-open'); });
+      if (isOpen) return;
+      item.classList.add('is-open');
+      state.currentDetailId = id;
+
+      if (typeof _supabase === 'undefined') return;
+
+      // 조회수 (세션당 1회)
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      if (dbPost && !state.viewedPosts[id]) {
+        state.viewedPosts[id] = true;
+        dbPost.views = (dbPost.views || 0) + 1;
+        _supabase.from('community_posts').update({ views: dbPost.views }).eq('id', id).then(function(){});
+        var vEl = document.getElementById('post-views-' + id);
+        if (vEl) vEl.textContent = dbPost.views;
+      }
+
+      // 댓글 로드
+      var res = await _supabase.from('community_comments').select('*').eq('post_id', id).order('created_at');
+      var comments = res.data || [];
+      var ccEl = document.getElementById('post-ccount-' + id);
+      if (ccEl) ccEl.textContent = comments.length;
+      var clEl = document.getElementById('post-clist-' + id);
+      if (clEl) {
+        clEl.innerHTML = comments.length === 0
+          ? '<p style="font-size:13px;color:var(--text-hint);margin-bottom:12px;">아직 댓글이 없습니다.</p>'
+          : comments.map(function(c) {
+              return '<div class="comment-item">' +
+                '<div class="comment-item__top">' +
+                  '<span class="comment-item__author">' + escHtml(c.author_name) + '</span>' +
+                  '<span class="comment-item__date">' + new Date(c.created_at).toLocaleDateString('ko-KR') + '</span>' +
+                '</div>' +
+                '<div class="comment-item__body">' + escHtml(c.content) + '</div>' +
+              '</div>';
+            }).join('');
+      }
+    }
+
+    /* ── 인라인 추천 ── */
+    function accLike(id) {
+      if (state.likes[id]) return;
+      state.likes[id] = true;
+      var btn = document.getElementById('post-like-btn-' + id);
+      if (btn) btn.classList.add('active');
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      if (dbPost) {
+        dbPost.likes = (dbPost.likes || 0) + 1;
+        var el = document.getElementById('post-likes-' + id);
+        if (el) el.textContent = dbPost.likes;
+        _supabase.from('community_posts').update({ likes: dbPost.likes }).eq('id', id).then(function(){});
+      }
+    }
+
+    /* ── 인라인 댓글 등록 ── */
+    async function accComment(postId) {
+      if (!state.session) { showToast('로그인 후 댓글을 작성할 수 있습니다'); return; }
+      var input = document.getElementById('post-cinput-' + postId);
+      var text = (input && input.value.trim()) || '';
+      if (!text) { showToast('댓글을 입력해주세요'); return; }
+
+      var authorName = state.session.user.email.split('@')[0];
+      try {
+        var profRes = await _supabase.from('profiles').select('name').eq('id', state.session.user.id).single();
+        if (profRes.data && profRes.data.name) authorName = profRes.data.name;
+      } catch(e) {}
+
+      var res = await _supabase.from('community_comments').insert({
+        post_id: postId, author_id: state.session.user.id,
+        author_name: authorName, content: text
+      });
+      if (res.error) { showToast('등록 실패: ' + res.error.message); return; }
+      if (input) input.value = '';
+      showToast('댓글이 등록됐습니다');
+
+      var reRes = await _supabase.from('community_comments').select('*').eq('post_id', postId).order('created_at');
+      var comments = reRes.data || [];
+      var ccEl = document.getElementById('post-ccount-' + postId);
+      if (ccEl) ccEl.textContent = comments.length;
+      var clEl = document.getElementById('post-clist-' + postId);
+      if (clEl) {
+        clEl.innerHTML = comments.map(function(c) {
+          return '<div class="comment-item">' +
+            '<div class="comment-item__top">' +
+              '<span class="comment-item__author">' + escHtml(c.author_name) + '</span>' +
+              '<span class="comment-item__date">' + new Date(c.created_at).toLocaleDateString('ko-KR') + '</span>' +
+            '</div>' +
+            '<div class="comment-item__body">' + escHtml(c.content) + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+
+    /* ── 인라인 수정 ── */
+    function accEdit(id) {
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      if (!dbPost) return;
+      state.currentDetailId = id;
+      var bodyEl = document.getElementById('post-body-' + id);
+      if (!bodyEl) return;
+      var sid = escHtml(String(id));
+      bodyEl.innerHTML =
+        '<input class="post-acc__edit-title" id="acc-title-' + sid + '" type="text" value="' + escHtml(dbPost.title) + '">' +
+        '<textarea class="post-acc__edit-body" id="acc-body-' + sid + '">' + escHtml(dbPost.content) + '</textarea>' +
+        '<div class="post-acc__edit-btns">' +
+          '<button class="edit-form__cancel" onclick="accCancelEdit(\'' + sid + '\')">취소</button>' +
+          '<button class="edit-form__save" onclick="accSaveEdit(\'' + sid + '\')">저장</button>' +
+        '</div>';
+    }
+
+    function accCancelEdit(id) {
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      var bodyEl = document.getElementById('post-body-' + id);
+      if (bodyEl && dbPost) bodyEl.textContent = dbPost.content;
+    }
+
+    async function accSaveEdit(id) {
+      var titleEl = document.getElementById('acc-title-' + id);
+      var bodyEl2 = document.getElementById('acc-body-' + id);
+      if (!titleEl || !bodyEl2) return;
+      var newTitle = titleEl.value.trim();
+      var newBody  = bodyEl2.value.trim();
+      if (!newTitle || !newBody) { showToast('제목과 내용을 입력해주세요'); return; }
+
+      var res = await _supabase.from('community_posts').update({ title: newTitle, content: newBody }).eq('id', id);
+      if (res.error) { showToast('수정 실패: ' + res.error.message); return; }
+
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      if (dbPost) { dbPost.title = newTitle; dbPost.content = newBody; }
+
+      var item = document.getElementById('post-' + id);
+      if (item) {
+        var titleSpan = item.querySelector('.post-acc__title');
+        if (titleSpan) titleSpan.textContent = newTitle;
+      }
+      var bodyWrap = document.getElementById('post-body-' + id);
+      if (bodyWrap) bodyWrap.textContent = newBody;
+      showToast('게시글이 수정됐습니다');
+    }
+
+    /* ── 인라인 삭제 ── */
+    async function accDelete(id) {
+      if (!confirm('게시글을 삭제하시겠습니까?')) return;
+      var res = await _supabase.from('community_posts').delete().eq('id', id);
+      if (res.error) { showToast('삭제 실패: ' + res.error.message); return; }
+      state.dbPosts = state.dbPosts.filter(function(p) { return p.id != id; });
+      var item = document.getElementById('post-' + id);
+      if (item) item.remove();
+      var remaining = document.querySelectorAll('#postList .faq-item-new').length;
+      document.getElementById('postCount').textContent = remaining;
+      showToast('게시글이 삭제됐습니다');
     }
 
     /* ── 글쓰기 제출 ── */
@@ -1372,6 +1615,13 @@
     window.submitEdit = submitEdit;
     window.deletePost = deletePost;
     window.submitComment = submitComment;
+    window.togglePost = togglePost;
+    window.accLike = accLike;
+    window.accComment = accComment;
+    window.accEdit = accEdit;
+    window.accCancelEdit = accCancelEdit;
+    window.accSaveEdit = accSaveEdit;
+    window.accDelete = accDelete;
     window.submitWrite = submitWrite;
 
     /* ── 초기화 ── */
