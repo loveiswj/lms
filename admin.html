@@ -605,7 +605,7 @@
   }
 
   /* ── 수강생 관리 ── */
-  function renderUsers(search) {
+  function buildUserRows(search) {
     var list = _data.users;
     if (search) {
       var q = search.toLowerCase();
@@ -640,19 +640,33 @@
         '<td style="font-size:12px;color:#9CA3AF;">' + formatDate(u.created_at) + '</td>' +
       '</tr>';
     }).join('');
+    return { rows: rows, count: list.length };
+  }
+
+  function updateUserRows() {
+    _userSearch = document.getElementById('userSearchInput') ? document.getElementById('userSearchInput').value : _userSearch;
+    var result = buildUserRows(_userSearch);
+    var tbody = document.getElementById('userTableBody');
+    var title = document.getElementById('userTableTitle');
+    if (tbody) tbody.innerHTML = result.rows || '<tr class="empty-row"><td colspan="10">검색 결과가 없습니다</td></tr>';
+    if (title) title.textContent = '전체 수강생 (' + result.count + '명)';
+  }
+
+  function renderUsers(search) {
+    var result = buildUserRows(search);
     return '<div class="admin-card">' +
       '<div class="admin-card-header">' +
-        '<span class="admin-card-title">전체 수강생 (' + list.length + '명)</span>' +
-        '<input type="text" placeholder="이름·회사·연락처 검색" value="' + escHtml(search||'') + '" ' +
-          'oninput="_userSearch=this.value;renderTab(\'users\')" ' +
+        '<span class="admin-card-title" id="userTableTitle">전체 수강생 (' + result.count + '명)</span>' +
+        '<input type="text" id="userSearchInput" placeholder="이름·회사·연락처 검색" value="' + escHtml(search||'') + '" ' +
+          'oninput="_userSearch=this.value;updateUserRows()" ' +
           'style="padding:7px 12px;border:1.5px solid #E5E7EB;border-radius:6px;font-size:13px;font-family:\'Noto Sans KR\',sans-serif;width:200px;outline:none;">' +
       '</div>' +
       '<table class="admin-table"><thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>회사명</th><th>소속/부서</th><th>수강</th><th>평균진도</th><th>커뮤니티</th><th>Q&amp;A글</th><th>가입일</th></tr></thead>' +
-      '<tbody>' + (rows || '<tr class="empty-row"><td colspan="10">검색 결과가 없습니다</td></tr>') + '</tbody></table></div>';
+      '<tbody id="userTableBody">' + (result.rows || '<tr class="empty-row"><td colspan="10">검색 결과가 없습니다</td></tr>') + '</tbody></table></div>';
   }
 
   /* ── 수강 현황 ── */
-  function renderEnrollments(search) {
+  function buildEnrollRows(search) {
     var list = _data.enrollments;
     if (search) {
       var q = search.toLowerCase();
@@ -672,22 +686,36 @@
       var displayName = user ? (user.name || '—') : '—';
       var courseTitle = course ? course.title : '강의 #' + e.course_id;
       return '<tr>' +
-        '<td>' + avatarCell(displayName, null) + '</td>' +
+        '<td style="font-size:14px;font-weight:500;">' + escHtml(displayName) + '</td>' +
         '<td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;" title="' + escHtml(courseTitle) + '">' + escHtml(courseTitle) + '</td>' +
         '<td><span class="badge ' + (isDone ? 'badge-green' : 'badge-navy') + '">' + (isDone ? '완료' : '수강중') + '</span></td>' +
         '<td>' + progressBar(pct) + '</td>' +
         '<td style="font-size:13px;color:#6B7280;">' + formatDateShort(e.enrolled_at) + '</td>' +
       '</tr>';
     }).join('');
+    return { rows: rows, count: list.length };
+  }
+
+  function updateEnrollRows() {
+    _enrollSearch = document.getElementById('enrollSearchInput') ? document.getElementById('enrollSearchInput').value : _enrollSearch;
+    var result = buildEnrollRows(_enrollSearch);
+    var tbody = document.getElementById('enrollTableBody');
+    var title = document.getElementById('enrollTableTitle');
+    if (tbody) tbody.innerHTML = result.rows || '<tr class="empty-row"><td colspan="5">검색 결과가 없습니다</td></tr>';
+    if (title) title.textContent = '전체 수강 현황 (' + result.count + '건)';
+  }
+
+  function renderEnrollments(search) {
+    var result = buildEnrollRows(search);
     return '<div class="admin-card">' +
       '<div class="admin-card-header">' +
-        '<span class="admin-card-title">전체 수강 현황 (' + list.length + '건)</span>' +
-        '<input type="text" placeholder="수강생·강의명 검색" value="' + escHtml(search||'') + '" ' +
-          'oninput="_enrollSearch=this.value;renderTab(\'enrollments\')" ' +
+        '<span class="admin-card-title" id="enrollTableTitle">전체 수강 현황 (' + result.count + '건)</span>' +
+        '<input type="text" id="enrollSearchInput" placeholder="수강생·강의명 검색" value="' + escHtml(search||'') + '" ' +
+          'oninput="_enrollSearch=this.value;updateEnrollRows()" ' +
           'style="padding:7px 12px;border:1.5px solid #E5E7EB;border-radius:6px;font-size:13px;font-family:\'Noto Sans KR\',sans-serif;width:200px;outline:none;">' +
       '</div>' +
       '<table class="admin-table"><thead><tr><th>수강생</th><th>강의</th><th>상태</th><th>진도율</th><th>신청일</th></tr></thead>' +
-      '<tbody>' + (rows || '<tr class="empty-row"><td colspan="5">검색 결과가 없습니다</td></tr>') + '</tbody></table></div>';
+      '<tbody id="enrollTableBody">' + (result.rows || '<tr class="empty-row"><td colspan="5">검색 결과가 없습니다</td></tr>') + '</tbody></table></div>';
   }
 
   /* ── FAQ 관리 ── */
