@@ -923,6 +923,7 @@
       currentDetailId: null,
       session: null,
       likes: {},
+      viewedPosts: {},
       isAdmin: false,
       dbPosts: []
     };
@@ -965,11 +966,14 @@
         document.getElementById('detailTitle').textContent = dbPost.title;
         document.getElementById('detailAuthor').textContent = dbPost.author_name;
         document.getElementById('detailDate').textContent = (dbPost.created_at || '').slice(0, 10);
-        document.getElementById('detailViews').textContent = (dbPost.views || 0) + 1;
+        if (!state.viewedPosts[id]) {
+          state.viewedPosts[id] = true;
+          _supabase.from('community_posts').update({ views: (dbPost.views || 0) + 1 }).eq('id', id).then(function(){});
+          dbPost.views = (dbPost.views || 0) + 1;
+        }
+        document.getElementById('detailViews').textContent = dbPost.views || 0;
         document.getElementById('detailBody').textContent = dbPost.content;
         document.getElementById('likeCount').textContent = dbPost.likes || 0;
-        _supabase.from('community_posts').update({ views: (dbPost.views || 0) + 1 }).eq('id', id).then(function(){});
-        dbPost.views = (dbPost.views || 0) + 1;
         await loadComments(id);
       } else {
         var post = POSTS.find(function(p) { return p.id === id; });
@@ -1111,19 +1115,21 @@
     /* ── 추천 ── */
     function toggleLike() {
       var id = state.currentDetailId;
-      var post = POSTS.find(function(p) { return p.id === id; });
-      if (!post) return;
-      var btn = document.getElementById('likeBtn');
-      if (state.likes[id]) {
-        state.likes[id] = false;
-        post.likes = Math.max(0, post.likes - 1);
-        btn.classList.remove('active');
+      if (state.likes[id]) return;
+      state.likes[id] = true;
+      document.getElementById('likeBtn').classList.add('active');
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      if (dbPost) {
+        dbPost.likes = (dbPost.likes || 0) + 1;
+        document.getElementById('likeCount').textContent = dbPost.likes;
+        _supabase.from('community_posts').update({ likes: dbPost.likes }).eq('id', id).then(function(){});
       } else {
-        state.likes[id] = true;
-        post.likes += 1;
-        btn.classList.add('active');
+        var post = POSTS.find(function(p) { return p.id == id; });
+        if (post) {
+          post.likes = (post.likes || 0) + 1;
+          document.getElementById('likeCount').textContent = post.likes;
+        }
       }
-      document.getElementById('likeCount').textContent = post.likes;
     }
 
     /* ── 댓글 등록 ── */
@@ -1133,10 +1139,16 @@
       var text = input.value.trim();
       if (!text) { showToast('댓글을 입력해주세요'); return; }
 
+      var authorName = state.session.user.email.split('@')[0];
+      try {
+        var profRes = await _supabase.from('profiles').select('name').eq('id', state.session.user.id).single();
+        if (profRes.data && profRes.data.name) authorName = profRes.data.name;
+      } catch(e) {}
+
       var res = await _supabase.from('community_comments').insert({
         post_id: state.currentDetailId,
         author_id: state.session.user.id,
-        author_name: '운영팀',
+        author_name: authorName,
         content: text
       });
       if (res.error) { showToast('등록 실패: ' + res.error.message); return; }
@@ -1224,7 +1236,6 @@
 
     /* ── 초기화 ── */
     document.addEventListener('DOMContentLoaded', function() {
-      renderPosts();
       initFromUrl();
       if (typeof _supabase !== 'undefined') {
         _supabase.auth.getSession().then(function(res) {
@@ -1235,6 +1246,8 @@
           updateCommentUI();
         });
         loadPostsFromDB();
+      } else {
+        renderPosts();
       }
     });
 
