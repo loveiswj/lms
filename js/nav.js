@@ -230,7 +230,14 @@
     var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
-    /* 헤더를 숨겨서 깜빡임 방지, 세션 확인 후 한 번에 표시 */
+    /* localStorage 동기 확인: 세션 없으면 즉시 로그아웃 상태 표시 */
+    var localSess = getLocalSession();
+    if (!localSess) {
+      renderLoggedOut(actionsEl);
+      return;
+    }
+
+    /* 세션 있음 — 짧게 숨기고 서버 확인 후 한 번에 표시 */
     actionsEl.style.visibility = 'hidden';
 
     _supabase.auth.getSession().then(function (res) {
@@ -258,6 +265,7 @@
         actionsEl.style.visibility = '';
       }
     }).catch(function () {
+      renderLoggedOut(actionsEl);
       actionsEl.style.visibility = '';
     });
   }
