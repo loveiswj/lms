@@ -230,14 +230,9 @@
     var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
-    /* 1단계: localStorage 즉시 읽어 깜빡임 없이 바로 적용 */
-    var local = getLocalSession();
-    if (local) {
-      var quickName = local.user.email ? local.user.email.split("@")[0] : '사용자';
-      renderLoggedIn(actionsEl, quickName);
-    }
+    /* 헤더를 숨겨서 깜빡임 방지, 세션 확인 후 한 번에 표시 */
+    actionsEl.style.visibility = 'hidden';
 
-    /* 2단계: 서버 세션 검증 후 프로필명으로 업데이트 */
     _supabase.auth.getSession().then(function (res) {
       var session = res.data && res.data.session;
 
@@ -246,9 +241,11 @@
           .then(function (r) {
             var name = (r.data && r.data.name) || session.user.email.split("@")[0];
             renderLoggedIn(actionsEl, name);
+            actionsEl.style.visibility = '';
           })
           .catch(function () {
             renderLoggedIn(actionsEl, session.user.email.split("@")[0]);
+            actionsEl.style.visibility = '';
           });
 
         var mobileLoginBtn = document.getElementById("mobileLoginBtn");
@@ -256,12 +253,12 @@
         var mobileSignupBtn = document.getElementById("mobileSignupBtn");
         if (mobileSignupBtn) mobileSignupBtn.style.display = "none";
 
-      } else if (local) {
-        /* 로컬엔 있었지만 서버에선 만료 → 로그아웃 상태로 복원 */
+      } else {
         renderLoggedOut(actionsEl);
+        actionsEl.style.visibility = '';
       }
     }).catch(function () {
-      /* 네트워크 오류 시 로컬 세션 상태 유지 */
+      actionsEl.style.visibility = '';
     });
   }
 
