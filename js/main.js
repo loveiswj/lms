@@ -17,10 +17,10 @@
   ];
 
   var SAMPLE_VIDEOS = [
-    { title: '전사 매출 현황', duration: '29:16', thumbnail_url: 'assets/images/thumb-main-01.jpg', youtube_url: '#' },
-    { title: '상품별 피벗 매출 분석 - 기본', duration: '15:52', thumbnail_url: 'assets/images/thumb-main-02.jpg', youtube_url: '#' },
-    { title: '매장별 매출 현황', duration: '21:05', thumbnail_url: 'assets/images/thumb-main-03.jpg', youtube_url: '#' },
-    { title: '영업 실적 보고서', duration: '30:11', thumbnail_url: 'assets/images/thumb-main-04.jpg', youtube_url: '#' },
+    { title: '전사 매출 현황', duration: '29:16', thumbnail_url: 'assets/images/thumb-main-01.jpg', youtube_url: 'course-detail.html?id=11' },
+    { title: '상품별 피벗 매출 분석 - 기본', duration: '15:52', thumbnail_url: 'assets/images/thumb-main-02.jpg', youtube_url: 'course-detail.html?id=3' },
+    { title: '매장별 매출 현황', duration: '21:05', thumbnail_url: 'assets/images/thumb-main-03.jpg', youtube_url: 'course-detail.html?id=7' },
+    { title: '영업 실적 보고서', duration: '30:11', thumbnail_url: 'assets/images/thumb-main-04.jpg', youtube_url: 'course-detail.html?id=9' },
   ];
 
   /* ────────────────────────────────────────
@@ -75,7 +75,7 @@
     el.innerHTML = list.map(function (v) {
       var thumb  = v.thumbnail_url || 'assets/images/thumb-dashboard.jpg';
       var url    = v.youtube_url   || '#';
-      var target = url !== '#' ? 'target="_blank" rel="noopener"' : '';
+      var target = (url.startsWith('http://') || url.startsWith('https://')) ? 'target="_blank" rel="noopener"' : '';
       return '<a href="' + url + '" ' + target + ' class="video-card">' +
         '<div class="video-card__thumb">' +
           '<img src="' + thumb + '" alt="' + v.title + '" loading="lazy">' +
