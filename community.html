@@ -761,7 +761,7 @@
       <div class="comments-section">
         <div class="comments-section__title">댓글 <span id="commentTitle">0</span>개</div>
         <div id="adminCommentForm" class="comment-write" style="display:none;">
-          <input class="comment-write__input" id="commentInput" placeholder="관리자 댓글을 입력하세요">
+          <input class="comment-write__input" id="commentInput" placeholder="댓글을 입력하세요">
           <button class="comment-write__btn" onclick="submitComment()">등록</button>
         </div>
         <div id="commentNotice" style="padding:14px 16px;background:#F8F9FB;border-radius:8px;margin-bottom:24px;font-size:14px;color:var(--text-hint);border:1px solid var(--border);">
@@ -1126,9 +1126,9 @@
       document.getElementById('likeCount').textContent = post.likes;
     }
 
-    /* ── 댓글 등록 (관리자 전용) ── */
+    /* ── 댓글 등록 ── */
     async function submitComment() {
-      if (!state.isAdmin) { showToast('관리자만 댓글을 작성할 수 있습니다'); return; }
+      if (!state.session) { showToast('로그인 후 댓글을 작성할 수 있습니다'); return; }
       var input = document.getElementById('commentInput');
       var text = input.value.trim();
       if (!text) { showToast('댓글을 입력해주세요'); return; }
@@ -1166,7 +1166,7 @@
     function updateCommentUI() {
       var form   = document.getElementById('adminCommentForm');
       var notice = document.getElementById('commentNotice');
-      if (state.isAdmin) {
+      if (state.session) {
         form.style.display = 'flex';
         notice.style.display = 'none';
       } else {
