@@ -453,6 +453,78 @@
       font-size: 13px;
       color: var(--text-hint);
     }
+    .post-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .post-actions__btn {
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--text-sub);
+      transition: all 0.15s;
+    }
+    .post-actions__btn:hover { border-color: var(--navy); color: var(--navy); }
+    .post-actions__btn--danger { color: #DC2626; }
+    .post-actions__btn--danger:hover { border-color: #DC2626; color: #DC2626; }
+    .edit-form { margin-bottom: 40px; }
+    .edit-form__title {
+      width: 100%;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--font);
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+    .edit-form__title:focus { outline: none; border-color: var(--navy); }
+    .edit-form__body {
+      width: 100%;
+      min-height: 200px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: var(--font);
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+    .edit-form__body:focus { outline: none; border-color: var(--navy); }
+    .edit-form__btns { display: flex; gap: 8px; justify-content: flex-end; }
+    .edit-form__save {
+      padding: 8px 24px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+    }
+    .edit-form__cancel {
+      padding: 8px 24px;
+      background: #fff;
+      color: var(--text-sub);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+    }
     .detail-body {
       font-size: 15px;
       line-height: 1.8;
@@ -741,10 +813,21 @@
           <span>조회 <span id="detailViews">0</span></span>
           <span>댓글 <span id="detailCommentCount">0</span></span>
         </div>
+        <div class="post-actions" id="postActions" style="display:none;">
+          <button class="post-actions__btn" onclick="startEdit()">수정</button>
+          <button class="post-actions__btn post-actions__btn--danger" onclick="deletePost()">삭제</button>
+        </div>
       </div>
 
-      <div class="detail-body" id="detailBody">
-        내용을 불러오는 중...
+      <div class="detail-body" id="detailBody">내용을 불러오는 중...</div>
+
+      <div class="edit-form" id="editForm" style="display:none;">
+        <input class="edit-form__title" id="editTitle" type="text" placeholder="제목">
+        <textarea class="edit-form__body" id="editBody" placeholder="내용을 입력하세요"></textarea>
+        <div class="edit-form__btns">
+          <button class="edit-form__cancel" onclick="cancelEdit()">취소</button>
+          <button class="edit-form__save" onclick="submitEdit()">저장</button>
+        </div>
       </div>
 
       <div class="detail-reactions">
@@ -994,6 +1077,16 @@
       }
 
       document.getElementById('likeBtn').classList.remove('active');
+      document.getElementById('editForm').style.display = 'none';
+      document.getElementById('detailBody').style.display = '';
+      document.getElementById('detailTitle').style.display = '';
+
+      var canManage = state.session && (
+        (dbPost && dbPost.author_id && dbPost.author_id === state.session.user.id) ||
+        state.isAdmin
+      );
+      document.getElementById('postActions').style.display = canManage ? '' : 'none';
+
       updateCommentUI();
       showPage('pagedetail');
     }
@@ -1109,6 +1202,49 @@
         excerpt: body.slice(0, 120), author: '나',
         date: new Date().toISOString().slice(0, 10), views: 0, likes: 0, comments: 0 });
       showToast('게시글이 등록됐습니다');
+      goBoard();
+    }
+
+    /* ── 글 수정 ── */
+    function startEdit() {
+      var dbPost = state.dbPosts.find(function(p) { return p.id == state.currentDetailId; });
+      if (!dbPost) return;
+      document.getElementById('editTitle').value = dbPost.title;
+      document.getElementById('editBody').value = dbPost.content;
+      document.getElementById('detailTitle').style.display = 'none';
+      document.getElementById('detailBody').style.display = 'none';
+      document.getElementById('postActions').style.display = 'none';
+      document.getElementById('editForm').style.display = '';
+    }
+    function cancelEdit() {
+      document.getElementById('detailTitle').style.display = '';
+      document.getElementById('detailBody').style.display = '';
+      document.getElementById('postActions').style.display = '';
+      document.getElementById('editForm').style.display = 'none';
+    }
+    async function submitEdit() {
+      var id = state.currentDetailId;
+      var title = document.getElementById('editTitle').value.trim();
+      var body = document.getElementById('editBody').value.trim();
+      if (!title || !body) { showToast('제목과 내용을 입력해주세요'); return; }
+      var res = await _supabase.from('community_posts').update({ title: title, content: body }).eq('id', id);
+      if (res.error) { showToast('수정 실패: ' + res.error.message); return; }
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      if (dbPost) { dbPost.title = title; dbPost.content = body; }
+      document.getElementById('detailTitle').textContent = title;
+      document.getElementById('detailBody').textContent = body;
+      cancelEdit();
+      showToast('게시글이 수정됐습니다');
+    }
+
+    /* ── 글 삭제 ── */
+    async function deletePost() {
+      if (!confirm('게시글을 삭제하시겠습니까?')) return;
+      var id = state.currentDetailId;
+      var res = await _supabase.from('community_posts').delete().eq('id', id);
+      if (res.error) { showToast('삭제 실패: ' + res.error.message); return; }
+      state.dbPosts = state.dbPosts.filter(function(p) { return p.id != id; });
+      showToast('게시글이 삭제됐습니다');
       goBoard();
     }
 
@@ -1231,6 +1367,10 @@
     window.goDetail = goDetail;
     window.goMypage = goMypage;
     window.toggleLike = toggleLike;
+    window.startEdit = startEdit;
+    window.cancelEdit = cancelEdit;
+    window.submitEdit = submitEdit;
+    window.deletePost = deletePost;
     window.submitComment = submitComment;
     window.submitWrite = submitWrite;
 
