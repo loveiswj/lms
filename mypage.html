@@ -713,33 +713,11 @@
     async function init() {
       var session = null;
 
-      /* getSession() 우선 시도, 실패 시 onAuthStateChange 대기 */
       try {
         var gsResult = await _supabase.auth.getSession();
         session = gsResult.data && gsResult.data.session ? gsResult.data.session : null;
       } catch(e) {
-        console.error('[mypage] getSession 오류:', e);
-      }
-
-      if (!session) {
-        /* getSession 타이밍 이슈 대비: onAuthStateChange로 재시도 */
-        try {
-          session = await new Promise(function(resolve) {
-            var done = false;
-            var timer = setTimeout(function() {
-              if (!done) { done = true; resolve(null); }
-            }, 4000);
-            _supabase.auth.onAuthStateChange(function(event, s) {
-              if (!done) {
-                done = true;
-                clearTimeout(timer);
-                resolve(s);
-              }
-            });
-          });
-        } catch(e) {
-          console.error('[mypage] onAuthStateChange 오류:', e);
-        }
+        console.error('[mypage] 세션 로드 오류:', e);
       }
 
       if (!session) {
