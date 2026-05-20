@@ -1048,9 +1048,6 @@
       });
 
       document.getElementById('postCount').textContent = filtered.length;
-      document.getElementById('statTotal').textContent = allPosts.length;
-      document.getElementById('statToday').textContent = allPosts.filter(function(p) { return p.date === today; }).length;
-      document.getElementById('statQna').textContent = allPosts.filter(function(p) { return p.cat === 'qa'; }).length;
 
       var list = document.getElementById('postList');
       var empty = document.getElementById('emptyState');
