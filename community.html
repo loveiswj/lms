@@ -1417,13 +1417,60 @@
       var bodyEl = document.getElementById('post-body-' + id);
       if (!bodyEl) return;
       var sid = escHtml(String(id));
+      var currentImg = dbPost.image_url
+        ? '<div style="margin-bottom:8px;">' +
+            '<p style="font-size:12px;color:var(--text-hint);margin-bottom:4px;">현재 이미지</p>' +
+            '<div style="position:relative;display:inline-block;">' +
+              '<img src="' + escHtml(dbPost.image_url) + '" style="max-width:100%;max-height:160px;border-radius:6px;display:block;">' +
+              '<button type="button" class="write-img-preview__remove" onclick="accRemoveImg(\'' + sid + '\')">✕</button>' +
+            '</div>' +
+            '<div id="acc-img-removed-' + sid + '" style="display:none;font-size:12px;color:#DC2626;margin-top:4px;">저장 시 이미지가 삭제됩니다</div>' +
+          '</div>'
+        : '';
       bodyEl.innerHTML =
         '<input class="post-acc__edit-title" id="acc-title-' + sid + '" type="text" value="' + escHtml(dbPost.title) + '">' +
         '<textarea class="post-acc__edit-body" id="acc-body-' + sid + '">' + escHtml(dbPost.content) + '</textarea>' +
+        currentImg +
+        '<div style="margin-bottom:8px;">' +
+          '<p style="font-size:12px;color:var(--text-hint);margin-bottom:6px;">이미지 변경 <span style="font-weight:400;">(선택)</span></p>' +
+          '<div class="write-img-zone" style="padding:14px;" onclick="document.getElementById(\'acc-img-input-' + sid + '\').click()">' +
+            '📎 클릭하여 새 이미지 첨부' +
+          '</div>' +
+          '<input type="file" id="acc-img-input-' + sid + '" accept="image/*" style="display:none;" onchange="accPreviewImg(this,\'' + sid + '\')">' +
+          '<div id="acc-img-preview-' + sid + '" style="display:none;margin-top:8px;position:relative;display:none;">' +
+            '<img id="acc-img-preview-img-' + sid + '" style="max-width:100%;max-height:160px;border-radius:6px;display:block;">' +
+          '</div>' +
+        '</div>' +
         '<div class="post-acc__edit-btns">' +
           '<button class="edit-form__cancel" onclick="accCancelEdit(\'' + sid + '\')">취소</button>' +
           '<button class="edit-form__save" onclick="accSaveEdit(\'' + sid + '\')">저장</button>' +
         '</div>';
+    }
+
+    function accPreviewImg(input, sid) {
+      var file = input.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { showToast('이미지는 5MB 이하만 첨부 가능합니다'); input.value = ''; return; }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var prevEl = document.getElementById('acc-img-preview-' + sid);
+        var prevImg = document.getElementById('acc-img-preview-img-' + sid);
+        if (prevEl) prevEl.style.display = '';
+        if (prevImg) prevImg.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function accRemoveImg(sid) {
+      // 현재 이미지 썸네일 숨기기
+      var btn = event && event.target;
+      if (btn) { var wrap = btn.closest('div'); if (wrap) wrap.style.opacity = '0.3'; }
+      // 삭제 안내 표시
+      var removedEl = document.getElementById('acc-img-removed-' + sid);
+      if (removedEl) removedEl.style.display = '';
+      // 새 이미지 input에 삭제 플래그
+      var input = document.getElementById('acc-img-input-' + sid);
+      if (input) input.dataset.removeImg = 'true';
     }
 
     function accCancelEdit(id) {
@@ -1440,16 +1487,55 @@
       var newBody  = bodyEl2.value.trim();
       if (!newTitle || !newBody) { showToast('제목과 내용을 입력해주세요'); return; }
 
-      var res = await _supabase.from('community_posts').update({ title: newTitle, content: newBody }).eq('id', id);
+      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
+      var imageUrl = dbPost ? (dbPost.image_url || null) : null;
+
+      // 이미지 삭제 플래그 확인
+      var imgInput = document.getElementById('acc-img-input-' + id);
+      if (imgInput && imgInput.dataset.removeImg === 'true' && !imgInput.files[0]) {
+        imageUrl = null;
+      }
+
+      // 새 이미지 업로드
+      if (imgInput && imgInput.files[0]) {
+        var file = imgInput.files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        var path = state.session.user.id + '/' + Date.now() + '.' + ext;
+        var upRes = await _supabase.storage.from('community-images').upload(path, file, { upsert: true });
+        if (!upRes.error) {
+          imageUrl = _supabase.storage.from('community-images').getPublicUrl(path).data.publicUrl;
+        } else {
+          showToast('이미지 업로드 실패: ' + upRes.error.message);
+        }
+      }
+
+      var updateData = { title: newTitle, content: newBody, image_url: imageUrl };
+      var res = await _supabase.from('community_posts').update(updateData).eq('id', id);
       if (res.error) { showToast('수정 실패: ' + res.error.message); return; }
 
-      var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
-      if (dbPost) { dbPost.title = newTitle; dbPost.content = newBody; }
+      if (dbPost) { dbPost.title = newTitle; dbPost.content = newBody; dbPost.image_url = imageUrl; }
 
+      // 아코디언 내 제목·이미지·본문 갱신
       var item = document.getElementById('post-' + id);
       if (item) {
         var titleSpan = item.querySelector('.post-acc__title');
         if (titleSpan) titleSpan.textContent = newTitle;
+        var imgWrap = item.querySelector('.post-acc__image');
+        if (imageUrl) {
+          if (imgWrap) {
+            imgWrap.innerHTML = '<img src="' + escHtml(imageUrl) + '" alt="첨부 이미지" onclick="openLightbox(\'' + escHtml(imageUrl) + '\')">';
+          } else {
+            var bodyDiv = document.getElementById('post-body-' + id);
+            if (bodyDiv && bodyDiv.parentNode) {
+              var newImgDiv = document.createElement('div');
+              newImgDiv.className = 'post-acc__image';
+              newImgDiv.innerHTML = '<img src="' + escHtml(imageUrl) + '" alt="첨부 이미지" onclick="openLightbox(\'' + escHtml(imageUrl) + '\')">';
+              bodyDiv.parentNode.insertBefore(newImgDiv, bodyDiv);
+            }
+          }
+        } else if (imgWrap) {
+          imgWrap.remove();
+        }
       }
       var bodyWrap = document.getElementById('post-body-' + id);
       if (bodyWrap) bodyWrap.textContent = newBody;
@@ -1723,6 +1809,8 @@
     window.accLike = accLike;
     window.accComment = accComment;
     window.accEdit = accEdit;
+    window.accPreviewImg = accPreviewImg;
+    window.accRemoveImg = accRemoveImg;
     window.accCancelEdit = accCancelEdit;
     window.accSaveEdit = accSaveEdit;
     window.accDelete = accDelete;
