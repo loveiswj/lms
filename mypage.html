@@ -19,6 +19,11 @@
       background: var(--navy);
       color: #fff;
       padding: 48px 0 40px;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .profile-header.is-ready {
+      opacity: 1;
     }
     .profile-header .container {
       display: flex;
@@ -38,9 +43,9 @@
       font-weight: 700;
       flex-shrink: 0;
     }
-    .profile-info { flex: 1; min-height: 80px; }
-    .profile-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; min-height: 28px; }
-    .profile-email { font-size: 14px; opacity: 0.75; margin-bottom: 12px; min-height: 20px; }
+    .profile-info { flex: 1; }
+    .profile-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .profile-email { font-size: 14px; opacity: 0.75; margin-bottom: 12px; }
     .profile-badges { display: flex; gap: 8px; flex-wrap: wrap; }
     .profile-badge {
       background: rgba(255,255,255,0.12);
@@ -535,6 +540,7 @@
       document.getElementById('profileName').textContent = USER.name;
       document.getElementById('profileEmail').textContent = USER.email;
       document.getElementById('profileAvatar').textContent = USER.name.charAt(0) || '?';
+      document.querySelector('.profile-header').classList.add('is-ready');
 
       /* 레벨 계산 */
       var done = ENROLLMENTS.filter(function(e) { return e.progress === 100; }).length;
@@ -724,12 +730,15 @@
         return;
       }
 
+      /* 세션 데이터로 즉시 1차 렌더 — DB 응답 전에 빈 화면 방지 */
+      USER.email = session.user.email || '';
+      USER.name  = (session.user.user_metadata && session.user.user_metadata.name)
+        ? session.user.user_metadata.name
+        : (session.user.email || '').split('@')[0];
+      renderProfile();
+
       try {
         var userId = session.user.id;
-        USER.email = session.user.email || '';
-        USER.name  = (session.user.user_metadata && session.user.user_metadata.name)
-          ? session.user.user_metadata.name
-          : (session.user.email || '').split('@')[0];
 
         /* 프로필 로드 */
         var { data: profile } = await _supabase
