@@ -677,18 +677,45 @@
       }
     }
 
+    /* ── 수료증 렌더 (현재 미구현) ── */
+    function renderCertificates() { /* 추후 구현 */ }
+
     /* ── Supabase 데이터 로드 및 초기화 ── */
     async function init() {
-      try {
-        /* 로그인 확인 */
-        var { data: { session } } = await _supabase.auth.getSession();
-        if (!session) { window.location.href = 'login.html'; return; }
+      var session = null;
 
+      /* onAuthStateChange로 세션 감지 (getSession보다 신뢰성 높음) */
+      try {
+        session = await new Promise(function(resolve) {
+          var resolved = false;
+          var timer = setTimeout(function() {
+            if (!resolved) { resolved = true; resolve(null); }
+          }, 5000);
+
+          var ref = _supabase.auth.onAuthStateChange(function(event, s) {
+            if (!resolved) {
+              resolved = true;
+              clearTimeout(timer);
+              ref.data.subscription.unsubscribe();
+              resolve(s);
+            }
+          });
+        });
+      } catch(e) {
+        console.error('[mypage] 세션 로드 오류:', e);
+      }
+
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
         var userId = session.user.id;
-        USER.email = session.user.email;
+        USER.email = session.user.email || '';
         USER.name  = (session.user.user_metadata && session.user.user_metadata.name)
           ? session.user.user_metadata.name
-          : session.user.email.split('@')[0];
+          : (session.user.email || '').split('@')[0];
 
         /* 프로필 로드 */
         var { data: profile } = await _supabase
@@ -703,7 +730,7 @@
           if (profile.role)  USER.role  = profile.role;
         }
 
-        /* 수강 정보 로드 (enrollments + progress JOIN) */
+        /* 수강 정보 로드 */
         var { data: enrollData } = await _supabase
           .from('enrollments')
           .select('course_id, enrolled_at')
@@ -725,7 +752,7 @@
           });
         }
       } catch(e) {
-        /* 어떤 오류가 나도 렌더는 실행 */
+        console.error('[mypage] 데이터 로드 오류:', e);
       }
 
       renderProfile();
