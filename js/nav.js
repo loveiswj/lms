@@ -192,11 +192,15 @@
     try {
       var keys = Object.keys(localStorage);
       for (var i = 0; i < keys.length; i++) {
-        if (keys[i].startsWith('sb-') && keys[i].endsWith('-auth-token')) {
-          var data = JSON.parse(localStorage.getItem(keys[i]));
+        var k = keys[i];
+        if ((k.startsWith('sb-') && k.endsWith('-auth-token')) || k === 'bim-academy-auth') {
+          var raw = localStorage.getItem(k);
+          var data = JSON.parse(raw);
+          /* bim-academy-auth 키는 {currentSession:{...}} 형태일 수 있음 */
+          if (data && data.currentSession) data = data.currentSession;
           if (data && data.access_token && data.user) {
             var exp = data.expires_at;
-            if (exp && (Date.now() / 1000) > exp) return null; // 만료
+            if (exp && (Date.now() / 1000) > exp) return null;
             return data;
           }
         }
@@ -262,13 +266,11 @@
   }
 
   window.navLogout = function () {
-    /* localStorage에서 Supabase 세션 즉시 제거 */
     Object.keys(localStorage).forEach(function(key) {
-      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1) {
+      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1 || key === 'bim-academy-auth') {
         localStorage.removeItem(key);
       }
     });
-    /* 서버 측 토큰 무효화 (백그라운드) */
     if (typeof _supabase !== "undefined") _supabase.auth.signOut().catch(function(){});
     window.location.href = "index.html";
   };
