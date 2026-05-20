@@ -337,13 +337,21 @@
   <header class="site-header">
     <div class="container">
       <div class="header-main">
-        <a href="index.html" class="logo">
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
+        <a href="index.html" class="logo-new">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
+        <nav class="gnb-simple" id="gnbSimple">
+          <a href="edu-info.html" class="gnb-simple__link">교육안내</a>
+          <a href="edu-schedule.html" class="gnb-simple__link">교육일정</a>
+          <a href="course-list.html" class="gnb-simple__link">교육동영상</a>
+          <a href="apply.html" class="gnb-simple__link">교육신청</a>
+          <a href="faq.html" class="gnb-simple__link">FAQ</a>
+          <a href="community.html" class="gnb-simple__link">커뮤니티</a>
+        </nav>
         <div class="header-actions">
           <a href="mypage.html" class="header-actions__link" style="color:var(--navy);font-weight:700;">마이페이지</a>
           <span class="header-actions__divider"></span>
-          <a href="login.html" class="btn btn--secondary btn--sm" onclick="logout(event)">로그아웃</a>
+          <a href="index.html" class="btn btn--secondary btn--sm" onclick="logout(event)">로그아웃</a>
           <a href="course-list.html" class="btn btn--primary btn--sm">수강신청</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
@@ -351,6 +359,26 @@
           <span class="hamburger__line"></span>
           <span class="hamburger__line"></span>
         </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
+      <div class="mobile-nav__header">
+        <div class="logo-new">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+        </div>
+        <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
+      </div>
+      <div class="mobile-nav__links">
+        <a href="edu-info.html">교육안내</a>
+        <a href="edu-schedule.html">교육일정</a>
+        <a href="course-list.html">교육동영상</a>
+        <a href="apply.html">교육신청</a>
+        <a href="faq.html">FAQ</a>
+        <a href="community.html">커뮤니티</a>
+      </div>
+      <div class="mobile-nav__actions">
+        <a href="mypage.html" class="btn btn--secondary btn--full">마이페이지</a>
+        <a href="index.html" class="btn btn--primary btn--full" onclick="logout(event)">로그아웃</a>
       </div>
     </div>
   </header>
@@ -466,6 +494,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/course-data.js"></script>
+  <script src="js/nav.js"></script>
   <script>
     var USER = { name: '', email: '', phone: '', role: '' };
     var ENROLLMENTS = [];
@@ -684,25 +713,33 @@
     async function init() {
       var session = null;
 
-      /* onAuthStateChange로 세션 감지 (getSession보다 신뢰성 높음) */
+      /* getSession() 우선 시도, 실패 시 onAuthStateChange 대기 */
       try {
-        session = await new Promise(function(resolve) {
-          var resolved = false;
-          var timer = setTimeout(function() {
-            if (!resolved) { resolved = true; resolve(null); }
-          }, 5000);
-
-          var ref = _supabase.auth.onAuthStateChange(function(event, s) {
-            if (!resolved) {
-              resolved = true;
-              clearTimeout(timer);
-              ref.data.subscription.unsubscribe();
-              resolve(s);
-            }
-          });
-        });
+        var gsResult = await _supabase.auth.getSession();
+        session = gsResult.data && gsResult.data.session ? gsResult.data.session : null;
       } catch(e) {
-        console.error('[mypage] 세션 로드 오류:', e);
+        console.error('[mypage] getSession 오류:', e);
+      }
+
+      if (!session) {
+        /* getSession 타이밍 이슈 대비: onAuthStateChange로 재시도 */
+        try {
+          session = await new Promise(function(resolve) {
+            var done = false;
+            var timer = setTimeout(function() {
+              if (!done) { done = true; resolve(null); }
+            }, 4000);
+            _supabase.auth.onAuthStateChange(function(event, s) {
+              if (!done) {
+                done = true;
+                clearTimeout(timer);
+                resolve(s);
+              }
+            });
+          });
+        } catch(e) {
+          console.error('[mypage] onAuthStateChange 오류:', e);
+        }
       }
 
       if (!session) {
