@@ -454,7 +454,9 @@
       list = list.filter(function(u) {
         return (u.name && u.name.toLowerCase().includes(q)) ||
                (u.email && u.email.toLowerCase().includes(q)) ||
-               (u.phone && u.phone.includes(q));
+               (u.phone && u.phone.includes(q)) ||
+               (u.company && u.company.toLowerCase().includes(q)) ||
+               (u.department && u.department.toLowerCase().includes(q));
       });
     }
 
@@ -465,9 +467,11 @@
       var avgPct    = progList.length > 0
         ? Math.round(progList.reduce(function(s, p) { return s + (p.progress_pct||0); }, 0) / progList.length) : 0;
       return '<tr>' +
-        '<td><strong>' + (u.name || '—') + '</strong></td>' +
-        '<td style="color:var(--text-hint);font-size:13px;">' + (u.email || '—') + '</td>' +
-        '<td>' + (u.phone || '—') + '</td>' +
+        '<td><strong>' + escHtml(u.name || '—') + '</strong></td>' +
+        '<td style="color:var(--text-hint);font-size:13px;">' + escHtml(u.email || '—') + '</td>' +
+        '<td>' + escHtml(u.phone || '—') + '</td>' +
+        '<td>' + escHtml(u.company || '—') + '</td>' +
+        '<td>' + escHtml(u.department || '—') + '</td>' +
         '<td><span class="badge badge-blue">' + enrCount + '개</span></td>' +
         '<td style="font-size:13px;">' + avgPct + '%</td>' +
         '<td style="font-size:12px;color:var(--text-hint);">' + formatDate(u.created_at) + '</td>' +
@@ -477,13 +481,13 @@
     return '<div class="admin-card">' +
       '<div class="admin-card-header">' +
         '<span class="admin-card-title">전체 수강생 (' + list.length + '명)</span>' +
-        '<input type="text" placeholder="이름·이메일·연락처 검색" value="' + (search||'') + '" ' +
+        '<input type="text" placeholder="이름·회사·연락처 검색" value="' + (search||'') + '" ' +
           'oninput="_userSearch=this.value;renderTab(\'users\')" ' +
           'style="padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);width:200px;">' +
       '</div>' +
       '<table class="admin-table">' +
-        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>수강</th><th>평균진도</th><th>가입일</th></tr></thead>' +
-        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="6">검색 결과가 없습니다</td></tr>') + '</tbody>' +
+        '<thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>회사명</th><th>소속/부서</th><th>수강</th><th>평균진도</th><th>가입일</th></tr></thead>' +
+        '<tbody>' + (rows || '<tr class="empty-row"><td colspan="8">검색 결과가 없습니다</td></tr>') + '</tbody>' +
       '</table>' +
     '</div>';
   }
