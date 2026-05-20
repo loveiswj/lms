@@ -701,12 +701,7 @@
       </div>
 
       <form id="writeForm" onsubmit="submitWrite(event)">
-        <div class="write-form__group">
-          <label class="write-form__label">카테고리</label>
-          <select class="write-form__select" id="writeCat">
-            <option value="qa">Q&amp;A</option>
-          </select>
-        </div>
+        <input type="hidden" id="writeCat" value="qa">
         <div class="write-form__group">
           <label class="write-form__label">제목</label>
           <input type="text" class="write-form__input" id="writeTitle" placeholder="제목을 입력하세요" maxlength="100" required>
