@@ -701,7 +701,13 @@
       </div>
 
       <form id="writeForm" onsubmit="submitWrite(event)">
-        <input type="hidden" id="writeCat" value="qa">
+        <div class="write-form__group" id="writeCatGroup" style="display:none;">
+          <label class="write-form__label">카테고리</label>
+          <select class="write-form__select" id="writeCat">
+            <option value="qa">Q&amp;A</option>
+            <option value="notice">공지사항</option>
+          </select>
+        </div>
         <div class="write-form__group">
           <label class="write-form__label">제목</label>
           <input type="text" class="write-form__input" id="writeTitle" placeholder="제목을 입력하세요" maxlength="100" required>
@@ -944,6 +950,7 @@
       }
       showPage('pagewrite');
       document.getElementById('writeForm').reset();
+      document.getElementById('writeCatGroup').style.display = state.isAdmin ? '' : 'none';
     }
     async function goDetail(id) {
       state.currentDetailId = id;
