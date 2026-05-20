@@ -225,8 +225,6 @@
   }
 
   function initAuth() {
-    if (typeof _supabase === "undefined") return;
-
     var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
@@ -234,6 +232,15 @@
     var localSess = getLocalSession();
     if (!localSess) {
       renderLoggedOut(actionsEl);
+      return;
+    }
+
+    /* Supabase CDN 미로드 시 로컬 세션 데이터로 즉시 표시 */
+    if (typeof _supabase === "undefined") {
+      var localName = (localSess.user && localSess.user.user_metadata && localSess.user.user_metadata.name)
+        || (localSess.user && localSess.user.email && localSess.user.email.split('@')[0])
+        || '';
+      renderLoggedIn(actionsEl, localName);
       return;
     }
 
