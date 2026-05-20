@@ -26,20 +26,23 @@
   --navy-light:    #1E40AF;
   --gold:          #F59E0B;
   --gold-hover:    #D97706;
-  --gray-dark:     #191f28;
+  --gray-dark:     #2c333d;
+  --charcoal:      #1c2129;
 
   /* ── 배경/카드 ── */
   --bg:            #F8F8F9;
   --bg-card:       #FFFFFF;
 
   /* ── 텍스트 ── */
-  --text-primary:  #191f28;
+  --text-primary:  #333d4b;
+  /*--text-primary:  #0F172A;*/
   --text-sub:      #54575a;
   --text-hint:     #94A3B8;
   --text-gray:     #4e5968;
   
   /* ── 테두리 ── */
   --border:        #E2E8F0;
+  --border-gray:   #cbd0d7;
   --border-light:  #F1F5F9;
 
   /* ── 상태 색상 ── */
@@ -48,10 +51,10 @@
   --red:           #EF4444;
 
   /* ── 반경 ── */
-  --radius-sm:     6px;
+  --radius-sm:     7px;
   --radius-md:     10px;
   --radius-lg:     16px;
-  --radius-xl:     24px;
+  --radius-xl:     20px;
 
   /* ── 폰트 ── */
   --font:          'Pretendard', 'Noto Sans KR', sans-serif;
@@ -72,7 +75,7 @@ body {
   font-family: var(--font);
   font-size: 15px;
   color: var(--text-primary);
-  background-color: var(--bg);
+  background-color: #fff;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -187,9 +190,9 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-hint);
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
 }
 
 .breadcrumb a {
@@ -233,14 +236,14 @@ body {
 }
 
 .empty-state__title {
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .empty-state__desc {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-sub);
   line-height: 1.7;
 }
