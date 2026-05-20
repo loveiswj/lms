@@ -1294,13 +1294,10 @@
         var badgeClass = 'post-card__badge--' + (p.cat || 'free');
         var badgeLabel = escHtml(badgeMap[p.cat] || '일반');
         var excerpt = escHtml((p.content || '').replace(/\n/g, ' ').slice(0, 80)) + ((p.content || '').length > 80 ? '...' : '');
-        var hasImg = p.image_url
-          ? '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.55"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'
-          : '';
         return '<div class="post-card" style="cursor:pointer;" onclick="goDetail(' + sid + ')">' +
           '<div class="post-card__top">' +
             '<span class="post-card__badge ' + badgeClass + '">' + badgeLabel + '</span>' +
-            '<span class="post-card__title">' + escHtml(p.title) + (hasImg ? ' ' + hasImg : '') + '</span>' +
+            '<span class="post-card__title">' + escHtml(p.title) + '</span>' +
           '</div>' +
           (excerpt ? '<div class="post-card__excerpt">' + excerpt + '</div>' : '') +
           '<div class="post-card__meta">' +
