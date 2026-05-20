@@ -4,223 +4,98 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>로그인 — 비아이매트릭스 아카데미</title>
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    .auth-wrap {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-      padding: 40px 24px;
-    }
-    .auth-card {
-      background: #fff;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 48px 40px;
-      width: 100%;
-      max-width: 440px;
-      box-shadow: 0 4px 24px rgba(44,62,107,0.08);
-    }
-    .auth-logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 32px;
-    }
-    .auth-logo img { height: 36px; width: auto; }
-    .auth-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--navy);
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .auth-desc {
-      font-size: 14px;
-      color: var(--text-sub);
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .form-group { margin-bottom: 16px; }
-    .form-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .form-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 15px;
-      font-family: var(--font);
-      color: var(--text-primary);
-      background: #fff;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-    }
-    .form-input:focus {
+    body { font-family: 'Noto Sans KR', sans-serif; }
+
+    .input-focus-premium:focus {
       outline: none;
-      border-color: var(--navy);
+      border-color: #2563EB !important;
+      box-shadow: 0 0 8px rgba(37, 99, 235, 0.15);
     }
-    .form-input.error { border-color: #EF4444; }
-    .form-error {
-      font-size: 12px;
-      color: #EF4444;
-      margin-top: 4px;
-      display: none;
-    }
-    .form-error.show { display: block; }
-    .form-options {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-    .form-check {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--text-sub);
-      cursor: pointer;
-    }
-    .form-check input { accent-color: var(--navy); }
-    .form-forgot {
-      font-size: 13px;
-      color: var(--navy-light);
-      text-decoration: none;
-    }
-    .form-forgot:hover { text-decoration: underline; }
-    .btn-auth {
-      width: 100%;
-      padding: 14px;
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-md);
-      font-size: 16px;
-      font-weight: 700;
-      font-family: var(--font);
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-bottom: 16px;
-    }
-    .btn-auth:hover { background: var(--navy-dark); }
-    .btn-auth:disabled { background: var(--text-hint); cursor: not-allowed; }
-    .auth-divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .auth-divider::before,
-    .auth-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .auth-divider span { font-size: 12px; color: var(--text-hint); }
-    .btn-social {
-      width: 100%;
-      padding: 12px;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      font-weight: 600;
-      font-family: var(--font);
-      color: var(--text-primary);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: border-color 0.2s, background 0.2s;
-      margin-bottom: 10px;
-    }
-    .btn-social:hover { background: var(--bg); border-color: var(--navy-light); }
-    .auth-footer {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 14px;
-      color: var(--text-sub);
-    }
-    .auth-footer a {
-      color: var(--navy);
-      font-weight: 700;
-      text-decoration: none;
-    }
-    .auth-footer a:hover { text-decoration: underline; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+
     .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
+      position: fixed; bottom: 32px; left: 50%;
       transform: translateX(-50%) translateY(20px);
-      background: #1A1A2E;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 14px;
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 9999;
-      white-space: nowrap;
+      background: #1A1A2E; color: #fff;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 14px; opacity: 0; transition: all 0.3s;
+      z-index: 9999; white-space: nowrap;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    @media (max-width: 480px) {
-      .auth-card { padding: 32px 20px; }
-    }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center justify-center py-8 px-4"
+      style="background-color:#F4F6F9; background-image:radial-gradient(circle at top right, rgba(15,32,66,0.05) 0%, transparent 50%);">
 
-  <div class="auth-wrap">
-    <div class="auth-card">
+  <div class="w-full max-w-[480px] bg-white border border-[#E2E8F0] rounded-2xl p-8 shadow-xl transition-all duration-300">
 
-      <div class="auth-logo">
+    <!-- 헤더 -->
+    <div class="text-center mb-8">
+      <div class="flex items-center justify-center mb-4">
         <a href="index.html">
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="h-9 object-contain"
+               onerror="this.style.display='none'; document.getElementById('logoFallback').classList.remove('hidden');">
         </a>
+        <span id="logoFallback" class="text-2xl font-black tracking-tight text-[#0f2042] hidden">
+          <span class="text-red-600 font-extrabold italic">BI</span> MATRIX
+        </span>
+      </div>
+      <h1 class="text-2xl font-bold text-[#1E293B] tracking-tight">로그인</h1>
+      <p class="text-xs text-gray-500 mt-1.5">비아이매트릭스 아카데미에 오신 것을 환영합니다</p>
+    </div>
+
+    <form id="loginForm" class="space-y-5" onsubmit="handleLoginSubmit(event)" novalidate>
+
+      <!-- 이메일 -->
+      <div>
+        <label for="email" class="block text-xs font-bold text-gray-700 mb-1.5">이메일 <span class="text-red-500">*</span></label>
+        <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요" autocomplete="email"
+               class="input-focus-premium w-full px-4 py-3.5 bg-white border border-[#CBD5E1] rounded-lg text-sm text-gray-800 placeholder-gray-400 transition-all duration-200"
+               onblur="validateEmail()">
+        <p id="emailError" class="text-[11px] text-red-500 mt-1 hidden"></p>
       </div>
 
-      <h1 class="auth-title">로그인</h1>
-      <p class="auth-desc">비아이매트릭스 아카데미에 오신 것을 환영합니다</p>
-
-      <form id="loginForm" novalidate>
-        <div class="form-group">
-          <label class="form-label" for="email">이메일</label>
-          <input type="email" id="email" class="form-input" placeholder="이메일 주소를 입력하세요" autocomplete="email">
-          <div class="form-error" id="emailError">올바른 이메일 주소를 입력해주세요</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="password">비밀번호</label>
-          <input type="password" id="password" class="form-input" placeholder="비밀번호를 입력하세요" autocomplete="current-password">
-          <div class="form-error" id="passwordError">비밀번호를 입력해주세요</div>
-        </div>
-
-        <div class="form-options">
-          <label class="form-check">
-            <input type="checkbox" id="remember"> 로그인 상태 유지
-          </label>
-          <a href="#" class="form-forgot" onclick="forgotPassword(event)">비밀번호 찾기</a>
-        </div>
-
-        <button type="submit" class="btn-auth" id="loginBtn">로그인</button>
-      </form>
-
-      <div class="auth-footer">
-        아직 회원이 아니신가요? <a href="signup.html">회원가입</a>
+      <!-- 비밀번호 -->
+      <div>
+        <label for="password" class="block text-xs font-bold text-gray-700 mb-1.5">비밀번호 <span class="text-red-500">*</span></label>
+        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" autocomplete="current-password"
+               class="input-focus-premium w-full px-4 py-3.5 bg-white border border-[#CBD5E1] rounded-lg text-sm text-gray-800 placeholder-gray-400 transition-all duration-200"
+               onblur="validatePassword()">
+        <p id="passwordError" class="text-[11px] text-red-500 mt-1 hidden"></p>
       </div>
 
+      <!-- 로그인 상태 유지 & 비밀번호 찾기 -->
+      <div class="flex items-center justify-between pt-1">
+        <label class="flex items-center gap-2.5 cursor-pointer select-none"
+               onclick="event.preventDefault(); toggleKeepLogin()">
+          <input type="checkbox" id="remember" class="sr-only">
+          <div id="keepLoginBox" class="w-4 h-4 rounded-full border border-[#CBD5E1] flex items-center justify-center transition-all bg-white flex-shrink-0">
+            <svg class="w-2.5 h-2.5 text-gray-300 fill-current" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
+          </div>
+          <span class="text-xs text-gray-600 font-medium">로그인 상태 유지</span>
+        </label>
+        <a href="#" class="text-xs text-[#0f2042] font-semibold hover:underline"
+           onclick="forgotPassword(event)">비밀번호 찾기</a>
+      </div>
+
+      <!-- 로그인 버튼 -->
+      <button type="submit" id="loginBtn"
+              class="w-full bg-[#0f2042] hover:bg-[#183266] hover:shadow-lg hover:shadow-blue-900/10 text-white font-bold py-4 rounded-lg transition-all duration-300 text-sm mt-3 focus:ring-4 focus:ring-blue-100">
+        로그인
+      </button>
+    </form>
+
+    <div class="text-center mt-6 text-xs text-gray-500">
+      아직 회원이 아니신가요?
+      <a href="signup.html" class="text-[#0f2042] font-bold hover:underline ml-1">회원가입</a>
     </div>
   </div>
 
@@ -228,6 +103,26 @@
 
   <script src="js/supabase-client.js"></script>
   <script>
+    /* ── returnTo 파라미터 처리 ── */
+    var _returnTo = new URLSearchParams(window.location.search).get('returnTo') || 'mypage.html';
+
+    /* ── 이미 로그인된 경우 원래 페이지로 이동 ── */
+    _supabase.auth.getSession().then(function(res) {
+      if (res.data.session) window.location.href = _returnTo;
+    });
+
+    /* ── 페이지 로드 시 저장된 이메일 복원 ── */
+    window.addEventListener('DOMContentLoaded', function() {
+      if (localStorage.getItem('keepLoggedIn') === 'true') {
+        var savedEmail = localStorage.getItem('savedEmail');
+        if (savedEmail) document.getElementById('email').value = savedEmail;
+        var cb = document.getElementById('remember');
+        cb.checked = true;
+        updateKeepLoginStyle(true);
+      }
+    });
+
+    /* ── Toast ── */
     function showToast(msg) {
       var t = document.getElementById('toast');
       t.textContent = msg;
@@ -235,47 +130,92 @@
       setTimeout(function() { t.classList.remove('show'); }, 2500);
     }
 
-    /* 이미 로그인된 경우 마이페이지로 이동 */
-    _supabase.auth.getSession().then(function(res) {
-      if (res.data.session) window.location.href = 'mypage.html';
-    });
-
-    /* 이메일/비밀번호 로그인 */
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      var email    = document.getElementById('email');
-      var password = document.getElementById('password');
-      var valid    = true;
-
-      if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-        email.classList.add('error');
-        document.getElementById('emailError').classList.add('show');
-        valid = false;
+    /* ── 유효성 검사 공통 토글러 ── */
+    function toggleErrorUI(inputId, errorId, errorMsg, isValid) {
+      var inputEl = document.getElementById(inputId);
+      var errorEl = document.getElementById(errorId);
+      if (isValid) {
+        inputEl.classList.remove('border-red-500');
+        inputEl.classList.add('border-[#CBD5E1]');
+        errorEl.classList.add('hidden');
+        errorEl.innerText = '';
       } else {
-        email.classList.remove('error');
-        document.getElementById('emailError').classList.remove('show');
+        inputEl.classList.remove('border-[#CBD5E1]');
+        inputEl.classList.add('border-red-500');
+        errorEl.classList.remove('hidden');
+        errorEl.innerText = errorMsg;
       }
+    }
 
-      if (!password.value) {
-        password.classList.add('error');
-        document.getElementById('passwordError').classList.add('show');
-        valid = false;
+    function validateEmail() {
+      var val = document.getElementById('email').value.trim();
+      if (!val) {
+        toggleErrorUI('email', 'emailError', '이메일 주소를 입력해 주세요.', false);
+        return false;
+      }
+      var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      toggleErrorUI('email', 'emailError', '올바른 이메일 형식이 아닙니다.', isValid);
+      return isValid;
+    }
+
+    function validatePassword() {
+      var val = document.getElementById('password').value;
+      var isValid = val.length > 0;
+      toggleErrorUI('password', 'passwordError', '비밀번호를 입력해 주세요.', isValid);
+      return isValid;
+    }
+
+    /* ── 원형 체크박스 스타일 ── */
+    function updateKeepLoginStyle(isChecked) {
+      var box = document.getElementById('keepLoginBox');
+      var svg = box.querySelector('svg');
+      if (isChecked) {
+        box.classList.remove('border-[#CBD5E1]', 'bg-white');
+        box.classList.add('border-[#0f2042]', 'bg-[#0f2042]');
+        svg.classList.remove('text-gray-300');
+        svg.classList.add('text-white');
       } else {
-        password.classList.remove('error');
-        document.getElementById('passwordError').classList.remove('show');
+        box.classList.remove('border-[#0f2042]', 'bg-[#0f2042]');
+        box.classList.add('border-[#CBD5E1]', 'bg-white');
+        svg.classList.remove('text-white');
+        svg.classList.add('text-gray-300');
       }
+    }
 
-      if (!valid) return;
+    function toggleKeepLogin() {
+      var cb = document.getElementById('remember');
+      cb.checked = !cb.checked;
+      updateKeepLoginStyle(cb.checked);
+    }
+
+    /* ── 로그인 제출 ── */
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+
+      var isEmailValid = validateEmail();
+      var isPwdValid   = validatePassword();
+      if (!isEmailValid || !isPwdValid) return;
 
       var btn = document.getElementById('loginBtn');
       btn.disabled = true;
       btn.textContent = '로그인 중...';
 
+      var email    = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
       var remember = document.getElementById('remember').checked;
 
+      /* 로그인 상태 유지: 이메일 저장 */
+      if (remember) {
+        localStorage.setItem('keepLoggedIn', 'true');
+        localStorage.setItem('savedEmail', email);
+      } else {
+        localStorage.removeItem('keepLoggedIn');
+        localStorage.removeItem('savedEmail');
+      }
+
       var { data, error } = await _supabase.auth.signInWithPassword({
-        email: email.value,
-        password: password.value
+        email: email,
+        password: password
       });
 
       if (error) {
@@ -283,11 +223,11 @@
         btn.disabled = false;
         btn.textContent = '로그인';
       } else {
-        window.location.href = 'mypage.html';
+        window.location.href = _returnTo;
       }
-    });
+    }
 
-    /* 비밀번호 찾기 */
+    /* ── 비밀번호 찾기 ── */
     async function forgotPassword(e) {
       e.preventDefault();
       var email = document.getElementById('email').value.trim();
@@ -305,14 +245,6 @@
       } else {
         showToast('재설정 메일을 발송했습니다. 스팸함도 확인해주세요');
       }
-    }
-
-    /* Google 로그인 */
-    async function loginWithGoogle() {
-      await _supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.origin + '/lms/mypage.html' }
-      });
     }
   </script>
 </body>

@@ -894,7 +894,7 @@
   /* ── 초기화 ── */
   async function init() {
     var { data: { session } } = await _supabase.auth.getSession();
-    if (!session) { window.location.href = 'login.html'; return; }
+    if (!session) { window.location.href = 'login.html?returnTo=admin.html'; return; }
 
     /* 관리자 권한 체크 */
     if (!ADMIN_EMAILS.includes(session.user.email)) {
