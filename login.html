@@ -231,6 +231,11 @@
         btn.disabled = false;
         btn.textContent = '로그인';
       } else {
+        /* 세션 강제 저장 후 이동 */
+        await _supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token
+        });
         window.location.href = _returnTo;
       }
     }
