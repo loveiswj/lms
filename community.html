@@ -911,11 +911,32 @@
         </div>
       </div>
 
+      <div id="detailImage" style="display:none;margin-bottom:20px;">
+        <img id="detailImageImg" src="" alt="첨부 이미지" style="max-width:100%;border-radius:10px;cursor:pointer;" onclick="openLightbox(this.src)">
+      </div>
+
       <div class="detail-body" id="detailBody">내용을 불러오는 중...</div>
 
       <div class="edit-form" id="editForm" style="display:none;">
         <input class="edit-form__title" id="editTitle" type="text" placeholder="제목">
         <textarea class="edit-form__body" id="editBody" placeholder="내용을 입력하세요"></textarea>
+        <div id="editCurrentImg" style="display:none;margin-bottom:10px;">
+          <p style="font-size:12px;color:var(--text-hint);margin-bottom:4px;">현재 이미지</p>
+          <div style="position:relative;display:inline-block;">
+            <img id="editCurrentImgEl" src="" style="max-width:100%;max-height:160px;border-radius:6px;display:block;">
+            <button type="button" class="write-img-preview__remove" onclick="editRemoveImg()">✕</button>
+          </div>
+          <div id="editImgRemovedNotice" style="display:none;font-size:12px;color:#DC2626;margin-top:4px;">저장 시 이미지가 삭제됩니다</div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <p style="font-size:12px;color:var(--text-hint);margin-bottom:6px;">이미지 변경 <span style="font-weight:400;">(선택)</span></p>
+          <div class="write-img-zone" style="padding:14px;" onclick="document.getElementById('editImgInput').click()">📎 클릭하여 새 이미지 첨부</div>
+          <input type="file" id="editImgInput" accept="image/*" style="display:none;" onchange="previewEditImg(this)">
+          <div id="editImgPreview" style="display:none;margin-top:8px;position:relative;">
+            <img id="editImgPreviewEl" style="max-width:100%;max-height:160px;border-radius:6px;display:block;">
+            <button type="button" class="write-img-preview__remove" onclick="removeEditImgPreview()">✕</button>
+          </div>
+        </div>
         <div class="edit-form__btns">
           <button class="edit-form__cancel" onclick="cancelEdit()">취소</button>
           <button class="edit-form__save" onclick="submitEdit()">저장</button>
@@ -1155,6 +1176,15 @@
         document.getElementById('detailViews').textContent = dbPost.views || 0;
         document.getElementById('detailBody').textContent = dbPost.content;
         document.getElementById('likeCount').textContent = dbPost.likes || 0;
+        var detailImg = document.getElementById('detailImage');
+        var detailImgEl = document.getElementById('detailImageImg');
+        if (dbPost.image_url) {
+          detailImgEl.src = dbPost.image_url;
+          detailImg.style.display = '';
+        } else {
+          detailImg.style.display = 'none';
+          detailImgEl.src = '';
+        }
         await loadComments(id);
       } else {
         var post = POSTS.find(function(p) { return p.id === id; });
@@ -1222,7 +1252,7 @@
       return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    /* ── 게시글 렌더링 (FAQ 아코디언 스타일) ── */
+    /* ── 게시글 렌더링 (카드 목록 → 클릭 시 상세보기) ── */
     function renderPosts() {
       var cat = state.currentCat;
       var allPosts = state.dbPosts.length > 0
@@ -1257,56 +1287,41 @@
       var notices = filtered.filter(function(p) { return p.cat === 'notice'; });
       var qas    = filtered.filter(function(p) { return p.cat !== 'notice'; });
 
-      function renderItem(p) {
+      var badgeMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
+
+      function renderCard(p) {
         var sid = escHtml(String(p.id));
-        var canManage = state.session && (
-          (p.author_id && p.author_id === state.session.user.id) || state.isAdmin
-        );
-        var manageHtml = canManage
-          ? '<button class="post-actions__btn" onclick="event.stopPropagation();accEdit(\'' + sid + '\')">수정</button>' +
-            '<button class="post-actions__btn post-actions__btn--danger" onclick="event.stopPropagation();accDelete(\'' + sid + '\')">삭제</button>'
+        var badgeClass = 'post-card__badge--' + (p.cat || 'free');
+        var badgeLabel = escHtml(badgeMap[p.cat] || '일반');
+        var excerpt = escHtml((p.content || '').replace(/\n/g, ' ').slice(0, 80)) + ((p.content || '').length > 80 ? '...' : '');
+        var hasImg = p.image_url
+          ? '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.55"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'
           : '';
-        return '<div class="faq-item-new" id="post-' + sid + '">' +
-          '<button class="faq-q" onclick="togglePost(\'' + sid + '\')">' +
-            '<span class="post-acc__title">' + escHtml(p.title) + '</span>' +
-            '<span class="post-acc__meta">' + escHtml(p.author) + ' · ' + escHtml(p.date) + '</span>' +
-            '<svg class="faq-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>' +
-          '</button>' +
-          '<div class="faq-a"><div class="post-acc__body">' +
-            (p.image_url ? '<div class="post-acc__image"><img src="' + escHtml(p.image_url) + '" alt="첨부 이미지" onclick="openLightbox(\'' + escHtml(p.image_url) + '\')"></div>' : '') +
-            '<div class="post-acc__content" id="post-body-' + sid + '">' + escHtml(p.content) + '</div>' +
-            '<div class="post-acc__footer">' +
-              '<div class="post-acc__stats">' +
-                '<span>조회 <span id="post-views-' + sid + '">' + p.views + '</span></span>' +
-                '<span>추천 <span id="post-likes-' + sid + '">' + p.likes + '</span></span>' +
-              '</div>' +
-              '<div class="post-acc__btns">' +
-                manageHtml +
-                '<button class="post-acc__like" id="post-like-btn-' + sid + '" onclick="event.stopPropagation();accLike(\'' + sid + '\')">' +
-                  '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' +
-                  '도움이 됐어요' +
-                '</button>' +
-              '</div>' +
-            '</div>' +
-            '<div class="post-acc__comments" id="post-comments-' + sid + '">' +
-              '<p class="post-acc__comments-title">댓글 <span id="post-ccount-' + sid + '">-</span>개</p>' +
-              '<div id="post-clist-' + sid + '"></div>' +
-              (state.session
-                ? '<div class="comment-write" style="margin-top:12px;">' +
-                    '<input class="comment-write__input" id="post-cinput-' + sid + '" placeholder="댓글을 입력하세요">' +
-                    '<button class="comment-write__btn" onclick="event.stopPropagation();accComment(\'' + sid + '\')">등록</button>' +
-                  '</div>'
-                : '<p style="font-size:13px;color:var(--text-hint);margin-top:8px;">로그인 후 댓글을 작성할 수 있습니다.</p>'
-              ) +
-            '</div>' +
-          '</div></div>' +
+        return '<div class="post-card" style="cursor:pointer;" onclick="goDetail(' + sid + ')">' +
+          '<div class="post-card__top">' +
+            '<span class="post-card__badge ' + badgeClass + '">' + badgeLabel + '</span>' +
+            '<span class="post-card__title">' + escHtml(p.title) + (hasImg ? ' ' + hasImg : '') + '</span>' +
+          '</div>' +
+          (excerpt ? '<div class="post-card__excerpt">' + excerpt + '</div>' : '') +
+          '<div class="post-card__meta">' +
+            '<span class="post-card__meta-item">' + escHtml(p.author) + '</span>' +
+            '<span class="post-card__meta-item">' + escHtml(p.date) + '</span>' +
+            '<span class="post-card__meta-item">' +
+              '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+              p.views +
+            '</span>' +
+            '<span class="post-card__meta-item">' +
+              '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/></svg>' +
+              p.likes +
+            '</span>' +
+          '</div>' +
         '</div>';
       }
 
       function renderGroup(label, posts) {
         if (!posts.length) return '';
         return '<p class="faq-group__title">' + label + '</p>' +
-               '<div class="faq-list-new">' + posts.map(renderItem).join('') + '</div>';
+               '<div>' + posts.map(renderCard).join('') + '</div>';
       }
 
       list.innerHTML = renderGroup('공지사항', notices) + renderGroup('Q&A', qas);
@@ -1644,28 +1659,98 @@
       if (!dbPost) return;
       document.getElementById('editTitle').value = dbPost.title;
       document.getElementById('editBody').value = dbPost.content;
+      // 이미지 초기화
+      var curImgWrap = document.getElementById('editCurrentImg');
+      var curImgEl = document.getElementById('editCurrentImgEl');
+      var removedNotice = document.getElementById('editImgRemovedNotice');
+      var editImgInput = document.getElementById('editImgInput');
+      var editImgPreview = document.getElementById('editImgPreview');
+      if (dbPost.image_url) {
+        curImgEl.src = dbPost.image_url;
+        curImgWrap.style.display = '';
+        curImgEl.style.opacity = '1';
+      } else {
+        curImgWrap.style.display = 'none';
+      }
+      if (removedNotice) removedNotice.style.display = 'none';
+      if (editImgInput) { editImgInput.value = ''; delete editImgInput.dataset.removeImg; }
+      if (editImgPreview) editImgPreview.style.display = 'none';
       document.getElementById('detailTitle').style.display = 'none';
       document.getElementById('detailBody').style.display = 'none';
+      document.getElementById('detailImage').style.display = 'none';
       document.getElementById('postActions').style.display = 'none';
       document.getElementById('editForm').style.display = '';
     }
     function cancelEdit() {
+      var dbPost = state.dbPosts.find(function(p) { return p.id == state.currentDetailId; });
       document.getElementById('detailTitle').style.display = '';
       document.getElementById('detailBody').style.display = '';
+      if (dbPost && dbPost.image_url) document.getElementById('detailImage').style.display = '';
       document.getElementById('postActions').style.display = '';
       document.getElementById('editForm').style.display = 'none';
+    }
+    function editRemoveImg() {
+      var curImgEl = document.getElementById('editCurrentImgEl');
+      if (curImgEl) curImgEl.style.opacity = '0.3';
+      var removedNotice = document.getElementById('editImgRemovedNotice');
+      if (removedNotice) removedNotice.style.display = '';
+      var editImgInput = document.getElementById('editImgInput');
+      if (editImgInput) editImgInput.dataset.removeImg = 'true';
+    }
+    function previewEditImg(input) {
+      var file = input.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { showToast('이미지는 5MB 이하만 첨부 가능합니다'); input.value = ''; return; }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('editImgPreviewEl').src = e.target.result;
+        document.getElementById('editImgPreview').style.display = '';
+      };
+      reader.readAsDataURL(file);
+    }
+    function removeEditImgPreview() {
+      document.getElementById('editImgInput').value = '';
+      document.getElementById('editImgPreview').style.display = 'none';
     }
     async function submitEdit() {
       var id = state.currentDetailId;
       var title = document.getElementById('editTitle').value.trim();
       var body = document.getElementById('editBody').value.trim();
       if (!title || !body) { showToast('제목과 내용을 입력해주세요'); return; }
-      var res = await _supabase.from('community_posts').update({ title: title, content: body }).eq('id', id);
-      if (res.error) { showToast('수정 실패: ' + res.error.message); return; }
+
       var dbPost = state.dbPosts.find(function(p) { return p.id == id; });
-      if (dbPost) { dbPost.title = title; dbPost.content = body; }
+      var imageUrl = dbPost ? (dbPost.image_url || null) : null;
+
+      var editImgInput = document.getElementById('editImgInput');
+      if (editImgInput && editImgInput.dataset.removeImg === 'true' && !editImgInput.files[0]) {
+        imageUrl = null;
+      }
+      if (editImgInput && editImgInput.files[0]) {
+        var file = editImgInput.files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        var path = state.session.user.id + '/' + Date.now() + '.' + ext;
+        var upRes = await _supabase.storage.from('community-images').upload(path, file, { upsert: true });
+        if (!upRes.error) {
+          imageUrl = _supabase.storage.from('community-images').getPublicUrl(path).data.publicUrl;
+        } else {
+          showToast('이미지 업로드 실패: ' + upRes.error.message);
+        }
+      }
+
+      var res = await _supabase.from('community_posts').update({ title: title, content: body, image_url: imageUrl }).eq('id', id);
+      if (res.error) { showToast('수정 실패: ' + res.error.message); return; }
+      if (dbPost) { dbPost.title = title; dbPost.content = body; dbPost.image_url = imageUrl; }
+
       document.getElementById('detailTitle').textContent = title;
       document.getElementById('detailBody').textContent = body;
+      var detailImgWrap = document.getElementById('detailImage');
+      var detailImgEl = document.getElementById('detailImageImg');
+      if (imageUrl) {
+        detailImgEl.src = imageUrl;
+        detailImgWrap.style.display = '';
+      } else {
+        detailImgWrap.style.display = 'none';
+      }
       cancelEdit();
       showToast('게시글이 수정됐습니다');
     }
