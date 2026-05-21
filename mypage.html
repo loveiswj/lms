@@ -513,7 +513,7 @@
     }
 
     function switchTab(name) {
-      var names = ['courses', 'certificates', 'community', 'settings'];
+      var names = ['courses', 'community', 'settings'];
       document.querySelectorAll('.mypage-tab').forEach(function(btn, i) {
         btn.classList.toggle('active', names[i] === name);
       });
