@@ -126,28 +126,6 @@
       })
       .catch(function () {});
 
-    // 커뮤니티 미리보기
-    sb.from('community_posts')
-      .select('id, category, title')
-      .order('created_at', { ascending: false })
-      .limit(8)
-      .then(function (res) {
-        if (!res.error && res.data) {
-          var map = { notice: 'noticePreview', qa: 'qaPreview', review: 'reviewPreview', ai: 'aiPreview' };
-          var bycat = {};
-          res.data.forEach(function (p) {
-            if (!bycat[p.category]) bycat[p.category] = p;
-          });
-          Object.keys(map).forEach(function (cat) {
-            if (bycat[cat]) {
-              var el = document.getElementById(map[cat]);
-              if (el) el.textContent = bycat[cat].title;
-            }
-          });
-        }
-      })
-      .catch(function () {});
-
     // 오프라인 이벤트
     sb.from('offline_events')
       .select('*')
