@@ -203,16 +203,13 @@
   /* localStorage에서 만료되지 않은 세션을 동기적으로 읽기 */
   function getLocalSession() {
     try {
-      var keys = Object.keys(localStorage);
-      for (var i = 0; i < keys.length; i++) {
-        if (keys[i].startsWith('sb-') && keys[i].endsWith('-auth-token')) {
-          var data = JSON.parse(localStorage.getItem(keys[i]));
-          if (data && data.access_token && data.user) {
-            var exp = data.expires_at;
-            if (exp && (Date.now() / 1000) > exp) return null; // 만료
-            return data;
-          }
-        }
+      var raw = localStorage.getItem('bim-academy-auth');
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      if (data && data.access_token && data.user) {
+        var exp = data.expires_at;
+        if (exp && (Date.now() / 1000) > exp && !data.refresh_token) return null;
+        return data;
       }
     } catch (e) {}
     return null;
@@ -237,19 +234,22 @@
     var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
-    /* 1단계: localStorage 즉시 읽어 깜빡임 없이 바로 적용 */
+    /* 1단계: localStorage 즉시 읽기 */
     var local = getLocalSession();
-    if (!local) {
-      renderLoggedOut(actionsEl);
-      if (typeof _supabase === "undefined") return;
-    } else {
+    if (local) {
       var cachedName = localStorage.getItem('bim-academy-display-name');
       var quickName = cachedName
         || (local.user && local.user.user_metadata && local.user.user_metadata.name)
         || (local.user && local.user.email ? local.user.email.split("@")[0] : '사용자');
       renderLoggedIn(actionsEl, quickName);
-      if (typeof _supabase === "undefined") return;
+    } else if (typeof _supabase === "undefined") {
+      /* Supabase 미사용 환경에서만 즉시 로그아웃 렌더 */
+      renderLoggedOut(actionsEl);
+      return;
     }
+    /* local이 없어도 Supabase가 있으면 2단계까지 기다림 */
+
+    if (typeof _supabase === "undefined") return;
 
     /* 2단계: 서버 세션 검증 후 프로필명으로 업데이트 */
     _supabase.auth.getSession().then(function (res) {
