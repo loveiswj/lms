@@ -404,12 +404,15 @@
         tb.innerHTML = '<tr><td colspan="9" class="es-empty">해당 교육 일정이 없습니다.</td></tr>';
         return;
       }
+      var statusImgMap = {
+        '신청중':  'edu_status_applying.png',
+        '접수예정': 'edu_status_upcoming.png',
+        '대기신청': 'edu_status_waiting.png',
+        '폐강':   'edu_status_canceled.png',
+        '접수마감': 'edu-label-closed.png'
+      };
       tb.innerHTML = rows.map(function (r) {
-        var cls = r.status === '신청중'  ? 'badge-open'
-                : r.status === '접수예정' ? 'badge-scheduled'
-                : r.status === '대기신청' ? 'badge-wait'
-                : r.status === '폐강'    ? 'badge-cancel'
-                : 'badge-closed';
+        var statusImg = statusImgMap[r.status] || 'edu-label-closed.png';
         return '<tr>' +
           '<td class="td-c">' + (r.round || '') + '</td>' +
           '<td class="td-name">' + r.curriculum + '</td>' +
@@ -419,7 +422,7 @@
           '<td class="td-c">24명</td>' +
           '<td class="td-c">' + r.registered + '명</td>' +
           '<td class="td-c">' + r.waiting + '명</td>' +
-          '<td class="td-c"><span class="es-badge ' + cls + '">' + r.status + '</span></td>' +
+          '<td class="td-c"><img src="assets/images/' + statusImg + '" alt="' + r.status + '" style="height:22px;vertical-align:middle;"></td>' +
           '</tr>';
       }).join('');
     }
