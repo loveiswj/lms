@@ -2109,18 +2109,6 @@
   border-radius: var(--radius-xl);
 }
 
-.btn--white {
-  background: #fff;
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-}
-
-.btn--white:hover {
-  color: #fff;
-  border: 1px solid var(--charcoal);
-  border-color: var(--border-gray);
-}
-
 /* Secondary: white background + navy border */
 .btn--secondary {
   background: var(--charcoal);
