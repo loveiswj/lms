@@ -125,7 +125,7 @@
   </div>
 </div>
   <!-- ══ 페이지: 게시판 ══ -->
-  <div class="comm-page active" id="pageboard">
+  <div class="comm-page" id="pageboard">
     <div class="comm-layout">
 
       <!-- 왼쪽: 목록 -->
@@ -1189,6 +1189,7 @@
         state.dbPosts = res.data;
       }
       renderPosts();
+      document.getElementById('pageboard').classList.add('active');
     }
 
     /* ── 내 활동 ── */
@@ -1269,6 +1270,7 @@
         loadPostsFromDB();
       } else {
         renderPosts();
+        document.getElementById('pageboard').classList.add('active');
       }
     });
 
