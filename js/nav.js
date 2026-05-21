@@ -221,7 +221,7 @@
   }
 
   function initAuth() {
-    var actionsEl = document.querySelector(".header-actions__auth");
+    var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
     /* 1단계: localStorage 즉시 읽어 깜빡임 없이 바로 적용 */
