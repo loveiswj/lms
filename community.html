@@ -100,6 +100,7 @@
     <button class="sub-line-tab active" onclick="setSubNav(this, 'all')">전체</button>
     <button class="sub-line-tab" onclick="setSubNav(this, 'notice')">공지사항</button>
     <button class="sub-line-tab" onclick="setSubNav(this, 'qa')">Q&amp;A</button>
+    <button class="sub-line-tab" onclick="setSubNav(this, 'free')">자유게시판</button>
 
     <!-- 글쓰기버튼 -->
     <div class="comm-write">
@@ -144,6 +145,7 @@
           <label class="write-form__label">카테고리</label>
           <select class="write-form__select" id="writeCat">
             <option value="qa">Q&amp;A</option>
+            <option value="free">자유게시판</option>
             <option value="notice">공지사항</option>
           </select>
         </div>
@@ -447,6 +449,8 @@
       showPage('pagewrite');
       document.getElementById('writeForm').reset();
       document.getElementById('writeCatGroup').style.display = state.isAdmin ? '' : 'none';
+      var defaultCat = (state.currentCat === 'free' || state.currentCat === 'qa') ? state.currentCat : 'qa';
+      document.getElementById('writeCat').value = defaultCat;
     }
     async function goDetail(id) {
       state.currentDetailId = id;
