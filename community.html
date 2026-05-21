@@ -1256,6 +1256,15 @@
     window.submitEditComment = submitEditComment;
     window.deleteComment = deleteComment;
 
+    /* ── bfcache 복원 시 게시판으로 리셋 ── */
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted) {
+        document.querySelectorAll('.comm-page').forEach(function(p) { p.classList.remove('active'); });
+        document.getElementById('pageboard').classList.add('active');
+        renderPosts();
+      }
+    });
+
     /* ── 초기화 ── */
     document.addEventListener('DOMContentLoaded', function() {
       initFromUrl();
