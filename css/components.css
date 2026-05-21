@@ -5801,6 +5801,7 @@
       padding: 40px 24px 80px;
       display: grid;
       align-items: start;
+      min-height: 60vh;
     }
 
     /* ══ 필터 칩 ══ */
