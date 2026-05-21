@@ -9,6 +9,19 @@
   /* ────────────────────────────────────────
      GNB 메가메뉴
   ──────────────────────────────────────── */
+  function initSimpleNav() {
+    document.querySelectorAll(".gnb-simple__link").forEach(function(link) {
+      link.addEventListener("click", function(e) {
+        var href = this.getAttribute("href");
+        var currentFile = location.pathname.split("/").pop() || "index.html";
+        if (href === currentFile) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    });
+  }
+
   function initGnb() {
     const gnbItems = document.querySelectorAll(".gnb__item");
     if (!gnbItems.length) return;
@@ -282,11 +295,14 @@
   /* ────────────────────────────────────────
      초기화
   ──────────────────────────────────────── */
+  /* nav.js는 </body> 직전에 로드되므로 헤더 DOM이 이미 존재함.
+     initAuth는 즉시 실행해 깜빡임을 없애고, 나머지는 DOMContentLoaded 후 실행 */
+  initAuth();
   document.addEventListener("DOMContentLoaded", function () {
+    initSimpleNav();
     initGnb();
     initMobileNav();
     initSearch();
     initMobileSearch();
-    initAuth();
   });
 })();
