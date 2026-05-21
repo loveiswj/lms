@@ -196,7 +196,6 @@
         if ((k.startsWith('sb-') && k.endsWith('-auth-token')) || k === 'bim-academy-auth') {
           var raw = localStorage.getItem(k);
           var data = JSON.parse(raw);
-          /* bim-academy-auth 키는 {currentSession:{...}} 형태일 수 있음 */
           if (data && data.currentSession) data = data.currentSession;
           if (data && data.access_token && data.user) {
             var exp = data.expires_at;
@@ -228,25 +227,19 @@
     var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
-    /* localStorage 동기 확인: 세션 없으면 즉시 로그아웃 상태 표시 */
-    var localSess = getLocalSession();
-    if (!localSess) {
+    /* 1단계: localStorage 즉시 읽어 깜빡임 없이 바로 적용 */
+    var local = getLocalSession();
+    if (!local) {
       renderLoggedOut(actionsEl);
-      return;
+      if (typeof _supabase === "undefined") return;
+    } else {
+      var quickName = (local.user && local.user.user_metadata && local.user.user_metadata.name)
+        || (local.user && local.user.email ? local.user.email.split("@")[0] : '사용자');
+      renderLoggedIn(actionsEl, quickName);
+      if (typeof _supabase === "undefined") return;
     }
 
-    /* Supabase CDN 미로드 시 로컬 세션 데이터로 즉시 표시 */
-    if (typeof _supabase === "undefined") {
-      var localName = (localSess.user && localSess.user.user_metadata && localSess.user.user_metadata.name)
-        || (localSess.user && localSess.user.email && localSess.user.email.split('@')[0])
-        || '';
-      renderLoggedIn(actionsEl, localName);
-      return;
-    }
-
-    /* 세션 있음 — 짧게 숨기고 서버 확인 후 한 번에 표시 */
-    actionsEl.style.visibility = 'hidden';
-
+    /* 2단계: 서버 세션 검증 후 프로필명으로 업데이트 */
     _supabase.auth.getSession().then(function (res) {
       var session = res.data && res.data.session;
 
@@ -255,11 +248,9 @@
           .then(function (r) {
             var name = (r.data && r.data.name) || session.user.email.split("@")[0];
             renderLoggedIn(actionsEl, name);
-            actionsEl.style.visibility = '';
           })
           .catch(function () {
             renderLoggedIn(actionsEl, session.user.email.split("@")[0]);
-            actionsEl.style.visibility = '';
           });
 
         var mobileLoginBtn = document.getElementById("mobileLoginBtn");
@@ -267,22 +258,23 @@
         var mobileSignupBtn = document.getElementById("mobileSignupBtn");
         if (mobileSignupBtn) mobileSignupBtn.style.display = "none";
 
-      } else {
+      } else if (local) {
+        /* 로컬엔 있었지만 서버에선 만료 → 로그아웃 상태로 복원 */
         renderLoggedOut(actionsEl);
-        actionsEl.style.visibility = '';
       }
     }).catch(function () {
-      renderLoggedOut(actionsEl);
-      actionsEl.style.visibility = '';
+      /* 네트워크 오류 시 로컬 세션 상태 유지 */
     });
   }
 
   window.navLogout = function () {
+    /* localStorage에서 Supabase 세션 즉시 제거 */
     Object.keys(localStorage).forEach(function(key) {
-      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1 || key === 'bim-academy-auth') {
+      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1) {
         localStorage.removeItem(key);
       }
     });
+    /* 서버 측 토큰 무효화 (백그라운드) */
     if (typeof _supabase !== "undefined") _supabase.auth.signOut().catch(function(){});
     window.location.href = "index.html";
   };

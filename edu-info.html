@@ -9,90 +9,106 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/edu-info.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/course-data.js"></script>
+  <script src="js/main.js"></script>
+
 </head>
 <body>
-
   <!-- ══ 헤더 ══ -->
   <header class="site-header">
     <div class="container">
       <div class="header-main">
-        <a href="index.html" class="logo-new">
+        <a href="index.html" class="logo-new" onclick="if(location.pathname.endsWith('index.html')||location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
+
         <nav class="gnb-simple" id="gnbSimple">
-          <a href="edu-info.html" class="gnb-simple__link gnb-simple__link--active">교육안내</a>
+          <a href="edu-info.html" class="gnb-simple__link">교육안내</a>
           <a href="edu-schedule.html" class="gnb-simple__link">교육일정</a>
           <a href="course-list.html" class="gnb-simple__link">교육동영상</a>
           <a href="apply.html" class="gnb-simple__link">교육신청</a>
           <a href="faq.html" class="gnb-simple__link">FAQ</a>
           <a href="community.html" class="gnb-simple__link">커뮤니티</a>
         </nav>
-        <div class="header-actions" id="headerActions">
-          <a href="login.html" class="header-actions__link">로그인</a>
-          <span class="header-actions__divider"></span>
-          <a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>
+
+        <div class="header-actions">
+          <button class="header-icon-btn" id="searchToggle" aria-label="검색">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <a href="login.html" class="btn btn--primary btn--sm">로그인</a>
         </div>
-        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+
+        <button class="hamburger" id="hamburger" aria-label="메뉴">
           <span class="hamburger__line"></span>
           <span class="hamburger__line"></span>
           <span class="hamburger__line"></span>
         </button>
-      </div>
-    </div>
-    <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
-      <div class="mobile-nav__header">
-        <div class="logo-new">
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
-        </div>
-        <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
-      </div>
-      <div class="mobile-nav__links">
-        <a href="edu-info.html">교육안내</a>
-        <a href="edu-schedule.html">교육일정</a>
-        <a href="course-list.html">교육동영상</a>
-        <a href="apply.html">교육신청</a>
-        <a href="faq.html">FAQ</a>
-        <a href="community.html">커뮤니티</a>
-      </div>
-      <div class="mobile-nav__actions">
-        <a href="login.html" class="btn btn--primary btn--full">로그인</a>
+
       </div>
     </div>
   </header>
 
+  <!-- ══ 검색 오버레이 ══ -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay__inner">
+      <input type="text" class="search-overlay__input" id="searchInput" placeholder="교육과정, 강사명 검색...">
+      <button class="search-overlay__close" id="searchClose" aria-label="닫기">✕</button>
+    </div>
+  </div>
+
+  <!-- ══ 모바일 메뉴 ══ -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
+    <div class="mobile-nav__header">
+      <div class="logo-new">
+        <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+      </div>
+      <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="mobile-nav__links">
+      <a href="edu-info.html">교육안내</a>
+      <a href="edu-schedule.html">교육일정</a>
+      <a href="course-list.html">교육동영상</a>
+      <a href="apply.html">교육신청</a>
+      <a href="faq.html">FAQ</a>
+      <a href="community.html">커뮤니티</a>
+    </div>
+    <div class="mobile-nav__actions">
+      <a href="login.html" class="btn btn--primary btn--full">로그인</a>
+    </div>
+  </div>
+
   <!-- ══ 히어로 ══ -->
-  <section class="ei-hero">
-    <div class="ei-hero__dots"></div>
-    <div class="ei-hero__inner">
-      <div class="ei-hero__eyebrow">Education Guide</div>
-      <h1 class="ei-hero__title">교육 안내</h1>
-      <p class="ei-hero__desc">
-        단순한 기능 습득을 넘어, 데이터를 다루는 기술과 업무 혁신 노하우를 경험하세요.<br>
-        비아이매트릭스 아카데미는 AUD플랫폼을 통한 실무 중심의 전문 교육 서비스를 제공합니다.
-      </p>
+  <section class="sub-hero sub-hero-eduinfo">
+    <div class="sub-hero__dots"></div>
+    <div class="sub-hero__inner">
+      <div class="sub-hero__eyebrow">Education Guide</div>
+      <h1 class="sub-hero__title" id="heroTitle">교육 안내</h1>
+      <p class="sub-hero__desc" id="heroDesc">단순한 기능 습득을 넘어, 데이터를 다루는 기술과 업무 혁신 노하우를 경험하세요.<br>
+비아이매트릭스 아카데미는 AUD플랫폼을 통한 실무 중심의 전문 교육 서비스를 제공합니다.</p>
     </div>
   </section>
 
   <!-- ══ 오프라인 교육 과정 ══ -->
   <div class="ei-courses">
-    <div style="padding: 56px 0 0;">
-      <h2 class="ei-courses__title">오프라인 교육 과정</h2>
-      <p class="ei-courses__hint">과정명을 클릭하면 상세 커리큘럼이 아래에 표시됩니다.</p>
+      <div class="section-hd">
+        <p class="section-hd__title">오프라인 교육 과정</p>
+        <p class="section-hd__sub">과정명을 클릭하면 상세 커리큘럼이 아래에 표시됩니다.</p>
+      </div>
 
       <!-- 카드 그리드 -->
       <div class="ei-card-grid" id="courseCards">
 
         <!-- 사용자 교육 -->
         <div class="ei-card" data-course="user">
-          <div class="ei-card__arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
           <div class="ei-card__badge">AUD플랫폼</div>
           <div class="ei-card__icon-wrap">
-            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
+            <span class="material-symbols-rounded ei-card__icon-size">person</span>
           </div>
           <p class="ei-card__name">사용자 교육</p>
           <hr class="ei-card__divider">
@@ -106,13 +122,9 @@
 
         <!-- 개발자 교육 -->
         <div class="ei-card" data-course="dev">
-          <div class="ei-card__arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
           <div class="ei-card__badge">AUD플랫폼</div>
           <div class="ei-card__icon-wrap">
-            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <polyline points="16 18 22 12 16 6"/>
-              <polyline points="8 6 2 12 8 18"/>
-            </svg>
+            <span class="material-symbols-rounded ei-card__icon-size">code</span>
           </div>
           <p class="ei-card__name">개발자 교육</p>
           <hr class="ei-card__divider">
@@ -126,14 +138,9 @@
 
         <!-- 관리자 교육 -->
         <div class="ei-card" data-course="admin">
-          <div class="ei-card__arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
           <div class="ei-card__badge">AUD플랫폼</div>
           <div class="ei-card__icon-wrap">
-            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
-              <path d="M17.66 7.34a6 6 0 0 1 0 8.49M6.34 7.34a6 6 0 0 0 0 8.49"/>
-            </svg>
+            <span class="material-symbols-rounded ei-card__icon-size">admin_panel_settings</span>
           </div>
           <p class="ei-card__name">관리자 교육</p>
           <hr class="ei-card__divider">
@@ -147,13 +154,9 @@
 
         <!-- i-MATRIX 교육 -->
         <div class="ei-card" data-course="imatrix">
-          <div class="ei-card__arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
           <div class="ei-card__badge">AUD플랫폼</div>
           <div class="ei-card__icon-wrap">
-            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-              <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-            </svg>
+            <span class="material-symbols-rounded ei-card__icon-size">grid_view</span>
           </div>
           <p class="ei-card__name">i-MATRIX 교육</p>
           <hr class="ei-card__divider">
@@ -167,16 +170,9 @@
 
         <!-- TRINITY 개발자 교육 -->
         <div class="ei-card ei-card--trinity" data-course="trinity">
-          <div class="ei-card__badge ei-card__badge--trinity">TRINITY</div>
+          <div class="ei-card__badge">TRINITY</div>
           <div class="ei-card__icon-wrap ei-card__icon-wrap--purple">
-            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <circle cx="12" cy="5" r="2.5"/>
-              <circle cx="5" cy="17" r="2.5"/>
-              <circle cx="19" cy="17" r="2.5"/>
-              <line x1="12" y1="7.5" x2="5" y2="14.5"/>
-              <line x1="12" y1="7.5" x2="19" y2="14.5"/>
-              <line x1="7.5" y1="17" x2="16.5" y2="17"/>
-            </svg>
+            <span class="material-symbols-rounded ei-card__icon-size">neurology</span>
           </div>
           <p class="ei-card__name">TRINITY 개발자 교육</p>
           <hr class="ei-card__divider">
@@ -199,7 +195,6 @@
         <div id="detailBody"></div>
       </div>
 
-    </div>
   </div>
 
   <!-- ══ 교육장 안내 ══ -->
@@ -210,16 +205,12 @@
       <div class="ei-venue__left">
         <span class="ei-venue__eyebrow">Location</span>
         <h2 class="ei-venue__title">교육장 안내</h2>
-        <p class="ei-venue__desc">최적의 실습 환경과 전용 PC가 완비된 교육장에서<br>전문 교육을 경험해보세요.</p>
+        <p class="ei-venue__desc">최적의 실습 환경과 전용 PC가 완비된 교육장에서 전문 교육을 경험해보세요.</p>
 
         <div class="ei-venue__cards">
           <div class="ei-venue__card">
             <div class="ei-venue__card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-186q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm-28 74q-14-5-25-15-65-60-115-117t-83.5-110.5q-33.5-53.5-51-103T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 45-17.5 94.5t-51 103Q698-301 648-244T533-127q-11 10-25 15t-28 5q-14 0-28-5Zm28-448Zm56.5 56.5Q560-527 560-560t-23.5-56.5Q513-640 480-640t-56.5 23.5Q400-593 400-560t23.5 56.5Q447-480 480-480t56.5-23.5Z"/></svg>            </div>
             <div>
               <p class="ei-venue__card-title">서울특별시 강남구 선릉로 429</p>
               <p class="ei-venue__card-sub">KR타워 7층 &nbsp;·&nbsp; 선릉역 3번 출구 도보 2분</p>
@@ -228,12 +219,7 @@
 
           <div class="ei-venue__card">
             <div class="ei-venue__card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <rect x="1" y="3" width="15" height="13" rx="2"/>
-                <path d="M16 8h4l3 5v3h-7V8z"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 -960 960 960"><path d="M320-200v20q0 25-17.5 42.5T260-120q-25 0-42.5-17.5T200-180v-62q-18-20-29-44.5T160-340v-380q0-83 77-121.5T480-880q172 0 246 37t74 123v380q0 29-11 53.5T760-242v62q0 25-17.5 42.5T700-120q-25 0-42.5-17.5T640-180v-20H320Zm162-560h224-448 224Zm158 280H240h480-80Zm-400-80h480v-120H240v120Zm142.5 222.5Q400-355 400-380t-17.5-42.5Q365-440 340-440t-42.5 17.5Q280-405 280-380t17.5 42.5Q315-320 340-320t42.5-17.5Zm280 0Q680-355 680-380t-17.5-42.5Q645-440 620-440t-42.5 17.5Q560-405 560-380t17.5 42.5Q595-320 620-320t42.5-17.5ZM258-760h448q-15-17-64.5-28.5T482-800q-107 0-156.5 12.5T258-760Zm62 480h320q33 0 56.5-23.5T720-360v-120H240v120q0 33 23.5 56.5T320-280Z"/></svg>
             </div>
             <div>
               <p class="ei-venue__card-title">대중교통 안내</p>
@@ -243,10 +229,7 @@
         </div>
 
         <div class="ei-venue__notice">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          주차 지원은 불가하니 가급적 대중교통을 이용해주시기 바랍니다.
+          <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 -960 960 960" width="15px"><path d="M508.5-291.5Q520-303 520-320t-11.5-28.5Q497-360 480-360t-28.5 11.5Q440-337 440-320t11.5 28.5Q463-280 480-280t28.5-11.5Zm0-160Q520-463 520-480v-160q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640v160q0 17 11.5 28.5T480-440q17 0 28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>          주차 지원은 불가하니 가급적 대중교통을 이용해주시기 바랍니다.
         </div>
       </div>
 

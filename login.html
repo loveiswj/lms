@@ -219,15 +219,7 @@
       });
 
       if (error) {
-        var msg = '이메일 또는 비밀번호가 올바르지 않습니다';
-        if (error.message && error.message.toLowerCase().includes('email not confirmed')) {
-          msg = '이메일 인증이 필요합니다. 가입 시 받은 메일을 확인해 주세요.';
-        }
-        showToast(msg);
-        btn.disabled = false;
-        btn.textContent = '로그인';
-      } else if (!data.session) {
-        showToast('이메일 인증 후 로그인해 주세요. 메일함을 확인해 주세요.');
+        showToast('이메일 또는 비밀번호가 올바르지 않습니다');
         btn.disabled = false;
         btn.textContent = '로그인';
       } else {

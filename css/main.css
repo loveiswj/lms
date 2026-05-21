@@ -26,6 +26,7 @@
   --navy-light:    #1E40AF;
   --gold:          #F59E0B;
   --gold-hover:    #D97706;
+  --gray-light:    #e9ecf0;
   --gray-dark:     #2c333d;
   --charcoal:      #1c2129;
 
@@ -37,7 +38,7 @@
   --text-primary:  #333d4b;
   /*--text-primary:  #0F172A;*/
   --text-sub:      #54575a;
-  --text-hint:     #94A3B8;
+  --text-hint:     #86909e;
   --text-gray:     #4e5968;
   
   /* ── 테두리 ── */
