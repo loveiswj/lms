@@ -203,16 +203,13 @@
   /* localStorage에서 만료되지 않은 세션을 동기적으로 읽기 */
   function getLocalSession() {
     try {
-      var keys = Object.keys(localStorage);
-      for (var i = 0; i < keys.length; i++) {
-        if (keys[i].startsWith('sb-') && keys[i].endsWith('-auth-token')) {
-          var data = JSON.parse(localStorage.getItem(keys[i]));
-          if (data && data.access_token && data.user) {
-            var exp = data.expires_at;
-            if (exp && (Date.now() / 1000) > exp && !data.refresh_token) return null; // 만료 & 갱신 불가
-            return data;
-          }
-        }
+      var raw = localStorage.getItem('bim-academy-auth');
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      if (data && data.access_token && data.user) {
+        var exp = data.expires_at;
+        if (exp && (Date.now() / 1000) > exp && !data.refresh_token) return null;
+        return data;
       }
     } catch (e) {}
     return null;
