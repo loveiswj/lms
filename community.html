@@ -125,7 +125,7 @@
   </div>
 </div>
   <!-- ══ 페이지: 게시판 ══ -->
-  <div class="comm-page" id="pageboard">
+  <div class="comm-page active" id="pageboard">
     <div class="comm-layout">
 
       <!-- 왼쪽: 목록 -->
@@ -1189,7 +1189,6 @@
         state.dbPosts = res.data;
       }
       renderPosts();
-      document.getElementById('pageboard').classList.add('active');
     }
 
     /* ── 내 활동 ── */
@@ -1256,12 +1255,11 @@
     window.submitEditComment = submitEditComment;
     window.deleteComment = deleteComment;
 
-    /* ── bfcache 복원 시 게시판으로 리셋 ── */
-    window.addEventListener('pageshow', function(e) {
+    /* ── bfcache 진입 전 게시판으로 리셋 (복원 시 플래시 방지) ── */
+    window.addEventListener('pagehide', function(e) {
       if (e.persisted) {
         document.querySelectorAll('.comm-page').forEach(function(p) { p.classList.remove('active'); });
         document.getElementById('pageboard').classList.add('active');
-        renderPosts();
       }
     });
 
@@ -1279,7 +1277,6 @@
         loadPostsFromDB();
       } else {
         renderPosts();
-        document.getElementById('pageboard').classList.add('active');
       }
     });
 
