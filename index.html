@@ -738,7 +738,7 @@
         if (typeof _supabase !== 'undefined') {
           var { error } = await _supabase.from('offline_events').insert({
             event_name:      'BI MATRIX USER MEETUP 2026',
-            event_date:      '2026-10-21',
+            event_date:      '2026-06-25',
             applicant_name:  name,
             applicant_email: email,
             applicant_phone: phone || null,
@@ -748,7 +748,7 @@
             user_id:         userId,
             status:          'pending'
           });
-          if (error) throw error;
+          if (error) { console.error('[Meetup 신청 오류]', error); throw error; }
         }
 
         // 성공 화면 표시
@@ -757,7 +757,9 @@
         document.getElementById('offlineSuccess').style.display = 'block';
 
       } catch(err) {
-        errEl.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+        console.error('[Meetup catch]', err);
+        var msg = (err && err.message) ? err.message : '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+        errEl.textContent = msg;
         errEl.style.display = 'block';
         btn.disabled = false;
         btn.textContent = '신청하기';
