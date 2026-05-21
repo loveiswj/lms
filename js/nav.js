@@ -270,7 +270,7 @@
   window.navLogout = function () {
     /* localStorage에서 Supabase 세션 즉시 제거 */
     Object.keys(localStorage).forEach(function(key) {
-      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1) {
+      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1 || key === 'bim-academy-auth') {
         localStorage.removeItem(key);
       }
     });
