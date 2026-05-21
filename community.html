@@ -503,6 +503,7 @@
       document.getElementById('postActions').style.display = canManage ? '' : 'none';
 
       updateCommentUI();
+      history.pushState({ comm: 'detail', id: id }, '');
       showPage('pagedetail');
     }
     function goMypage() { showPage('pagemypage'); loadMypage(); }
@@ -1234,6 +1235,13 @@
     window.cancelEditComment = cancelEditComment;
     window.submitEditComment = submitEditComment;
     window.deleteComment = deleteComment;
+
+    /* ── 브라우저 뒤로가기 → 목록 복귀 ── */
+    window.addEventListener('popstate', function() {
+      if (document.getElementById('pagedetail').classList.contains('active')) {
+        goBoard();
+      }
+    });
 
     /* ── 초기화 ── */
     document.addEventListener('DOMContentLoaded', function() {
