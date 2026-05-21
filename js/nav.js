@@ -192,14 +192,11 @@
     try {
       var keys = Object.keys(localStorage);
       for (var i = 0; i < keys.length; i++) {
-        var k = keys[i];
-        if ((k.startsWith('sb-') && k.endsWith('-auth-token')) || k === 'bim-academy-auth') {
-          var raw = localStorage.getItem(k);
-          var data = JSON.parse(raw);
-          if (data && data.currentSession) data = data.currentSession;
+        if (keys[i].startsWith('sb-') && keys[i].endsWith('-auth-token')) {
+          var data = JSON.parse(localStorage.getItem(keys[i]));
           if (data && data.access_token && data.user) {
             var exp = data.expires_at;
-            if (exp && (Date.now() / 1000) > exp) return null;
+            if (exp && (Date.now() / 1000) > exp) return null; // 만료
             return data;
           }
         }
@@ -233,7 +230,9 @@
       renderLoggedOut(actionsEl);
       if (typeof _supabase === "undefined") return;
     } else {
-      var quickName = (local.user && local.user.user_metadata && local.user.user_metadata.name)
+      var cachedName = localStorage.getItem('bim-academy-display-name');
+      var quickName = cachedName
+        || (local.user && local.user.user_metadata && local.user.user_metadata.name)
         || (local.user && local.user.email ? local.user.email.split("@")[0] : '사용자');
       renderLoggedIn(actionsEl, quickName);
       if (typeof _supabase === "undefined") return;
@@ -247,6 +246,7 @@
         _supabase.from("profiles").select("name").eq("id", session.user.id).single()
           .then(function (r) {
             var name = (r.data && r.data.name) || session.user.email.split("@")[0];
+            localStorage.setItem('bim-academy-display-name', name);
             renderLoggedIn(actionsEl, name);
           })
           .catch(function () {
@@ -270,7 +270,7 @@
   window.navLogout = function () {
     /* localStorage에서 Supabase 세션 즉시 제거 */
     Object.keys(localStorage).forEach(function(key) {
-      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1 || key === 'bim-academy-auth') {
+      if (key.startsWith('sb-') || key.indexOf('supabase') !== -1 || key === 'bim-academy-auth' || key === 'bim-academy-display-name') {
         localStorage.removeItem(key);
       }
     });
