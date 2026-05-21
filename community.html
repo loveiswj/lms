@@ -40,7 +40,7 @@
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
-          <a href="login.html" class="btn btn--primary btn--sm">로그인</a>
+          <div class="header-actions__auth"></div>
         </div>
 
         <button class="hamburger" id="hamburger" aria-label="메뉴">
@@ -100,7 +100,6 @@
     <button class="sub-line-tab active" onclick="setSubNav(this, 'all')">전체</button>
     <button class="sub-line-tab" onclick="setSubNav(this, 'notice')">공지사항</button>
     <button class="sub-line-tab" onclick="setSubNav(this, 'qa')">Q&amp;A</button>
-    <button class="sub-line-tab" onclick="setSubNav(this, 'free')">자유게시판</button>
 
     <!-- 글쓰기버튼 -->
     <div class="comm-write">
@@ -145,7 +144,6 @@
           <label class="write-form__label">카테고리</label>
           <select class="write-form__select" id="writeCat">
             <option value="qa">Q&amp;A</option>
-            <option value="free">자유게시판</option>
             <option value="notice">공지사항</option>
           </select>
         </div>
@@ -302,7 +300,7 @@
 
       <!-- 상단: 소셜 아이콘 -->
       <div class="footer-bim__social-row">
-        <a href="https://www.bimatrix.co.kr/" target="_blank" rel="noopener" class="footer-bim__social-btn" aria-label="홈페이지">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -331,9 +329,9 @@
 
       <!-- 중간: 링크 메뉴 -->
       <div class="footer-bim__links-row">
-        <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>
+        <a href="#">개인정보처리방침</a>
         <span class="footer-bim__divider">|</span>
-        <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" rel="noopener">문의하기</a>
+        <a href="#">문의하기</a>
       </div>
 
       <!-- 하단: 회사 정보 + 로고 -->
@@ -448,13 +446,7 @@
       }
       showPage('pagewrite');
       document.getElementById('writeForm').reset();
-      document.getElementById('writeCatGroup').style.display = '';
-      var writeCat = document.getElementById('writeCat');
-      writeCat.innerHTML = state.isAdmin
-        ? '<option value="qa">Q&amp;A</option><option value="free">자유게시판</option><option value="notice">공지사항</option>'
-        : '<option value="qa">Q&amp;A</option><option value="free">자유게시판</option>';
-      var defaultCat = state.currentCat === 'free' ? 'free' : 'qa';
-      writeCat.value = defaultCat;
+      document.getElementById('writeCatGroup').style.display = state.isAdmin ? '' : 'none';
     }
     async function goDetail(id) {
       state.currentDetailId = id;
@@ -503,7 +495,6 @@
       document.getElementById('postActions').style.display = canManage ? '' : 'none';
 
       updateCommentUI();
-      history.pushState({ comm: 'detail', id: id }, '');
       showPage('pagedetail');
     }
     function goMypage() { showPage('pagemypage'); loadMypage(); }
@@ -1235,13 +1226,6 @@
     window.cancelEditComment = cancelEditComment;
     window.submitEditComment = submitEditComment;
     window.deleteComment = deleteComment;
-
-    /* ── 브라우저 뒤로가기 → 목록 복귀 ── */
-    window.addEventListener('popstate', function() {
-      if (document.getElementById('pagedetail').classList.contains('active')) {
-        goBoard();
-      }
-    });
 
     /* ── 초기화 ── */
     document.addEventListener('DOMContentLoaded', function() {

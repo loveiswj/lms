@@ -41,7 +41,7 @@
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
-          <a href="login.html" class="btn btn--primary btn--sm">로그인</a>
+          <div class="header-actions__auth"></div>
         </div>
 
         <button class="hamburger" id="hamburger" aria-label="메뉴">
@@ -238,12 +238,12 @@
         <div class="ei-venue__map-wrap">
           <iframe
             class="ei-venue__iframe"
-            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429+KR&t=&z=17&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429+KR타워&t=&z=17&ie=UTF8&iwloc=&output=embed"
             allowfullscreen loading="lazy"
             title="교육장 위치 지도">
           </iframe>
           <a class="ei-venue__map-btn"
-             href="https://map.naver.com/v5/search/서울특별시%20강남구%20선릉로%20429%20KR"
+             href="https://map.naver.com/v5/search/서울특별시%20강남구%20선릉로%20429%20KR타워"
              target="_blank" rel="noopener">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
@@ -263,7 +263,7 @@
 
       <!-- 상단: 소셜 아이콘 -->
       <div class="footer-bim__social-row">
-        <a href="https://www.bimatrix.co.kr/" target="_blank" rel="noopener" class="footer-bim__social-btn" aria-label="홈페이지">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -292,9 +292,9 @@
 
       <!-- 중간: 링크 메뉴 -->
       <div class="footer-bim__links-row">
-        <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>
+        <a href="#">개인정보처리방침</a>
         <span class="footer-bim__divider">|</span>
-        <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" rel="noopener">문의하기</a>
+        <a href="#">문의하기</a>
       </div>
 
       <!-- 하단: 회사 정보 + 로고 -->
@@ -538,7 +538,7 @@
         '</table>';
     }
 
-    function renderDetail(key, noScroll) {
+    function renderDetail(key) {
       var data   = COURSES[key];
       var detail = document.getElementById('courseDetail');
       var badge  = document.getElementById('detailBadge');
@@ -579,14 +579,7 @@
       }
 
       detail.classList.add('is-visible');
-      if (!noScroll) {
-        setTimeout(function () {
-          var header = document.querySelector('.site-header');
-          var headerH = header ? header.offsetHeight : 64;
-          var top = detail.getBoundingClientRect().top + window.pageYOffset - headerH - 24;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-        }, 50);
-      }
+      setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -599,11 +592,11 @@
         });
       });
 
-      /* 기본 선택: 사용자 교육 — 스크롤 없이 렌더만 */
+      /* 기본 선택: 사용자 교육 */
       var defaultCard = document.querySelector('.ei-card[data-course="user"]');
       if (defaultCard) {
         defaultCard.classList.add('is-active');
-        renderDetail('user', true);
+        renderDetail('user');
       }
     });
 

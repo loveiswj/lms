@@ -35,7 +35,7 @@
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
-          <a href="login.html" class="btn btn--primary btn--sm">로그인</a>
+          <div class="header-actions__auth"></div>
         </div>
 
         <button class="hamburger" id="hamburger" aria-label="메뉴">
@@ -221,7 +221,7 @@
                 <img src="assets/images/Process-card-icon-05.png" style="width: 90px;">
               </div>
               <ul class="Process-card__meta-list">
-                <li><span>대상</span>AUD플랫폼 교육 수료자<br>(사용자·개발자·관리자)</li>
+                <li><span>대상</span>AUD 플랫폼 교육 수료자<br>(사용자·개발자·관리자)</li>
                 <li><span>교육기간</span>2일</li>
                 <li><span>교육주기</span>매월 3주차</li>
               </ul>
@@ -277,21 +277,21 @@
                 </svg>
               </div>
               <p class="comm-btn__label">공지 게시판</p>
-              <p class="comm-btn__sub">주요 안내 및 이벤트 소식</p>
+              <p class="comm-btn__sub" id="noticePreview">새로운 소식과<br>주요 안내 확인</p>
             </a>
             <a href="community.html?tab=qa" class="comm-btn">
               <div class="comm-btn__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="20" height="20"><path d="M64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L360 512C354.8 512 349.8 513.7 345.6 516.8L230.4 603.2C226.2 606.3 221.2 608 216 608C202.7 608 192 597.3 192 584L192 512L160 512C107 512 64 469 64 416z"/></svg>
               </div>
               <p class="comm-btn__label">Q&amp;A</p>
-              <p class="comm-btn__sub">궁금한 점은 언제든<br>물어보세요</p>
+              <p class="comm-btn__sub" id="qaPreview">질문하고 전문가에게<br>답변 받기</p>
             </a>
             <a href="community.html?tab=free" class="comm-btn">
               <div class="comm-btn__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="22" height="22"><path d="M96 192C96 130.1 146.1 80 208 80C269.9 80 320 130.1 320 192C320 253.9 269.9 304 208 304C146.1 304 96 253.9 96 192zM32 528C32 430.8 110.8 352 208 352C305.2 352 384 430.8 384 528L384 534C384 557.2 365.2 576 342 576L74 576C50.8 576 32 557.2 32 534L32 528zM464 128C517 128 560 171 560 224C560 277 517 320 464 320C411 320 368 277 368 224C368 171 411 128 464 128zM464 368C543.5 368 608 432.5 608 512L608 534.4C608 557.4 589.4 576 566.4 576L421.6 576C428.2 563.5 432 549.2 432 534L432 528C432 476.5 414.6 429.1 385.5 391.3C408.1 376.6 435.1 368 464 368z"/></svg>
               </div>
-              <p class="comm-btn__label">자유게시판</p>
-              <p class="comm-btn__sub">수강생들과 자유로운 소통</p>
+              <p class="comm-btn__label">스터디 그룹</p>
+              <p class="comm-btn__sub" id="reviewPreview">함께 성장하는<br>학습공동체</p>
             </a>
           </div>
         </div>
@@ -306,8 +306,8 @@
             <img src="assets/images/img-offline.jpg" alt="오프라인 모임" class="comm-offline-img">
             <div class="comm-offline-info">
               <p class="comm-offline-name">BI MATRIX USER MEETUP</p>
-              <p class="comm-offline-detail">2026.06.25 (목) &nbsp;19:00 ~ 20:00</p>
-              <p class="comm-offline-detail">서울 강남구 선릉로 429, 7층</p>
+              <p class="comm-offline-detail">2026.10.21 (수) &nbsp;14:00 ~ 17:00</p>
+              <p class="comm-offline-detail">서울 강남구 테헤란로 125, 5층</p>
               <a href="#" class="comm-offline-btn" onclick="openOfflineModal(event)">모임 신청하기 →</a>
             </div>
           </div>
@@ -379,7 +379,7 @@
 
       <!-- 상단: 소셜 아이콘 -->
       <div class="footer-bim__social-row">
-        <a href="https://www.bimatrix.co.kr/" target="_blank" rel="noopener" class="footer-bim__social-btn" aria-label="홈페이지">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -408,9 +408,9 @@
 
       <!-- 중간: 링크 메뉴 -->
       <div class="footer-bim__links-row">
-        <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>
+        <a href="#">개인정보처리방침</a>
         <span class="footer-bim__divider">|</span>
-        <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" rel="noopener">문의하기</a>
+        <a href="#">문의하기</a>
       </div>
 
       <!-- 하단: 회사 정보 + 로고 -->
@@ -475,9 +475,9 @@
         border-bottom:1px solid #E2E8F0;
         display:flex; gap:20px; flex-wrap:wrap;
       ">
-        <span style="font-size:13px; color:#475569;">2026.06.25 (목)&nbsp;&nbsp;19:00 ~ 20:00</span>
-        <span style="font-size:13px; color:#475569;">서울 강남구 선릉로 429, 7층</span>
-        <span style="font-size:13px; color:#475569;">👥 선착순 20명</span>
+        <span style="font-size:13px; color:#475569;">📅 2026.10.21 (수)&nbsp;&nbsp;14:00 ~ 17:00</span>
+        <span style="font-size:13px; color:#475569;">📍 서울 강남구 테헤란로 125, 5층</span>
+        <span style="font-size:13px; color:#475569;">👥 선착순 50명</span>
       </div>
 
       <!-- 폼 -->
