@@ -10,13 +10,13 @@
      GNB 메가메뉴
   ──────────────────────────────────────── */
   function initSimpleNav() {
+    /* 같은 페이지 링크 클릭 시 페이지를 새로 로드해 상태를 초기화 (커리큘럼 등 리셋) */
     document.querySelectorAll(".gnb-simple__link").forEach(function(link) {
-      link.addEventListener("click", function(e) {
+      link.addEventListener("click", function() {
         var href = this.getAttribute("href");
         var currentFile = location.pathname.split("/").pop() || "index.html";
         if (href === currentFile) {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          location.href = href;
         }
       });
     });

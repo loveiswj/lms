@@ -17,10 +17,10 @@
   ];
 
   var SAMPLE_VIDEOS = [
-    { title: '전사 매출 현황', duration: '29:16', thumbnail_url: 'assets/images/thumb-main-01.jpg', youtube_url: 'course-detail.html?id=11' },
-    { title: '상품별 피벗 매출 분석 - 기본', duration: '15:52', thumbnail_url: 'assets/images/thumb-main-02.jpg', youtube_url: 'course-detail.html?id=3' },
-    { title: '매장별 매출 현황', duration: '21:05', thumbnail_url: 'assets/images/thumb-main-03.jpg', youtube_url: 'course-detail.html?id=7' },
-    { title: '영업 실적 보고서', duration: '30:11', thumbnail_url: 'assets/images/thumb-main-04.jpg', youtube_url: 'course-detail.html?id=9' },
+    { title: '매출 현황', duration: '15:14', thumbnail_url: 'assets/images/thumb/thumb-dashboard-1.png', youtube_url: 'course-detail.html?id=11' },
+    { title: '상품별 매출 분석(CrossTab)', duration: '00:58', thumbnail_url: 'assets/images/thumb/thumb-olap-3.png', youtube_url: 'course-detail.html?id=3' },
+    { title: '매장별 매출 현황', duration: '05:50', thumbnail_url: 'assets/images/thumb/thumb-report-1.png', youtube_url: 'course-detail.html?id=7' },
+    { title: '영업 실적 보고서', duration: '13:15', thumbnail_url: 'assets/images/thumb/thumb-report-3.png', youtube_url: 'course-detail.html?id=9' },
   ];
 
   /* ────────────────────────────────────────

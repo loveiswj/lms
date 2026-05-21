@@ -154,12 +154,12 @@
                 <col style="width:50px">
                 <col style="width:50px">
                 <col style="width:50px">
-                <col style="width:80px">
+                <col style="width:70px">
               </colgroup>
               <thead>
                 <tr>
                   <th>회차</th>
-                  <th>과정명</th>
+                  <th style="text-align:left">과정명</th>
                   <th>시작일</th>
                   <th>기간</th>
                   <th>접수 마감</th>
@@ -217,7 +217,7 @@
 
       <!-- 상단: 소셜 아이콘 -->
       <div class="footer-bim__social-row">
-        <a href="https://www.bimatrix.co.kr/" target="_blank" rel="noopener" class="footer-bim__social-btn" aria-label="홈페이지">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -246,9 +246,9 @@
 
       <!-- 중간: 링크 메뉴 -->
       <div class="footer-bim__links-row">
-        <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>
+        <a href="#">개인정보처리방침</a>
         <span class="footer-bim__divider">|</span>
-        <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" rel="noopener">문의하기</a>
+        <a href="#">문의하기</a>
       </div>
 
       <!-- 하단: 회사 정보 + 로고 -->
@@ -397,15 +397,12 @@
         tb.innerHTML = '<tr><td colspan="9" class="es-empty">해당 교육 일정이 없습니다.</td></tr>';
         return;
       }
-      var statusImgMap = {
-        '신청중':  'edu_status_applying.png',
-        '접수예정': 'edu_status_upcoming.png',
-        '대기신청': 'edu_status_waiting.png',
-        '폐강':   'edu_status_canceled.png',
-        '접수마감': 'edu-label-closed.png'
-      };
       tb.innerHTML = rows.map(function (r) {
-        var statusImg = statusImgMap[r.status] || 'edu-label-closed.png';
+        var cls = r.status === '신청중'  ? 'badge-open'
+                : r.status === '접수예정' ? 'badge-scheduled'
+                : r.status === '대기신청' ? 'badge-wait'
+                : r.status === '폐강'    ? 'badge-cancel'
+                : 'badge-closed';
         return '<tr>' +
           '<td class="td-c">' + (r.round || '') + '</td>' +
           '<td class="td-name">' + r.curriculum + '</td>' +
@@ -415,7 +412,7 @@
           '<td class="td-c">24명</td>' +
           '<td class="td-c">' + r.registered + '명</td>' +
           '<td class="td-c">' + r.waiting + '명</td>' +
-          '<td class="td-c"><img src="assets/images/' + statusImg + '" alt="' + r.status + '" style="display:block;margin:0 auto;max-width:100%;image-rendering:crisp-edges;"></td>' +
+          '<td class="td-c"><span class="es-badge ' + cls + '">' + r.status + '</span></td>' +
           '</tr>';
       }).join('');
     }

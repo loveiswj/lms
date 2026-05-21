@@ -18,7 +18,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "입문",
     duration: "1분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-1.png"
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "4분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-2.png"
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "1분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-3.png"
   },
   {
     id: 4,
@@ -60,7 +60,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "3분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-4.png"
   },
   {
     id: 5,
@@ -74,7 +74,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "1분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-5.png"
   },
   {
     id: 6,
@@ -88,7 +88,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "1분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-6.png"
   },
 
   /* ── [기초] 사용자 과정 · 엑셀 자동화 ── */
@@ -104,7 +104,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "6분",
-    thumbnail: "assets/images/thumb-report.jpg"
+    thumbnail: "assets/images/thumb/thumb-report-1.png"
   },
   {
     id: 8,
@@ -118,14 +118,14 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "4분",
-    thumbnail: "assets/images/thumb-report.jpg"
+    thumbnail: "assets/images/thumb/thumb-report-2.png"
   },
 
   /* ── [응용] 실무 활용 과정 · 엑셀 자동화 ── */
   {
     id: 9,
     product: "i-AUD",
-    report_title: "양식 설정 보고서",
+    report_title: "영업 실적 보고서",
     title: "엑셀 설계만으로 웹 보고서를 완성하세요",
     outcome: "엑셀로 화면을 설계하면 수식·레이아웃·차트가 그대로 웹으로 전환돼요.",
     youtube: "https://youtu.be/wKkwd6Z1qxo?si=kKKiYycu0UUtIIXy",
@@ -134,7 +134,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "14분",
-    thumbnail: "assets/images/thumb-report.jpg"
+    thumbnail: "assets/images/thumb/thumb-report-3.png"
   },
   {
     id: 10,
@@ -148,7 +148,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "13분",
-    thumbnail: "assets/images/thumb-report.jpg"
+    thumbnail: "assets/images/thumb/thumb-report-4.png"
   },
 
   /* ── [응용] 실무 활용 과정 · 엑셀 자동화 + 시각화 분석 ── */
@@ -164,7 +164,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "16분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb/thumb-dashboard-1.png"
   },
   {
     id: 12,
@@ -178,7 +178,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "7분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb/thumb-dashboard-2.png"
   },
   {
     id: 13,
@@ -192,7 +192,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "고급",
     duration: "10분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb/thumb-dashboard-3.png"
   },
   {
     id: 14,
@@ -206,7 +206,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "7분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb/thumb-dashboard-4.png"
   },
   {
     id: 15,
@@ -220,7 +220,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중상급",
     duration: "4분",
-    thumbnail: "assets/images/thumb-dashboard.jpg"
+    thumbnail: "assets/images/thumb/thumb-dashboard-5.png"
   },
 
   /* ── [응용] 실무 활용 과정 · 데이터 저장 ── */
@@ -236,7 +236,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "초급",
     duration: "6분",
-    thumbnail: "assets/images/thumb-uiux.jpg"
+    thumbnail: "assets/images/thumb/thumb-uiux-1.png"
   },
 
   /* ── [심화] 개발자 과정 · 데이터 저장 ── */
@@ -252,7 +252,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "11분",
-    thumbnail: "assets/images/thumb-uiux.jpg"
+    thumbnail: "assets/images/thumb/thumb-uiux-2.png"
   },
   {
     id: 18,
@@ -266,7 +266,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중상급",
     duration: "12분",
-    thumbnail: "assets/images/thumb-uiux.jpg"
+    thumbnail: "assets/images/thumb/thumb-uiux-3.png"
   },
 
   /* ── [응용] 실무 활용 과정 · 엑셀 자동화 + 데이터 저장 ── */
@@ -282,7 +282,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "14분",
-    thumbnail: "assets/images/thumb-uiux.jpg"
+    thumbnail: "assets/images/thumb/thumb-uiux-4.png"
   },
   {
     id: 20,
@@ -296,7 +296,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중상급",
     duration: "9분",
-    thumbnail: "assets/images/thumb-uiux.jpg"
+    thumbnail: "assets/images/thumb/thumb-uiux-5.png"
   },
 
   /* ── [전문] 관리자 과정 · 시스템 운영 ── */
@@ -312,7 +312,7 @@ const COURSES = [
     industry: ["retail"],
     difficulty: "중급",
     duration: "4분",
-    thumbnail: "assets/images/thumb-olap.jpg"
+    thumbnail: "assets/images/thumb/thumb-olap-7.png"
   }
 
 ];
