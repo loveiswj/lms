@@ -1652,8 +1652,6 @@
   gap: 8px;
   flex-shrink: 0;
   margin-left: auto;
-  min-width: 220px;
-  justify-content: flex-end;
 }
 
 .header-actions__link {
@@ -5815,7 +5813,6 @@
       padding: 40px 24px 80px;
       display: grid;
       align-items: start;
-      min-height: 60vh;
     }
 
     /* ══ 필터 칩 ══ */

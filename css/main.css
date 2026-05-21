@@ -72,10 +72,6 @@
 }
 
 /* ── Base ── */
-html {
-  scrollbar-gutter: stable;
-}
-
 body {
   font-family: var(--font);
   font-size: 15px;

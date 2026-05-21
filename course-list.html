@@ -48,23 +48,6 @@
       </div>
     </div>
   </header>
-<script>
-(function(){
-  var el = document.querySelector('.header-actions');
-  if (!el) return;
-  try {
-    var d = JSON.parse(localStorage.getItem('bim-academy-auth') || 'null');
-    if (d && d.access_token && d.user && (!(d.expires_at && Date.now()/1000 > d.expires_at) || d.refresh_token)) {
-      var n = localStorage.getItem('bim-academy-display-name')
-        || (d.user.user_metadata && d.user.user_metadata.name)
-        || (d.user.email ? d.user.email.split('@')[0] : '사용자');
-      el.innerHTML = '<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">' + n + '님</span><span class="header-actions__divider"></span><a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a><button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';
-      return;
-    }
-  } catch(e) {}
-  el.innerHTML = '<a href="login.html" class="header-actions__link">로그인</a><span class="header-actions__divider"></span><a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';
-})();
-</script>
 
   <!-- ══ 검색 오버레이 ══ -->
   <div class="search-overlay" id="searchOverlay">
@@ -413,7 +396,7 @@
 
       <!-- 상단: 소셜 아이콘 -->
       <div class="footer-bim__social-row">
-        <a href="https://www.bimatrix.co.kr/" target="_blank" rel="noopener" class="footer-bim__social-btn" aria-label="홈페이지">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -442,9 +425,9 @@
 
       <!-- 중간: 링크 메뉴 -->
       <div class="footer-bim__links-row">
-        <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>
+        <a href="#">개인정보처리방침</a>
         <span class="footer-bim__divider">|</span>
-        <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" rel="noopener">문의하기</a>
+        <a href="#">문의하기</a>
       </div>
 
       <!-- 하단: 회사 정보 + 로고 -->

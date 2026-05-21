@@ -10,7 +10,6 @@
   <style>
     .mypage-wrap {
       min-height: 100vh;
-      background: var(--bg);
       padding-bottom: 80px;
     }
 
@@ -18,30 +17,55 @@
     .profile-header {
       background: var(--navy);
       color: #fff;
-      padding: 48px 0 40px;
+      padding: 35px 0 55px;
     }
+    .sub-hero-mypage {
+      position: relative;
+      overflow: hidden;
+      background: #000 url('assets/images/sub-hero-mypage.jpg') center/cover no-repeat;
+    }
+
+    .sub-hero-mypage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to right,
+        rgba(1, 1, 8, 0.95) 30%,
+        rgba(1, 1, 8, 0.6) 50%,
+        rgba(1, 1, 8, 0.5) 70%,
+        rgba(1, 1, 8, 0.95) 90%
+      );
+      pointer-events: none;
+    }
+
+.container {
+  position: relative;
+  z-index: 2;
+}
     .profile-header .container {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 30px;
     }
     .profile-avatar {
-      width: 72px;
-      height: 72px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       background: rgba(255,255,255,0.15);
-      border: 3px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 38px;
+      font-weight: 500;
       flex-shrink: 0;
     }
     .profile-info { flex: 1; }
-    .profile-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-    .profile-email { font-size: 14px; opacity: 0.75; margin-bottom: 12px; }
-    .profile-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .profile-name { font-size: 26px; font-weight: 600; margin-bottom: 0px; }
+    .profile-email { font-size: 15px; opacity: 0.75; margin-bottom: 10px; }
+    .profile-badges { display: flex; gap: 10px; flex-wrap: wrap; }
     .profile-badge {
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.2);
@@ -51,20 +75,27 @@
       font-weight: 600;
     }
     .profile-badge.gold { background: rgba(245,158,11,0.2); border-color: var(--gold); color: var(--gold); }
+    .profile-badge.blue { background: rgba(59, 130, 246, .18); border-color: rgba(59, 130, 246, .35); color: #93C5FD; }
     .profile-edit-btn {
-      padding: 8px 20px;
-      background: rgba(255,255,255,0.1);
-      border: 1.5px solid rgba(255,255,255,0.25);
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.40);
       border-radius: var(--radius-md);
       color: #fff;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
       font-family: var(--font);
       cursor: pointer;
       transition: background 0.2s;
       white-space: nowrap;
+      margin-top: auto;
     }
-    .profile-edit-btn:hover { background: rgba(255,255,255,0.2); }
+    .profile-edit-btn:hover { 
+      background: rgba(255,255,255,0.9); 
+      border: 1.5px solid rgba(255,255,255,0.90);
+      color: var(--text-primary);
+      font-weight: 700;
+    }
 
     /* ── 통계 카드 ── */
     .stats-row {
@@ -83,41 +114,58 @@
       text-align: center;
     }
     .stat-num {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--navy);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--text-primary);
       line-height: 1;
       margin-bottom: 6px;
     }
     .stat-num span { font-size: 16px; font-weight: 600; }
-    .stat-label { font-size: 12px; color: var(--text-hint); font-weight: 600; letter-spacing: 0.04em; }
+    .stat-label { font-size: 15px; color: var(--text-hint); font-weight: 500; letter-spacing: 0.04em; }
 
-    /* ── 탭 ── */
-    .mypage-tabs {
+    .mypage-tab-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      margin-bottom: 40px;
+    }
+    .mypage-tab-bar__inner {
+      max-width: 100%;
+      margin: 0 auto;
       display: flex;
-      gap: 4px;
-      margin-bottom: 28px;
-      border-bottom: 2px solid var(--border);
+      align-items: center;
+      overflow-x: auto;
     }
     .mypage-tab {
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-hint);
-      cursor: pointer;
-      border: none;
+      padding: 21px 20px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #4e5968;
       background: none;
-      font-family: var(--font);
-      position: relative;
-      bottom: -2px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: inherit;
     }
-    .mypage-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
-    .mypage-tab:hover:not(.active) { color: var(--text-sub); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
+    .mypage-tab:hover { 
+      var(--text-primary); 
+      font-weight: 700;
+    }
+    .mypage-tab.active {
+      color: var(--text-primary);
+      border-bottom-color: var(--gray-dark);
+      font-weight: 700;
+    }
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel.active {
+      display: block;
+    }
     /* ── 강의 카드 (수강 중) ── */
     .course-progress-card {
       background: #fff;
@@ -243,8 +291,8 @@
     .empty-state p { font-size: 15px; margin-bottom: 20px; }
     .empty-state a {
       display: inline-block;
-      padding: 10px 24px;
-      background: var(--navy);
+      padding: 12px 24px;
+      background: var(--charcoal);
       color: #fff;
       border-radius: var(--radius-md);
       font-size: 14px;
@@ -257,24 +305,24 @@
       background: #fff;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
-      padding: 32px;
+      padding: 30px;
       margin-bottom: 20px;
     }
     .settings-title {
-      font-size: 16px;
+      font-size: 22px;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--text-primary);
       margin-bottom: 20px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
     }
-    .form-group { margin-bottom: 16px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px;}
     .form-label {
       display: block;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
-      color: var(--navy);
+      color: var(--text-primary);
       margin-bottom: 6px;
     }
     .form-input {
@@ -292,8 +340,8 @@
     .form-input:focus { outline: none; border-color: var(--navy); }
     .form-input:disabled { background: var(--bg); color: var(--text-hint); }
     .btn-save {
-      padding: 10px 28px;
-      background: var(--navy);
+      padding: 12px 28px;
+      background: var(--charcoal);
       color: #fff;
       border: none;
       border-radius: var(--radius-md);
@@ -303,7 +351,7 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .btn-save:hover { background: var(--navy-dark); }
+    .btn-save:hover { background: var(--gray-dark); }
 
     /* ── 알림 / 토스트 ── */
     .toast {
@@ -327,7 +375,7 @@
     }
     @media (max-width: 480px) {
       .stats-row { grid-template-columns: 1fr 1fr; }
-      .mypage-tab { padding: 10px 12px; font-size: 13px; }
+      .mypage-tab-bar { padding: 10px 12px; font-size: 13px; }
     }
   </style>
 </head>
@@ -337,8 +385,8 @@
   <header class="site-header">
     <div class="container">
       <div class="header-main">
-        <a href="index.html" class="logo-new">
-          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+        <a href="index.html" class="logo">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo__img">
         </a>
         <div class="header-actions">
           <a href="mypage.html" class="header-actions__link" style="color:var(--navy);font-weight:700;">마이페이지</a>
@@ -356,7 +404,7 @@
   </header>
 
   <!-- ══ 프로필 헤더 ══ -->
-  <div class="profile-header">
+  <div class="profile-header sub-hero-mypage">
     <div class="container">
       <div class="profile-avatar" id="profileAvatar"></div>
       <div class="profile-info">
@@ -364,7 +412,7 @@
         <div class="profile-email" id="profileEmail"></div>
         <div class="profile-badges">
           <span class="profile-badge">수강생</span>
-          <span class="profile-badge gold" id="profileLevel">Lv.1 입문자</span>
+          <span class="profile-badge blue" id="profileLevel">Lv.1 입문자</span>
         </div>
       </div>
       <button class="profile-edit-btn" onclick="switchTab('settings')">프로필 수정</button>
@@ -388,12 +436,22 @@
       </div>
     </div>
 
-    <!-- ══ 탭 ══ -->
-    <div class="mypage-tabs">
+    <!-- ══ 탭 ══ 
+    <div class="mypage-tab">
       <button class="mypage-tab active" onclick="switchTab('courses')">내 강의</button>
       <button class="mypage-tab" onclick="switchTab('community')">내 게시글</button>
       <button class="mypage-tab" onclick="switchTab('settings')">프로필 설정</button>
+    </div>-->
+
+    <div class="mypage-tab-bar">
+      <div class="mypage-tab-bar__inner">
+        <button class="mypage-tab active" onclick="switchTab('courses')">내 강의</button>
+        <button class="mypage-tab" onclick="switchTab('community')">내 게시글</button>
+        <button class="mypage-tab" onclick="switchTab('settings')">프로필 설정</button>
+      </div>
     </div>
+
+
 
     <!-- ── 탭: 내 강의 ── -->
     <div class="tab-panel active" id="panel-courses">
@@ -450,12 +508,11 @@
         </div>
         <div class="form-group">
           <label class="form-label">새 비밀번호</label>
-          <input type="password" class="form-input" id="pwNew" placeholder="영문·숫자 조합 10자 이상" maxlength="20">
-          <p style="font-size:11px;color:#94A3B8;margin-top:4px;">영문, 숫자 조합 10자리 이상 (최대 20자)</p>
+          <input type="password" class="form-input" id="pwNew" placeholder="8자 이상">
         </div>
         <div class="form-group">
           <label class="form-label">새 비밀번호 확인</label>
-          <input type="password" class="form-input" id="pwConfirm" placeholder="새 비밀번호 다시 입력" maxlength="20">
+          <input type="password" class="form-input" id="pwConfirm" placeholder="새 비밀번호 다시 입력">
         </div>
         <button class="btn-save" onclick="changePassword()">비밀번호 변경</button>
       </div>
@@ -480,7 +537,7 @@
     }
 
     function switchTab(name) {
-      var names = ['courses', 'certificates', 'community', 'settings'];
+      var names = ['courses', 'community', 'settings'];
       document.querySelectorAll('.mypage-tab').forEach(function(btn, i) {
         btn.classList.toggle('active', names[i] === name);
       });
@@ -600,18 +657,12 @@
     }
 
     /* ── 비밀번호 변경 ── */
-    var PW_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,20}$/;
     async function changePassword() {
-      var cur = document.getElementById('pwCurrent').value;
       var nw  = document.getElementById('pwNew').value;
       var cfm = document.getElementById('pwConfirm').value;
-      if (!cur) { showToast('현재 비밀번호를 입력해주세요'); return; }
-      if (!nw)  { showToast('새 비밀번호를 입력해주세요'); return; }
-      if (!PW_REGEX.test(nw)) { showToast('새 비밀번호는 영문, 숫자 조합 10자리 이상 20자리 이하로 입력해주세요'); return; }
-      if (nw !== cfm) { showToast('새 비밀번호가 일치하지 않습니다'); return; }
-      if (nw === cur) { showToast('기존과 동일한 비밀번호는 사용할 수 없습니다'); return; }
-      var { error: authErr } = await _supabase.auth.signInWithPassword({ email: USER.email, password: cur });
-      if (authErr) { showToast('현재 비밀번호가 올바르지 않습니다'); return; }
+      if (!nw) { showToast('새 비밀번호를 입력해주세요'); return; }
+      if (nw.length < 8) { showToast('새 비밀번호는 8자 이상이어야 합니다'); return; }
+      if (nw !== cfm)    { showToast('새 비밀번호가 일치하지 않습니다'); return; }
       var { error } = await _supabase.auth.updateUser({ password: nw });
       if (error) { showToast('비밀번호 변경 중 오류가 발생했습니다'); return; }
       document.getElementById('pwCurrent').value = '';
