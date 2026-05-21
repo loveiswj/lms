@@ -489,19 +489,22 @@
             width:100%; height:42px; padding:0 14px; border:1px solid #E2E8F0;
             border-radius:8px; font-size:14px; font-family:inherit; box-sizing:border-box;
             outline:none; transition:border-color .15s;
-          " onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#E2E8F0'">
+          " onfocus="this.style.borderColor='#2563EB'" onblur="olValidateEmail()" oninput="olValidateEmail()">
+          <p id="ol_email_err" style="font-size:11px; color:#EF4444; margin-top:3px; display:none;"></p>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
           <div>
-            <label style="display:block; font-size:13px; font-weight:600; color:#0F172A; margin-bottom:5px;">연락처</label>
-            <input id="ol_phone" type="tel" placeholder="010-0000-0000" style="
+            <label style="display:block; font-size:13px; font-weight:600; color:#0F172A; margin-bottom:5px;">연락처 <span style="color:#EF4444;">*</span></label>
+            <input id="ol_phone" type="tel" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" style="
               width:100%; height:42px; padding:0 14px; border:1px solid #E2E8F0;
               border-radius:8px; font-size:14px; font-family:inherit; box-sizing:border-box;
               outline:none; transition:border-color .15s;
-            " onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#E2E8F0'">
+            " onfocus="this.style.borderColor='#2563EB'" onblur="olValidatePhone()"
+              oninput="olFormatPhone(this)">
+            <p id="ol_phone_err" style="font-size:11px; color:#EF4444; margin-top:3px; display:none;"></p>
           </div>
           <div>
-            <label style="display:block; font-size:13px; font-weight:600; color:#0F172A; margin-bottom:5px;">소속 회사</label>
+            <label style="display:block; font-size:13px; font-weight:600; color:#0F172A; margin-bottom:5px;">소속 회사 <span style="color:#EF4444;">*</span></label>
             <input id="ol_company" type="text" placeholder="회사명" style="
               width:100%; height:42px; padding:0 14px; border:1px solid #E2E8F0;
               border-radius:8px; font-size:14px; font-family:inherit; box-sizing:border-box;
@@ -657,20 +660,52 @@
       document.getElementById('offlineFooter').style.display = 'flex';
     }
 
-    async function submitOfflineEvent() {
-      var name  = (document.getElementById('ol_name').value || '').trim();
-      var email = (document.getElementById('ol_email').value || '').trim();
-      var phone = (document.getElementById('ol_phone').value || '').trim();
-      var company = (document.getElementById('ol_company').value || '').trim();
-      var job   = (document.getElementById('ol_job').value || '').trim();
-      var memo  = (document.getElementById('ol_memo').value || '').trim();
-      var errEl = document.getElementById('olErrorMsg');
+    function olFormatPhone(el) {
+      var v = el.value.replace(/\D/g, '');
+      if (v.length <= 3) el.value = v;
+      else if (v.length <= 7) el.value = v.slice(0,3) + '-' + v.slice(3);
+      else el.value = v.slice(0,3) + '-' + v.slice(3,7) + '-' + v.slice(7,11);
+    }
 
-      if (!name)  { errEl.textContent = '이름을 입력해주세요.';  errEl.style.display = 'block'; return; }
-      if (!email) { errEl.textContent = '이메일을 입력해주세요.'; errEl.style.display = 'block'; return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        errEl.textContent = '올바른 이메일 형식이 아닙니다.'; errEl.style.display = 'block'; return;
-      }
+    function olValidateEmail() {
+      var val = (document.getElementById('ol_email').value || '').trim();
+      var errEl = document.getElementById('ol_email_err');
+      var input = document.getElementById('ol_email');
+      if (!val) { errEl.style.display = 'none'; input.style.borderColor = '#E2E8F0'; return false; }
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      errEl.textContent = ok ? '' : '올바른 이메일 형식이 아닙니다.';
+      errEl.style.display = ok ? 'none' : 'block';
+      input.style.borderColor = ok ? '#22C55E' : '#EF4444';
+      return ok;
+    }
+
+    function olValidatePhone() {
+      var val = (document.getElementById('ol_phone').value || '').trim();
+      var errEl = document.getElementById('ol_phone_err');
+      var input = document.getElementById('ol_phone');
+      if (!val) { errEl.style.display = 'none'; input.style.borderColor = '#E2E8F0'; return false; }
+      var ok = /^\d{3}-\d{4}-\d{4}$/.test(val);
+      errEl.textContent = ok ? '' : '올바른 형식이 아닙니다. (예: 010-0000-0000)';
+      errEl.style.display = ok ? 'none' : 'block';
+      input.style.borderColor = ok ? '#22C55E' : '#EF4444';
+      return ok;
+    }
+
+    async function submitOfflineEvent() {
+      var name    = (document.getElementById('ol_name').value || '').trim();
+      var email   = (document.getElementById('ol_email').value || '').trim();
+      var phone   = (document.getElementById('ol_phone').value || '').trim();
+      var company = (document.getElementById('ol_company').value || '').trim();
+      var job     = (document.getElementById('ol_job').value || '').trim();
+      var memo    = (document.getElementById('ol_memo').value || '').trim();
+      var errEl   = document.getElementById('olErrorMsg');
+
+      if (!name)    { errEl.textContent = '이름을 입력해주세요.';    errEl.style.display = 'block'; return; }
+      if (!email)   { errEl.textContent = '이메일을 입력해주세요.';  errEl.style.display = 'block'; return; }
+      if (!olValidateEmail()) { errEl.style.display = 'none'; return; }
+      if (!phone)   { errEl.textContent = '연락처를 입력해주세요.';  errEl.style.display = 'block'; return; }
+      if (!olValidatePhone()) { errEl.style.display = 'none'; return; }
+      if (!company) { errEl.textContent = '소속 회사를 입력해주세요.'; errEl.style.display = 'block'; return; }
       errEl.style.display = 'none';
 
       var btn = document.getElementById('olSubmitBtn');
