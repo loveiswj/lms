@@ -581,7 +581,7 @@
 
       var html = '';
       ENROLLMENTS.forEach(function(enr) {
-        var course = COURSES.find(function(c) { return c.id === enr.courseId; });
+        var course = COURSES.find(function(c) { return c.id == enr.courseId; });
         if (!course) return;
         var isDone = enr.progress === 100;
         var featureLabel = { epa:'데이터 취합', dashboard:'대시보드', olap:'OLAP', uiux:'UI/UX', report:'보고서' };
