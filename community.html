@@ -448,9 +448,13 @@
       }
       showPage('pagewrite');
       document.getElementById('writeForm').reset();
-      document.getElementById('writeCatGroup').style.display = state.isAdmin ? '' : 'none';
-      var defaultCat = (state.currentCat === 'free' || state.currentCat === 'qa') ? state.currentCat : 'qa';
-      document.getElementById('writeCat').value = defaultCat;
+      document.getElementById('writeCatGroup').style.display = '';
+      var writeCat = document.getElementById('writeCat');
+      writeCat.innerHTML = state.isAdmin
+        ? '<option value="qa">Q&amp;A</option><option value="free">자유게시판</option><option value="notice">공지사항</option>'
+        : '<option value="qa">Q&amp;A</option><option value="free">자유게시판</option>';
+      var defaultCat = state.currentCat === 'free' ? 'free' : 'qa';
+      writeCat.value = defaultCat;
     }
     async function goDetail(id) {
       state.currentDetailId = id;
