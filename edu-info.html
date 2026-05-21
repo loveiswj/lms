@@ -580,7 +580,12 @@
 
       detail.classList.add('is-visible');
       if (!noScroll) {
-        setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        setTimeout(function () {
+          var header = document.querySelector('.site-header');
+          var headerH = header ? header.offsetHeight : 64;
+          var top = detail.getBoundingClientRect().top + window.pageYOffset - headerH - 24;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }, 50);
       }
     }
 
