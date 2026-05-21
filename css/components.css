@@ -1652,6 +1652,8 @@
   gap: 8px;
   flex-shrink: 0;
   margin-left: auto;
+  min-width: 220px;
+  justify-content: flex-end;
 }
 
 .header-actions__link {

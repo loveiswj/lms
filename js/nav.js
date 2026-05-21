@@ -209,7 +209,7 @@
           var data = JSON.parse(localStorage.getItem(keys[i]));
           if (data && data.access_token && data.user) {
             var exp = data.expires_at;
-            if (exp && (Date.now() / 1000) > exp) return null; // 만료
+            if (exp && (Date.now() / 1000) > exp && !data.refresh_token) return null; // 만료 & 갱신 불가
             return data;
           }
         }
