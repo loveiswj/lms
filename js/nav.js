@@ -22,6 +22,18 @@
     });
   }
 
+  function initLogoNav() {
+    var logoLink = document.querySelector("a.logo-new[href='index.html']");
+    if (!logoLink) return;
+    logoLink.addEventListener("click", function(e) {
+      var p = location.pathname;
+      if (p.endsWith("index.html") || p.endsWith("/") || p === "") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  }
+
   function initGnb() {
     const gnbItems = document.querySelectorAll(".gnb__item");
     if (!gnbItems.length) return;
@@ -203,13 +215,16 @@
   /* localStorage에서 만료되지 않은 세션을 동기적으로 읽기 */
   function getLocalSession() {
     try {
-      var raw = localStorage.getItem('bim-academy-auth');
-      if (!raw) return null;
-      var data = JSON.parse(raw);
-      if (data && data.access_token && data.user) {
-        var exp = data.expires_at;
-        if (exp && (Date.now() / 1000) > exp && !data.refresh_token) return null;
-        return data;
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].startsWith('sb-') && keys[i].endsWith('-auth-token')) {
+          var data = JSON.parse(localStorage.getItem(keys[i]));
+          if (data && data.access_token && data.user) {
+            var exp = data.expires_at;
+            if (exp && (Date.now() / 1000) > exp) return null; // 만료
+            return data;
+          }
+        }
       }
     } catch (e) {}
     return null;
@@ -234,22 +249,19 @@
     var actionsEl = document.querySelector(".header-actions");
     if (!actionsEl) return;
 
-    /* 1단계: localStorage 즉시 읽기 */
+    /* 1단계: localStorage 즉시 읽어 깜빡임 없이 바로 적용 */
     var local = getLocalSession();
-    if (local) {
+    if (!local) {
+      renderLoggedOut(actionsEl);
+      if (typeof _supabase === "undefined") return;
+    } else {
       var cachedName = localStorage.getItem('bim-academy-display-name');
       var quickName = cachedName
         || (local.user && local.user.user_metadata && local.user.user_metadata.name)
         || (local.user && local.user.email ? local.user.email.split("@")[0] : '사용자');
       renderLoggedIn(actionsEl, quickName);
-    } else if (typeof _supabase === "undefined") {
-      /* Supabase 미사용 환경에서만 즉시 로그아웃 렌더 */
-      renderLoggedOut(actionsEl);
-      return;
+      if (typeof _supabase === "undefined") return;
     }
-    /* local이 없어도 Supabase가 있으면 2단계까지 기다림 */
-
-    if (typeof _supabase === "undefined") return;
 
     /* 2단계: 서버 세션 검증 후 프로필명으로 업데이트 */
     _supabase.auth.getSession().then(function (res) {
@@ -297,9 +309,13 @@
   ──────────────────────────────────────── */
   /* nav.js는 </body> 직전에 로드되므로 헤더 DOM이 이미 존재함.
      initAuth는 즉시 실행해 깜빡임을 없애고, 나머지는 DOMContentLoaded 후 실행 */
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+
   initAuth();
   document.addEventListener("DOMContentLoaded", function () {
     initSimpleNav();
+    initLogoNav();
     initGnb();
     initMobileNav();
     initSearch();
