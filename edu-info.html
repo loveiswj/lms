@@ -531,7 +531,7 @@
         '</table>';
     }
 
-    function renderDetail(key) {
+    function renderDetail(key, doScroll) {
       var data   = COURSES[key];
       var detail = document.getElementById('courseDetail');
       var badge  = document.getElementById('detailBadge');
@@ -601,7 +601,9 @@
       body.insertAdjacentHTML('beforeend', venueHtml);
 
       detail.classList.add('is-visible');
-      setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+      if (doScroll) {
+        setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+      }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -610,15 +612,15 @@
         card.addEventListener('click', function () {
           cards.forEach(function (c) { c.classList.remove('is-active'); });
           this.classList.add('is-active');
-          renderDetail(this.dataset.course);
+          renderDetail(this.dataset.course, true);
         });
       });
 
-      /* 기본 선택: 사용자 교육 */
+      /* 기본 선택: 사용자 교육 (스크롤 없이 렌더만) */
       var defaultCard = document.querySelector('.ei-card[data-course="user"]');
       if (defaultCard) {
         defaultCard.classList.add('is-active');
-        renderDetail('user');
+        renderDetail('user', false);
       }
     });
 
