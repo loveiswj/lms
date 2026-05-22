@@ -272,10 +272,17 @@
           .then(function (r) {
             var name = (r.data && r.data.name) || session.user.email.split("@")[0];
             localStorage.setItem('bim-academy-display-name', name);
-            renderLoggedIn(actionsEl, name);
+            /* 이미 로그인 상태로 렌더된 경우 이름 텍스트만 교체 (버튼 DOM 유지) */
+            var usernameEl = actionsEl.querySelector('.header-actions__username');
+            if (usernameEl) {
+              usernameEl.textContent = name + '님';
+            } else {
+              renderLoggedIn(actionsEl, name);
+            }
           })
           .catch(function () {
-            renderLoggedIn(actionsEl, session.user.email.split("@")[0]);
+            var usernameEl = actionsEl.querySelector('.header-actions__username');
+            if (!usernameEl) renderLoggedIn(actionsEl, session.user.email.split("@")[0]);
           });
 
         var mobileLoginBtn = document.getElementById("mobileLoginBtn");
