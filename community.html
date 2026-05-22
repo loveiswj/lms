@@ -1158,8 +1158,6 @@
       if (typeof _supabase === 'undefined') return;
       var res = await _supabase.from('community_posts')
         .select('*')
-        .neq('is_hidden', true)
-        .order('is_pinned', { ascending: false })
         .order('created_at', { ascending: false });
       if (!res.error && res.data) {
         state.dbPosts = res.data;
