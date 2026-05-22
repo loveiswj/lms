@@ -1156,25 +1156,13 @@
     /* ── DB 게시글 로드 ── */
     async function loadPostsFromDB() {
       if (typeof _supabase === 'undefined') { renderPosts(); return; }
-      try {
-        var res = await _supabase.from('community_posts')
-          .select('*')
-          .order('created_at', { ascending: false });
-        if (!res.error && res.data && res.data.length > 0) {
-          state.dbPosts = res.data;
-        } else {
-          state.dbPosts = POSTS.map(function(p) {
-            return { id: p.id, category: p.cat, title: p.title, content: p.excerpt || '',
-                     author_name: p.author, created_at: p.date + 'T00:00:00',
-                     views: p.views, likes: p.likes, author_id: null, image_url: null };
-          });
-        }
-      } catch(e) {
-        state.dbPosts = POSTS.map(function(p) {
-          return { id: p.id, category: p.cat, title: p.title, content: p.excerpt || '',
-                   author_name: p.author, created_at: p.date + 'T00:00:00',
-                   views: p.views, likes: p.likes, author_id: null, image_url: null };
-        });
+      var res = await _supabase.from('community_posts')
+        .select('*')
+        .eq('is_hidden', false)
+        .order('is_pinned', { ascending: false })
+        .order('created_at', { ascending: false });
+      if (!res.error && res.data) {
+        state.dbPosts = res.data;
       }
       renderPosts();
     }

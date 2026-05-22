@@ -408,7 +408,6 @@
       </div>
     </div>
   </header>
-  <script>(function(){var el=document.querySelector('.header-actions');if(!el)return;try{var d=JSON.parse(localStorage.getItem('bim-academy-auth')||'null');if(d&&d.access_token&&d.user&&(!(d.expires_at&&Date.now()/1000>d.expires_at)||d.refresh_token)){var n=localStorage.getItem('bim-academy-display-name')||(d.user.user_metadata&&d.user.user_metadata.name)||(d.user.email?d.user.email.split('@')[0]:'사용자');el.innerHTML='<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">'+n+'님</span><span class="header-actions__divider"></span><a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a><button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';return;}}catch(e){}el.innerHTML='<a href="login.html" class="header-actions__link">로그인</a><span class="header-actions__divider"></span><a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';})();</script>
 
   <!-- ══ 모바일 메뉴 ══ -->
   <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
@@ -552,6 +551,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/course-data.js"></script>
+  <script src="js/nav.js"></script>
   <script>
     var USER = { name: '', email: '', phone: '', role: '' };
     var ENROLLMENTS = [];
