@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교육일정 — 비아이매트릭스 아카데미</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/edu-schedule.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/course-data.js"></script>
+  <script src="js/main.js"></script>
+
+</head>
+<body>
+  <!-- ══ 헤더 ══ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-main">
+        <span class="logo-new">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ 검색 오버레이 ══ -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay__inner">
+      <input type="text" class="search-overlay__input" id="searchInput" placeholder="교육과정, 강사명 검색...">
+      <button class="search-overlay__close" id="searchClose" aria-label="닫기">✕</button>
+    </div>
+  </div>
+
+  <!-- ══ 모바일 메뉴 ══ -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
+    <div class="mobile-nav__header">
+      <div class="logo-new">
+        <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+      </div>
+      <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="mobile-nav__links">
+      <a href="edu-info.html">교육안내</a>
+      <a href="edu-schedule.html">교육일정</a>
+      <a href="course-list.html">교육동영상</a>
+      <a href="apply.html">교육신청</a>
+      <a href="faq.html">FAQ</a>
+      <a href="community.html">커뮤니티</a>
+    </div>
+    <div class="mobile-nav__actions">
+      <a href="login.html" class="btn btn--primary btn--full">로그인</a>
+    </div>
+  </div>
+
+  <!-- ══ 히어로 ══ -->
+  <section class="sub-hero sub-hero-edusch">
+    <div class="sub-hero__dots"></div>
+    <div class="sub-hero__inner">
+      <div class="sub-hero__eyebrow">Education Schedule</div>
+      <h1 class="sub-hero__title" id="heroTitle">교육 일정</h1>
+      <p class="sub-hero__desc" id="heroDesc">정기 교육 일정과 신청 현황을 한눈에 확인하세요.<br>
+달력에서 일정을 클릭하면 상세 현황이 바로 표시됩니다.</p>
+    </div>
+  </section>
+
+  <!-- ══ 메인 ══ -->
+  <div class="es-wrap">
+    <div class="es-inner">
+
+      <!-- 페이지 헤더 -->
+      <div class="section-hd">
+        <p class="section-hd__title">교육 일정 및 신청 현황</p>
+        <p class="section-hd__sub">달력에서 교육을 클릭하면 우측 테이블에 해당 일정이 표시됩니다.</p>
+      </div>
+
+      <!-- 통합 카드 -->
+      <div class="es-card">
+
+        <!-- ── 좌: 달력 ── -->
+        <div class="es-cal-side">
+          <div class="es-cal-head">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <button class="es-nav-btn" id="prevBtn">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <span id="calTitle" class="es-cal-head__title">2026.05</span>
+              <button class="es-nav-btn" id="nextBtn">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            <button class="es-download-btn" id="downloadBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              연간 일정 다운로드
+            </button>
+          </div>
+          <div id="calendar"></div>
+        </div>
+
+        <!-- ── 우: 상세 ── -->
+        <div class="es-detail-side">
+
+          <!-- 상세 헤더 -->
+          <div class="es-detail-head">
+            <div class="es-detail-head__label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              일정 상세
+            </div>
+            <div class="es-detail-head__right">
+              <button class="es-month-btn" id="viewAllBtn" style="display:none" type="button">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                전체 보기
+              </button>
+            </div>
+          </div>
+
+          <!-- 테이블 -->
+          <div class="es-table-wrap">
+            <table class="es-table" style="table-layout:fixed">
+              <colgroup>
+                <col style="width:55px">
+                <col>
+                <col style="width:92px">
+                <col style="width:50px">
+                <col style="width:92px">
+                <col style="width:50px">
+                <col style="width:50px">
+                <col style="width:50px">
+                <col style="width:70px">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>회차</th>
+                  <th style="text-align:left">과정명</th>
+                  <th>시작일</th>
+                  <th>기간</th>
+                  <th>접수 마감</th>
+                  <th>정원</th>
+                  <th>신청</th>
+                  <th>대기</th>
+                  <th>상태</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody">
+                <tr><td colspan="9" class="es-empty">불러오는 중...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+
+        </div>
+      </div><!-- /.es-card -->
+
+
+    </div>
+  </div>
+
+  <!-- ══ 안내 섹션 ══ -->
+  <section class="apply-policy">
+    <div class="apply-policy__wrap">
+
+      <div>
+        <p class="apply-policy__col-title">교육 운영 정책<span class="highlight"> (수강 신청 전 꼭 확인해 주세요!)</span></p>
+        <ul class="apply-policy__list">
+            <li><strong>모집 정원 :</strong> 과정당 최대 24명 (선착순 마감), 정원 초과 시 대기자로 등록됩니다.</li>
+            <li><strong>폐강 기준 :</strong> 접수 마감일 기준 신청 인원이 10명 미만일 경우 교육이 취소(폐강)될 수 있습니다. (폐강 시 개별 메일 안내)</li>
+            <li><strong>수강 확정 안내 :</strong> 마감 다음 날 신청하신 이메일로 개별 발송됩니다.</li>
+            <li><strong>무단 불참 안내 :</strong> 사전 취소 없이 무단으로 불참하실 경우, 향후 교육 수강이 제한될 수 있으니 유의해 주시기 바랍니다.</li>
+        </ul>
+      </div>
+
+      <div class="apply-policy__sep" style="height: 100%;"></div>
+
+      <div>
+        <p class="apply-policy__col-title">교육 운영 정책 안내</p>
+        <ul class="apply-policy__list">
+          <li>모든 교육 과정은 유상으로 진행됩니다. <span class="highlight">(1일 300,000원 / VAT 별도)</span></li>
+          <li>정확한 교육 비용 및 견적은 교육 신청 시 담당 영업대표에게 문의해주시기 바랍니다.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 푸터 ══ -->
+  <!-- ══ 푸터 ══ -->
+  <footer class="site-footer-new">
+    <div class="footer-bim__wrap">
+
+      <!-- 상단: 소셜 아이콘 -->
+      <div class="footer-bim__social-row">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+        </a>
+        <a href="https://www.youtube.com/@BIMATRIXKR?sub_confirmation=1" class="footer-bim__social-btn" aria-label="youtube">
+              <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
+                <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
+              </svg>
+        </a>
+        <a href="https://www.facebook.com/bimatrixkorea" class="footer-bim__social-btn" aria-label="Facebook">
+              <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
+                <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
+              </svg>
+        </a>
+        <a href="https://blog.naver.com/bi_matrix" class="footer-bim__social-btn" aria-label="Naver Blog">
+                <svg viewBox="0 0 106.4 86" width="22" height="22" aria-hidden="true" fill="rgba(255,255,255,0.65)">
+                  <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                  <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                  <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
+                  <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                </svg>
+        </a>
+      </div>
+
+      <!-- 중간: 링크 메뉴 -->
+      <div class="footer-bim__links-row">
+        <a href="#">개인정보처리방침</a>
+        <span class="footer-bim__divider">|</span>
+        <a href="#">문의하기</a>
+      </div>
+
+      <!-- 하단: 회사 정보 + 로고 -->
+      <div class="footer-bim__bottom">
+        <div class="footer-bim__info">
+          <p class="footer-bim__company">(주)비아이매트릭스</p>
+          <p class="footer-bim__addr">서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동)　｜　대표이사: 배영근</p>
+          <p class="footer-bim__addr">사업자등록번호: 120-86-79936　｜　Tel: 02-561-4475　｜　Fax: 02-561-4479</p>
+          <p class="footer-bim__copy">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+        </div>
+        <div class="footer-bim__logo-wrap">
+          <img src="assets/images/img_logo_footer.svg" alt="BI MATRIX" class="footer-bim__logo">
+        </div>
+      </div>
+
+      <!-- Family Site 드롭다운 -->
+      <div class="footer-bim__family">
+        <div class="footer-bim__family-select" id="familySiteToggle">
+          <span>Family Site</span>
+          <svg class="footer-bim__family-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="footer-bim__family-dropdown" id="familySiteDropdown">
+          <a href="http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp" target="_blank" rel="noopener">AUD플랫폼 데모</a>
+          <a href="https://cs.bimatrix.co.kr/portal/login.jsp" target="_blank" rel="noopener">고객지원 사이트</a>
+          <a href="https://audp.bimatrix.co.kr/pages/viewpage.action?pageId=78708774" target="_blank" rel="noopener">기술 자료실</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+<!-- Family Site 드롭다운 -->
+<script>
+(function() {
+  var toggle = document.getElementById('familySiteToggle');
+  var dropdown = document.getElementById('familySiteDropdown');
+  var arrow = toggle && toggle.querySelector('.footer-bim__family-arrow');
+  if (toggle && dropdown) {
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.toggle('is-open');
+      if (arrow) arrow.classList.toggle('is-open', isOpen);
+    });
+    document.addEventListener('click', function() {
+      dropdown.classList.remove('is-open');
+      if (arrow) arrow.classList.remove('is-open');
+    });
+  }
+})();
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+  <script>
+  (function () {
+
+    var DAY_KO = ['일','월','화','수','목','금','토'];
+
+    /* DATE 문자열 → "MM.DD(요일)" */
+    function fmtDate(dateStr) {
+      if (!dateStr) return '—';
+      var d = new Date(dateStr + 'T00:00:00');
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return d.getFullYear() + '.' + mm + '.' + dd + '(' + DAY_KO[d.getDay()] + ')';
+    }
+
+    /* 날짜에서 연도 제거: "2026.05.04(월)" → "05.04(월)" */
+    function stripYear(str) {
+      if (!str) return '—';
+      return String(str).replace(/^\d{4}\./, '');
+    }
+
+    /* 과정명 축약 */
+    function shorten(title) {
+      return title
+        .replace('TRINITY 개발자 교육', 'TRINITY')
+        .replace('i-MATRIX 심화 교육', 'i-MX 심화')
+        .replace('i-MATRIX 교육', 'i-MATRIX')
+        .replace('개발자 교육', '개발자')
+        .replace('사용자 교육', '사용자')
+        .replace('관리자 교육', '관리자')
+        .replace('신규 직원 교육', '신규직원')
+        .replace('기본 교육', '기본');
+    }
+
+
+    /* 과정별 글자색 */
+    var COURSE_COLOR = {
+      '개발자 교육':         '#0B4C98',
+      '관리자 교육':         '#026D72',
+      'TRINITY 개발자 교육': '#4C309D',
+      '사용자 교육':         '#0665D4',
+      'i-MATRIX 교육':      '#0B4C98',
+      'i-MATRIX 심화 교육':  '#0B4C98',
+      '기본 교육':           '#0665D4'
+    };
+
+    /* 과정별 배경색 */
+    var COURSE_BG = {
+      '개발자 교육':         '#B1D4FF',
+      '관리자 교육':         '#DDF4F4',
+      'TRINITY 개발자 교육': '#E3DDF4',
+      '사용자 교육':         '#E3F0FF',
+      'i-MATRIX 교육':      '#E3F0FF',
+      'i-MATRIX 심화 교육':  '#E3F0FF',
+      '기본 교육':           '#E3F0FF'
+    };
+
+    var curYear = 2026, curMonth = 5;
+    var calendar, selectedId = null;
+    var cachedDetailRows = [];
+
+    function fcEnd(d) {
+      var p = d.split('-');
+      var dt = new Date(+p[0], +p[1] - 1, +p[2] + 1);
+      return dt.getFullYear() + '-' +
+        String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+        String(dt.getDate()).padStart(2, '0');
+    }
+
+    /* 달력 렌더링 */
+    function applyCalData(events) {
+      calendar.removeAllEvents();
+      events.forEach(function (ev) {
+        calendar.addEvent({
+          id:              ev.curriculum + '||' + ev.round,
+          title:           ev.curriculum + ' (' + ev.round + ')',
+          start:           ev.start_date,
+          end:             fcEnd(ev.end_date || ev.start_date),
+          backgroundColor: COURSE_BG[ev.curriculum] || '#E8EEF6',
+          borderColor:     'transparent',
+          textColor:       COURSE_COLOR[ev.curriculum] || '#1E3A5F'
+        });
+      });
+    }
+
+    /* 테이블 렌더링 (Supabase row 그대로 받음) */
+    function applyDetailData(rows) {
+      var tb = document.getElementById('scheduleBody');
+      if (!rows || !rows.length) {
+        tb.innerHTML = '<tr><td colspan="9" class="es-empty">해당 교육 일정이 없습니다.</td></tr>';
+        return;
+      }
+      tb.innerHTML = rows.map(function (r) {
+        var cls = r.status === '신청중'  ? 'badge-open'
+                : r.status === '접수예정' ? 'badge-scheduled'
+                : r.status === '대기신청' ? 'badge-wait'
+                : r.status === '폐강'    ? 'badge-cancel'
+                : 'badge-closed';
+        return '<tr>' +
+          '<td class="td-c">' + (r.round || '') + '</td>' +
+          '<td class="td-name">' + r.curriculum + '</td>' +
+          '<td class="td-c">' + stripYear(fmtDate(r.start_date)) + '</td>' +
+          '<td class="td-c">' + r.duration + '</td>' +
+          '<td class="td-c">' + stripYear(fmtDate(r.deadline)) + '</td>' +
+          '<td class="td-c">24명</td>' +
+          '<td class="td-c">' + r.registered + '명</td>' +
+          '<td class="td-c">' + r.waiting + '명</td>' +
+          '<td class="td-c"><span class="es-badge ' + cls + '">' + r.status + '</span></td>' +
+          '</tr>';
+      }).join('');
+    }
+
+    /* ── Supabase 연동 ── */
+    function monthRange(y, m) {
+      var first = y + '-' + String(m).padStart(2, '0') + '-01';
+      var d = new Date(y, m, 0);
+      var last  = y + '-' + String(m).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      return { first: first, last: last };
+    }
+
+    function loadMonth(y, m) {
+      var r = monthRange(y, m);
+      document.getElementById('scheduleBody').innerHTML =
+        '<tr><td colspan="9" class="es-empty">불러오는 중...</td></tr>';
+
+      _supabase.from('edu_schedule')
+        .select('curriculum, round, start_date, end_date')
+        .lte('start_date', r.last)
+        .gte('end_date', r.first)
+        .order('start_date')
+        .then(function (res) {
+          applyCalData(res.data || []);
+        });
+
+      _supabase.from('edu_schedule')
+        .select('*')
+        .gte('start_date', r.first)
+        .lte('start_date', r.last)
+        .order('start_date')
+        .then(function (res) {
+          cachedDetailRows = res.data || [];
+          if (!selectedId) applyDetailData(cachedDetailRows);
+        });
+    }
+
+    function setDetailHeader(isFiltered) {
+      var btn = document.getElementById('viewAllBtn');
+      btn.style.display = isFiltered ? 'inline-flex' : 'none';
+    }
+
+    function loadDetail(curriculum, round) {
+      setDetailHeader(true);
+      var filtered = cachedDetailRows.filter(function (row) {
+        return row.curriculum === curriculum && row.round === round;
+      });
+      applyDetailData(filtered);
+    }
+
+    function resetDetail() {
+      setDetailHeader(false);
+      document.querySelectorAll('.es-cal-side .fc-ev-selected').forEach(function (el) {
+        el.classList.remove('fc-ev-selected');
+      });
+      selectedId = null;
+      applyDetailData(cachedDetailRows);
+    }
+
+    function setLabel() {
+      document.getElementById('calTitle').textContent =
+        curYear + '.' + String(curMonth).padStart(2, '0');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView:    'dayGridMonth',
+        initialDate:    '2026-05-01',
+        headerToolbar:  false,
+        height:         'auto',
+        fixedWeekCount: false,
+        dayMaxEvents:   3,
+        hiddenDays:     [0, 6],
+        dayHeaderContent: function (arg) {
+          return ['일','월','화','수','목','금','토'][arg.date.getDay()];
+        },
+        eventContent: function (arg) {
+          return { html: '<div class="fc-ev-label">' + shorten(arg.event.title) + '</div>' };
+        },
+        eventDidMount: function (info) {
+          info.el.style.cursor = 'pointer';
+        },
+        eventClick: function (info) {
+          document.querySelectorAll('.es-cal-side .fc-ev-selected').forEach(function (el) {
+            el.classList.remove('fc-ev-selected');
+          });
+          info.el.classList.add('fc-ev-selected');
+          selectedId = info.event.id;
+          var parts = info.event.id.split('||');
+          loadDetail(parts[0], parts[1]);
+        }
+      });
+      calendar.render();
+
+      document.getElementById('prevBtn').addEventListener('click', function () {
+        if (--curMonth < 1) { curMonth = 12; curYear--; }
+        calendar.prev(); setLabel();
+        selectedId = null; setDetailHeader(false);
+        loadMonth(curYear, curMonth);
+      });
+      document.getElementById('nextBtn').addEventListener('click', function () {
+        if (++curMonth > 12) { curMonth = 1; curYear++; }
+        calendar.next(); setLabel();
+        selectedId = null; setDetailHeader(false);
+        loadMonth(curYear, curMonth);
+      });
+      document.getElementById('viewAllBtn').addEventListener('click', function () {
+        resetDetail();
+      });
+      document.getElementById('downloadBtn').addEventListener('click', function () {
+        var btn = this;
+        btn.disabled = true;
+        btn.textContent = '불러오는 중...';
+        _supabase.from('edu_schedule')
+          .select('*')
+          .gte('start_date', '2026-01-01')
+          .lte('start_date', '2026-12-31')
+          .order('start_date')
+          .then(function (res) {
+            var rows = res.data || [];
+            var sheetData = [['회차','과정명','시작일','종료일','기간','접수마감','정원','신청','대기','상태']];
+            rows.forEach(function (r) {
+              sheetData.push([
+                r.round, r.curriculum,
+                r.start_date, r.end_date, r.duration,
+                r.deadline || '', 24, r.registered, r.waiting, r.status
+              ]);
+            });
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.aoa_to_sheet(sheetData);
+            ws['!cols'] = [
+              {wch:6},{wch:20},{wch:12},{wch:12},{wch:6},
+              {wch:12},{wch:6},{wch:6},{wch:6},{wch:8}
+            ];
+            XLSX.utils.book_append_sheet(wb, ws, '2026 교육일정');
+            XLSX.writeFile(wb, 'BI MATRIX 2026년 교육일정.xlsx');
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 연간 일정 다운로드';
+          });
+      });
+
+      setLabel();
+      loadMonth(curYear, curMonth);
+    });
+
+  })();
+  </script>
+</body>
+</html>
