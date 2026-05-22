@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교육안내 — 비아이매트릭스 아카데미</title>
+  <meta name="description" content="비아이매트릭스 아카데미 교육 과정 안내. 사용자·개발자·관리자 교육의 일정, 비용, 커리큘럼을 확인하세요.">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/edu-info.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/course-data.js"></script>
+  <script src="js/main.js"></script>
+
+</head>
+<body>
+  <!-- ══ 헤더 ══ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-main">
+        <a href="index.html" class="logo-new">
+          <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ 검색 오버레이 ══ -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay__inner">
+      <input type="text" class="search-overlay__input" id="searchInput" placeholder="교육과정, 강사명 검색...">
+      <button class="search-overlay__close" id="searchClose" aria-label="닫기">✕</button>
+    </div>
+  </div>
+
+  <!-- ══ 모바일 메뉴 ══ -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="모바일 메뉴">
+    <div class="mobile-nav__header">
+      <div class="logo-new">
+        <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
+      </div>
+      <button class="mobile-nav__close" id="mobileNavClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="mobile-nav__links">
+      <a href="edu-info.html">교육안내</a>
+      <a href="edu-schedule.html">교육일정</a>
+      <a href="course-list.html">교육동영상</a>
+      <a href="apply.html">교육신청</a>
+      <a href="faq.html">FAQ</a>
+      <a href="community.html">커뮤니티</a>
+    </div>
+    <div class="mobile-nav__actions">
+      <a href="login.html" class="btn btn--primary btn--full">로그인</a>
+    </div>
+  </div>
+
+  <!-- ══ 히어로 ══ -->
+  <section class="sub-hero sub-hero-eduinfo">
+    <div class="sub-hero__dots"></div>
+    <div class="sub-hero__inner">
+      <div class="sub-hero__eyebrow">Education Guide</div>
+      <h1 class="sub-hero__title" id="heroTitle">교육 안내</h1>
+      <p class="sub-hero__desc" id="heroDesc">단순한 기능 습득을 넘어, 데이터를 다루는 기술과 업무 혁신 노하우를 경험하세요.<br>
+비아이매트릭스 아카데미는 AUD플랫폼을 통한 실무 중심의 전문 교육 서비스를 제공합니다.</p>
+    </div>
+  </section>
+
+  <!-- ══ 오프라인 교육 과정 ══ -->
+  <div class="ei-courses">
+      <div class="section-hd">
+        <p class="section-hd__title">오프라인 교육 과정</p>
+        <p class="section-hd__sub">과정명을 클릭하면 상세 커리큘럼이 아래에 표시됩니다.</p>
+      </div>
+
+      <!-- 카드 그리드 -->
+      <div class="ei-card-grid" id="courseCards">
+
+        <!-- 사용자 교육 -->
+        <div class="ei-card" data-course="user">
+          <div class="ei-card__badge">AUD플랫폼</div>
+          <div class="ei-card__icon-wrap">
+            <span class="material-symbols-rounded ei-card__icon-size">person</span>
+          </div>
+          <p class="ei-card__name">사용자 교육</p>
+          <hr class="ei-card__divider">
+          <div class="ei-card__info">
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg><span>1일 (7교시)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>200,000원 (1인)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>월 2회 (1, 3주차)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>현업사용자</span></div>
+          </div>
+        </div>
+
+        <!-- 개발자 교육 -->
+        <div class="ei-card" data-course="dev">
+          <div class="ei-card__badge">AUD플랫폼</div>
+          <div class="ei-card__icon-wrap">
+            <span class="material-symbols-rounded ei-card__icon-size">code</span>
+          </div>
+          <p class="ei-card__name">개발자 교육</p>
+          <hr class="ei-card__divider">
+          <div class="ei-card__info">
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg><span>3일 (18h)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>500,000원 (1인)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>월 2회 (2, 4주차)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>개발자</span></div>
+          </div>
+        </div>
+
+        <!-- 관리자 교육 -->
+        <div class="ei-card" data-course="admin">
+          <div class="ei-card__badge">AUD플랫폼</div>
+          <div class="ei-card__icon-wrap">
+            <span class="material-symbols-rounded ei-card__icon-size">admin_panel_settings</span>
+          </div>
+          <p class="ei-card__name">관리자 교육</p>
+          <hr class="ei-card__divider">
+          <div class="ei-card__info">
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg><span>1일 (8교시)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>200,000원 (1인)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>월 1회 (2주차)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>개발자/운영자</span></div>
+          </div>
+        </div>
+
+        <!-- i-MATRIX 교육 -->
+        <div class="ei-card" data-course="imatrix">
+          <div class="ei-card__badge">AUD플랫폼</div>
+          <div class="ei-card__icon-wrap">
+            <span class="material-symbols-rounded ei-card__icon-size">grid_view</span>
+          </div>
+          <p class="ei-card__name">i-MATRIX 교육</p>
+          <hr class="ei-card__divider">
+          <div class="ei-card__info">
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg><span>1일 (7교시)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>200,000원 (1인)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>월 1회 (3주차)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>i-MATRIX 개발자</span></div>
+          </div>
+        </div>
+
+        <!-- TRINITY 개발자 교육 -->
+        <div class="ei-card ei-card--trinity" data-course="trinity">
+          <div class="ei-card__badge">TRINITY</div>
+          <div class="ei-card__icon-wrap ei-card__icon-wrap--purple">
+            <span class="material-symbols-rounded ei-card__icon-size">neurology</span>
+          </div>
+          <p class="ei-card__name">TRINITY 개발자 교육</p>
+          <hr class="ei-card__divider">
+          <div class="ei-card__info">
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg><span>2일 (12h)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>500,000원 (1인)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>월 1회 (3주차)</span></div>
+            <div class="ei-card__row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>수료자 대상</span></div>
+          </div>
+        </div>
+
+      </div><!-- /ei-card-grid -->
+
+      <!-- 커리큘럼 상세 영역 -->
+      <div class="ei-detail" id="courseDetail">
+        <div class="ei-detail__header">
+          <span class="ei-detail__badge" id="detailBadge"></span>
+          <span class="ei-detail__name" id="detailName"></span>
+        </div>
+        <div id="detailBody"></div>
+      </div>
+
+  </div>
+
+  <!-- ══ 교육장 안내 ══ -->
+  <section class="ei-venue">
+    <div class="ei-venue__inner">
+
+      <!-- 왼쪽: 텍스트 -->
+      <div class="ei-venue__left">
+        <span class="ei-venue__eyebrow">Location</span>
+        <h2 class="ei-venue__title">교육장 안내</h2>
+        <p class="ei-venue__desc">최적의 실습 환경과 전용 PC가 완비된 교육장에서 전문 교육을 경험해보세요.</p>
+
+        <div class="ei-venue__cards">
+          <div class="ei-venue__card">
+            <div class="ei-venue__card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-186q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm-28 74q-14-5-25-15-65-60-115-117t-83.5-110.5q-33.5-53.5-51-103T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 45-17.5 94.5t-51 103Q698-301 648-244T533-127q-11 10-25 15t-28 5q-14 0-28-5Zm28-448Zm56.5 56.5Q560-527 560-560t-23.5-56.5Q513-640 480-640t-56.5 23.5Q400-593 400-560t23.5 56.5Q447-480 480-480t56.5-23.5Z"/></svg>            </div>
+            <div>
+              <p class="ei-venue__card-title">서울특별시 강남구 선릉로 429, KR타워</p>
+              <p class="ei-venue__card-sub">선릉역 3번 출구 도보 2분</p>
+            </div>
+          </div>
+
+          <div class="ei-venue__card">
+            <div class="ei-venue__card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 -960 960 960"><path d="M320-200v20q0 25-17.5 42.5T260-120q-25 0-42.5-17.5T200-180v-62q-18-20-29-44.5T160-340v-380q0-83 77-121.5T480-880q172 0 246 37t74 123v380q0 29-11 53.5T760-242v62q0 25-17.5 42.5T700-120q-25 0-42.5-17.5T640-180v-20H320Zm162-560h224-448 224Zm158 280H240h480-80Zm-400-80h480v-120H240v120Zm142.5 222.5Q400-355 400-380t-17.5-42.5Q365-440 340-440t-42.5 17.5Q280-405 280-380t17.5 42.5Q315-320 340-320t42.5-17.5Zm280 0Q680-355 680-380t-17.5-42.5Q645-440 620-440t-42.5 17.5Q560-405 560-380t17.5 42.5Q595-320 620-320t42.5-17.5ZM258-760h448q-15-17-64.5-28.5T482-800q-107 0-156.5 12.5T258-760Zm62 480h320q33 0 56.5-23.5T720-360v-120H240v120q0 33 23.5 56.5T320-280Z"/></svg>
+            </div>
+            <div>
+              <p class="ei-venue__card-title">대중교통 안내</p>
+              <p class="ei-venue__card-sub">지하철 2호선 / 수인분당선 선릉역 이용<br>별도의 주차 지원이 없으니 대중교통을 권장합니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ei-venue__notice">
+          <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 -960 960 960" width="15px"><path d="M508.5-291.5Q520-303 520-320t-11.5-28.5Q497-360 480-360t-28.5 11.5Q440-337 440-320t11.5 28.5Q463-280 480-280t28.5-11.5Zm0-160Q520-463 520-480v-160q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640v160q0 17 11.5 28.5T480-440q17 0 28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>          주차 지원은 불가하니 가급적 대중교통을 이용해주시기 바랍니다.
+        </div>
+      </div>
+
+      <!-- 오른쪽: 지도 -->
+      <div class="ei-venue__right">
+        <div class="ei-venue__map-wrap">
+          <iframe
+            class="ei-venue__iframe"
+            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429&t=&z=17&ie=UTF8&iwloc=&output=embed"
+            allowfullscreen loading="lazy"
+            title="교육장 위치 지도">
+          </iframe>
+          <a class="ei-venue__map-btn"
+             href="https://map.naver.com/v5/search/서울특별시%20강남구%20선릉로%20429%2C%20KR타워"
+             target="_blank" rel="noopener">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            네이버 지도에서 보기
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 푸터 ══ -->
+  <footer class="site-footer-new">
+    <div class="footer-bim__wrap">
+
+      <!-- 상단: 소셜 아이콘 -->
+      <div class="footer-bim__social-row">
+        <a href="#" class="footer-bim__social-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+        </a>
+        <a href="https://www.youtube.com/@BIMATRIXKR?sub_confirmation=1" class="footer-bim__social-btn" aria-label="youtube">
+              <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
+                <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
+              </svg>
+        </a>
+        <a href="https://www.facebook.com/bimatrixkorea" class="footer-bim__social-btn" aria-label="Facebook">
+              <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
+                <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
+              </svg>
+        </a>
+        <a href="https://blog.naver.com/bi_matrix" class="footer-bim__social-btn" aria-label="Naver Blog">
+                <svg viewBox="0 0 106.4 86" width="22" height="22" aria-hidden="true" fill="rgba(255,255,255,0.65)">
+                  <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                  <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                  <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
+                  <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                </svg>
+        </a>
+      </div>
+
+      <!-- 중간: 링크 메뉴 -->
+      <div class="footer-bim__links-row">
+        <a href="#">개인정보처리방침</a>
+        <span class="footer-bim__divider">|</span>
+        <a href="#">문의하기</a>
+      </div>
+
+      <!-- 하단: 회사 정보 + 로고 -->
+      <div class="footer-bim__bottom">
+        <div class="footer-bim__info">
+          <p class="footer-bim__company">(주)비아이매트릭스</p>
+          <p class="footer-bim__addr">서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동)　｜　대표이사: 배영근</p>
+          <p class="footer-bim__addr">사업자등록번호: 120-86-79936　｜　Tel: 02-561-4475　｜　Fax: 02-561-4479</p>
+          <p class="footer-bim__copy">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+        </div>
+        <div class="footer-bim__logo-wrap">
+          <img src="assets/images/img_logo_footer.svg" alt="BI MATRIX" class="footer-bim__logo">
+        </div>
+      </div>
+
+      <!-- Family Site 드롭다운 -->
+      <div class="footer-bim__family">
+        <div class="footer-bim__family-select" id="familySiteToggle">
+          <span>Family Site</span>
+          <svg class="footer-bim__family-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="footer-bim__family-dropdown" id="familySiteDropdown">
+          <a href="http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp" target="_blank" rel="noopener">AUD플랫폼 데모</a>
+          <a href="https://cs.bimatrix.co.kr/portal/login.jsp" target="_blank" rel="noopener">고객지원 사이트</a>
+          <a href="https://audp.bimatrix.co.kr/pages/viewpage.action?pageId=78708774" target="_blank" rel="noopener">기술 자료실</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+<!-- Family Site 드롭다운 -->
+<script>
+(function() {
+  var toggle = document.getElementById('familySiteToggle');
+  var dropdown = document.getElementById('familySiteDropdown');
+  var arrow = toggle && toggle.querySelector('.footer-bim__family-arrow');
+  if (toggle && dropdown) {
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.toggle('is-open');
+      if (arrow) arrow.classList.toggle('is-open', isOpen);
+    });
+    document.addEventListener('click', function() {
+      dropdown.classList.remove('is-open');
+      if (arrow) arrow.classList.remove('is-open');
+    });
+  }
+})();
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+  (function () {
+
+    var COURSES = {
+      user: {
+        badge: 'AUD플랫폼', name: '사용자 교육',
+        desc: 'AUD플랫폼을 활용한 실무 BI 분석 화면 제작을 단계별로 경험합니다. 엑셀 기반 보고서부터 대시보드, 차트 분석까지 현업 사용자 관점에서 핵심 기능을 익힙니다.',
+        meta: [
+          { icon: 'clock',    text: '1일 (7교시)' },
+          { icon: 'money',    text: '200,000원 (1인)' },
+          { icon: 'calendar', text: '월 2회 (1, 3주차)' },
+          { icon: 'person',   text: '현업사용자' }
+        ],
+        curriculum: [
+          ['STEP 1\n솔루션 및\n개발 방법론 소개', '1교시\n10:00~10:50', 'AUD플랫폼 소개\nLowCode 활용 사례를 통한 샘플 소개'],
+          ['', '2교시\n11:00~11:50', '월별 매출 분석(PPDM 활용)\nPPDM 개발 방법론 소개\n파생공법 활용 월별 매출 분석 예제 실습'],
+          ['STEP 2\n조회 화면 구현', '3교시\n13:00~13:50', '영업 실적 보고서(Report)\n엑셀 형태로 웹에서 보기\n데이터 연결하기\n데이터 가공해서 활용하기'],
+          ['STEP 3\n대시보드 화면 구현', '4교시\n14:00~14:50', '고객별 매출 현황\n엑셀 형태로 대시보드 생성하기\n차트로 데이터 표현하기'],
+          ['STEP 4\n조회/분석 화면 구현', '5교시\n15:00~15:50', '지점별 매출 실적 / 상품별 매출 분석\n지점별 실적을 표로 한눈에 보기\n필요한 수치 계산하여 표시하기\n지역별로 잘 팔리는 상품 찾아보기\n데이터 묶어서 분석하기'],
+          ['', '6교시\n16:00~16:40', '기간별 매출 추이 현황(Chart)\n기간별 매출 금액 추이 확인하기\n데이터 차트로 표현하기'],
+          ['STEP 5\nQ/A', '7교시\n16:40~17:00', '솔루션 Q/A']
+        ]
+      },
+      dev: {
+        badge: 'AUD플랫폼', name: '개발자 교육',
+        desc: '3일 과정으로 i-META 설계부터 조회·수정 화면 개발, 대시보드 구현까지 개발자 관점의 전체 개발 흐름을 집중적으로 습득합니다.',
+        meta: [
+          { icon: 'clock',    text: '3일 (18h)' },
+          { icon: 'money',    text: '500,000원 (1인)' },
+          { icon: 'calendar', text: '월 2회 (2, 4주차)' },
+          { icon: 'person',   text: '개발자' }
+        ],
+        days: [
+          { label: '1일차', curriculum: [
+            ['STEP 1\n솔루션 및\n개발 방법론 소개', '1교시\n10:00~10:30', 'AUD플랫폼 소개\nLowCode 활용 사례를 통한 샘플 소개'],
+            ['', '2교시\n10:30~11:50', '월별 매출 분석(PPDM 활용)\nPPDM 개발 방법론 소개\n엑셀 기본 알아보기\n파생공법 활용 예제 실습'],
+            ['STEP 2\n업무화면 제작', '3교시\n13:00~14:30', '지역별 신규 고객 현황\n지역별 신규 고객 추이 분석 화면 만들기'],
+            ['', '4교시\n14:40~15:30', '연도별 재무제표\n연도별 재무제표 화면 만들기'],
+            ['', '5교시\n15:40~16:30', '건설유형별 매출현황\n공사유형별 원가·손익 분석 화면 만들기'],
+            ['STEP 3\nQ/A', '6교시\n16:40~17:00', '솔루션 Q/A']
+          ]},
+          { label: '2일차', curriculum: [
+            ['STEP 1\ni-META 이해', '1교시\n10:00~10:50', 'i-META 제작\ni-META 소개\ni-META File 생성하기'],
+            ['STEP 2\n기본 화면 구현', '2교시\n11:00~11:50', '지점별 매출 실적\n지점별 실적을 표로 한눈에 보기\n필요한 수치 계산하여 표시하기'],
+            ['STEP 3\n조회 화면 구현', '3교시\n13:00~13:50', '상품별 매출 분석\n지역별로 잘 팔리는 상품 찾아보기\n데이터 묶어서 분석하기'],
+            ['', '4교시\n14:00~14:50', '고객 등급별 매출 현황\n고객 등급에 따른 매출 상세 보기\n조건 바꿔가며 조회하기\n차트 선택 시 연동 설정하기'],
+            ['', '5교시\n15:00~15:50', '상품별 실적\n상품별 전월/전년 대비 증감률을 분석하기\n엑셀 형태로 웹에서 보기\n여러 데이터 합쳐서 활용하기\n데이터 가공해서 활용하기'],
+            ['STEP 4\n대시보드 화면 구현', '6교시\n16:00~16:40', '매출 현황\n주요 지표를 차트로 만들어 실적 대시보드 구성하기\n데이터 가공해서 활용하기'],
+            ['STEP 5\nQ/A', '7교시\n16:40~17:00', '솔루션 Q/A']
+          ]},
+          { label: '3일차', curriculum: [
+            ['STEP 1\n조회/수정\n화면 구현', '1교시\n10:00~10:50', '고객 정보 관리\n고객 정보 조회하고 입력하는 화면 만들기\n검색/추가/삭제/저장 기능 사용하기'],
+            ['', '2교시\n11:00~11:50', '고객별 매출 실적 관리\n고객 정보 선택 시 해당 고객 매출 정보 조회·등록 화면 만들기\n컨트롤 간 연동 기능 구현하기'],
+            ['', '3교시\n13:00~14:50', '인사 관리\n직원 정보 등록·수정·삭제하기\n입력 양식 활용하기\n저장 기능 연결하기'],
+            ['', '4교시\n15:00~15:50', '매출 계획 관리\n엑셀 양식으로 데이터 조회하고 입력하기\n엑셀 연동 기능 활용하기(EPA모듈)\n입력 데이터 저장 처리하기'],
+            ['STEP 2\n분석 화면 구현', '5교시\n16:00~16:40', '매출 분석\n엑셀로 입력한 데이터를 다양한 형태로 분석하기\n유연한 테이블 형식으로 데이터 재구성하기(i-META 생성)'],
+            ['STEP 3\nQ/A', '6교시\n16:40~17:00', '솔루션 Q/A']
+          ]}
+        ]
+      },
+      admin: {
+        badge: 'AUD플랫폼', name: '관리자 교육',
+        desc: 'AUD플랫폼 아키텍처 이해부터 Admin 설정, i-META 제작·배포까지 시스템 운영 담당자를 위한 전문 과정입니다.',
+        meta: [
+          { icon: 'clock',    text: '1일 (8교시)' },
+          { icon: 'money',    text: '200,000원 (1인)' },
+          { icon: 'calendar', text: '월 1회 (2주차)' },
+          { icon: 'person',   text: '개발자/운영자' }
+        ],
+        curriculum: [
+          ['STEP 1\nAUD플랫폼\n아키텍처', '1교시\n10:00~10:20', '솔루션 아키텍처 소개\n지원 환경, 아키텍처 구조\n권한 처리\n다국어 활용'],
+          ['STEP 2\nAdmin', '2교시\n10:20~10:50', '관리자 화면 시연\n권한 설정, 데이터베이스 연결, 형상관리\n시스템 옵션, Log 모니터링\n공통 데이터소스 생성'],
+          ['', '3교시\n11:00~11:50', '모듈 제작 및 배포하기\n모듈 제작 및 배포 방법\n디버깅 방법'],
+          ['STEP 3\ni-META 제작', '4교시\n13:00~13:50', 'i-META 기본\ni-META 소개\n스키마 및 테이블 등록, 권한 관리'],
+          ['', '5교시\n14:00~14:50', 'i-META 제작\ni-META File 생성\n테이블 조인, 필드 정의, 데이터 필터 및 권한 설정'],
+          ['', '6교시\n15:00~15:50', 'i-META 제작 (계속)\n계산필드 정의\n정합성 검사\nField Group, Drill To Detail 설정'],
+          ['', '7교시\n16:00~16:40', 'i-META 활용\ni-META File 활용 데이터 조회\n공유/배포 및 권한 적용'],
+          ['STEP 4\nQ/A', '8교시\n16:40~17:00', '솔루션 Q/A']
+        ]
+      },
+      imatrix: {
+        badge: 'AUD플랫폼', name: 'i-MATRIX 교육',
+        desc: 'i-MATRIX Designer를 활용한 화면 개발 실습 과정입니다. 데이터 셋 생성부터 조회·수정 화면 구현, 이벤트 처리까지 실무 예제 중심으로 진행합니다.',
+        meta: [
+          { icon: 'clock',    text: '1일 (7교시)' },
+          { icon: 'money',    text: '200,000원 (1인)' },
+          { icon: 'calendar', text: '월 1회 (3주차)' },
+          { icon: 'person',   text: 'i-MATRIX 개발자' }
+        ],
+        curriculum: [
+          ['STEP 1\n솔루션 소개', '1교시\n10:00~10:20', 'AUD플랫폼 소개\nLowCode 활용 사례를 통한 샘플 소개'],
+          ['', '2교시\n10:20~10:50', '개발 방법론 소개\nPPDM 개발 방법론 소개\n개발 방법론 활용 예시 소개'],
+          ['', '3교시\n11:00~11:50', '기본 화면 구현\ni-MATRIX Designer 기본 사용 방법\n변수 활용\nEvent 설정 방법'],
+          ['STEP 2\n조회 화면 구현', '4교시\n13:00~13:50', '고객 등급별 매출 추이\n데이터 셋 생성 및 연동\n화면 개발에 필요한 주요 수식 및 기능\n조건 컨트롤 생성 및 속성 활용\nEvent 활용'],
+          ['', '5교시\n14:00~15:50', '주요 점포별 매출 실적 현황\n데이터 추출 및 연결\nPPDM 개발 방법론 활용 보고서 구현'],
+          ['STEP 3\n조회/수정\n화면 구현', '6교시\n16:00~16:40', '매장별 매출 계획 관리\n데이터 유효성 검사\n데이터 저장 Event 구현'],
+          ['STEP 4\nQ/A', '7교시\n16:40~17:00', '솔루션 Q/A']
+        ]
+      },
+      trinity: {
+        badge: 'TRINITY', name: 'TRINITY 개발자 교육',
+        desc: '사용자·개발자·관리자 과정 수료자 대상 심화 과정입니다. AI Agent 제작, i-META 학습, ReAct Flow 구현 등 TRINITY 플랫폼의 핵심 기능을 2일간 집중 실습합니다.',
+        meta: [
+          { icon: 'clock',    text: '2일 (12h)' },
+          { icon: 'money',    text: '500,000원 (1인)' },
+          { icon: 'calendar', text: '월 1회 (3주차)' },
+          { icon: 'person',   text: '사용자/개발자/관리자 수료자' }
+        ],
+        days: [
+          { label: '1일차', curriculum: [
+            ['STEP 1\n솔루션 소개', '1교시\n10:00~10:50', 'G-MATRIX 및 TRINITY 소개\nTRINITY 핵심요소 이해하기'],
+            ['', '2교시\n11:00~11:50', '주요 구축 사례\nTRINITY 실제 도입 사례'],
+            ['STEP 2\nTRINITY\n기본 실습', '3교시\n13:00~13:50', 'TRINITY 이해하기\nTRINITY의 개념 정의 (용어/Designer/Portal)'],
+            ['', '4교시\n14:00~14:50', 'Agent 이해와 제작 실습\n시연으로 이해하는 TRINITY 동작방식\n(컴포넌트의 활용 및 Flow 제작 방식 이해)'],
+            ['', '5교시\n15:00~15:50', 'Agent 응용 제작 실습\n(URL, 문서 활용 Flow 제작)'],
+            ['', '6교시\n16:00~16:30', 'TRINITY의 미래\nTRINITY! 어떤 Agent까지 만들 수 있나?\nTRINITY 개발방법론 소개'],
+            ['STEP 3\nQ/A', '7교시\n16:30~16:50', '질의/응답']
+          ]},
+          { label: '2일차', curriculum: [
+            ['STEP 1\nTRINITY\n응용 실습', '1교시\n10:00~10:50', 'ReAct Agent 살펴보기\nReAct Agent를 활용한 매출실적 Agent 살펴보기'],
+            ['', '2교시\n11:00~11:50', 'i-META 제작 및 학습\ni-META 제작 Tip\ni-META 학습 (i-META, 값, 용어 학습)'],
+            ['', '3교시\n13:00~15:30', '매출실적 Agent 제작하기\n메타 스키마 Flow 제작하기\nReAct Agent Flow 제작하기\n업무 시나리오 기반 프롬프트 및 온톨로지 작성하기'],
+            ['STEP 2\n관리자 교육', '4교시\n15:40~16:30', 'TRINITY 설치 및 관리자 기능 소개\n관리자 기능 및 권한 관리 설정\nTRINITY 디버깅 방법\nTRINITY 패치 방법 및 기술지원 방법'],
+            ['STEP 3\nQ/A', '5교시\n16:30~16:50', '질의/응답']
+          ]}
+        ]
+      }
+    };
+
+    var ICONS = {
+      clock:    '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>',
+      money:    '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
+      calendar: '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      person:   '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+    };
+
+    function buildTable(rows) {
+      /* rowspan 계산 */
+      var spans = rows.map(function(r, i) {
+        if (!r[0]) return 0;
+        var count = 1, j = i + 1;
+        while (j < rows.length && !rows[j][0]) { count++; j++; }
+        return count;
+      });
+
+      var clockIcon = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:5px;color:#EF4444;"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>';
+
+      var body = rows.map(function(r, i) {
+        var cells = '';
+
+        /* 열1: 과정 (rowspan) */
+        if (spans[i] > 0) {
+          var stepParts = r[0].split('\n');
+          var stepNum   = stepParts[0];
+          var stepLabel = stepParts.slice(1).join(' ');
+          cells += '<td class="ei-curriculum__step-cell" rowspan="' + spans[i] + '">' +
+            '<span class="ei-curriculum__step-num">' + stepNum + '</span>' +
+            (stepLabel ? '<span class="ei-curriculum__step-label">' + stepLabel + '</span>' : '') +
+            '</td>';
+        }
+
+        /* 열2: 교육내용 제목 (첫 줄) */
+        var contentParts = r[2].split('\n');
+        cells += '<td class="ei-curriculum__subject-cell"><strong>' + contentParts[0] + '</strong></td>';
+
+        /* 열3: 세부 항목 (나머지 줄, 체크마크) */
+        var items = contentParts.slice(1);
+        var itemsHtml = items.length > 0
+          ? '<ul class="ei-curriculum__items">' + items.map(function(it) { return '<li>' + it + '</li>'; }).join('') + '</ul>'
+          : '';
+        cells += '<td class="ei-curriculum__items-cell">' + itemsHtml + '</td>';
+
+        /* 열4: 교육시간 */
+        var timeParts = r[1].split('\n');
+        var session   = timeParts[0];
+        var timeRange = timeParts[1] ? timeParts[1].replace('~', '~​') : '';
+        cells += '<td class="ei-curriculum__time-cell">' +
+          clockIcon + session + (timeRange ? '(' + timeRange + ')' : '') +
+          '</td>';
+
+        return '<tr>' + cells + '</tr>';
+      }).join('');
+
+      return '<table class="ei-curriculum">' +
+        '<thead><tr><th>과정</th><th colspan="2">교육 내용</th><th>교육 시간</th></tr></thead>' +
+        '<tbody>' + body + '</tbody>' +
+        '</table>';
+    }
+
+    function renderDetail(key) {
+      var data   = COURSES[key];
+      var detail = document.getElementById('courseDetail');
+      var badge  = document.getElementById('detailBadge');
+      var dname  = document.getElementById('detailName');
+      var body   = document.getElementById('detailBody');
+
+      badge.textContent = data.badge;
+      dname.textContent = data.name + ' 커리큘럼';
+
+      var descHtml = data.desc ? '<p class="ei-detail__desc-text">' + data.desc + '</p>' : '';
+
+      if (data.days) {
+        var tabsHtml = '<div class="ei-day-tabs">';
+        data.days.forEach(function (day, i) {
+          tabsHtml += '<button class="ei-day-tab' + (i === 0 ? ' is-active' : '') + '" data-day="' + i + '">' + day.label + '</button>';
+        });
+        tabsHtml += '</div>';
+
+        var panelsHtml = '';
+        data.days.forEach(function (day, i) {
+          panelsHtml += '<div class="ei-day-panel" data-day="' + i + '" style="display:' + (i === 0 ? 'block' : 'none') + '">' + buildTable(day.curriculum) + '</div>';
+        });
+
+        body.innerHTML = descHtml + tabsHtml + panelsHtml;
+
+        body.querySelectorAll('.ei-day-tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            var idx = this.dataset.day;
+            body.querySelectorAll('.ei-day-tab').forEach(function (t) { t.classList.remove('is-active'); });
+            this.classList.add('is-active');
+            body.querySelectorAll('.ei-day-panel').forEach(function (p) {
+              p.style.display = p.dataset.day === idx ? 'block' : 'none';
+            });
+          });
+        });
+      } else {
+        body.innerHTML = descHtml + buildTable(data.curriculum);
+      }
+
+      detail.classList.add('is-visible');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var cards = document.querySelectorAll('.ei-card');
+      cards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          cards.forEach(function (c) { c.classList.remove('is-active'); });
+          this.classList.add('is-active');
+          renderDetail(this.dataset.course);
+          setTimeout(function () {
+            document.getElementById('courseDetail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
+        });
+      });
+
+      /* 기본 선택: 사용자 교육 (렌더만, 스크롤 없음) */
+      var defaultCard = document.querySelector('.ei-card[data-course="user"]');
+      if (defaultCard) {
+        defaultCard.classList.add('is-active');
+        renderDetail('user');
+      }
+    });
+
+  })();
+  </script>
+</body>
+</html>
