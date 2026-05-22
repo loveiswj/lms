@@ -22,7 +22,7 @@
   <header class="site-header">
     <div class="container">
       <div class="header-main">
-        <a href="index.html" class="logo-new" onclick="if(location.pathname.endsWith('index.html')||location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
+        <a href="index.html" class="logo-new">
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
 
@@ -46,7 +46,6 @@
       </div>
     </div>
   </header>
-  <script>(function(){var el=document.querySelector('.header-actions');if(!el)return;try{var d=JSON.parse(localStorage.getItem('bim-academy-auth')||'null');if(d&&d.access_token&&d.user&&(!(d.expires_at&&Date.now()/1000>d.expires_at)||d.refresh_token)){var n=localStorage.getItem('bim-academy-display-name')||(d.user.user_metadata&&d.user.user_metadata.name)||(d.user.email?d.user.email.split('@')[0]:'사용자');el.innerHTML='<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">'+n+'님</span><span class="header-actions__divider"></span><a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a><button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';return;}}catch(e){}el.innerHTML='<a href="login.html" class="header-actions__link">로그인</a><span class="header-actions__divider"></span><a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';})();</script>
 
   <!-- ══ 검색 오버레이 ══ -->
   <div class="search-overlay" id="searchOverlay">
@@ -232,7 +231,7 @@
         <div class="ei-venue__map-wrap">
           <iframe
             class="ei-venue__iframe"
-            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429&t=&z=17&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429+KR타워&t=&z=17&ie=UTF8&iwloc=&output=embed"
             allowfullscreen loading="lazy"
             title="교육장 위치 지도">
           </iframe>
@@ -532,7 +531,7 @@
         '</table>';
     }
 
-    function renderDetail(key, noScroll) {
+    function renderDetail(key) {
       var data   = COURSES[key];
       var detail = document.getElementById('courseDetail');
       var badge  = document.getElementById('detailBadge');
@@ -572,8 +571,37 @@
         body.innerHTML = descHtml + buildTable(data.curriculum);
       }
 
+      var venueHtml = '<div class="ei-detail__venue">' +
+        '<p class="ei-detail__venue-title">교육장 안내</p>' +
+        '<div class="ei-detail__venue-body">' +
+          '<div class="ei-detail__venue-info">' +
+            '<div class="ei-detail__venue-row">' +
+              '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+              '<span>서울특별시 강남구 선릉로 429, KR타워 7층</span>' +
+            '</div>' +
+            '<div class="ei-detail__venue-row">' +
+              '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+              '<span>지하철 2호선 / 수인분당선 선릉역 3번 출구 도보 2분</span>' +
+            '</div>' +
+            '<div class="ei-detail__venue-row ei-detail__venue-notice">' +
+              '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+              '<span>주차 지원 불가, 대중교통 이용 권장</span>' +
+            '</div>' +
+            '<a class="ei-detail__venue-map-btn" href="https://map.naver.com/v5/search/서울특별시%20강남구%20선릉로%20429%20KR타워" target="_blank" rel="noopener">' +
+              '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
+              '네이버 지도에서 보기' +
+            '</a>' +
+          '</div>' +
+          '<div class="ei-detail__venue-map">' +
+            '<iframe src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429+KR타워&t=&z=17&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" title="교육장 위치 지도"></iframe>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+      body.insertAdjacentHTML('beforeend', venueHtml);
+
       detail.classList.add('is-visible');
-      if (!noScroll) setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+      setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -590,7 +618,7 @@
       var defaultCard = document.querySelector('.ei-card[data-course="user"]');
       if (defaultCard) {
         defaultCard.classList.add('is-active');
-        renderDetail('user', true);
+        renderDetail('user');
       }
     });
 
