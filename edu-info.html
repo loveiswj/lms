@@ -22,7 +22,7 @@
   <header class="site-header">
     <div class="container">
       <div class="header-main">
-        <a href="index.html" class="logo-new" onclick="if(location.pathname.endsWith('index.html')||location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
+        <a href="index.html" class="logo-new">
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
 
@@ -46,7 +46,6 @@
       </div>
     </div>
   </header>
-  <script>(function(){var el=document.querySelector('.header-actions');if(!el)return;try{var d=JSON.parse(localStorage.getItem('bim-academy-auth')||'null');if(d&&d.access_token&&d.user&&(!(d.expires_at&&Date.now()/1000>d.expires_at)||d.refresh_token)){var n=localStorage.getItem('bim-academy-display-name')||(d.user.user_metadata&&d.user.user_metadata.name)||(d.user.email?d.user.email.split('@')[0]:'사용자');el.innerHTML='<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">'+n+'님</span><span class="header-actions__divider"></span><a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a><button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';return;}}catch(e){}el.innerHTML='<a href="login.html" class="header-actions__link">로그인</a><span class="header-actions__divider"></span><a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';})();</script>
 
   <!-- ══ 검색 오버레이 ══ -->
   <div class="search-overlay" id="searchOverlay">
@@ -206,8 +205,8 @@
             <div class="ei-venue__card-icon">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-186q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm-28 74q-14-5-25-15-65-60-115-117t-83.5-110.5q-33.5-53.5-51-103T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 45-17.5 94.5t-51 103Q698-301 648-244T533-127q-11 10-25 15t-28 5q-14 0-28-5Zm28-448Zm56.5 56.5Q560-527 560-560t-23.5-56.5Q513-640 480-640t-56.5 23.5Q400-593 400-560t23.5 56.5Q447-480 480-480t56.5-23.5Z"/></svg>            </div>
             <div>
-              <p class="ei-venue__card-title">서울특별시 강남구 선릉로 429</p>
-              <p class="ei-venue__card-sub">KR타워 7층 &nbsp;·&nbsp; 선릉역 3번 출구 도보 2분</p>
+              <p class="ei-venue__card-title">서울특별시 강남구 선릉로 429, KR타워</p>
+              <p class="ei-venue__card-sub">선릉역 3번 출구 도보 2분</p>
             </div>
           </div>
 
@@ -232,12 +231,12 @@
         <div class="ei-venue__map-wrap">
           <iframe
             class="ei-venue__iframe"
-            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429&t=&z=17&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=서울특별시+강남구+선릉로+429+KR타워&t=&z=17&ie=UTF8&iwloc=&output=embed"
             allowfullscreen loading="lazy"
             title="교육장 위치 지도">
           </iframe>
           <a class="ei-venue__map-btn"
-             href="https://map.naver.com/v5/search/서울특별시%20강남구%20선릉로%20429%20KR타워"
+             href="https://map.naver.com/v5/search/서울특별시%20강남구%20선릉로%20429%2C%20KR타워"
              target="_blank" rel="noopener">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
@@ -532,7 +531,7 @@
         '</table>';
     }
 
-    function renderDetail(key, noScroll) {
+    function renderDetail(key) {
       var data   = COURSES[key];
       var detail = document.getElementById('courseDetail');
       var badge  = document.getElementById('detailBadge');
@@ -573,7 +572,6 @@
       }
 
       detail.classList.add('is-visible');
-      if (!noScroll) setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -583,14 +581,17 @@
           cards.forEach(function (c) { c.classList.remove('is-active'); });
           this.classList.add('is-active');
           renderDetail(this.dataset.course);
+          setTimeout(function () {
+            document.getElementById('courseDetail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
         });
       });
 
-      /* 기본 선택: 사용자 교육 */
+      /* 기본 선택: 사용자 교육 (렌더만, 스크롤 없음) */
       var defaultCard = document.querySelector('.ei-card[data-course="user"]');
       if (defaultCard) {
         defaultCard.classList.add('is-active');
-        renderDetail('user', true);
+        renderDetail('user');
       }
     });
 

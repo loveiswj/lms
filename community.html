@@ -21,7 +21,7 @@
   <header class="site-header">
     <div class="container">
       <div class="header-main">
-        <a href="index.html" class="logo-new" onclick="if(location.pathname.endsWith('index.html')||location.pathname==='/'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
+        <a href="index.html" class="logo-new">
           <img src="assets/images/bimatrix_logo.png" alt="BI MATRIX" class="logo-img">
         </a>
 
@@ -45,7 +45,6 @@
       </div>
     </div>
   </header>
-  <script>(function(){var el=document.querySelector('.header-actions');if(!el)return;try{var d=JSON.parse(localStorage.getItem('bim-academy-auth')||'null');if(d&&d.access_token&&d.user&&(!(d.expires_at&&Date.now()/1000>d.expires_at)||d.refresh_token)){var n=localStorage.getItem('bim-academy-display-name')||(d.user.user_metadata&&d.user.user_metadata.name)||(d.user.email?d.user.email.split('@')[0]:'사용자');el.innerHTML='<span class="header-actions__username" style="font-size:13px;color:var(--text-sub);font-weight:600;">'+n+'님</span><span class="header-actions__divider"></span><a href="mypage.html" class="btn btn--secondary btn--sm">마이페이지</a><button onclick="navLogout()" class="btn btn--primary btn--sm" style="border:none;cursor:pointer;font-family:var(--font);">로그아웃</button>';return;}}catch(e){}el.innerHTML='<a href="login.html" class="header-actions__link">로그인</a><span class="header-actions__divider"></span><a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';})();</script>
 
   <!-- ══ 검색 오버레이 ══ -->
   <div class="search-overlay" id="searchOverlay">
@@ -94,6 +93,7 @@
     <button class="sub-line-tab active" onclick="setSubNav(this, 'all')">전체</button>
     <button class="sub-line-tab" onclick="setSubNav(this, 'notice')">공지사항</button>
     <button class="sub-line-tab" onclick="setSubNav(this, 'qa')">Q&amp;A</button>
+    <button class="sub-line-tab" onclick="setSubNav(this, 'free')">자유게시판</button>
 
     <!-- 글쓰기버튼 -->
     <div class="comm-write">
@@ -137,6 +137,7 @@
         <div class="write-form__group" id="writeCatGroup" style="display:none;">
           <label class="write-form__label">카테고리</label>
           <select class="write-form__select" id="writeCat">
+            <option value="free">자유게시판</option>
             <option value="qa">Q&amp;A</option>
             <option value="notice">공지사항</option>
           </select>
@@ -552,7 +553,9 @@
       empty.style.display = 'none';
 
       var notices = filtered.filter(function(p) { return p.cat === 'notice'; });
-      var qas    = filtered.filter(function(p) { return p.cat !== 'notice'; });
+      var qas    = filtered.filter(function(p) { return p.cat === 'qa'; });
+      var frees  = filtered.filter(function(p) { return p.cat === 'free'; });
+      var others = filtered.filter(function(p) { return p.cat !== 'notice' && p.cat !== 'qa' && p.cat !== 'free'; });
 
       var badgeMap = { notice: '공지', qa: 'Q&A', review: '수강후기', free: '자유게시판' };
 
@@ -588,7 +591,7 @@
                '<div>' + posts.map(renderCard).join('') + '</div>';
       }
 
-      list.innerHTML = renderGroup('공지사항', notices) + renderGroup('Q&A', qas);
+      list.innerHTML = renderGroup('공지사항', notices) + renderGroup('Q&A', qas) + renderGroup('자유게시판', frees) + renderGroup('기타', others);
     }
 
     /* ── 아코디언 토글 ── */
@@ -1152,7 +1155,7 @@
 
     /* ── DB 게시글 로드 ── */
     async function loadPostsFromDB() {
-      if (typeof _supabase === 'undefined') return;
+      if (typeof _supabase === 'undefined') { renderPosts(); return; }
       var res = await _supabase.from('community_posts')
         .select('*')
         .eq('is_hidden', false)

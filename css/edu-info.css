@@ -499,6 +499,80 @@
 }
 .ei-venue__map-btn:hover { background: var(--blue-dark); }
 
+/* ── 커리큘럼 상세 내 교육장 안내 ── */
+.ei-detail__venue {
+  margin-top: 36px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.ei-detail__venue-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+.ei-detail__venue-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.ei-detail__venue-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ei-detail__venue-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+.ei-detail__venue-row svg { flex-shrink: 0; margin-top: 2px; color: var(--blue); }
+.ei-detail__venue-notice {
+  color: #DC2626;
+  background: rgba(239,68,68,0.06);
+  border: 1px solid rgba(239,68,68,0.18);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ei-detail__venue-notice svg { color: #EF4444; }
+.ei-detail__venue-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 10px 18px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.15s;
+  width: fit-content;
+}
+.ei-detail__venue-map-btn:hover { background: var(--blue-dark); }
+.ei-detail__venue-map {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.ei-detail__venue-map iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: none;
+}
+@media (max-width: 768px) {
+  .ei-detail__venue-body { grid-template-columns: 1fr; }
+  .ei-detail__venue-map iframe { height: 200px; }
+}
+
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
   .ei-card-grid { grid-template-columns: repeat(3, 1fr); }
@@ -517,3 +591,4 @@
   .ei-detail       { padding: 24px 18px; }
   .ei-detail__meta { gap: 12px; }
 }
+
