@@ -225,9 +225,8 @@
 
   function renderLoggedOut(actionsEl) {
     actionsEl.innerHTML =
-      '<a href="login.html" class="header-actions__link">로그인</a>' +
-      '<span class="header-actions__divider"></span>' +
-      '<a href="signup.html" class="btn btn--secondary btn--sm">회원가입</a>';
+      '<a href="login.html" class="btn btn--secondary btn--sm">로그인</a>' +
+      '<a href="signup.html" class="btn btn--primary btn--sm">회원가입</a>';
   }
 
   function initAuth() {

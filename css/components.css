@@ -1672,6 +1672,7 @@
   width: 1px;
   height: 14px;
   background: var(--border);
+  margin: 0 5px;
 }
 
 /* ════════════════════════════════════════
@@ -2111,15 +2112,14 @@
 
 /* Secondary: white background + navy border */
 .btn--secondary {
-  background: var(--charcoal);
-  color: #fff;
-  border: 1px solid var(--charcoal);
-  padding: 14px 15px;
-  border-radius: var(--radius-md);
+  background: #fff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-gray);
 }
 
 .btn--secondary:hover {
-  background: var(--gray-dark);
+  color: var(--text-primary);
+  border: 1px solid var(--text-hint);
 }
 
 /* Accent: blue background */
@@ -3962,7 +3962,12 @@
   padding: 80px 0 100px;
 }
 
-.faq-section .faq-list-new {
+.faq-section-main {
+  padding: 80px 0 100px;
+  background: var(--bg);
+}
+
+.faq-list-new {
   margin-top: 0;
   background: #fff;
   border: 1.5px solid #E8EDF3;
