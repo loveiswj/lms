@@ -563,9 +563,6 @@
           cards.forEach(function (c) { c.classList.remove('is-active'); });
           this.classList.add('is-active');
           renderDetail(this.dataset.course);
-          setTimeout(function () {
-            document.getElementById('courseDetail').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 50);
         });
       });
 
